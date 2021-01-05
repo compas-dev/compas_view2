@@ -27,12 +27,12 @@ requirements = read("requirements.txt").split("\n")
 optional_requirements = {}
 
 setup(
-    name="compas_viewers2",
+    name="compas_view2",
     version="0.1.0",
     description="Second generation viewers for the COMPAS framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/blockresearchgroup/compas_viewers2",
+    url="https://github.com/blockresearchgroup/compas_view2",
     author="tom van mele",
     author_email="van.mele@arch.ethz.ch",
     license="MIT license",
@@ -53,7 +53,7 @@ setup(
     ],
     keywords=[],
     project_urls={},
-    packages=["compas_viewers2"],
+    packages=["compas_view2"],
     package_dir={"": "src"},
     package_data={},
     data_files=[],

@@ -1,2 +1,2 @@
 
-.. automodule:: compas_viewers2
+.. automodule:: compas_view2

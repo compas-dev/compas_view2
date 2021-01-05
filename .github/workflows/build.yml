@@ -35,7 +35,7 @@ jobs:
           invoke lint
       - name: Test import
         run: |
-          python -m compas_viewers2
+          python -m compas_view2
       - name: Test with pytest
         run: |
           invoke test

@@ -5,4 +5,4 @@ API Reference
 .. toctree::
     :maxdepth: 1
 
-    api/compas_viewers2
+    api/compas_view2

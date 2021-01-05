@@ -95,7 +95,7 @@ def clean(ctx, docs=True, bytecode=True, builds=True):
 
         if builds:
             folders.append('build/')
-            folders.append('src/compas_viewers2.egg-info/')
+            folders.append('src/compas_view2.egg-info/')
 
         for folder in folders:
             rmtree(os.path.join(BASE_FOLDER, folder), ignore_errors=True)

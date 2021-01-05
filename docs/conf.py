@@ -98,7 +98,7 @@ html_theme = "compaspkg"
 html_theme_path = sphinx_compas_theme.get_html_theme_path()
 
 html_theme_options = {
-    "package_name"    : "compas_viewers2",
+    "package_name"    : "compas_view2",
     "package_title"   : project,
     "package_version" : release,
 }
