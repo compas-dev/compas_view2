@@ -18,6 +18,7 @@ from compas.geometry import Transformation, Translation, Rotation, Frame
 from compas.geometry import normalize_vector, subtract_vectors, scale_vector, cross_vectors
 
 from compas.utilities import i_to_rgb
+from compas.utilities import flatten
 
 
 VSHADER = """
@@ -50,6 +51,15 @@ void main()
     frag_color = vertex_color;
 }
 """
+
+
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
+# Helpers
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
 
 
 def make_shader_program(vsource, fsource):
@@ -182,6 +192,46 @@ def lookat(eye, target, up):
     return M
 
 
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
+# App & Main Window
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
+
+
+class Viewer(QtWidgets.QMainWindow):
+
+    def __init__(self, app, data):
+        super().__init__()
+        # initialize the GL widget
+        self.app = app
+        self.view = View(data)
+        # put the window in the middle of the screen
+        self.setCentralWidget(self.view)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.setContentsMargins(0, 0, 0, 0)
+        self.center()
+
+    def center(self):
+        self.resize(self.view.width, self.view.height)
+        desktop = self.app.desktop()
+        rect = desktop.availableGeometry()
+        x = 0.5 * (rect.width() - self.view.width)
+        y = 0.5 * (rect.height() - self.view.height)
+        self.setGeometry(x, y, self.view.width, self.view.height)
+
+
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
+# OpenGL View
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
+
+
 class View(QtWidgets.QOpenGLWidget):
     width = 800
     height = 500
@@ -274,7 +324,6 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glUseProgram(self.program)
         P = perspective(45, self.aspect(), 0.1, 100)
         V = lookat([0, 0, 5], [0, 0, 0], [0, 1, 0])
-        # update
         Rx = Rotation.from_axis_and_angle([1, 0, 0], math.radians(-60))
         Rz = Rotation.from_axis_and_angle([0, 0, 1], math.radians(-30))
         M = Rx * Rz
@@ -353,26 +402,13 @@ class View(QtWidgets.QOpenGLWidget):
         print(None)
 
 
-class Viewer(QtWidgets.QMainWindow):
-
-    def __init__(self, app, data):
-        super().__init__()
-        # initialize the GL widget
-        self.app = app
-        self.view = View(data)
-        # put the window in the middle of the screen
-        self.setCentralWidget(self.view)
-        self.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.setContentsMargins(0, 0, 0, 0)
-        self.center()
-
-    def center(self):
-        self.resize(self.view.width, self.view.height)
-        desktop = self.app.desktop()
-        rect = desktop.availableGeometry()
-        x = 0.5 * (rect.width() - self.view.width)
-        y = 0.5 * (rect.height() - self.view.height)
-        self.setGeometry(x, y, self.view.width, self.view.height)
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
+# Objects
+# ==============================================================================
+# ==============================================================================
+# ==============================================================================
 
 
 class BoxObject:
@@ -499,13 +535,14 @@ class BoxObject:
         return self._faces_colors
 
 
-if __name__ == '__main__':
+# ==============================================================================
+# Main
+# ==============================================================================
 
-    from dataclasses import dataclass
+if __name__ == '__main__':
 
     from compas.datastructures import Mesh
     from compas.geometry import Box
-    from compas.utilities import flatten
 
     box = Box.from_width_height_depth(1, 1, 1)
     boxobject = BoxObject(box)
