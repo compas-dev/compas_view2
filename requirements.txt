@@ -1,3 +1,7 @@
-PySide2 >= 5.12.2
-PyOpenGL >= 3.1.5
-PyOpenGL-accelerate >= 3.1.5
+pyside2
+pyqt5
+pyglet
+glfw
+pyopengl
+pyopengl-accelerate
+compas
