@@ -11,10 +11,9 @@ from OpenGL import GL
 import ctypes as ct
 import numpy as np
 
-from compas.geometry import Transformation, Translation, Rotation, Frame
-from compas.geometry import normalize_vector, subtract_vectors, scale_vector, cross_vectors, dot_vectors
+from compas.geometry import Transformation, Translation, Rotation
+from compas.geometry import normalize_vector, subtract_vectors, cross_vectors
 
-from compas.utilities import i_to_rgb
 from compas.utilities import flatten
 
 
@@ -22,41 +21,32 @@ DTYPE_OTYPE = {}
 
 
 VSHADER = """
-#version 330
+#version 150
 
-layout(location = 0) in vec3 vertex;
-layout(location = 1) in vec3 color;
-
-uniform bool is_selected = false;
-uniform float opacity = 1.0;
+attribute vec3 vertex;
+attribute vec3 color;
 
 uniform mat4 P;
 uniform mat4 W;
 
-out vec4 vertex_color;
+varying vec4 vertex_color;
 
 void main()
 {
     gl_Position = P * W * vec4(vertex, 1.0);
 
-    if (is_selected) {
-        vertex_color = vec4(1.0, 1.0, 0.0, opacity);
-    }
-    else {
-        vertex_color = vec4(color, opacity);
-    }
+    vertex_color = vec4(color, 1.0);
 }
 """
 
 FSHADER = """
-#version 330
+#version 150
 
-in vec4 vertex_color;
-out vec4 frag_color;
+varying vec4 vertex_color;
 
 void main()
 {
-    frag_color = vertex_color;
+    gl_FragColor = vertex_color;
 }
 """
 
@@ -77,30 +67,13 @@ def make_shader_program(vsource, fsource):
     GL.glAttachShader(program, vertex)
     GL.glAttachShader(program, fragment)
     GL.glLinkProgram(program)
+    GL.glValidateProgram(program)
     result = GL.glGetProgramiv(program, GL.GL_LINK_STATUS)
     if not result:
         raise RuntimeError(GL.glGetProgramInfoLog(program))
+    GL.glDeleteShader(vertex)
+    GL.glDeleteShader(fragment)
     return program
-
-
-def make_vertex_buffer(data):
-    n = len(data)
-    vbo = GL.glGenBuffers(1)
-    cdata = (ct.c_float * n)(* data)
-    fsize = ct.sizeof(ct.c_float)
-    GL.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo)
-    GL.glBufferData(GL.GL_ARRAY_BUFFER, fsize * n, cdata, GL.GL_STATIC_DRAW)
-    return vbo
-
-
-def make_index_buffer(data):
-    n = len(data)
-    vbo = GL.glGenBuffers(1)
-    cdata = (ct.c_int * n)(* data)
-    isize = ct.sizeof(ct.c_int)
-    GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, vbo)
-    GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, isize * n, cdata, GL.GL_STATIC_DRAW)
-    return vbo
 
 
 def compile_vertex_shader(source):
@@ -123,15 +96,22 @@ def compile_fragment_shader(source):
     return shader
 
 
-def link_shader_program(vertex, fragment):
-    program = GL.glCreateProgram()
-    GL.glAttachShader(program, vertex)
-    GL.glAttachShader(program, fragment)
-    GL.glLinkProgram(program)
-    result = GL.glGetProgramiv(program, GL.GL_LINK_STATUS)
-    if not result:
-        raise RuntimeError(GL.glGetProgramInfoLog(program))
-    return program
+def make_vertex_buffer(data):
+    vbo = GL.glGenBuffers(1)
+    cdata = (ct.c_float * len(data))(* data)
+    GL.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo)
+    GL.glBufferData(GL.GL_ARRAY_BUFFER, ct.sizeof(cdata), cdata, GL.GL_STATIC_DRAW)
+    GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
+    return vbo
+
+
+def make_index_buffer(data):
+    vbo = GL.glGenBuffers(1)
+    cdata = (ct.c_int * len(data))(* data)
+    GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, vbo)
+    GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, ct.sizeof(cdata), cdata, GL.GL_STATIC_DRAW)
+    GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, 0)
+    return vbo
 
 
 def ortho(left, right, bottom, top, near, far):
@@ -189,12 +169,6 @@ def lookat(eye, target, up):
 class Viewer:
 
     def __init__(self):
-        # glFormat = QtGui.QSurfaceFormat()
-        # glFormat.setVersion(3, 2)
-        # glFormat.setProfile(QtGui.QSurfaceFormat.CoreProfile)
-        # glFormat.setDefaultFormat(glFormat)
-        # QtGui.QSurfaceFormat.setDefaultFormat(glFormat)
-        # QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseDesktopOpenGL)
         app = QtCore.QCoreApplication.instance()
         if app is None:
             app = QtWidgets.QApplication(sys.argv)
@@ -204,7 +178,6 @@ class Viewer:
         self.app.references.add(self.main)
         self.view = View()
         self.main.setCentralWidget(self.view)
-        self.main.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.main.setContentsMargins(0, 0, 0, 0)
         self.main.resize(self.view.width, self.view.height)
         desktop = self.app.desktop()
@@ -300,15 +273,13 @@ class Mouse:
         return self.pos.y() - self.last_pos.y()
 
 
-class View(QtWidgets.QOpenGLWidget):
+class View(QtOpenGL.QGLWidget):
     width = 800
     height = 500
     opacity = 1.0
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
-        self.context = QtGui.QOpenGLContext()
-        self.keys = {'shift': False}
         self.camera = PerspectiveCamera()
         self.mouse = Mouse()
         self.objects = {}
@@ -336,8 +307,7 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glUniform1f(loc, value)
 
     def initializeGL(self):
-        print(self.gl_info())
-        GL.glClearColor(0.9, 0.9, 0.9, 1)
+        GL.glClearColor(1, 1, 1, 1)
         GL.glPolygonOffset(1.0, 1.0)
         GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
         GL.glEnable(GL.GL_CULL_FACE)
@@ -346,34 +316,31 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glDepthFunc(GL.GL_LESS)
         GL.glEnable(GL.GL_BLEND)
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
-        # initialize the objects
-        for guid in self.objects:
-            obj = self.objects[guid]
-            obj.init()
         # create the program
         self.program = make_shader_program(VSHADER, FSHADER)
         GL.glUseProgram(self.program)
+        GL.glBindAttribLocation(self.program, 0, "vertex")
+        GL.glBindAttribLocation(self.program, 1, "color")
         self.uniform4x4(self.program, "P", self.camera.P(self.width, self.height))
         self.uniform4x4(self.program, "W", self.camera.W())
-        GL.glUseProgram(0)
+        # init the buffers
+        for guid in self.objects:
+            obj = self.objects[guid]
+            obj.init()
 
     def resizeGL(self, width: int, height: int):
         self.width = width
         self.height = height
         GL.glViewport(0, 0, width, height)
-        GL.glUseProgram(self.program)
         self.uniform4x4(self.program, "P", self.camera.P(self.width, self.height))
-        GL.glUseProgram(0)
 
     def paintGL(self):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
         GL.glUseProgram(self.program)
-        self.uniform1f(self.program, "opacity", self.opacity)
         self.uniform4x4(self.program, "W", self.camera.W())
         for guid in self.objects:
             obj = self.objects[guid]
-            obj.draw(self.program)
-        GL.glUseProgram(0)
+            obj.draw()
 
     def mouseMoveEvent(self, event):
         if self.isActiveWindow() and self.underMouse():
@@ -415,95 +382,6 @@ class View(QtWidgets.QOpenGLWidget):
 # ==============================================================================
 
 
-class NetworkObject:
-
-    default_color_nodes = [0.1, 0.1, 0.1]
-    default_color_edges = [0.4, 0.4, 0.4]
-
-    def __init__(self, data, name=None, is_selected=False, show_nodes=True, show_edges=True):
-        self._vao = None
-        self._data = None
-        self._node_xyz = None
-        self.data = data
-        self.name = name
-        self.is_selected = is_selected
-        self.show_nodes = show_nodes
-        self.show_edges = show_edges
-
-    @property
-    def data(self):
-        return self._data
-
-    @data.setter
-    def data(self, data):
-        self._data = data
-
-    @property
-    def node_xyz(self):
-        return {node: self.data.node_attributes(node, 'xyz') for node in self.data.nodes()}
-
-    @property
-    def nodes(self):
-        data = self.data
-        node_xyz = self.node_xyz
-        color = self.default_color_nodes
-        vertices = []
-        colors = []
-        for node in data.nodes():
-            xyz = node_xyz[node]
-            vertices.append(xyz)
-            colors.append(color)
-        return {
-            'vertices': make_vertex_buffer(list(flatten(vertices))),
-            'colors': make_vertex_buffer(list(flatten(colors)))}
-
-    @property
-    def edges(self):
-        data = self.data
-        node_xyz = self.node_xyz
-        color = self.default_color_edges
-        edges = []
-        colors = []
-        for u, v in data.edges():
-            edges.append(node_xyz[u])
-            edges.append(node_xyz[v])
-            colors.append(color)
-            colors.append(color)
-        return {
-            'vertices': make_vertex_buffer(list(flatten(edges))),
-            'colors': make_vertex_buffer(list(flatten(colors)))}
-
-    def init(self):
-        self._vao = {'edges': GL.glGenVertexArrays(1), 'nodes': GL.glGenVertexArrays(1)}
-        # edges
-        GL.glBindVertexArray(self._vao['edges'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['vertices'])
-        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
-        # nodes
-        GL.glPointSize(10)
-        GL.glBindVertexArray(self._vao['nodes'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.nodes['vertices'])
-        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.nodes['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
-        # release
-        GL.glBindVertexArray(0)
-
-    def draw(self, program):
-        if self.show_edges:
-            GL.glBindVertexArray(self._vao['edges'])
-            GL.glDrawArrays(GL.GL_LINES, 0, GL.GL_BUFFER_SIZE)
-        if self.show_nodes:
-            GL.glBindVertexArray(self._vao['nodes'])
-            GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
-
-
 class MeshObject:
 
     default_color_vertices = [0.1, 0.1, 0.1]
@@ -511,73 +389,46 @@ class MeshObject:
     default_color_front = [0.8, 0.8, 0.8]
     default_color_back = [1.0, 0.5, 0.7]
 
-    def __init__(self, data, name=None, is_selected=False, show_vertices=True, show_edges=True, show_faces=True):
-        self._vao = None
-        self._data = None
-        self._mesh = None
-        self._vertex_xyz = None
-        self.data = data
+    def __init__(self, data, name=None, is_selected=False, show_vertices=True,
+                 show_edges=True, show_faces=True):
+        self._data = data
+        self._mesh = data
+        self._vertices = None
+        self._edges = None
+        self._front = None
+        self._back = None
         self.name = name
         self.is_selected = is_selected
         self.show_vertices = show_vertices
         self.show_edges = show_edges
         self.show_faces = show_faces
 
-    @property
-    def data(self):
-        return self._data
-
-    @data.setter
-    def data(self, data):
-        self._data = data
-        self._mesh = data
-
-    @property
-    def mesh(self):
-        return self._mesh
-
-    @property
-    def vertex_xyz(self):
-        return {vertex: self.mesh.vertex_attributes(vertex, 'xyz') for vertex in self.mesh.vertices()}
-
-    @property
-    def vertices(self):
-        mesh = self.mesh
-        vertex_xyz = self.vertex_xyz
-        color = self.default_color_vertices
+    def init(self):
+        mesh = self._mesh
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
         vertices = []
         colors = []
         for vertex in mesh.vertices():
             xyz = vertex_xyz[vertex]
             vertices.append(xyz)
-            colors.append(color)
-        return {
+            colors.append(self.default_color_vertices)
+        self._vertices = {
             'vertices': make_vertex_buffer(list(flatten(vertices))),
-            'colors': make_vertex_buffer(list(flatten(colors)))}
-
-    @property
-    def edges(self):
-        mesh = self.mesh
-        vertex_xyz = self.vertex_xyz
-        color = self.default_color_edges
+            'colors': make_vertex_buffer(list(flatten(colors)))
+        }
         edges = []
         colors = []
         for u, v in mesh.edges():
             edges.append(vertex_xyz[u])
             edges.append(vertex_xyz[v])
-            colors.append(color)
-            colors.append(color)
-        return {
+            colors.append(self.default_color_edges)
+            colors.append(self.default_color_edges)
+        self._edges = {
             'vertices': make_vertex_buffer(list(flatten(edges))),
-            'colors': make_vertex_buffer(list(flatten(colors)))}
-
-    @property
-    def front(self):
-        mesh = self.mesh
-        vertex_xyz = self.vertex_xyz
+            'colors': make_vertex_buffer(list(flatten(colors)))
+        }
         faces = []
         colors = []
-        color = self.default_color_front
         for face in mesh.faces():
             vertices = mesh.face_vertices(face)
             if len(vertices) == 3:
@@ -585,9 +436,9 @@ class MeshObject:
                 faces.append(vertex_xyz[a])
                 faces.append(vertex_xyz[b])
                 faces.append(vertex_xyz[c])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                colors.append(self.default_color_front)
+                colors.append(self.default_color_front)
+                colors.append(self.default_color_front)
             elif len(vertices) == 4:
                 a, b, c, d = vertices
                 faces.append(vertex_xyz[a])
@@ -596,25 +447,20 @@ class MeshObject:
                 faces.append(vertex_xyz[a])
                 faces.append(vertex_xyz[c])
                 faces.append(vertex_xyz[d])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                colors.append(self.default_color_front)
+                colors.append(self.default_color_front)
+                colors.append(self.default_color_front)
+                colors.append(self.default_color_front)
+                colors.append(self.default_color_front)
+                colors.append(self.default_color_front)
             else:
                 raise NotImplementedError
-        return {
+        self._front = {
             'vertices': make_vertex_buffer(list(flatten(faces))),
-            'colors': make_vertex_buffer(list(flatten(colors)))}
-
-    @property
-    def back(self):
-        mesh = self.mesh
-        vertex_xyz = self.vertex_xyz
+            'colors': make_vertex_buffer(list(flatten(colors)))
+        }
         faces = []
         colors = []
-        color = self.default_color_back
         for face in mesh.faces():
             vertices = mesh.face_vertices(face)[::-1]
             if len(vertices) == 3:
@@ -622,9 +468,9 @@ class MeshObject:
                 faces.append(vertex_xyz[a])
                 faces.append(vertex_xyz[b])
                 faces.append(vertex_xyz[c])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                colors.append(self.default_color_back)
+                colors.append(self.default_color_back)
+                colors.append(self.default_color_back)
             elif len(vertices) == 4:
                 a, b, c, d = vertices
                 faces.append(vertex_xyz[a])
@@ -633,73 +479,72 @@ class MeshObject:
                 faces.append(vertex_xyz[a])
                 faces.append(vertex_xyz[c])
                 faces.append(vertex_xyz[d])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                colors.append(self.default_color_back)
+                colors.append(self.default_color_back)
+                colors.append(self.default_color_back)
+                colors.append(self.default_color_back)
+                colors.append(self.default_color_back)
+                colors.append(self.default_color_back)
             else:
                 raise NotImplementedError
-        return {
+        self._back = {
             'vertices': make_vertex_buffer(list(flatten(faces))),
-            'colors': make_vertex_buffer(list(flatten(colors)))}
+            'colors': make_vertex_buffer(list(flatten(colors)))
+        }
 
-    def init(self):
-        self._vao = {
-            'front': GL.glGenVertexArrays(1),
-            'back': GL.glGenVertexArrays(1),
-            'edges': GL.glGenVertexArrays(1),
-            'vertices': GL.glGenVertexArrays(1)}
-        # front
-        GL.glBindVertexArray(self._vao['front'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.front['vertices'])
-        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.front['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
-        # back
-        GL.glBindVertexArray(self._vao['back'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.back['vertices'])
-        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.back['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
-        # edges
-        GL.glBindVertexArray(self._vao['edges'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['vertices'])
-        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
-        # vertices
-        GL.glPointSize(10)
-        GL.glBindVertexArray(self._vao['vertices'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.vertices['vertices'])
-        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.vertices['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
-        # release
-        GL.glBindVertexArray(0)
+    @property
+    def vertices(self):
+        return self._vertices
 
-    def draw(self, program):
+    @property
+    def edges(self):
+        return self._edges
+
+    @property
+    def front(self):
+        return self._front
+
+    @property
+    def back(self):
+        return self._back
+
+    def draw(self):
         if self.show_faces:
-            GL.glUniform1i(GL.glGetUniformLocation(program, "is_selected"), self.is_selected)
-            GL.glBindVertexArray(self._vao['front'])
+            # front
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.front['vertices'])
+            GL.glEnableVertexAttribArray(0)
+            GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, 0)
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.front['colors'])
+            GL.glEnableVertexAttribArray(1)
+            GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, 0)
             GL.glDrawArrays(GL.GL_TRIANGLES, 0, GL.GL_BUFFER_SIZE)
-            GL.glBindVertexArray(self._vao['back'])
+            # back
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.back['vertices'])
+            GL.glEnableVertexAttribArray(0)
+            GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, 0)
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.back['colors'])
+            GL.glEnableVertexAttribArray(1)
+            GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, 0)
             GL.glDrawArrays(GL.GL_TRIANGLES, 0, GL.GL_BUFFER_SIZE)
-            GL.glUniform1i(GL.glGetUniformLocation(program, "is_selected"), 0)
+            # reset
         if self.show_edges:
-            GL.glBindVertexArray(self._vao['edges'])
+            # edges
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['vertices'])
+            GL.glEnableVertexAttribArray(0)
+            GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, 0)
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['colors'])
+            GL.glEnableVertexAttribArray(1)
+            GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, 0)
             GL.glDrawArrays(GL.GL_LINES, 0, GL.GL_BUFFER_SIZE)
         if self.show_vertices:
-            GL.glBindVertexArray(self._vao['vertices'])
+            # vertices
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.vertices['vertices'])
+            GL.glEnableVertexAttribArray(0)
+            GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, 0)
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.vertices['colors'])
+            GL.glEnableVertexAttribArray(1)
+            GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, 0)
+            GL.glPointSize(10)
             GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
 
 
@@ -710,14 +555,19 @@ class ShapeObject(MeshObject):
     default_color_front = [0.6, 0.6, 0.6]
     default_color_back = [0.4, 0.4, 0.4]
 
-    @property
-    def data(self):
-        return self._data
-
-    @data.setter
-    def data(self, data):
+    def __init__(self, data, name=None, is_selected=False,
+                 show_vertices=True, show_edges=True, show_faces=True):
         self._data = data
         self._mesh = Mesh.from_shape(data)
+        self._vertices = None
+        self._edges = None
+        self._front = None
+        self._back = None
+        self.name = name
+        self.is_selected = is_selected
+        self.show_vertices = show_vertices
+        self.show_edges = show_edges
+        self.show_faces = show_faces
 
 
 # ==============================================================================
@@ -726,57 +576,17 @@ class ShapeObject(MeshObject):
 
 if __name__ == '__main__':
 
-    import compas
-    import random
-
     from compas.datastructures import Mesh
-    from compas.datastructures import Network
     from compas.geometry import Box
-    from compas.geometry import Sphere
-    from compas.geometry import Torus
-    from compas.geometry import Pointcloud
 
     DTYPE_OTYPE[Box] = ShapeObject
-    DTYPE_OTYPE[Sphere] = ShapeObject
-    DTYPE_OTYPE[Torus] = ShapeObject
     DTYPE_OTYPE[Mesh] = MeshObject
-    DTYPE_OTYPE[Network] = NetworkObject
-    # DTYPE_OTYPE[VolMesh] = VolMeshObject
-    # DTYPE_OTYPE[Assembly] = AssemblyObject
 
     box = Box.from_width_height_depth(1, 1, 1)
-
-    R = Rotation.from_axis_and_angle([0, 0, 1], radians(90))
-    pcl1 = Pointcloud.from_bounds(100, 50, 30, 100)
-    pcl1.transform(R)
-
-    R = Rotation.from_axis_and_angle([0, 0, 1], radians(180))
-    pcl2 = Pointcloud.from_bounds(100, 50, 30, 100)
-    pcl2.transform(R)
-
-    mesh = Mesh.from_off(compas.get('tubemesh.off'))
-    mesh.flip_cycles()
-
-    network = Network.from_obj(compas.get('grid_irregular.obj'))
 
     # visualisation
 
     viewer = Viewer()
-    viewer.view.opacity = 0.7
-    viewer.view.camera.far = 1000
 
-    viewer.add(network)
-    viewer.add(mesh, show_vertices=False)
     viewer.add(box, show_vertices=False)
-
-    for point in pcl1:
-        sphere = Sphere(point, random.random())
-        viewer.add(sphere, show_vertices=False)
-
-    for point in pcl2:
-        radius = random.random()
-        scale = random.random()
-        torus = Torus((point, [0, 0, 1]), radius, scale * radius)
-        viewer.add(torus, show_vertices=False)
-
     viewer.show()
