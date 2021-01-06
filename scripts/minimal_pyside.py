@@ -74,68 +74,94 @@ void main()
 # ==============================================================================
 
 
-def make_shader_program(vsource, fsource):
-    vertex = compile_vertex_shader(vsource)
-    fragment = compile_fragment_shader(fsource)
-    program = GL.glCreateProgram()
-    GL.glAttachShader(program, vertex)
-    GL.glAttachShader(program, fragment)
-    GL.glLinkProgram(program)
-    result = GL.glGetProgramiv(program, GL.GL_LINK_STATUS)
-    if not result:
-        raise RuntimeError(GL.glGetProgramInfoLog(program))
+def make_shader_program(context, vsource, fsource):
+    # vertex = compile_vertex_shader(vsource)
+    # fragment = compile_fragment_shader(fsource)
+    # program = GL.glCreateProgram()
+    # GL.glAttachShader(program, vertex)
+    # GL.glAttachShader(program, fragment)
+    # GL.glLinkProgram(program)
+    # result = GL.glGetProgramiv(program, GL.GL_LINK_STATUS)
+    # if not result:
+    #     raise RuntimeError(GL.glGetProgramInfoLog(program))
+    # return program
+    program = QtGui.QOpenGLShaderProgram(context)
+    program.addShader(compile_vertex_shader(vsource))
+    program.addShader(compile_fragment_shader(fsource))
+    program.link()
     return program
 
 
 def make_vertex_buffer(data):
+    # n = len(data)
+    # vbo = GL.glGenBuffers(1)
+    # cdata = (ct.c_float * n)(* data)
+    # fsize = ct.sizeof(ct.c_float)
+    # GL.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo)
+    # GL.glBufferData(GL.GL_ARRAY_BUFFER, fsize * n, cdata, GL.GL_STATIC_DRAW)
+    # return vbo
     n = len(data)
-    vbo = GL.glGenBuffers(1)
-    cdata = (ct.c_float * n)(* data)
     fsize = ct.sizeof(ct.c_float)
-    GL.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo)
-    GL.glBufferData(GL.GL_ARRAY_BUFFER, fsize * n, cdata, GL.GL_STATIC_DRAW)
+    cdata = (ct.c_float * n)(* data)
+    vbo = QtGui.QOpenGLBuffer(QtGui.QOpenGLBuffer.VertexBuffer)
+    vbo.create()
+    vbo.bind()
+    vbo.allocate(cdata, n * fsize)
+    vbo.setUsagePattern(QtGui.QOpenGLBuffer.DynamicDraw)
     return vbo
 
 
-def make_index_buffer(data):
-    n = len(data)
-    vbo = GL.glGenBuffers(1)
-    cdata = (ct.c_int * n)(* data)
-    isize = ct.sizeof(ct.c_int)
-    GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, vbo)
-    GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, isize * n, cdata, GL.GL_STATIC_DRAW)
-    return vbo
+# def make_index_buffer(data):
+#     n = len(data)
+#     vbo = GL.glGenBuffers(1)
+#     cdata = (ct.c_int * n)(* data)
+#     isize = ct.sizeof(ct.c_int)
+#     GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, vbo)
+#     GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, isize * n, cdata, GL.GL_STATIC_DRAW)
+#     return vbo
 
 
 def compile_vertex_shader(source):
-    shader = GL.glCreateShader(GL.GL_VERTEX_SHADER)
-    GL.glShaderSource(shader, source)
-    GL.glCompileShader(shader)
-    result = GL.glGetShaderiv(shader, GL.GL_COMPILE_STATUS)
-    if not result:
-        raise RuntimeError(GL.glGetShaderInfoLog(shader))
+    # shader = GL.glCreateShader(GL.GL_VERTEX_SHADER)
+    # GL.glShaderSource(shader, source)
+    # GL.glCompileShader(shader)
+    # result = GL.glGetShaderiv(shader, GL.GL_COMPILE_STATUS)
+    # if not result:
+    #     raise RuntimeError(GL.glGetShaderInfoLog(shader))
+    # return shader
+    shader = QtGui.QOpenGLShader(QtGui.QOpenGLShader.Vertex)
+    is_compiled = shader.compileSourceCode(source)
+    if not is_compiled:
+        print(shader.log())
+        raise ValueError("Vertex shader known as {} is not compiled".format(name))
     return shader
 
 
 def compile_fragment_shader(source):
-    shader = GL.glCreateShader(GL.GL_FRAGMENT_SHADER)
-    GL.glShaderSource(shader, source)
-    GL.glCompileShader(shader)
-    result = GL.glGetShaderiv(shader, GL.GL_COMPILE_STATUS)
-    if not result:
-        raise RuntimeError(GL.glGetShaderInfoLog(shader))
+    # shader = GL.glCreateShader(GL.GL_FRAGMENT_SHADER)
+    # GL.glShaderSource(shader, source)
+    # GL.glCompileShader(shader)
+    # result = GL.glGetShaderiv(shader, GL.GL_COMPILE_STATUS)
+    # if not result:
+    #     raise RuntimeError(GL.glGetShaderInfoLog(shader))
+    # return shader
+    shader = QtGui.QOpenGLShader(QtGui.QOpenGLShader.Fragment)
+    is_compiled = shader.compileSourceCode(source)
+    if not is_compiled:
+        print(shader.log())
+        raise ValueError("Fragment shader known as {} is not compiled".format(name))
     return shader
 
 
-def link_shader_program(vertex, fragment):
-    program = GL.glCreateProgram()
-    GL.glAttachShader(program, vertex)
-    GL.glAttachShader(program, fragment)
-    GL.glLinkProgram(program)
-    result = GL.glGetProgramiv(program, GL.GL_LINK_STATUS)
-    if not result:
-        raise RuntimeError(GL.glGetProgramInfoLog(program))
-    return program
+# def link_shader_program(vertex, fragment):
+#     program = GL.glCreateProgram()
+#     GL.glAttachShader(program, vertex)
+#     GL.glAttachShader(program, fragment)
+#     GL.glLinkProgram(program)
+#     result = GL.glGetProgramiv(program, GL.GL_LINK_STATUS)
+#     if not result:
+#         raise RuntimeError(GL.glGetProgramInfoLog(program))
+#     return program
 
 
 def ortho(left, right, bottom, top, near, far):
@@ -280,11 +306,17 @@ class PerspectiveCamera:
 
     def P(self):
         P = perspective(self.fov, self.view.aspect(), self.near, self.far)
-        return np.asfortranarray(P, dtype=np.float32)
+        return P.list
+        # return (ct.c_float * 16)(* P.list)
+        # return np.array(P, dtype=np.float32).ravel().tolist()
+        # return QtGui.QMatrix4x4(* P.list)
 
     def V(self):
         V = Transformation()
-        return np.asfortranarray(V, dtype=np.float32)
+        return V.list
+        # return (ct.c_float * 16)(* V.list)
+        # return np.array(V, dtype=np.float32).ravel().tolist()
+        # return QtGui.QMatrix4x4(* V.list)
 
     def M(self):
         T2 = Translation.from_vector([self.tx, self.ty, -self.distance])
@@ -293,7 +325,10 @@ class PerspectiveCamera:
         Rz = Rotation.from_axis_and_angle([0, 0, 1], radians(self.rz))
         T0 = Translation.from_vector([-self.target[0], -self.target[1], -self.target[2]])
         M = T2 * T1 * Rx * Rz * T0
-        return np.asfortranarray(M, dtype=np.float32)
+        return M.list
+        # return (ct.c_float * 16)(* M.list)
+        # return np.array(M, dtype=np.float32).ravel().tolist()
+        # return QtGui.QMatrix4x4(* M.list)
 
 
 class Mouse:
@@ -342,45 +377,50 @@ class View(QtWidgets.QOpenGLWidget):
         return self.width / self.height
 
     def initializeGL(self):
+        self.context.create()
         # print(self.gl_info())
-        GL.glClearColor(0.9, 0.9, 0.9, 1)
-        GL.glPolygonOffset(1.0, 1.0)
-        GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
-        GL.glEnable(GL.GL_CULL_FACE)
-        GL.glCullFace(GL.GL_BACK)
-        GL.glEnable(GL.GL_DEPTH_TEST)
-        GL.glDepthFunc(GL.GL_LESS)
-        GL.glEnable(GL.GL_BLEND)
-        GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
+        f = self.context.functions()
+        f.initializeOpenGLFunctions()
+        f.glClearColor(0.9, 0.9, 0.9, 1)
+        f.glPolygonOffset(1.0, 1.0)
+        f.glEnable(GL.GL_POLYGON_OFFSET_FILL)
+        f.glEnable(GL.GL_CULL_FACE)
+        f.glCullFace(GL.GL_BACK)
+        f.glEnable(GL.GL_DEPTH_TEST)
+        f.glDepthFunc(GL.GL_LESS)
+        f.glEnable(GL.GL_BLEND)
+        f.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         # initialize the objects
         for guid in self.objects:
             obj = self.objects[guid]
-            obj.init()
+            obj.init(f)
         # associate programs with object types
-        self.program = make_shader_program(VSHADER, FSHADER)
-        GL.glUseProgram(self.program)
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "P"), 1, True, self.camera.P())
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "V"), 1, True, self.camera.V())
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "O"), 1, True, np.asfortranarray(Transformation(), dtype=np.float32))
-        GL.glUseProgram(0)
+        self.program = make_shader_program(self.context, VSHADER, FSHADER)
+        self.program.bind()
+        self.program.setUniformValueArray("P", self.camera.P(), 1, 4)
+        self.program.setUniformValueArray("V", self.camera.V(), 1, 4)
+        self.program.setUniformValueArray("O", Transformation().list, 1, 4)
+        self.program.release()
 
     def resizeGL(self, width: int, height: int):
+        f = self.context.functions()
         self.width = width
         self.height = height
-        GL.glViewport(0, 0, width, height)
-        GL.glUseProgram(self.program)
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "P"), 1, True, self.camera.P())
-        GL.glUseProgram(0)
+        f.glViewport(0, 0, width, height)
+        self.program.bind()
+        self.program.setUniformValueArray("P", self.camera.P(), 1, 4)
+        self.program.release()
 
     def paintGL(self):
-        GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-        GL.glUseProgram(self.program)
-        GL.glUniform1f(GL.glGetUniformLocation(self.program, "opacity"), self.opacity)
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "M"), 1, True, self.camera.M())
+        f = self.context.functions()
+        f.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
+        self.program.bind()
+        self.program.setUniformValue1f("opacity", self.opacity)
+        self.program.setUniformValueArray("M", self.camera.M(), 1, 4)
         for guid in self.objects:
             obj = self.objects[guid]
-            obj.draw(self.program)
-        GL.glUseProgram(0)
+            obj.draw(f)
+        self.program.release()
 
     def mouseMoveEvent(self, event):
         if self.isActiveWindow() and self.underMouse():
@@ -408,9 +448,9 @@ class View(QtWidgets.QOpenGLWidget):
             degrees = event.delta() / 8
             steps = degrees / 15
             self.camera.zoom(steps)
-            GL.glUseProgram(self.program)
-            GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "V"), 1, True, self.camera.V())
-            GL.glUseProgram(0)
+            self.program.bind()
+            self.program.setUniformValueArray("V", self.camera.V(), 1, 4)
+            self.program.release()
             self.update()
 
 
@@ -481,35 +521,38 @@ class NetworkObject:
             'vertices': make_vertex_buffer(list(flatten(edges))),
             'colors': make_vertex_buffer(list(flatten(colors)))}
 
-    def init(self):
-        self._vao = {'edges': GL.glGenVertexArrays(1), 'nodes': GL.glGenVertexArrays(1)}
+    def init(self, f):
+        self._vao = {
+            'edges': QtGui.QOpenGLVertexArrayObject(),
+            'nodes': QtGui.QOpenGLVertexArrayObject()}
         # edges
-        GL.glBindVertexArray(self._vao['edges'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['vertices'])
+        self._vao['edges'].create()
+        self._vao['edges'].bind()
+        f.glEnableVertexAttribArray(0)
+        self.edges['vertices'].bind()
         GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.edges['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
+        f.glEnableVertexAttribArray(1)
+        self.edges['colors'].bind()
+        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
+        self._vao['edges'].release()
         # nodes
-        GL.glPointSize(10)
-        GL.glBindVertexArray(self._vao['nodes'])
-        GL.glEnableVertexAttribArray(0)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.nodes['vertices'])
+        self._vao['nodes'].create()
+        self._vao['nodes'].bind()
+        f.glEnableVertexAttribArray(0)
+        self.nodes['vertices'].bind()
         GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
-        GL.glEnableVertexAttribArray(1)
-        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self.nodes['colors'])
-        GL.glVertexAttribPointer(1, 3, GL.GL_FLOAT, False, 0, None)
-        # release
-        GL.glBindVertexArray(0)
+        f.glEnableVertexAttribArray(1)
+        self.nodes['colors'].bind()
+        GL.glVertexAttribPointer(0, 3, GL.GL_FLOAT, False, 0, None)
+        self._vao['nodes'].release()
 
-    def draw(self, program):
+    def draw(self, f):
         if self.show_edges:
-            GL.glBindVertexArray(self._vao['edges'])
-            GL.glDrawArrays(GL.GL_LINES, 0, GL.GL_BUFFER_SIZE)
+            self._vao['edges'].bind()
+            f.glDrawArrays(GL.GL_LINES, 0, GL.GL_BUFFER_SIZE)
         if self.show_nodes:
-            GL.glBindVertexArray(self._vao['nodes'])
-            GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
+            self._vao['nodes'].bind()
+            f.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
 
 
 class MeshObject:
@@ -776,17 +819,17 @@ if __name__ == '__main__':
     viewer.view.camera.far = 1000
 
     viewer.add(network)
-    viewer.add(mesh, show_vertices=False)
-    viewer.add(box, show_vertices=False)
+    # viewer.add(mesh, show_vertices=False)
+    # viewer.add(box, show_vertices=False)
 
-    for point in pcl1:
-        sphere = Sphere(point, random.random())
-        viewer.add(sphere, show_vertices=False)
+    # for point in pcl1:
+    #     sphere = Sphere(point, random.random())
+    #     viewer.add(sphere, show_vertices=False)
 
-    for point in pcl2:
-        radius = random.random()
-        scale = random.random()
-        torus = Torus((point, [0, 0, 1]), radius, scale * radius)
-        viewer.add(torus, show_vertices=False)
+    # for point in pcl2:
+    #     radius = random.random()
+    #     scale = random.random()
+    #     torus = Torus((point, [0, 0, 1]), radius, scale * radius)
+    #     viewer.add(torus, show_vertices=False)
 
     viewer.show()

@@ -4,4 +4,6 @@ pyglet
 glfw
 pyopengl
 pyopengl-accelerate
+vispy
+glumpy
 compas
