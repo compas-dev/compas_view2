@@ -1,42 +1,134 @@
-from glumpy import app, gloo, gl
+import numpy as np
+from glumpy import app, gl, gloo, glm
+from glumpy.geometry import colorcube
+from glumpy.transforms import PVMProjection, Position, Trackball
 
-vertex = """
-uniform float scale;
-attribute vec2 position;
-attribute vec4 color;
-varying vec4 v_color;
+from math import tan, cos, sin, radians
+
+from compas.datastructures import Mesh
+from compas.geometry import Box
+
+from compas.geometry import Transformation, Translation, Rotation, Frame
+from compas.geometry import normalize_vector, subtract_vectors, scale_vector, cross_vectors, dot_vectors
+
+from compas.utilities import i_to_rgb
+from compas.utilities import flatten
+
+
+VSHADER = """
+attribute vec3 position;
+attribute vec3 color;
+
+uniform vec4 colormask;
+uniform int is_selected;
+uniform float opacity;
+
+uniform mat4 P;
+uniform mat4 V;
+uniform mat4 M;
+
+varying vec4 vertex_color;
+
 void main()
 {
-    gl_Position = vec4(scale*position, 0.0, 1.0);
-    v_color = color;
+    if (is_selected == 1){
+        vertex_color = vec4(1.0, 1.0, 0.0, opacity) * colormask;
+    }
+    else {
+        vertex_color = vec4(color, opacity) * colormask;
+    }
+
+    gl_Position = P * V * M * vec4(position, 1.0);
 }
 """
 
-fragment = """
-varying vec4 v_color;
+FSHADER = """
+varying vec4 vertex_color;
+
 void main()
 {
-    gl_FragColor = v_color;
+    gl_FragColor = vertex_color;
 }
 """
 
-# Build the program and corresponding buffers (with 4 vertices)
-quad = gloo.Program(vertex, fragment, count=4)
 
-# Upload data into GPU
-quad['color'] = [ (1,0,0,1), (0,1,0,1), (0,0,1,1), (1,1,0,1) ]
-quad['position'] = [ (-1,-1),   (-1,+1),   (+1,-1),   (+1,+1)   ]
-quad['scale'] = 1.0
+window = app.Window(width=800, height=500, title="Minimal Glumpy", color=(1, 1, 1, 1))
 
-# Create a window with a valid GL context
-window = app.Window()
 
-# Tell glumpy what needs to be done at each redraw
+@window.event
+def on_init():
+    gl.glPolygonOffset(1.0, 1.0)
+    gl.glEnable(gl.GL_POLYGON_OFFSET_FILL)
+    gl.glEnable(gl.GL_CULL_FACE)
+    gl.glCullFace(gl.GL_BACK)
+    gl.glEnable(gl.GL_DEPTH_TEST)
+    gl.glDepthFunc(gl.GL_LESS)
+    gl.glEnable(gl.GL_BLEND)
+    gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+
+
+@window.event
+def on_resize(width, height):
+    program['P'] = glm.perspective(45.0, width / height, 0.1, 100.0)
+
+
 @window.event
 def on_draw(dt):
     window.clear()
-    quad.draw(gl.GL_TRIANGLE_STRIP)
+    program['colormask'] = [1.0, 1.0, 1.0, 1.0]
+    program.draw(gl.GL_TRIANGLES, F)
+    program['colormask'] = [0.0, 0.0, 0.0, 1.0]
+    program.draw(gl.GL_LINES, E)
 
-# Run the app
+
+box = Box.from_width_height_depth(1, 1, 1)
+mesh = Mesh.from_shape(box)
+
+vertices = []
+edges = []
+i = 0
+for face in mesh.faces():
+    a, b, c, d = mesh.face_coordinates(face)
+    vertices.append(a)  # 0
+    vertices.append(b)  # 1
+    vertices.append(c)  # 2
+    vertices.append(a)  # 3
+    vertices.append(c)  # 4
+    vertices.append(d)  # 5
+    edges.append([i + 0, i + 1])
+    edges.append([i + 1, i + 2])
+    edges.append([i + 2, i + 5])
+    edges.append([i + 5, i + 0])
+    i += 6
+
+program = gloo.Program(VSHADER, FSHADER)
+
+V = np.zeros(len(vertices), dtype=[("position", np.float32, 3), ("color", np.float32, 3)])
+F = np.array(list(range(len(vertices))), dtype=np.uint32)
+E = np.array(list(flatten(edges)), dtype=np.uint32)
+
+V["position"] = vertices
+V["color"] = [(0.7, 0.7, 0.7)] * len(vertices)
+
+V = V.view(gloo.VertexBuffer)
+F = F.view(gloo.IndexBuffer)
+E = E.view(gloo.IndexBuffer)
+
+view = np.eye(4, dtype=np.float32)
+model = np.eye(4, dtype=np.float32)
+projection = np.eye(4, dtype=np.float32)
+
+glm.translate(view, 0, 0, -10)
+
+program['position'] = V['position']
+program['color'] = V['color']
+
+program['V'] = view
+program['M'] = model
+program['P'] = projection
+
+program['is_selected'] = 1
+program['opacity'] = 1.0
+
 app.run()
 
