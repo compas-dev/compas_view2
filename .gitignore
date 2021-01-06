@@ -114,3 +114,5 @@ temp/**
 .DS_Store
 
 scripts/__old/**
+
+.vscode
