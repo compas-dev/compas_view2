@@ -244,7 +244,7 @@ class PerspectiveCamera:
         self.tz = 0
         self.zoom_delta = 0.05
         self.rotation_delta = 1
-        self.pan_delta = 0.1
+        self.pan_delta = 0.05
 
     def rotate(self, dx, dy):
         self.rx += self.rotation_delta * dy
@@ -329,6 +329,9 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glDepthFunc(GL.GL_LESS)
         GL.glEnable(GL.GL_BLEND)
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
+        GL.glEnable(GL.GL_POINT_SMOOTH)
+        GL.glEnable(GL.GL_LINE_SMOOTH)
+        GL.glEnable(GL.GL_POLYGON_SMOOTH)
         # init the buffers
         for guid in self.objects:
             obj = self.objects[guid]
@@ -541,7 +544,7 @@ class MeshObject:
             'positions': make_vertex_buffer(list(flatten(positions))),
             'colors': make_vertex_buffer(list(flatten(colors))),
             'elements': make_index_buffer(list(flatten(elements))),
-            'n': mesh.number_of_faces()
+            'n': i
         }
 
     @property
@@ -603,7 +606,7 @@ class ShapeObject(MeshObject):
 
     default_color_vertices = [0.1, 0.1, 0.1]
     default_color_edges = [0.2, 0.2, 0.2]
-    default_color_front = [0.6, 0.6, 0.6]
+    default_color_front = [0.8, 0.8, 0.8]
     default_color_back = [0.4, 0.4, 0.4]
 
     def __init__(self, data, name=None, is_selected=False,
@@ -629,15 +632,17 @@ if __name__ == '__main__':
 
     from compas.datastructures import Mesh
     from compas.geometry import Box
+    from compas.geometry import Pointcloud
 
     DTYPE_OTYPE[Box] = ShapeObject
     DTYPE_OTYPE[Mesh] = MeshObject
-
-    box = Box.from_width_height_depth(1, 1, 1)
 
     # visualisation
 
     viewer = Viewer()
 
-    viewer.add(box, show_vertices=False)
+    for point in Pointcloud.from_bounds(10, 5, 3, 500):
+        box = Box((point, [1, 0, 0], [0, 1, 0]), 0.1, 0.1, 0.1)
+        viewer.add(box, show_vertices=False)
+
     viewer.show()
