@@ -1,7 +1,7 @@
 import numpy as np
 from glumpy import app, gl, gloo, glm
 from glumpy.geometry import colorcube
-from glumpy.transforms import PVMProjection, Position, Trackball
+from glumpy.transforms import PVMProjection, Position, Trackball, PanZoom
 
 from math import tan, cos, sin, radians
 
@@ -74,11 +74,27 @@ def on_resize(width, height):
 
 @window.event
 def on_draw(dt):
+    global Rx, Rz
     window.clear()
+
+    model = np.eye(4, dtype=np.float32)
+    glm.rotate(model, Rz, 0, 0, 1)
+    glm.rotate(model, Rx, 1, 0, 0)
+    glm.translate(model, 0, 0, -10)
+    program['M'] = model
+
     program['colormask'] = [1.0, 1.0, 1.0, 1.0]
     program.draw(gl.GL_TRIANGLES, F)
     program['colormask'] = [0.0, 0.0, 0.0, 1.0]
     program.draw(gl.GL_LINES, E)
+
+
+@window.event
+def on_mouse_drag(x, y, dx, dy, buttons):
+    global Rx, Rz
+    if buttons == 1:
+        Rx += dy
+        Rz += dx
 
 
 box = Box.from_width_height_depth(1, 1, 1)
@@ -118,17 +134,18 @@ view = np.eye(4, dtype=np.float32)
 model = np.eye(4, dtype=np.float32)
 projection = np.eye(4, dtype=np.float32)
 
-glm.translate(view, 0, 0, -10)
-
 program['position'] = V['position']
 program['color'] = V['color']
 
+program['P'] = projection
 program['V'] = view
 program['M'] = model
-program['P'] = projection
 
 program['is_selected'] = 1
 program['opacity'] = 1.0
+
+Rx = -60
+Rz = -30
 
 app.run()
 
