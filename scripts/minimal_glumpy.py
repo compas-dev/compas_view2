@@ -65,6 +65,12 @@ def on_init():
     gl.glDepthFunc(gl.GL_LESS)
     gl.glEnable(gl.GL_BLEND)
     gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+    gl.glEnable(gl.GL_POINT_SMOOTH)
+    gl.glEnable(gl.GL_LINE_SMOOTH)
+    gl.glEnable(gl.GL_POLYGON_SMOOTH)
+    gl.glHint(gl.GL_POLYGON_SMOOTH_HINT, gl.GL_NICEST)
+    gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
+    gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_NICEST)
 
 
 @window.event

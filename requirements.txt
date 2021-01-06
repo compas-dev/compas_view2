@@ -1,3 +1,4 @@
+compas
 pyside2
 pyqt5
 pyglet
@@ -6,4 +7,3 @@ pyopengl
 pyopengl-accelerate
 vispy
 glumpy
-compas
