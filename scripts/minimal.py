@@ -1,6 +1,4 @@
 import sys
-import math
-
 from math import tan, cos, sin, radians
 
 from PySide2 import QtWidgets
@@ -33,15 +31,13 @@ uniform bool is_selected = false;
 uniform float opacity = 1.0;
 
 uniform mat4 P;
-uniform mat4 V;
-uniform mat4 M;
-uniform mat4 O;
+uniform mat4 W;
 
 out vec4 vertex_color;
 
 void main()
 {
-    gl_Position = P * V * M * O * vec4(vertex, 1.0);
+    gl_Position = P * W * vec4(vertex, 1.0);
 
     if (is_selected) {
         vertex_color = vec4(1.0, 1.0, 0.0, opacity);
@@ -235,8 +231,7 @@ class Viewer:
 
 class PerspectiveCamera:
 
-    def __init__(self, view, fov=45, near=0.1, far=100, target=None, distance=10):
-        self.view = view
+    def __init__(self, fov=45, near=0.1, far=100, target=None, distance=10):
         self.fov = fov
         self.near = near
         self.far = far
@@ -251,55 +246,48 @@ class PerspectiveCamera:
         self.rotation_delta = 1
         self.pan_delta = 0.1
 
-    def rotate(self):
-        dx = self.view.mouse.dx()
-        dy = self.view.mouse.dy()
+    def rotate(self, dx, dy):
         self.rx += self.rotation_delta * dy
         self.rz += self.rotation_delta * dx
 
-    def pan(self):
+    def pan(self, dx, dy):
         sinrz = sin(radians(self.rz))
         cosrz = cos(radians(self.rz))
         sinrx = sin(radians(self.rx))
         cosrx = cos(radians(self.rx))
-        dx = self.view.mouse.dx() * cosrz - self.view.mouse.dy() * sinrz * cosrx
-        dy = self.view.mouse.dy() * cosrz * cosrx + self.view.mouse.dx() * sinrz
-        dz = self.view.mouse.dy() * sinrx * self.pan_delta
-        dx *= self.distance / 10.
-        dy *= self.distance / 10.
-        dz *= self.distance / 10.
-        self.tx += self.pan_delta * dx
-        self.ty -= self.pan_delta * dy
+        _dx = dx * cosrz - dy * sinrz * cosrx
+        _dy = dy * cosrz * cosrx + dx * sinrz
+        _dz = dy * sinrx * self.pan_delta
+        _dx *= 0.1 * self.distance
+        _dy *= 0.1 * self.distance
+        _dz *= 0.1 * self.distance
+        self.tx += self.pan_delta * _dx
+        self.ty -= self.pan_delta * _dy
         self.target[0] = -self.tx
         self.target[1] = -self.ty
-        self.target[2] -= dz
-        self.distance -= dz
+        self.target[2] -= _dz
+        self.distance -= _dz
 
     def zoom(self, steps=1):
         self.distance -= steps * self.zoom_delta * self.distance
 
-    def P(self):
-        P = perspective(self.fov, self.view.aspect(), self.near, self.far)
+    def P(self, width, height):
+        P = perspective(self.fov, width / height, self.near, self.far)
         return np.asfortranarray(P, dtype=np.float32)
 
-    def V(self):
-        V = Transformation()
-        return np.asfortranarray(V, dtype=np.float32)
-
-    def M(self):
+    def W(self):
         T2 = Translation.from_vector([self.tx, self.ty, -self.distance])
         T1 = Translation.from_vector(self.target)
         Rx = Rotation.from_axis_and_angle([1, 0, 0], radians(self.rx))
         Rz = Rotation.from_axis_and_angle([0, 0, 1], radians(self.rz))
         T0 = Translation.from_vector([-self.target[0], -self.target[1], -self.target[2]])
-        M = T2 * T1 * Rx * Rz * T0
-        return np.asfortranarray(M, dtype=np.float32)
+        W = T2 * T1 * Rx * Rz * T0
+        return np.asfortranarray(W, dtype=np.float32)
 
 
 class Mouse:
 
-    def __init__(self, view):
-        self.view = view
+    def __init__(self):
         self.pos = QtCore.QPoint()
         self.last_pos = QtCore.QPoint()
         self.buttons = {'left': False, 'right': False}
@@ -320,8 +308,8 @@ class View(QtWidgets.QOpenGLWidget):
         super().__init__(parent=parent)
         self.context = QtGui.QOpenGLContext()
         self.keys = {'shift': False}
-        self.camera = PerspectiveCamera(self)
-        self.mouse = Mouse(self)
+        self.camera = PerspectiveCamera()
+        self.mouse = Mouse()
         self.objects = {}
 
     def gl_info(self):
@@ -338,11 +326,16 @@ class View(QtWidgets.QOpenGLWidget):
         )
         return info
 
-    def aspect(self):
-        return self.width / self.height
+    def uniform4x4(self, program, name, data):
+        loc = GL.glGetUniformLocation(program, name)
+        GL.glUniformMatrix4fv(loc, 1, True, data)
+
+    def uniform1f(self, program, name, value):
+        loc = GL.glGetUniformLocation(program, name)
+        GL.glUniform1f(loc, value)
 
     def initializeGL(self):
-        # print(self.gl_info())
+        print(self.gl_info())
         GL.glClearColor(0.9, 0.9, 0.9, 1)
         GL.glPolygonOffset(1.0, 1.0)
         GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
@@ -356,12 +349,10 @@ class View(QtWidgets.QOpenGLWidget):
         for guid in self.objects:
             obj = self.objects[guid]
             obj.init()
-        # associate programs with object types
+        # create the program
         self.program = make_shader_program(VSHADER, FSHADER)
         GL.glUseProgram(self.program)
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "P"), 1, True, self.camera.P())
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "V"), 1, True, self.camera.V())
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "O"), 1, True, np.asfortranarray(Transformation(), dtype=np.float32))
+        self.uniform4x4(self.program, "P", self.camera.P(self.width, self.height))
         GL.glUseProgram(0)
 
     def resizeGL(self, width: int, height: int):
@@ -369,14 +360,14 @@ class View(QtWidgets.QOpenGLWidget):
         self.height = height
         GL.glViewport(0, 0, width, height)
         GL.glUseProgram(self.program)
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "P"), 1, True, self.camera.P())
+        self.uniform4x4(self.program, "P", self.camera.P(self.width, self.height))
         GL.glUseProgram(0)
 
     def paintGL(self):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
         GL.glUseProgram(self.program)
-        GL.glUniform1f(GL.glGetUniformLocation(self.program, "opacity"), self.opacity)
-        GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "M"), 1, True, self.camera.M())
+        self.uniform1f(self.program, "opacity", self.opacity)
+        self.uniform4x4(self.program, "W", self.camera.W())
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.program)
@@ -385,12 +376,14 @@ class View(QtWidgets.QOpenGLWidget):
     def mouseMoveEvent(self, event):
         if self.isActiveWindow() and self.underMouse():
             self.mouse.pos = event.pos()
+            dx = self.mouse.dx()
+            dy = self.mouse.dy()
             if event.buttons() & QtCore.Qt.LeftButton:
-                self.camera.rotate()
+                self.camera.rotate(dx, dy)
                 self.mouse.last_pos = event.pos()
                 self.update()
             elif event.buttons() & QtCore.Qt.RightButton:
-                self.camera.pan()
+                self.camera.pan(dx, dy)
                 self.mouse.last_pos = event.pos()
                 self.update()
 
@@ -408,9 +401,6 @@ class View(QtWidgets.QOpenGLWidget):
             degrees = event.delta() / 8
             steps = degrees / 15
             self.camera.zoom(steps)
-            GL.glUseProgram(self.program)
-            GL.glUniformMatrix4fv(GL.glGetUniformLocation(self.program, "V"), 1, True, self.camera.V())
-            GL.glUseProgram(0)
             self.update()
 
 
@@ -743,8 +733,6 @@ if __name__ == '__main__':
     from compas.geometry import Sphere
     from compas.geometry import Torus
     from compas.geometry import Pointcloud
-    from compas.geometry import Rotation
-    from compas.utilities import print_profile
 
     DTYPE_OTYPE[Box] = ShapeObject
     DTYPE_OTYPE[Sphere] = ShapeObject
