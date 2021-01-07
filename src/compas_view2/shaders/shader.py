@@ -1,10 +1,11 @@
+import os
 from OpenGL import GL
 
 
 class Shader:
 
-    def __init__(self, vertex, fragment):
-        self.program = make_shader_program(vertex, fragment)
+    def __init__(self, name='120/mesh'):
+        self.program = make_shader_program(name)
         self.locations = {}
 
     def uniform4x4(self, name, value):
@@ -67,9 +68,16 @@ class Shader:
             GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
 
 
-def make_shader_program(vsource, fsource):
-    vertex = compile_vertex_shader(vsource)
-    fragment = compile_fragment_shader(fsource)
+def make_shader_program(name):
+    vsource = os.path.join(os.path.dirname(__file__), "{}.vert".format(name))
+    fsource = os.path.join(os.path.dirname(__file__), "{}.frag".format(name))
+
+    with open(vsource, "r") as f:
+        vertex = compile_vertex_shader(f.read())
+
+    with open(fsource, "r") as f:
+        fragment = compile_fragment_shader(f.read())
+
     program = GL.glCreateProgram()
     GL.glAttachShader(program, vertex)
     GL.glAttachShader(program, fragment)

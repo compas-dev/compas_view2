@@ -11,9 +11,6 @@ compas_view2
 
 
 """
-
-from __future__ import print_function
-
 import os
 import sys
 
@@ -33,4 +30,4 @@ DOCS = os.path.abspath(os.path.join(HOME, "docs"))
 TEMP = os.path.abspath(os.path.join(HOME, "temp"))
 
 
-__all__ = ["HOME", "DATA", "DOCS", "TEMP"]
+__all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_VIEW", "register"]

@@ -3,7 +3,5 @@ pyside2
 pyqt5
 pyglet
 glfw
-pyopengl
-pyopengl-accelerate
-vispy
-glumpy
+pyopengl; sys_platform != 'win32'
+pyopengl-accelerate; sys_platform != 'win32'

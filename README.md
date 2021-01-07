@@ -10,7 +10,25 @@ conda activate view2
 pip install -r requirements-dev.txt
 ```
 
-## Scripts
+On Windows, `PyOpenGL` and `PyOpenGL-accelerate` have to be installed separately from here:
+<https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl>
+
+Make sure to select the versions that match your system.
+
+## Notes
+
+* Provide separate shaders for GLSL 1.20 and GLSL 3.30 and above.
+* Load all available programs into shader for specific version.
+* Create correct shader for GLSL version.
+* Align object init and drawing methods with GLSL version.
+* Use VAO for GLSL 3.30 and above.
+* Provide shader programs for different types of COMPAS objects.
+* Add toolbar for basic view operations: Select, Zoom Extents, Zoom Selected, Translate, Rotate, ...
+* Add menu for additional operations: Load objects, Save scene, Load scene, Mesh operations, ...
+* How to visualize script output in open Viewer?
+* Run script button.
+
+## Examples
 
 `scripts/minimal_120.py`
 
@@ -29,4 +47,4 @@ python scripts/minimal_120.py
 
 OpenGL 3.3 (or higher) and corresponding GLSL 3.30 (with Core Profile) works only on Mac (on my machine).
 
-* VAO supported.
+*Under Construction*...
