@@ -13,14 +13,9 @@ import numpy as np
 
 from compas.geometry import Transformation, Translation, Rotation
 
-from compas.utilities import flatten
-from compas.utilities import i_to_rgb
-
-from utilities.matrices import *
-from utilities.shaders import *
-from utilities.mouse import *
-from utilities.camera import *
-from utilities.objects import *
+from utilities.shaders import Shader
+from utilities.mouse import Mouse
+from utilities.camera import PerspectiveCamera
 
 
 VSHADER = """
@@ -75,7 +70,7 @@ void main()
 class Window:
     DTYPE_OTYPE = {}
 
-    def __init__(self, version=(2, 1), core=True):
+    def __init__(self, version=(2, 1), core=False):
         glFormat = QtGui.QSurfaceFormat()
         glFormat.setVersion(*version)
         if core:
@@ -224,6 +219,10 @@ if __name__ == '__main__':
     from compas.datastructures import Mesh
     from compas.geometry import Box
     from compas.geometry import Pointcloud
+    from compas.utilities import i_to_rgb
+
+    from utilities.objects import ShapeObject, MeshObject
+
 
     Window.DTYPE_OTYPE[Box] = ShapeObject
     Window.DTYPE_OTYPE[Mesh] = MeshObject

@@ -1,7 +1,7 @@
 from compas.datastructures import Mesh
 from compas.utilities import flatten
 
-from .buffers import *
+from .buffers import make_index_buffer, make_vertex_buffer
 
 
 class MeshObject:
