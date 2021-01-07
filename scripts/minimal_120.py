@@ -20,12 +20,12 @@ network = Network.from_obj(compas.get('grid_irregular.obj'))
 viewer.add(mesh, show_vertices=False)
 viewer.add(network)
 
-for point in Pointcloud.from_bounds(10, 5, 3, 500).transformed(Rotation.from_axis_and_angle([0, 0, 1], math.radians(180))):
+for point in Pointcloud.from_bounds(10, 5, 3, 100).transformed(Rotation.from_axis_and_angle([0, 0, 1], math.radians(180))):
     box = Box((point, [1, 0, 0], [0, 1, 0]), 0.1, 0.1, 0.1)
     color = i_to_rgb(random.random(), normalize=True)
     viewer.add(box, show_vertices=False, color=color, is_selected=random.choice([0, 1]))
 
-for point in Pointcloud.from_bounds(5, 3, 10, 500).transformed(Rotation.from_axis_and_angle([0, 0, 1], math.radians(90))):
+for point in Pointcloud.from_bounds(5, 3, 10, 100).transformed(Rotation.from_axis_and_angle([0, 0, 1], math.radians(90))):
     r1 = 0.1 * random.random()
     r2 = random.random() * r1
     torus = Torus((point, [0, 0, 1]), r1, r2)
