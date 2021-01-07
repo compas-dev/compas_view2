@@ -173,23 +173,23 @@ class MeshObject:
             # front
             shader.bind_attribute('position', self.front['positions'])
             shader.bind_attribute('color', self.front['colors'])
-            shader.draw_triangles()
+            shader.draw_triangles(elements=self.front['elements'], n=self.front['n'])
             # back
             shader.bind_attribute('position', self.back['positions'])
             shader.bind_attribute('color', self.back['colors'])
-            shader.draw_triangles()
+            shader.draw_triangles(elements=self.back['elements'], n=self.back['n'])
             # reset
             shader.uniform1i('is_selected', 0)
         if self.show_edges:
             # edges
             shader.bind_attribute('position', self.edges['positions'])
             shader.bind_attribute('color', self.edges['colors'])
-            shader.draw_lines()
+            shader.draw_lines(elements=self.edges['elements'], n=self.edges['n'])
         if self.show_vertices:
             # vertices
             shader.bind_attribute('position', self.vertices['positions'])
             shader.bind_attribute('color', self.vertices['colors'])
-            shader.draw_points(size=10)
+            shader.draw_points(size=10, elements=self.vertices['elements'], n=self.vertices['n'])
         # reset
         shader.disable_attribute('position')
         shader.disable_attribute('color')

@@ -44,21 +44,27 @@ class Shader:
         GL.glDisableVertexAttribArray(self.locations[name])
         del self.locations[name]
 
-    def draw_triangles(self):
-        # GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, self.front['elements'])
-        # GL.glDrawElements(GL.GL_TRIANGLES, self.front['n'], GL.GL_UNSIGNED_INT, None)
-        GL.glDrawArrays(GL.GL_TRIANGLES, 0, GL.GL_BUFFER_SIZE)
+    def draw_triangles(self, elements=None, n=0):
+        if elements:
+            GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
+            GL.glDrawElements(GL.GL_TRIANGLES, n, GL.GL_UNSIGNED_INT, None)
+        else:
+            GL.glDrawArrays(GL.GL_TRIANGLES, 0, GL.GL_BUFFER_SIZE)
 
-    def draw_lines(self):
-        # GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, self.edges['elements'])
-        # GL.glDrawElements(GL.GL_LINES, self.edges['n'], GL.GL_UNSIGNED_INT, None)
-        GL.glDrawArrays(GL.GL_LINES, 0, GL.GL_BUFFER_SIZE)
+    def draw_lines(self, elements=None, n=0):
+        if elements:
+            GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
+            GL.glDrawElements(GL.GL_LINES, n, GL.GL_UNSIGNED_INT, None)
+        else:
+            GL.glDrawArrays(GL.GL_LINES, 0, GL.GL_BUFFER_SIZE)
 
-    def draw_points(self, size=1):
+    def draw_points(self, size=1, elements=None, n=0):
         GL.glPointSize(size)
-        # GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, self.vertices['elements'])
-        # GL.glDrawElements(GL.GL_POINTS, self.vertices['n'], GL.GL_UNSIGNED_INT, None)
-        GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
+        if elements:
+            GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
+            GL.glDrawElements(GL.GL_POINTS, n, GL.GL_UNSIGNED_INT, None)
+        else:
+            GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
 
 
 def make_shader_program(vsource, fsource):

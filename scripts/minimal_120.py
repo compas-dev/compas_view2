@@ -218,14 +218,13 @@ if __name__ == '__main__':
 
     from utilities.objects import ShapeObject, MeshObject
 
-
     Window.DTYPE_OTYPE[Box] = ShapeObject
     Window.DTYPE_OTYPE[Mesh] = MeshObject
 
     viewer = Window()
     viewer.view.opacity = 0.7
 
-    for point in Pointcloud.from_bounds(10, 5, 3, 1000):
+    for point in Pointcloud.from_bounds(10, 5, 3, 100):
         box = Box((point, [1, 0, 0], [0, 1, 0]), 0.1, 0.1, 0.1)
         color = i_to_rgb(random.random(), normalize=True)
         viewer.add(box, show_vertices=False, color=color, is_selected=random.choice([0, 1]))
