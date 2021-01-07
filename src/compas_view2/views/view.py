@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Union
 from OpenGL import GL
 
 from PySide2 import QtCore, QtGui, QtWidgets
@@ -13,12 +13,14 @@ class View(QtWidgets.QOpenGLWidget):
     def __init__(self,
                  app,
                  color: Tuple[float, float, float] = (1, 1, 1, 1),
-                 opacity: float = 1.0,
-                 selection_color: Tuple[float, float, float] = (0.0, 0.0, 0.0)):
+                 selection_color: Tuple[float, float, float] = (0.0, 0.0, 0.0),
+                 mode: str = 'shaded'):
         super().__init__()
+        self._opacity = 1.0
+        self.shader = None
         self.app = app
         self.color = color
-        self.opacity = opacity
+        self.mode = mode
         self.selection_color = selection_color
         self.camera = Camera()
         self.mouse = Mouse()
@@ -41,6 +43,27 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glEnable(GL.GL_LINE_SMOOTH)
         GL.glEnable(GL.GL_POLYGON_SMOOTH)
         self.init()
+
+    @property
+    def mode(self):
+        return self._mode
+
+    @mode.setter
+    def mode(self, mode):
+        self._mode = mode
+        if mode == 'ghosted':
+            self._opacity = 0.7
+        else:
+            self._opacity = 1.0
+        if self.shader:
+            self.shader.bind()
+            self.shader.uniform1f("opacity", self._opacity)
+            self.shader.release()
+            self.update()
+
+    @property
+    def opacity(self):
+        return self._opacity
 
     def init(self):
         pass

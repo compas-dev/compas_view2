@@ -36,7 +36,7 @@ class Window:
 
     """
 
-    def __init__(self, version: str = '120', width=800, height=500):
+    def __init__(self, version: str = '120', width=800, height=500, viewmode='shaded'):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -67,7 +67,7 @@ class Window:
         self.main = QtWidgets.QMainWindow()
         self.app.references.add(self.main)
 
-        self.view = View(self)
+        self.view = View(self, mode=viewmode)
 
         self.main.setCentralWidget(self.view)
         self.main.setContentsMargins(0, 0, 0, 0)
@@ -79,6 +79,18 @@ class Window:
         menubar = self.main.menuBar()
         menubar.setContentsMargins(0, 0, 0, 0)
         menubar.setNativeMenuBar(True)
+
+        viewmenu = menubar.addMenu('View')
+        radio = QtWidgets.QActionGroup(self.main, exclusive=True)
+        action = viewmenu.addAction('Shaded', self.to_shaded)
+        action.setCheckable(True)
+        action.setChecked(self.view.mode == 'shaded')
+        radio.addAction(action)
+        action = viewmenu.addAction('Ghosted', self.to_ghosted)
+        action.setCheckable(True)
+        action.setChecked(self.view.mode == 'ghosted')
+        radio.addAction(action)
+
         scenemenu = menubar.addMenu('Scene')
         scenemenu.addAction('Load Scene', lambda: statusbar.showMessage('Load scene...'))
         scenemenu.addAction('Save Scene', lambda: statusbar.showMessage('Save scene...'))
@@ -87,15 +99,29 @@ class Window:
         scenemenu.addAction('Redo', lambda: statusbar.showMessage('Redo scene change...'))
         scenemenu.addAction('Clear', lambda: statusbar.showMessage('Clear scene...'))
         scenemenu.addAction('Redraw', lambda: statusbar.showMessage('Redraw scene...'))
-        openglmenu = menubar.addMenu('OpenGL')
-        openglmenu.addAction('OpenGL Version', lambda: statusbar.showMessage("OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))))
-        openglmenu.addAction('GLSL Version', lambda: statusbar.showMessage("GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))))
 
-        toolbar = self.main.addToolBar('Tools')
-        toolbar.setMovable(False)
-        toolbar.setObjectName('Tools')
-        toolbar.setIconSize(QtCore.QSize(24, 24))
-        toolbar.setContentsMargins(0, 0, 0, 0)
+        primenu = menubar.addMenu('Primitives')
+        primenu.addAction('Point', lambda: statusbar.showMessage('Add point'))
+        primenu.addAction('Vector', lambda: statusbar.showMessage('Add vector'))
+        primenu.addAction('Line', lambda: statusbar.showMessage('Add line'))
+        primenu.addAction('Circle', lambda: statusbar.showMessage('Add circle'))
+
+        shapemenu = menubar.addMenu('Shapes')
+        shapemenu.addAction('Box', self.add_box)
+        shapemenu.addAction('Spere', self.add_sphere)
+
+        netmenu = menubar.addMenu('Networks')
+        meshmenu = menubar.addMenu('Meshes')
+
+        openglmenu = menubar.addMenu('OpenGL')
+        openglmenu.addAction('OpenGL Version', self.opengl_version)
+        openglmenu.addAction('GLSL Version', self.glsl_version)
+
+        # toolbar = self.main.addToolBar('Tools')
+        # toolbar.setMovable(False)
+        # toolbar.setObjectName('Tools')
+        # toolbar.setIconSize(QtCore.QSize(24, 24))
+        # toolbar.setContentsMargins(0, 0, 0, 0)
 
         self.resize(width, height)
 
@@ -108,9 +134,41 @@ class Window:
         self.main.setGeometry(x, y, width, height)
 
     def add(self, data, **kwargs):
-        self.view.objects[data] = ViewObject.build(data, **kwargs)
+        obj = ViewObject.build(data, **kwargs)
+        self.view.objects[obj] = obj
+        if self.view.isValid():
+            obj.init()
+
+    def opengl_version(self):
+        value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
+        QtWidgets.QMessageBox.information(self.main, 'Info', value)
+
+    def glsl_version(self):
+        value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
+        QtWidgets.QMessageBox.information(self.main, 'Info', value)
+
+    def to_shaded(self):
+        self.view.mode = 'shaded'
+
+    def to_ghosted(self):
+        self.view.mode = 'ghosted'
+
+    def add_box(self):
+        from compas.geometry import Box
+        r = QtWidgets.QInputDialog.getDouble(self.main, 'Add Box', 'size', 1)
+        if r[1] and r[0] > 0:
+            size = r[0]
+            box = Box.from_width_height_depth(size, size, size)
+            self.add(box)
+
+    def add_sphere(self):
+        from compas.geometry import Sphere
+        r = QtWidgets.QInputDialog.getDouble(self.main, 'Add Sphere', 'radius', 1)
+        if r[1] and r[0] > 0:
+            radius = r[0]
+            sphere = Sphere([0, 0, 0], radius)
+            self.add(sphere)
 
     def show(self):
         self.main.show()
-        self.main.raise_()
         self.app.exec_()

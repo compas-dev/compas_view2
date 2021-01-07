@@ -14,7 +14,7 @@ class ViewShape(ViewMesh):
     default_color_back = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
-                 show_vertices=True, show_edges=True, show_faces=True, color=None):
+                 show_vertices=False, show_edges=True, show_faces=True, color=None):
         self._data = data
         self._mesh = Mesh.from_shape(data)
         self._vertices = None
