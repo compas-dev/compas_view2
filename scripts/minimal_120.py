@@ -1,21 +1,15 @@
 import sys
-from math import cos, sin, radians
 
 from PySide2 import QtWidgets
 from PySide2 import QtCore
 from PySide2 import QtGui
-from PySide2 import QtOpenGL
 
 from OpenGL import GL
-
-import ctypes as ct
-import numpy as np
-
-from compas.geometry import Transformation, Translation, Rotation
 
 from utilities.shaders import Shader
 from utilities.mouse import Mouse
 from utilities.camera import PerspectiveCamera
+from utilities.gl import gl_info
 
 
 VSHADER = """
@@ -130,6 +124,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.objects = {}
 
     def initializeGL(self):
+        print(gl_info())
         GL.glClearColor(* self.color)
         GL.glPolygonOffset(1.0, 1.0)
         GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
