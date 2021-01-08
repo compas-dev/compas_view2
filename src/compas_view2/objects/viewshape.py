@@ -1,7 +1,4 @@
 from compas.datastructures import Mesh
-from compas.utilities import flatten
-
-from ..buffers import make_index_buffer, make_vertex_buffer
 
 from .viewmesh import ViewMesh
 

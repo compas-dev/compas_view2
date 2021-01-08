@@ -7,6 +7,7 @@ from ..gl import gl_info
 from ..views import View120
 from ..views import View330
 from ..objects import ViewObject
+from ..forms.sphere import SphereForm
 
 
 VERSIONS = {'120': (2, 1), '330': (3, 3)}
@@ -163,11 +164,13 @@ class Window:
 
     def add_sphere(self):
         from compas.geometry import Sphere
-        r = QtWidgets.QInputDialog.getDouble(self.main, 'Add Sphere', 'radius', 1)
-        if r[1] and r[0] > 0:
-            radius = r[0]
+        form = SphereForm()
+        if form.exec_():
+            radius = form.radius
+            u = form.u
+            v = form.v
             sphere = Sphere([0, 0, 0], radius)
-            self.add(sphere)
+            self.add(sphere, u=u, v=v)
 
     def show(self):
         self.main.show()
