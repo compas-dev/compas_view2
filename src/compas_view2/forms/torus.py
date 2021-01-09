@@ -4,21 +4,29 @@ from PySide2 import QtGui
 from .form import Form
 
 
-class SphereForm(Form):
+class TorusForm(Form):
 
     def __init__(self):
-        super().__init__(title='Add Sphere')
+        super().__init__(title='Add Torus')
 
     def inputs(self):
+        # inputs
         inputs = QtWidgets.QVBoxLayout()
         # inputs: radius
-        radius_layout = QtWidgets.QHBoxLayout()
+        size_layout = QtWidgets.QHBoxLayout()
+        # radius
         radius_label = QtWidgets.QLabel('Radius')
         self.radius_input = QtWidgets.QDoubleSpinBox()
         self.radius_input.setValue(1.0)
-        radius_layout.addWidget(radius_label)
-        radius_layout.addWidget(self.radius_input)
-        inputs.addLayout(radius_layout)
+        size_layout.addWidget(radius_label)
+        size_layout.addWidget(self.radius_input)
+        # tube
+        tube_label = QtWidgets.QLabel('Tube')
+        self.tube_input = QtWidgets.QDoubleSpinBox()
+        self.tube_input.setValue(1.0)
+        size_layout.addWidget(tube_label)
+        size_layout.addWidget(self.tube_input)
+        inputs.addLayout(size_layout)
         # inputs: UV
         uv_layout = QtWidgets.QHBoxLayout()
         # U
@@ -40,12 +48,16 @@ class SphereForm(Form):
 
     @property
     def radius(self):
-        return float(self.radius_input.value())
+        return float(self.radius_input.text())
 
     @property
+    def tube(self):
+        return float(self.tube_input.text())
+    
+    @property
     def u(self):
-        return int(self.u_input.value())
+        return int(self.u_input.text())
 
     @property
     def v(self):
-        return int(self.v_input.value())
+        return int(self.v_input.text())

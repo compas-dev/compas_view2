@@ -8,6 +8,7 @@ from ..views import View120
 from ..views import View330
 from ..objects import ViewObject
 from ..forms.sphere import SphereForm
+from ..forms.torus import TorusForm
 
 
 VERSIONS = {'120': (2, 1), '330': (3, 3)}
@@ -110,6 +111,7 @@ class Window:
         shapemenu = menubar.addMenu('Shapes')
         shapemenu.addAction('Box', self.add_box)
         shapemenu.addAction('Spere', self.add_sphere)
+        shapemenu.addAction('Torus', self.add_torus)
 
         netmenu = menubar.addMenu('Networks')
         meshmenu = menubar.addMenu('Meshes')
@@ -171,6 +173,17 @@ class Window:
             v = form.v
             sphere = Sphere([0, 0, 0], radius)
             self.add(sphere, u=u, v=v)
+
+    def add_torus(self):
+        from compas.geometry import Torus
+        form = TorusForm()
+        if form.exec_():
+            radius = form.radius
+            tube = form.tube
+            u = form.u
+            v = form.v
+            torus = Torus(([0, 0, 0], [0, 0, 1]), radius, tube)
+            self.add(torus, u=u, v=v)
 
     def show(self):
         self.main.show()
