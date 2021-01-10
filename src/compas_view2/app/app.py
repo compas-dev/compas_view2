@@ -1,4 +1,5 @@
 import sys
+import os
 
 from OpenGL import GL
 from PySide2 import QtCore, QtGui, QtWidgets
@@ -10,6 +11,9 @@ from ..objects import ViewObject
 from ..forms.sphere import SphereForm
 from ..forms.torus import TorusForm
 
+
+HERE = os.path.dirname(__file__)
+ICONS = os.path.join(HERE, '../icons')
 
 VERSIONS = {'120': (2, 1), '330': (3, 3)}
 
@@ -74,13 +78,17 @@ class Window:
         self.main.setCentralWidget(self.view)
         self.main.setContentsMargins(0, 0, 0, 0)
 
+        # status
+
         statusbar = self.main.statusBar()
         statusbar.setContentsMargins(0, 0, 0, 0)
         statusbar.showMessage('Ready')
 
+        # menu
+
         menubar = self.main.menuBar()
         menubar.setContentsMargins(0, 0, 0, 0)
-        menubar.setNativeMenuBar(True)
+        menubar.setNativeMenuBar(False)
 
         viewmenu = menubar.addMenu('View')
         radio = QtWidgets.QActionGroup(self.main, exclusive=True)
@@ -99,32 +107,44 @@ class Window:
         scenemenu.addSeparator()
         scenemenu.addAction('Undo', lambda: statusbar.showMessage('Undo scene change...'))
         scenemenu.addAction('Redo', lambda: statusbar.showMessage('Redo scene change...'))
-        scenemenu.addAction('Clear', lambda: statusbar.showMessage('Clear scene...'))
-        scenemenu.addAction('Redraw', lambda: statusbar.showMessage('Redraw scene...'))
+        scenemenu.addAction('History', lambda: statusbar.showMessage('Redo scene change...'))
+        scenemenu.addSeparator()
+        scenemenu.addAction('Clear Scene', lambda: statusbar.showMessage('Clear scene...'))
+        scenemenu.addAction('Redraw Scene', lambda: statusbar.showMessage('Redraw scene...'))
 
         primenu = menubar.addMenu('Primitives')
-        primenu.addAction('Point', lambda: statusbar.showMessage('Add point'))
-        primenu.addAction('Vector', lambda: statusbar.showMessage('Add vector'))
-        primenu.addAction('Line', lambda: statusbar.showMessage('Add line'))
-        primenu.addAction('Circle', lambda: statusbar.showMessage('Add circle'))
+        primenu.addAction('Add Point', lambda: statusbar.showMessage('Add point'))
+        primenu.addAction('Add Vector', lambda: statusbar.showMessage('Add vector'))
+        primenu.addAction('Add Line', lambda: statusbar.showMessage('Add line'))
+        primenu.addAction('Add Circle', lambda: statusbar.showMessage('Add circle'))
 
         shapemenu = menubar.addMenu('Shapes')
-        shapemenu.addAction('Box', self.add_box)
-        shapemenu.addAction('Spere', self.add_sphere)
-        shapemenu.addAction('Torus', self.add_torus)
+        shapemenu.addAction('Add Box', self.add_box)
+        shapemenu.addAction('Add Spere', self.add_sphere)
+        shapemenu.addAction('Add Torus', self.add_torus)
 
         netmenu = menubar.addMenu('Networks')
+        netmenu.addAction('Add Network from OBJ', self.add_network_from_obj)
+
         meshmenu = menubar.addMenu('Meshes')
+        meshmenu.addAction('Add Mesh from OBJ', self.add_mesh_from_obj)
+        meshmenu.addAction('Add Mesh from OFF', self.add_mesh_from_off)
+        meshmenu.addAction('Add Mesh from PLY', self.add_mesh_from_ply)
+        meshmenu.addAction('Add Mesh from STL', self.add_mesh_from_stl)
 
         openglmenu = menubar.addMenu('OpenGL')
         openglmenu.addAction('OpenGL Version', self.opengl_version)
         openglmenu.addAction('GLSL Version', self.glsl_version)
 
-        # toolbar = self.main.addToolBar('Tools')
-        # toolbar.setMovable(False)
-        # toolbar.setObjectName('Tools')
-        # toolbar.setIconSize(QtCore.QSize(24, 24))
-        # toolbar.setContentsMargins(0, 0, 0, 0)
+        # toolbar
+
+        toolbar = self.main.addToolBar('Tools')
+        toolbar.setMovable(False)
+        toolbar.setObjectName('Tools')
+        toolbar.setIconSize(QtCore.QSize(24, 24))
+
+        undotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', lambda: print('undo'))
+        redotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', lambda: print('redo'))
 
         self.resize(width, height)
 
@@ -142,6 +162,12 @@ class Window:
         if self.view.isValid():
             obj.init()
 
+    def show(self):
+        self.main.show()
+        self.app.exec_()
+
+    # Actions: OpenGL
+
     def opengl_version(self):
         value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
         QtWidgets.QMessageBox.information(self.main, 'Info', value)
@@ -150,11 +176,19 @@ class Window:
         value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
         QtWidgets.QMessageBox.information(self.main, 'Info', value)
 
+    # Actions: View
+
     def to_shaded(self):
         self.view.mode = 'shaded'
 
     def to_ghosted(self):
         self.view.mode = 'ghosted'
+
+    # Actions: Scene
+
+    def view_objects(self)
+
+    # Actions: Shapes
 
     def add_box(self):
         from compas.geometry import Box
@@ -184,7 +218,3 @@ class Window:
             v = form.v
             torus = Torus(([0, 0, 0], [0, 0, 1]), radius, tube)
             self.add(torus, u=u, v=v)
-
-    def show(self):
-        self.main.show()
-        self.app.exec_()
