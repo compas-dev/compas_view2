@@ -33,6 +33,14 @@ class View120(View):
         self.shader.release()
 
     def paint(self):
+        # 1. bind the program for all shapes and meshes
+        # loop over objects
+        # check types and draw if appropriate
+        # 2. bind program for primitives
+        # loop over objects
+        # check types and draw if appropriate
+        # 3. bind program for ...
+        # ...
         self.shader.bind()
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         for guid in self.objects:
