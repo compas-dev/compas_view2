@@ -72,27 +72,31 @@ class App:
 
         self.width = width
         self.height = height
-        self._app = app
-        self.main = QtWidgets.QMainWindow()
-        self._app.references.add(self.main)
+        self.window = QtWidgets.QMainWindow()
         self.view = View(self, mode=viewmode)
-        self.main.setCentralWidget(self.view)
-        self.main.setContentsMargins(0, 0, 0, 0)
+        self.window.setCentralWidget(self.view)
+        self.window.setContentsMargins(0, 0, 0, 0)
         self.controller = Controller(self)
+
+        self._app = app
+        self._app.references.add(self.window)
+
         self.init_statusbar()
+
         with open(CONFIG) as f:
             config = json.load(f)
             self.init_menubar(config.get("menubar"))
             self.init_toolbar(config.get("toolbar"))
+
         self.resize(width, height)
 
     def resize(self, width, height):
-        self.main.resize(width, height)
+        self.window.resize(width, height)
         desktop = self._app.desktop()
         rect = desktop.availableGeometry()
         x = 0.5 * (rect.width() - width)
         y = 0.5 * (rect.height() - height)
-        self.main.setGeometry(x, y, width, height)
+        self.window.setGeometry(x, y, width, height)
 
     def add(self, data, **kwargs):
         obj = ViewObject.build(data, **kwargs)
@@ -101,7 +105,7 @@ class App:
             obj.init()
 
     def show(self):
-        self.main.show()
+        self.window.show()
         self._app.exec_()
 
     # ==============================================================================
@@ -109,14 +113,14 @@ class App:
     # ==============================================================================
 
     def init_statusbar(self):
-        self.statusbar = self.main.statusBar()
+        self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
         self.statusbar.showMessage('Ready')
 
     def init_menubar(self, items):
         if not items:
             return
-        self.menubar = self.main.menuBar()
+        self.menubar = self.window.menuBar()
         self.menubar.setNativeMenuBar(False)
         self.menubar.setContentsMargins(0, 0, 0, 0)
         self.add_menubar_items(items, self.menubar)
@@ -124,7 +128,7 @@ class App:
     def init_toolbar(self, items):
         if not items:
             return
-        toolbar = self.main.addToolBar('Tools')
+        toolbar = self.window.addToolBar('Tools')
         toolbar.setMovable(False)
         toolbar.setObjectName('Tools')
         toolbar.setIconSize(QtCore.QSize(24, 24))
@@ -142,7 +146,7 @@ class App:
                 if 'items' in item:
                     self.add_menubar_items(item['items'], menu)
             elif item['type'] == 'radio':
-                radio = QtWidgets.QActionGroup(self.main, exclusive=True)
+                radio = QtWidgets.QActionGroup(self.window, exclusive=True)
                 for item in item['items']:
                     action = self.add_action(item, parent)
                     action.setCheckable(True)

@@ -11,6 +11,17 @@ class Controller:
     def __init__(self, app):
         self.app = app
 
+    def about(self):
+        self.app.statusbar.showMessage('Display about in text dialog.')
+
+    def opengl_version(self):
+        value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
+        QtWidgets.QMessageBox.information(self.app.window, 'Info', value)
+
+    def glsl_version(self):
+        value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
+        QtWidgets.QMessageBox.information(self.app.window, 'Info', value)
+
     # Actions: View
 
     def to_shaded(self):
@@ -18,14 +29,6 @@ class Controller:
 
     def to_ghosted(self):
         self.app.view.mode = 'ghosted'
-
-    def opengl_version(self):
-        value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
-        QtWidgets.QMessageBox.information(self.app.main, 'Info', value)
-
-    def glsl_version(self):
-        value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
-        QtWidgets.QMessageBox.information(self.app.main, 'Info', value)
 
     # Actions: Scene
 
@@ -71,7 +74,7 @@ class Controller:
 
     def add_box(self):
         from compas.geometry import Box
-        r = QtWidgets.QInputDialog.getDouble(self.app.main, 'Add Box', 'size', 1)
+        r = QtWidgets.QInputDialog.getDouble(self.app.window, 'Add Box', 'size', 1)
         if r[1] and r[0] > 0:
             size = r[0]
             box = Box.from_width_height_depth(size, size, size)

@@ -3,6 +3,17 @@
     [
         {
             "type": "menu",
+            "text": "COMPAS Viewer 2",
+            "items":
+            [
+                {"type": "action", "text": "About", "action": "about"},
+                {"type": "separator"},
+                {"type": "action", "text": "OpenGL Version", "action": "opengl_version"},
+                {"type": "action", "text": "GLSL Version", "action": "glsl_version"}
+            ]
+        },
+        {
+            "type": "menu",
             "text": "View",
             "items":
             [
@@ -13,10 +24,7 @@
                         {"type": "action", "text": "Shaded", "checked": true, "action": "to_shaded"},
                         {"type": "action", "text": "Ghosted", "checked": false, "action": "to_ghosted"}
                     ]
-                },
-                {"type": "separator"},
-                {"type": "action", "text": "OpenGL Version", "action": "opengl_version"},
-                {"type": "action", "text": "GLSL Version", "action": "glsl_version"}
+                }
             ]
         },
         {
@@ -36,23 +44,30 @@
         },
         {
             "type": "menu",
-            "text": "Primitives",
+            "text": "Geometry",
             "items":
             [
-                {"type": "action", "text": "Add Point", "action": "add_point"},
-                {"type": "action", "text": "Add Vector", "action": "add_vector"},
-                {"type": "action", "text": "Add Line", "action": "add_line"},
-                {"type": "action", "text": "Add Circle", "action": "add_circle"}
-            ]
-        },
-        {
-            "type": "menu",
-            "text": "Shapes",
-            "items":
-            [
-                {"type": "action", "text": "Add Box", "action": "add_box"},
-                {"type": "action", "text": "Add Sphere", "action": "add_sphere"},
-                {"type": "action", "text": "Add Torus", "action": "add_torus"}
+                {
+                    "type": "menu",
+                    "text": "Primitives",
+                    "items":
+                    [
+                        {"type": "action", "text": "Add Point", "action": "add_point"},
+                        {"type": "action", "text": "Add Vector", "action": "add_vector"},
+                        {"type": "action", "text": "Add Line", "action": "add_line"},
+                        {"type": "action", "text": "Add Circle", "action": "add_circle"}
+                    ]
+                },
+                {
+                    "type": "menu",
+                    "text": "Shapes",
+                    "items":
+                    [
+                        {"type": "action", "text": "Add Box", "action": "add_box"},
+                        {"type": "action", "text": "Add Sphere", "action": "add_sphere"},
+                        {"type": "action", "text": "Add Torus", "action": "add_torus"}
+                    ]
+                }
             ]
         },
         {
