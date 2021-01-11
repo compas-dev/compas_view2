@@ -11,7 +11,13 @@ class Controller:
     def __init__(self, app):
         self.app = app
 
-    # Actions: OpenGL
+    # Actions: View
+
+    def to_shaded(self):
+        self.app.view.mode = 'shaded'
+
+    def to_ghosted(self):
+        self.app.view.mode = 'ghosted'
 
     def opengl_version(self):
         value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
@@ -20,14 +26,6 @@ class Controller:
     def glsl_version(self):
         value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
         QtWidgets.QMessageBox.information(self.app.main, 'Info', value)
-
-    # Actions: View
-
-    def to_shaded(self):
-        self.app.view.mode = 'shaded'
-
-    def to_ghosted(self):
-        self.app.view.mode = 'ghosted'
 
     # Actions: Scene
 
@@ -105,7 +103,7 @@ class Controller:
     def add_network_from_obj(self):
         pass
 
-    # Actions: Assemblies
+    # Actions: Meshes
 
     def add_mesh_from_obj(self):
         pass

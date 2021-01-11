@@ -32,7 +32,7 @@ class SphereForm(Form):
         v_label = QtWidgets.QLabel('V')
         self.v_input = QtWidgets.QSpinBox()
         self.v_input.setValue(16)
-        self.u_input.setSingleStep(4)
+        self.v_input.setSingleStep(4)
         uv_layout.addWidget(v_label)
         uv_layout.addWidget(self.v_input)
         inputs.addLayout(uv_layout)
