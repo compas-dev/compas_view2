@@ -1,24 +1,28 @@
 import sys
 import os
+import json
+
+from functools import partial
+from typing import Optional
 
 from OpenGL import GL
 from PySide2 import QtCore, QtGui, QtWidgets
 
-from ..gl import gl_info
 from ..views import View120
 from ..views import View330
 from ..objects import ViewObject
-from ..forms.sphere import SphereForm
-from ..forms.torus import TorusForm
+
+from .controller import Controller
 
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
+CONFIG = os.path.join(HERE, 'config.json')
 
 VERSIONS = {'120': (2, 1), '330': (3, 3)}
 
 
-class Window:
+class App:
     """Viewer app and main window.
 
     Attributes
@@ -42,7 +46,7 @@ class Window:
 
     """
 
-    def __init__(self, version: str = '120', width=800, height=500, viewmode='shaded'):
+    def __init__(self, version: str = '120', width: int = 800, height: int = 500, viewmode: str = 'shaded'):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -68,89 +72,23 @@ class Window:
 
         self.width = width
         self.height = height
-
-        self.app = app
+        self._app = app
         self.main = QtWidgets.QMainWindow()
-        self.app.references.add(self.main)
-
+        self._app.references.add(self.main)
         self.view = View(self, mode=viewmode)
-
         self.main.setCentralWidget(self.view)
         self.main.setContentsMargins(0, 0, 0, 0)
-
-        # status
-
-        statusbar = self.main.statusBar()
-        statusbar.setContentsMargins(0, 0, 0, 0)
-        statusbar.showMessage('Ready')
-
-        # menu
-
-        menubar = self.main.menuBar()
-        menubar.setContentsMargins(0, 0, 0, 0)
-        menubar.setNativeMenuBar(False)
-
-        viewmenu = menubar.addMenu('View')
-        radio = QtWidgets.QActionGroup(self.main, exclusive=True)
-        action = viewmenu.addAction('Shaded', self.to_shaded)
-        action.setCheckable(True)
-        action.setChecked(self.view.mode == 'shaded')
-        radio.addAction(action)
-        action = viewmenu.addAction('Ghosted', self.to_ghosted)
-        action.setCheckable(True)
-        action.setChecked(self.view.mode == 'ghosted')
-        radio.addAction(action)
-
-        scenemenu = menubar.addMenu('Scene')
-        scenemenu.addAction('Load Scene', lambda: statusbar.showMessage('Load scene...'))
-        scenemenu.addAction('Save Scene', lambda: statusbar.showMessage('Save scene...'))
-        scenemenu.addSeparator()
-        scenemenu.addAction('Undo', lambda: statusbar.showMessage('Undo scene change...'))
-        scenemenu.addAction('Redo', lambda: statusbar.showMessage('Redo scene change...'))
-        scenemenu.addAction('History', lambda: statusbar.showMessage('Redo scene change...'))
-        scenemenu.addSeparator()
-        scenemenu.addAction('Clear Scene', lambda: statusbar.showMessage('Clear scene...'))
-        scenemenu.addAction('Redraw Scene', lambda: statusbar.showMessage('Redraw scene...'))
-
-        primenu = menubar.addMenu('Primitives')
-        primenu.addAction('Add Point', lambda: statusbar.showMessage('Add point'))
-        primenu.addAction('Add Vector', lambda: statusbar.showMessage('Add vector'))
-        primenu.addAction('Add Line', lambda: statusbar.showMessage('Add line'))
-        primenu.addAction('Add Circle', lambda: statusbar.showMessage('Add circle'))
-
-        shapemenu = menubar.addMenu('Shapes')
-        shapemenu.addAction('Add Box', self.add_box)
-        shapemenu.addAction('Add Spere', self.add_sphere)
-        shapemenu.addAction('Add Torus', self.add_torus)
-
-        netmenu = menubar.addMenu('Networks')
-        netmenu.addAction('Add Network from OBJ', self.add_network_from_obj)
-
-        meshmenu = menubar.addMenu('Meshes')
-        meshmenu.addAction('Add Mesh from OBJ', self.add_mesh_from_obj)
-        meshmenu.addAction('Add Mesh from OFF', self.add_mesh_from_off)
-        meshmenu.addAction('Add Mesh from PLY', self.add_mesh_from_ply)
-        meshmenu.addAction('Add Mesh from STL', self.add_mesh_from_stl)
-
-        openglmenu = menubar.addMenu('OpenGL')
-        openglmenu.addAction('OpenGL Version', self.opengl_version)
-        openglmenu.addAction('GLSL Version', self.glsl_version)
-
-        # toolbar
-
-        toolbar = self.main.addToolBar('Tools')
-        toolbar.setMovable(False)
-        toolbar.setObjectName('Tools')
-        toolbar.setIconSize(QtCore.QSize(24, 24))
-
-        undotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', lambda: print('undo'))
-        redotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', lambda: print('redo'))
-
+        self.controller = Controller(self)
+        self.init_statusbar()
+        with open(CONFIG) as f:
+            config = json.load(f)
+            self.init_menubar(config.get("menubar"))
+            self.init_toolbar(config.get("toolbar"))
         self.resize(width, height)
 
     def resize(self, width, height):
         self.main.resize(width, height)
-        desktop = self.app.desktop()
+        desktop = self._app.desktop()
         rect = desktop.availableGeometry()
         x = 0.5 * (rect.width() - width)
         y = 0.5 * (rect.height() - height)
@@ -164,57 +102,74 @@ class Window:
 
     def show(self):
         self.main.show()
-        self.app.exec_()
+        self._app.exec_()
 
-    # Actions: OpenGL
+    # ==============================================================================
+    # UI
+    # ==============================================================================
 
-    def opengl_version(self):
-        value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
-        QtWidgets.QMessageBox.information(self.main, 'Info', value)
+    def init_statusbar(self):
+        self.statusbar = self.main.statusBar()
+        self.statusbar.setContentsMargins(0, 0, 0, 0)
+        self.statusbar.showMessage('Ready')
 
-    def glsl_version(self):
-        value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
-        QtWidgets.QMessageBox.information(self.main, 'Info', value)
+    def init_menubar(self, items):
+        if not items:
+            return
+        self.menubar = self.main.menuBar()
+        self.menubar.setNativeMenuBar(False)
+        self.menubar.setContentsMargins(0, 0, 0, 0)
+        self.add_menubar_items(items, self.menubar)
 
-    # Actions: View
+    def init_toolbar(self, items):
+        if not items:
+            return
+        toolbar = self.main.addToolBar('Tools')
+        toolbar.setMovable(False)
+        toolbar.setObjectName('Tools')
+        toolbar.setIconSize(QtCore.QSize(24, 24))
+        undotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', self.undo)
+        redotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', self.redo)
 
-    def to_shaded(self):
-        self.view.mode = 'shaded'
+    def add_menubar_items(self, items, parent):
+        if not items:
+            return
+        for item in items:
+            if item['type'] == 'separator':
+                parent.addSeparator()
+            elif item['type'] == 'menu':
+                menu = parent.addMenu(item['text'])
+                if 'items' in item:
+                    self.add_menubar_items(item['items'], menu)
+            elif item['type'] == 'radio':
+                radio = QtWidgets.QActionGroup(self.main, exclusive=True)
+                for item in item['items']:
+                    action = self.add_action(item, parent)
+                    action.setCheckable(True)
+                    action.setChecked(item['checked'])
+                    radio.addAction(action)
+            elif item['type'] == 'action':
+                self.add_action(item, parent)
+            else:
+                raise NotImplementedError
 
-    def to_ghosted(self):
-        self.view.mode = 'ghosted'
+    def add_toolbar_items(self, items, parent):
+        if not items:
+            return
+        for item in items:
+            if item['type'] == 'separator':
+                parent.addSeparator()
+            elif item['type'] == 'action':
+                self.add_action(item, parent)
+            else:
+                raise NotImplementedError
 
-    # Actions: Scene
-
-    def view_objects(self)
-
-    # Actions: Shapes
-
-    def add_box(self):
-        from compas.geometry import Box
-        r = QtWidgets.QInputDialog.getDouble(self.main, 'Add Box', 'size', 1)
-        if r[1] and r[0] > 0:
-            size = r[0]
-            box = Box.from_width_height_depth(size, size, size)
-            self.add(box)
-
-    def add_sphere(self):
-        from compas.geometry import Sphere
-        form = SphereForm()
-        if form.exec_():
-            radius = form.radius
-            u = form.u
-            v = form.v
-            sphere = Sphere([0, 0, 0], radius)
-            self.add(sphere, u=u, v=v)
-
-    def add_torus(self):
-        from compas.geometry import Torus
-        form = TorusForm()
-        if form.exec_():
-            radius = form.radius
-            tube = form.tube
-            u = form.u
-            v = form.v
-            torus = Torus(([0, 0, 0], [0, 0, 1]), radius, tube)
-            self.add(torus, u=u, v=v)
+    def add_action(self, item, parent):
+        text = item['text']
+        action = getattr(self.controller, item['action'])
+        args = item.get('args', None) or []
+        kwargs = item.get('kwargs', None) or {}
+        if 'icon' in item:
+            icon = QtGui.QIcon(item['icon'])
+            return parent.addAction(icon, text, partial(action, *args, **kwargs))
+        return parent.addAction(text, partial(action, *args, **kwargs))

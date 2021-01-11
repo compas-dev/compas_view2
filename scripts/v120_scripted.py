@@ -12,7 +12,7 @@ from compas.utilities import i_to_rgb
 
 from compas_view2 import app
 
-viewer = app.Window(width=800, height=500, viewmode='ghosted')
+viewer = app.App(width=800, height=500, viewmode='ghosted')
 
 mesh = Mesh.from_off(compas.get('tubemesh.off'))
 network = Network.from_obj(compas.get('grid_irregular.obj'))

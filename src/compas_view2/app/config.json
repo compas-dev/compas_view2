@@ -1,0 +1,78 @@
+{
+    "menubar":
+    [
+        {
+            "type": "menu",
+            "text": "View",
+            "items":
+            [
+                {
+                    "type": "radio",
+                    "items":
+                    [
+                        {"type": "action", "text": "Shaded", "checked": true, "action": "to_shaded"},
+                        {"type": "action", "text": "Ghosted", "checked": false, "action": "to_ghosted"}
+                    ]
+                },
+                {"type": "separator"},
+                {"type": "action", "text": "OpenGL Version", "action": "opengl_version"},
+                {"type": "action", "text": "GLSL Version", "action": "glsl_version"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "Scene",
+            "items":
+            [
+                {"type": "action", "text": "Load Scene", "action": "load_scene"},
+                {"type": "action", "text": "Save Scene", "action": "save_scene"},
+                {"type": "separator"},
+                {"type": "action", "text": "Undo", "action": "undo"},
+                {"type": "action", "text": "Redo", "action": "redo"},
+                {"type": "separator"},
+                {"type": "action", "text": "Clear Scene", "action": "clear_scene"},
+                {"type": "action", "text": "Redraw Scene", "action": "redraw_scene"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "Primitives",
+            "items":
+            [
+                {"type": "action", "text": "Add Point", "action": "add_point"},
+                {"type": "action", "text": "Add Vector", "action": "add_vector"},
+                {"type": "action", "text": "Add Line", "action": "add_line"},
+                {"type": "action", "text": "Add Circle", "action": "add_circle"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "Shapes",
+            "items":
+            [
+                {"type": "action", "text": "Add Box", "action": "add_box"},
+                {"type": "action", "text": "Add Sphere", "action": "add_sphere"},
+                {"type": "action", "text": "Add Torus", "action": "add_torus"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "Networks",
+            "items":
+            [
+                {"type": "action", "text": "Add Network from OBJ", "action": "add_network_from_obj"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "Meshes",
+            "items":
+            [
+                {"type": "action", "text": "Add Mesh from OBJ", "action": "add_mesh_from_obj"},
+                {"type": "action", "text": "Add Mesh from OFF", "action": "add_mesh_from_off"},
+                {"type": "action", "text": "Add Mesh from PLY", "action": "add_mesh_from_ply"},
+                {"type": "action", "text": "Add Mesh from STL", "action": "add_mesh_from_stl"}
+            ]
+        }
+    ]
+}
