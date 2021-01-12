@@ -6,6 +6,8 @@ from PySide2 import QtCore, QtWidgets
 from ..shaders import Shader
 from .view import View
 
+import numpy as np
+
 
 class View120(View):
     """View widget for OpenGL version 2.1 and GLSL 120 with a Compatibility Profile.
@@ -41,9 +43,43 @@ class View120(View):
         # check types and draw if appropriate
         # 3. bind program for ...
         # ...
+        if self.enable_paint_instances:
+            self.paint_instances()
+
         self.shader.bind()
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.shader)
         self.shader.release()
+
+
+    def paint_instances(self):
+
+        self.shader.bind()
+        self.shader.uniform4x4("viewworld", self.camera.viewworld())
+        for guid in self.objects:
+            obj = self.objects[guid]
+            if hasattr(obj, "draw_instance"):
+                obj.draw_instance(self.shader)
+        self.shader.release()
+
+        instance_buffer = GL.glReadPixels(0, 0, self.app.width, self.app.height, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
+        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(self.app.height, self.app.width, 3)
+
+        self.clear()
+
+        # for heigh-res screens
+        size = self.size()
+        ratioH = int(self.app.height / size.height())
+        ratioW = int(self.app.width / size.width())
+        instance_map = instance_map[::ratioH, ::ratioW, :]
+        instance_map = np.flip(instance_map, 0)
+
+        x = self.mouse.last_pos.x()
+        y = self.mouse.last_pos.y()
+        obj = self.app.selector.find(x, y, instance_map)
+        self.app.selector.select(obj)
+
+         # Disable painting instances until next mouse click
+        self.enable_paint_instances = False

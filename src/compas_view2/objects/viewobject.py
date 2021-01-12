@@ -18,6 +18,7 @@ class ViewObject(ABC):
         self._data = data
         self.name = name
         self.is_selected = is_selected
+        self.instance_color = None
 
     @abc.abstractmethod
     def init(self):
