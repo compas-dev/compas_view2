@@ -7,26 +7,15 @@ Second generation viewers for the COMPAS framework
 ## Windows
 
 ```bash
-conda create -n view2 python=3.7 cython freetype --yes
+conda create -n view2 python=3.8 cython freetype freeglut --yes
 conda activate view2
 pip install -r requirements-dev.txt
-```
-
-Install `PyOpenGL` and `PyOpenGL-accelerate` from here:
-<https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyopengl>
-
-Make sure to select the versions of the wheels that match your system.
-For example, for Python3.7
-
-```bash
-pip install PyOpenGL‑3.1.5‑cp37‑cp37m‑win_amd64.whl
-pip install PyOpenGL_accelerate‑3.1.5‑cp37‑cp37m‑win_amd64.whl
 ```
 
 ## Mac
 
 ```bash
-conda create -n view2 python=3.7 cython freetype python.app --yes
+conda create -n view2 python=3.8 cython freetype python.app --yes
 conda activate view2
 pip install -r requirements-dev.txt
 ```
