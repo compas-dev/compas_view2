@@ -197,8 +197,7 @@ class ViewMesh(ViewObject):
         shader.enable_attribute('color')
 
         shader.uniform1i('is_instance_mask', 1)
-        if self.instance_color is not None:
-            shader.uniform3f('instance_color', self.instance_color)
+        shader.uniform3f('instance_color', self.instance_color)
         # front
         shader.bind_attribute('position', self.front['positions'])
         shader.draw_triangles(elements=self.front['elements'], n=self.front['n'])
