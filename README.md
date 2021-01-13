@@ -7,7 +7,7 @@ Second generation viewers for the COMPAS framework
 ## Windows
 
 ```bash
-conda create -n view2 python=3.8 cython freetype freeglut --yes
+conda create -n view2 python=3.8 cython freeglut --yes
 conda activate view2
 pip install -r requirements-dev.txt
 ```
@@ -15,7 +15,7 @@ pip install -r requirements-dev.txt
 ## Mac
 
 ```bash
-conda create -n view2 python=3.8 cython freetype python.app --yes
+conda create -n view2 python=3.8 cython python.app --yes
 conda activate view2
 pip install -r requirements-dev.txt
 ```
