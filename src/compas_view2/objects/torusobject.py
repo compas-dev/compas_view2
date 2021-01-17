@@ -1,9 +1,9 @@
 from compas.datastructures import Mesh
 
-from .viewshape import ViewShape
+from .shapeobject import ShapeObject
 
 
-class ViewSphere(ViewShape):
+class TorusObject(ShapeObject):
 
     def __init__(self, data, *args, u=16, v=16, **kwargs):
         super().__init__(data, *args, **kwargs)

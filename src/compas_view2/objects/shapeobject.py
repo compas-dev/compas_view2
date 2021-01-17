@@ -1,9 +1,9 @@
 from compas.datastructures import Mesh
 
-from .viewmesh import ViewMesh
+from .meshobject import MeshObject
 
 
-class ViewShape(ViewMesh):
+class ShapeObject(MeshObject):
 
     default_color_vertices = [0.2, 0.2, 0.2]
     default_color_edges = [0.4, 0.4, 0.4]

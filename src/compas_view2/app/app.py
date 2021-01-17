@@ -12,7 +12,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 from ..views import View120
 from ..views import View330
-from ..objects import ViewObject
+from ..objects import Object
 
 from .controller import Controller
 
@@ -101,7 +101,7 @@ class App:
         self.window.setGeometry(x, y, width, height)
 
     def add(self, data, **kwargs):
-        obj = ViewObject.build(data, **kwargs)
+        obj = Object.build(data, **kwargs)
         self.view.objects[obj] = obj
         if self.view.isValid():
             obj.init()

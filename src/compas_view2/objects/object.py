@@ -4,7 +4,7 @@ ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
 DATA_VIEW = {}
 
 
-class ViewObject(ABC):
+class Object(ABC):
 
     @staticmethod
     def register(dtype, vtype):

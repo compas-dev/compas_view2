@@ -3,10 +3,10 @@ from compas.utilities import flatten
 
 from ..buffers import make_index_buffer, make_vertex_buffer
 
-from .viewobject import ViewObject
+from .object import Object
 
 
-class ViewNetwork(ViewObject):
+class NetworkObject(Object):
 
     default_color_nodes = [0.1, 0.1, 0.1]
     default_color_edges = [0.4, 0.4, 0.4]

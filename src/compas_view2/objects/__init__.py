@@ -4,16 +4,16 @@ from compas.geometry import Box
 from compas.geometry import Sphere
 from compas.geometry import Torus
 
-from .viewobject import ViewObject
+from .object import Object
 
-from .viewnetwork import ViewNetwork
-from .viewmesh import ViewMesh
-from .viewbox import ViewBox
-from .viewsphere import ViewSphere
-from .viewtorus import ViewTorus
+from .networkobject import NetworkObject
+from .meshobject import MeshObject
+from .boxobject import BoxObject
+from .sphereobject import SphereObject
+from .torusobject import TorusObject
 
-ViewObject.register(Network, ViewNetwork)
-ViewObject.register(Mesh, ViewMesh)
-ViewObject.register(Box, ViewBox)
-ViewObject.register(Sphere, ViewSphere)
-ViewObject.register(Torus, ViewTorus)
+Object.register(Network, NetworkObject)
+Object.register(Mesh, MeshObject)
+Object.register(Box, BoxObject)
+Object.register(Sphere, SphereObject)
+Object.register(Torus, TorusObject)
