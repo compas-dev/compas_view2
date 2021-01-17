@@ -30,4 +30,17 @@ DOCS = os.path.abspath(os.path.join(HOME, "docs"))
 TEMP = os.path.abspath(os.path.join(HOME, "temp"))
 
 
+try:
+    from OpenGL import GL
+except:
+    from ctypes import util
+    orig_util_find_library = util.find_library
+    def new_util_find_library(name):
+        res = orig_util_find_library(name)
+        if res:
+            return res
+        return '/System/Library/Frameworks/' + name + '.framework/' + name
+    util.find_library = new_util_find_library
+
+
 __all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_VIEW", "register"]

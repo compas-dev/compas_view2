@@ -5,7 +5,9 @@ import json
 from functools import partial
 from typing import Optional
 
-from OpenGL import GL
+import os
+os.environ['QT_MAC_WANTS_LAYER'] = '1'
+
 from PySide2 import QtCore, QtGui, QtWidgets
 
 from ..views import View120
