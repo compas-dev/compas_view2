@@ -36,6 +36,19 @@ In `.vscode/settings.json`
 }
 ```
 
+### Big Sur
+
+After updating to Big Sur, a few things had to be updated.
+Some of these fixes will no longer be necessary in Python 3.9
+but COMPAS and Numpy are not yet available for this version of Python...
+
+* <https://stackoverflow.com/questions/63475461/unable-to-import-opengl-gl-in-python-on-macos>
+* <https://developer.apple.com/documentation/xcode/porting_your_macos_apps_to_apple_silicon>
+* <https://github.com/PixarAnimationStudios/USD/issues/1372>
+* <https://forum.openframeworks.cc/t/big-sur-and-opengl/35661>
+* <https://forum.qt.io/topic/120846/big-sur-pyside2-not-showing-a-widgets/7>
+* <https://stackoverflow.com/questions/64833558/apps-not-popping-up-on-macos-big-sur-11-0-1#_=>
+
 ## Examples
 
 `scripts/minimal_120.py`
