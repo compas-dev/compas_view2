@@ -26,3 +26,9 @@ class Object(ABC):
     @abc.abstractmethod
     def draw(self, shader):
         pass
+
+    def create(self):
+        pass
+
+    def edit(self):
+        pass
