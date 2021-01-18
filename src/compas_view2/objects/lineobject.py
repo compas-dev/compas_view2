@@ -28,7 +28,7 @@ class LineObject(Object):
 
     def init(self):
         line = self._data
-        # nodes
+        # points
         color = self.color_points or self.default_color_points
         positions = [line.start, line.end]
         colors = [color, color]
@@ -39,11 +39,11 @@ class LineObject(Object):
             'elements': make_index_buffer(elements),
             'n': 2
         }
-        # edges
+        # lines
         color = self.color_line or self.default_color_line
+        positions = [line.start, line.end]
         colors = [color, color]
         elements = [0, 1]
-        color = self.default_color_edges
         self._lines = {
             'positions': make_vertex_buffer(list(flatten(positions))),
             'colors': make_vertex_buffer(list(flatten(colors))),
