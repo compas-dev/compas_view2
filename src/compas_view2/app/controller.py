@@ -3,6 +3,7 @@ from OpenGL import GL
 from PySide2 import QtWidgets
 
 from ..gl import gl_info
+from ..forms.point import PointForm
 from ..forms.sphere import SphereForm
 from ..forms.torus import TorusForm
 
@@ -60,7 +61,14 @@ class Controller:
     # Actions: Primitives
 
     def add_point(self):
-        pass
+        from compas.geometry import Point
+        form = PointForm()
+        if form.exec_():
+            x = form.x
+            y = form.y
+            z = form.z
+            point = Point(x, y, z)
+            self.app.add(point)
 
     def add_vector(self):
         pass
