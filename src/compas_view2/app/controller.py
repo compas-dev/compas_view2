@@ -96,8 +96,14 @@ class Controller:
 
     def add_polyline_from_selected_points(self):
         from compas.geometry import Point, Polyline
-        points = self.select_points()
-        if points:
+        if not self.app.selector.select():
+            return
+        objects = self.app.selector.selected()
+        points = []
+        for obj in objects:
+            if isinstance(obj._data, Point):
+                points.append(obj)
+        if len(points) > 1:
             polyline = Polyline(points)
             self.app.add(polyline)
 
