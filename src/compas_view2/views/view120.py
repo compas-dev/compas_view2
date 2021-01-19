@@ -53,9 +53,7 @@ class View120(View):
             obj.draw(self.shader)
         self.shader.release()
 
-
     def paint_instances(self):
-
         self.shader.bind()
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         for guid in self.objects:

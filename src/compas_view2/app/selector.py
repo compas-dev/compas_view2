@@ -2,7 +2,7 @@ from random import randint
 from compas.utilities import rgb_to_hex
 from compas.utilities import hex_to_rgb
 
-class Selector():
+class Selector:
 
     def __init__(self, app):
         self.app = app
@@ -31,7 +31,6 @@ class Selector():
             return None
 
     def select(self, obj=None, mode="single"):
-
         if mode == "single":
             for key in self.instances:
                 self.instances[key].is_selected = False
@@ -41,6 +40,8 @@ class Selector():
                 print(self.selected)
             else:
                 self.app.statusbar.showMessage("")
+        else:
+            raise NotImplementedError
 
     @property
     def selected(self):
