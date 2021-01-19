@@ -15,6 +15,7 @@ from ..views import View330
 from ..objects import Object
 
 from .controller import Controller
+from .selector import Selector
 
 
 HERE = os.path.dirname(__file__)
@@ -79,6 +80,7 @@ class App:
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
         self.controller = Controller(self)
+        self.selector = Selector(self)
 
         self._app = app
         self._app.references.add(self.window)
@@ -103,6 +105,7 @@ class App:
     def add(self, data, **kwargs):
         obj = Object.build(data, **kwargs)
         self.view.objects[obj] = obj
+        self.selector.add(obj)
         if self.view.isValid():
             obj.init()
 

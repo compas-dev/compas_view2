@@ -13,7 +13,7 @@ class View(QtWidgets.QOpenGLWidget):
     def __init__(self,
                  app,
                  color: Tuple[float, float, float] = (1, 1, 1, 1),
-                 selection_color: Tuple[float, float, float] = (0.0, 0.0, 0.0),
+                 selection_color: Tuple[float, float, float] = (1.0, 1.0, 0.0),
                  mode: str = 'shaded'):
         super().__init__()
         self._opacity = 1.0
@@ -25,6 +25,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.camera = Camera()
         self.mouse = Mouse()
         self.objects = {}
+        self.enable_paint_instances = False
 
     def clear(self):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
@@ -41,7 +42,7 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         GL.glEnable(GL.GL_POINT_SMOOTH)
         GL.glEnable(GL.GL_LINE_SMOOTH)
-        GL.glEnable(GL.GL_POLYGON_SMOOTH)
+        # GL.glEnable(GL.GL_POLYGON_SMOOTH)
         self.init()
 
     @property
@@ -104,6 +105,10 @@ class View(QtWidgets.QOpenGLWidget):
             return
         self.mouse.last_pos = event.pos()
         self.update()
+
+        # Enable painting instance map for pick for next rendered frame
+        if self.app.selector.enabled:
+            self.enable_paint_instances = True
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():

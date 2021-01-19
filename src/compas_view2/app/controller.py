@@ -94,6 +94,19 @@ class Controller:
     def add_circle(self):
         pass
 
+    def add_polyline_from_selected_points(self):
+        from compas.geometry import Point, Polyline
+        if not self.app.selector.select():
+            return
+        objects = self.app.selector.selected()
+        points = []
+        for obj in objects:
+            if isinstance(obj._data, Point):
+                points.append(obj)
+        if len(points) > 1:
+            polyline = Polyline(points)
+            self.app.add(polyline)
+
     # Actions: Shapes
 
     def add_box(self):
