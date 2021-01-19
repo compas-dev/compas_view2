@@ -1,0 +1,39 @@
+from compas.utilities import flatten
+
+from ..buffers import make_index_buffer, make_vertex_buffer
+
+from .object import Object
+
+
+class PointObject(Object):
+
+    default_color = [0.1, 0.1, 0.1]
+
+    def __init__(self, data, name=None, is_selected=False, color=None):
+        super().__init__(data, name=name, is_selected=is_selected)
+        self._points = None
+        self.color = color
+
+    @property
+    def points(self):
+        return self._points
+
+    def init(self):
+        positions = [self._data]
+        colors = [self.color or self.default_color]
+        elements = [0]
+        self._points = {
+            'positions': make_vertex_buffer(list(flatten(positions))),
+            'colors': make_vertex_buffer(list(flatten(colors))),
+            'elements': make_index_buffer(elements),
+            'n': 1
+        }
+
+    def draw(self, shader):
+        shader.enable_attribute('position')
+        shader.enable_attribute('color')
+        shader.bind_attribute('position', self.points['positions'])
+        shader.bind_attribute('color', self.points['colors'])
+        shader.draw_points(size=10, elements=self.points['elements'], n=self.points['n'])
+        shader.disable_attribute('position')
+        shader.disable_attribute('color')

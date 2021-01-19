@@ -1,5 +1,4 @@
 from PySide2 import QtWidgets
-from PySide2 import QtGui
 
 from .form import Form
 

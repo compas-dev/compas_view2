@@ -5,12 +5,14 @@ import json
 from functools import partial
 from typing import Optional
 
-from OpenGL import GL
+import os
+os.environ['QT_MAC_WANTS_LAYER'] = '1'
+
 from PySide2 import QtCore, QtGui, QtWidgets
 
 from ..views import View120
 from ..views import View330
-from ..objects import ViewObject
+from ..objects import Object
 
 from .controller import Controller
 from .selector import Selector
@@ -101,7 +103,7 @@ class App:
         self.window.setGeometry(x, y, width, height)
 
     def add(self, data, **kwargs):
-        obj = ViewObject.build(data, **kwargs)
+        obj = Object.build(data, **kwargs)
         self.view.objects[obj] = obj
         self.selector.add(obj)
         if self.view.isValid():

@@ -1,5 +1,5 @@
-from OpenGL import GL
 import ctypes as ct
+from OpenGL import GL
 
 
 def make_vertex_buffer(data):

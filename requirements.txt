@@ -1,7 +1,5 @@
 compas
 pyside2
 pyqt5
-pyglet
-glfw
 pyopengl
 pyopengl-accelerate

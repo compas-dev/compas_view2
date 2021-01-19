@@ -3,10 +3,10 @@ from compas.utilities import flatten
 
 from ..buffers import make_index_buffer, make_vertex_buffer
 
-from .viewobject import ViewObject
+from .object import Object
 
 
-class ViewMesh(ViewObject):
+class MeshObject(Object):
 
     default_color_vertices = [0.2, 0.2, 0.2]
     default_color_edges = [0.4, 0.4, 0.4]

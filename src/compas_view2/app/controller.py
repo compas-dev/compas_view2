@@ -1,7 +1,10 @@
 from OpenGL import GL
+
 from PySide2 import QtWidgets
 
 from ..gl import gl_info
+from ..forms.point import PointForm
+from ..forms.line import LineForm
 from ..forms.sphere import SphereForm
 from ..forms.torus import TorusForm
 
@@ -59,16 +62,50 @@ class Controller:
     # Actions: Primitives
 
     def add_point(self):
-        pass
+        from compas.geometry import Point
+        form = PointForm()
+        if form.exec_():
+            x = form.x
+            y = form.y
+            z = form.z
+            point = Point(x, y, z)
+            self.app.add(point)
 
     def add_vector(self):
         pass
 
     def add_line(self):
-        pass
+        from compas.geometry import Point, Line
+        form = LineForm()
+        if form.exec_():
+            Ax = form.Ax
+            Ay = form.Ay
+            Az = form.Az
+            Bx = form.Bx
+            By = form.By
+            Bz = form.Bz
+            show_points = form.show_points
+            if Ax != Bx or Ay != By or Az != Bz:
+                A = Point(Ax, Ay, Az)
+                B = Point(Bx, By, Bz)
+                line = Line(A, B)
+                self.app.add(line, show_points=show_points)
 
     def add_circle(self):
         pass
+
+    def add_polyline_from_selected_points(self):
+        from compas.geometry import Point, Polyline
+        if not self.app.selector.select():
+            return
+        objects = self.app.selector.selected()
+        points = []
+        for obj in objects:
+            if isinstance(obj._data, Point):
+                points.append(obj)
+        if len(points) > 1:
+            polyline = Polyline(points)
+            self.app.add(polyline)
 
     # Actions: Shapes
 

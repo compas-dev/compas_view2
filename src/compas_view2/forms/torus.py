@@ -1,5 +1,4 @@
 from PySide2 import QtWidgets
-from PySide2 import QtGui
 
 from .form import Form
 
@@ -48,16 +47,16 @@ class TorusForm(Form):
 
     @property
     def radius(self):
-        return float(self.radius_input.text())
+        return float(self.radius_input.value())
 
     @property
     def tube(self):
-        return float(self.tube_input.text())
+        return float(self.tube_input.value())
 
     @property
     def u(self):
-        return int(self.u_input.text())
+        return int(self.u_input.value())
 
     @property
     def v(self):
-        return int(self.v_input.text())
+        return int(self.v_input.value())
