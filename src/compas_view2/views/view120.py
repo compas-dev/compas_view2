@@ -62,17 +62,12 @@ class View120(View):
                 obj.draw_instance(self.shader)
         self.shader.release()
 
-        instance_buffer = GL.glReadPixels(0, 0, self.app.width, self.app.height, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
-        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(self.app.height, self.app.width, 3)
+        r = self.devicePixelRatio()
+        instance_buffer = GL.glReadPixels(0, 0, self.app.width*r, self.app.height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
+        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(self.app.height*r, self.app.width*r, 3)
+        instance_map = instance_map[::-r, ::r, :]
 
         self.clear()
-
-        # for heigh-res screens
-        size = self.size()
-        ratioH = int(self.app.height / size.height())
-        ratioW = int(self.app.width / size.width())
-        instance_map = instance_map[::ratioH, ::ratioW, :]
-        instance_map = np.flip(instance_map, 0)
 
         x = self.mouse.last_pos.x()
         y = self.mouse.last_pos.y()
