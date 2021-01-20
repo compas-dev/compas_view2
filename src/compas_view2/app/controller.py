@@ -93,12 +93,12 @@ class Controller:
 
     def add_circle(self):
         pass
-    
+
     def add_line_from_selected_points(self):
         from compas.geometry import Point, Line
 
         def on_finish_selection(points):
-            if len(points) ==2:
+            if len(points) == 2:
                 line = Line(*points)
                 self.app.add(line)
                 self.app.view.update()
