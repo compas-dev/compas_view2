@@ -53,8 +53,9 @@ class Shader:
         else:
             GL.glDrawArrays(GL.GL_TRIANGLES, 0, GL.GL_BUFFER_SIZE)
 
-    def draw_lines(self, elements=None, n=0):
+    def draw_lines(self, elements=None, n=0, width=1):
         if elements:
+            GL.glLineWidth(width)
             GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
             GL.glDrawElements(GL.GL_LINES, n, GL.GL_UNSIGNED_INT, None)
         else:

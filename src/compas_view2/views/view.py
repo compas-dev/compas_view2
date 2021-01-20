@@ -5,6 +5,8 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 from ..camera import Camera
 from ..mouse import Mouse
+from ..objects import GridObject
+from ..objects import AxisObject
 
 
 class View(QtWidgets.QOpenGLWidget):
@@ -26,7 +28,11 @@ class View(QtWidgets.QOpenGLWidget):
         self.camera = Camera()
         self.mouse = Mouse()
         self.objects = {}
+        self.grid = GridObject(1, 10, 10)
+        self.axis = AxisObject(3)
         self.enable_paint_instances = False
+        self.show_grid = True
+        self.show_axis = True
 
     def clear(self):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
