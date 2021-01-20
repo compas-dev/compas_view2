@@ -17,6 +17,8 @@ from .meshobject import MeshObject
 from .boxobject import BoxObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
+from .gridobject import GridObject
+from .axisobject import AxisObject
 
 Object.register(Point, PointObject)
 Object.register(Line, LineObject)
