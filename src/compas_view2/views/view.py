@@ -16,6 +16,7 @@ class View(QtWidgets.QOpenGLWidget):
                  selection_color: Tuple[float, float, float] = (1.0, 1.0, 0.0),
                  mode: str = 'shaded'):
         super().__init__()
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
         self.shader = None
         self.app = app
@@ -122,3 +123,6 @@ class View(QtWidgets.QOpenGLWidget):
         steps = degrees / 15
         self.camera.zoom(steps)
         self.update()
+
+    def keyPressEvent(self, event):
+        print(event)
