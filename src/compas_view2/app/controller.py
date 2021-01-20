@@ -93,6 +93,20 @@ class Controller:
 
     def add_circle(self):
         pass
+    
+    def add_line_from_selected_points(self):
+        from compas.geometry import Point, Line
+
+        def on_finish_selection(points):
+            if len(points) ==2:
+                line = Line(*points)
+                self.app.add(line)
+                self.app.statusbar.showMessage("Line added")
+            else:
+                self.app.statusbar.showMessage("Must select 2 points")
+
+        self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
+        self.app.selector.pick(Point, on_finish_selection)
 
     def add_polyline_from_selected_points(self):
         from compas.geometry import Point, Polyline
