@@ -16,6 +16,7 @@ class Selector:
         self.mode = "single"
         self.types = []
         self.on_finish_selection = None
+        self.select(mode="deselect")
 
     def get_hex(self):
         while True:
