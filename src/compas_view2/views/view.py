@@ -49,7 +49,7 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         GL.glEnable(GL.GL_POINT_SMOOTH)
         GL.glEnable(GL.GL_LINE_SMOOTH)
-        # GL.glEnable(GL.GL_POLYGON_SMOOTH)
+        # GL.glEnable(GL.GL_POLYGON_SMOOTH) # Disabled to avoid gap between triangles
         self.init()
 
     @property
@@ -110,16 +110,25 @@ class View(QtWidgets.QOpenGLWidget):
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
+
+        if event.buttons() & QtCore.Qt.LeftButton:
+            self.mouse.buttons['left'] = True
+        elif event.buttons() & QtCore.Qt.RightButton:
+            self.mouse.buttons['right'] = True
+
         self.mouse.last_pos = event.pos()
         self.update()
 
         # Enable painting instance map for pick for next rendered frame
-        if self.app.selector.enabled:
+        if self.app.selector.enabled and self.mouse.buttons['left']:
             self.enable_paint_instances = True
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
+
+        self.mouse.buttons['left'] = False
+        self.mouse.buttons['right'] = False
         self.update()
 
     def wheelEvent(self, event):
@@ -131,4 +140,6 @@ class View(QtWidgets.QOpenGLWidget):
         self.update()
 
     def keyPressEvent(self, event):
-        print(event)
+        if event.key() == 16777220 or event.key() == 16777221: # Enter
+            if self.app.selector.enabled:
+                self.app.selector.finish_selection()
