@@ -101,6 +101,7 @@ class Controller:
             if len(points) ==2:
                 line = Line(*points)
                 self.app.add(line)
+                self.app.view.update()
                 self.app.statusbar.showMessage("Line added")
             else:
                 self.app.statusbar.showMessage("Must select 2 points")
