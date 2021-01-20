@@ -15,7 +15,7 @@ class View120(View):
 
     def init(self):
         self.grid.init()
-        self.axis.init()
+        # self.axis.init()
         # init the buffers
         for guid in self.objects:
             obj = self.objects[guid]
@@ -52,8 +52,8 @@ class View120(View):
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         if self.show_grid:
             self.grid.draw(self.shader)
-        if self.show_axis:
-            self.axis.draw(self.shader)
+        # if self.show_axis:
+        #     self.axis.draw(self.shader)
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.shader)
