@@ -9,14 +9,21 @@ class Selector:
         self.app = app
         self.color_to_exclude = ['#ffffff', '#000000']
         self.instances = {}
-        self.reset()
+        self.enabled = True
+        self.mode = 'single'
+        self.types = []
+        self.on_finish_selection = None
 
     def reset(self):
         self.enabled = True
-        self.mode = "single"
+        self.mode = 'single'
         self.types = []
         self.on_finish_selection = None
-        self.select(mode="deselect")
+        self.deselect()
+
+    @property
+    def selected(self):
+        return [self.instances[key] for key in self.instances if self.instances[key].is_selected]
 
     def get_hex(self):
         while True:
@@ -40,26 +47,14 @@ class Selector:
             return None
 
     def select(self, obj=None, mode=None, types=None, update=False):
-
         mode = mode or self.mode
         types = types or self.types
-
-        if mode == "single":
+        if mode == 'single':
             for key in self.instances:
                 self.instances[key].is_selected = False
             if obj:
-                self.app.statusbar.showMessage("Picked: " + obj.__repr__())
                 obj.is_selected = True
-                print(self.selected)
-            else:
-                self.app.statusbar.showMessage("")
-        elif mode == "deselect":
-            if obj:
-                obj.is_selected = False
-            else:
-                for key in self.instances:
-                    self.instances[key].is_selected = False
-        elif mode == "multi":
+        elif mode == 'multi':
             if not obj:
                 return
             if types:
@@ -68,30 +63,31 @@ class Selector:
                         obj.is_selected = True
             else:
                 obj.is_selected = True
-            print(self.selected)
         else:
             raise NotImplementedError
-
         if update:
             self.app.view.update()
+
+    def deselect(self, obj=None, update=False):
+        if obj:
+            obj.is_selected = False
+        else:
+            for key in self.instances:
+                self.instances[key].is_selected = False
+        if update:
+            self.app.view.update()
+
+    def start_selection(self, types=None, on_finish_selection=None):
+        if not isinstance(types, list):
+            types = [types]
+        self.enabled = True
+        self.deselect(update=True)
+        self.mode = 'multi'
+        self.types = types
+        self.on_finish_selection = on_finish_selection
 
     def finish_selection(self):
         if self.on_finish_selection:
             selected_data = [obj._data for obj in self.selected]
             self.on_finish_selection(selected_data)
         self.reset()
-
-    def pick(self, types=None, on_finish_selection=None):
-
-        if not isinstance(types, list):
-            types = [types]
-
-        self.enabled = True
-        self.select(mode="deselect", update=True)
-        self.mode = "multi"
-        self.types = types
-        self.on_finish_selection = on_finish_selection
-
-    @property
-    def selected(self):
-        return [self.instances[key] for key in self.instances if self.instances[key].is_selected]

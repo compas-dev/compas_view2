@@ -15,7 +15,6 @@ class View120(View):
 
     def init(self):
         self.grid.init()
-        # self.axis.init()
         # init the buffers
         for guid in self.objects:
             obj = self.objects[guid]
@@ -37,23 +36,10 @@ class View120(View):
         self.shader.release()
 
     def paint(self):
-        # 1. bind the program for all shapes and meshes
-        # loop over objects
-        # check types and draw if appropriate
-        # 2. bind program for primitives
-        # loop over objects
-        # check types and draw if appropriate
-        # 3. bind program for ...
-        # ...
-        if self.enable_paint_instances:
-            self.paint_instances()
-
         self.shader.bind()
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         if self.show_grid:
             self.grid.draw(self.shader)
-        # if self.show_axis:
-        #     self.axis.draw(self.shader)
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.shader)
@@ -67,18 +53,14 @@ class View120(View):
             if hasattr(obj, "draw_instance"):
                 obj.draw_instance(self.shader)
         self.shader.release()
-
+        # create map
         r = self.devicePixelRatio()
         instance_buffer = GL.glReadPixels(0, 0, self.app.width*r, self.app.height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
         instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(self.app.height*r, self.app.width*r, 3)
         instance_map = instance_map[::-r, ::r, :]
-
-        self.clear()
-
+        # find out which pixel and thus which object was clicked on
+        # it is not intuitive that this happens here
         x = self.mouse.last_pos.x()
         y = self.mouse.last_pos.y()
         obj = self.app.selector.find(x, y, instance_map)
         self.app.selector.select(obj)
-
-         # Disable painting instances until next mouse click
-        self.enable_paint_instances = False

@@ -16,23 +16,22 @@ class View(QtWidgets.QOpenGLWidget):
                  app,
                  color: Tuple[float, float, float] = (1, 1, 1, 1),
                  selection_color: Tuple[float, float, float] = (1.0, 1.0, 0.0),
-                 mode: str = 'shaded'):
+                 mode: str = 'shaded',
+                 show_grid: bool = True):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
         self.shader = None
+        self.enable_paint_instances = False
         self.app = app
         self.color = color
         self.mode = mode
         self.selection_color = selection_color
+        self.show_grid = show_grid
         self.camera = Camera()
         self.mouse = Mouse()
-        self.objects = {}
         self.grid = GridObject(1, 10, 10)
-        # self.axis = AxisObject(3)
-        self.enable_paint_instances = False
-        self.show_grid = True
-        # self.show_axis = True
+        self.objects = {}
 
     def clear(self):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
@@ -49,7 +48,6 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         GL.glEnable(GL.GL_POINT_SMOOTH)
         GL.glEnable(GL.GL_LINE_SMOOTH)
-        # GL.glEnable(GL.GL_POLYGON_SMOOTH) # Disabled to avoid gap between triangles
         self.init()
 
     @property
@@ -87,7 +85,14 @@ class View(QtWidgets.QOpenGLWidget):
 
     def paintGL(self):
         self.clear()
+        if self.enable_paint_instances:
+            self.paint_instances()
+            self.enable_paint_instances = False
+            self.clear()
         self.paint()
+
+    def paint_instances(self):
+        pass
 
     def paint(self):
         pass
@@ -110,23 +115,20 @@ class View(QtWidgets.QOpenGLWidget):
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-
         if event.buttons() & QtCore.Qt.LeftButton:
             self.mouse.buttons['left'] = True
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons['right'] = True
-
         self.mouse.last_pos = event.pos()
         self.update()
-
         # Enable painting instance map for pick for next rendered frame
-        if self.app.selector.enabled and self.mouse.buttons['left']:
-            self.enable_paint_instances = True
+        if self.mouse.buttons['left']:
+            if self.app.selector.enabled:
+                self.enable_paint_instances = True
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-
         self.mouse.buttons['left'] = False
         self.mouse.buttons['right'] = False
         self.update()
@@ -140,6 +142,8 @@ class View(QtWidgets.QOpenGLWidget):
         self.update()
 
     def keyPressEvent(self, event):
-        if event.key() == 16777220 or event.key() == 16777221: # Enter
+        key = event.key()
+        if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
+            # if there is an active selection process
             if self.app.selector.enabled:
                 self.app.selector.finish_selection()

@@ -107,7 +107,7 @@ class Controller:
                 self.app.statusbar.showMessage("Must select 2 points")
 
         self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
-        self.app.selector.pick(Point, on_finish_selection)
+        self.app.selector.start_selection(Point, on_finish_selection)
 
     def add_polyline_from_selected_points(self):
         from compas.geometry import Point, Polyline
