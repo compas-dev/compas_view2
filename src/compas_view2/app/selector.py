@@ -9,7 +9,11 @@ class Selector:
         self.app = app
         self.color_to_exclude = ['#ffffff', '#000000']
         self.instances = {}
-        self.reset()
+        self.enabled = True
+        self.mode = "single"
+        self.overwrite_mode = None
+        self.types = []
+        self.on_finish_selection = None
 
     def reset(self):
         self.enabled = True
