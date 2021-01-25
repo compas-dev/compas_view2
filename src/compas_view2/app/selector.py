@@ -1,7 +1,7 @@
 from random import randint
 from compas.utilities import rgb_to_hex
 from compas.utilities import hex_to_rgb
-
+import numpy as np
 
 class Selector:
 
@@ -14,6 +14,11 @@ class Selector:
         self.overwrite_mode = None
         self.types = []
         self.on_finish_selection = None
+        self.box_selection_settings = {
+            "stage": "",
+            "coords": np.zeros((4,), np.int),
+            "deselect": False
+        }
 
     def reset(self):
         self.enabled = True
@@ -40,13 +45,25 @@ class Selector:
         obj.instance_color = hex_to_rgb(unique_hex, normalize=True)
         return unique_hex
 
-    def find(self, x, y, instance_map):
+    def select_pixel_from_instance_map(self, x, y, instance_map):
         rgb = instance_map[y][x]
         hex_key = rgb_to_hex(rgb)
+        obj = None
         if hex_key in self.instances:
-            return self.instances[hex_key]
-        else:
-            return None
+            obj = self.instances[hex_key]    
+        self.select(obj)
+
+
+    def select_all_from_instance_map(self, instance_map):
+        unique_rgbs = np.unique(instance_map.reshape(-1, instance_map.shape[2]), axis=0)
+        for rgb in unique_rgbs:
+            hex_key = rgb_to_hex(rgb)
+            if hex_key in self.instances:
+                obj = self.instances[hex_key]
+                if self.box_selection_settings["deselect"]:
+                    self.deselect(obj)
+                else:
+                    self.select(obj, "multi")
 
     def select(self, obj=None, mode=None, types=None, update=False):
         mode = mode or self.mode
@@ -94,3 +111,13 @@ class Selector:
             selected_data = [obj._data for obj in self.selected]
             self.on_finish_selection(selected_data)
         self.reset()
+
+    def perform_box_selection(self, x, y, deselect=False):
+        if self.box_selection_settings["stage"] != "selecting":
+            self.box_selection_settings["stage"] = "selecting"
+            self.box_selection_settings["coords"][:2] = x, y
+        self.box_selection_settings["coords"][2:] = x, y
+        self.box_selection_settings["deselect"] = deselect
+
+    def finish_box_selection(self):
+        self.box_selection_settings["stage"] = "paint_instance"
