@@ -143,7 +143,16 @@ class View(QtWidgets.QOpenGLWidget):
 
     def keyPressEvent(self, event):
         key = event.key()
-        if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
-            # if there is an active selection process
-            if self.app.selector.enabled:
+        if self.app.selector.enabled:
+            if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
                 self.app.selector.finish_selection()
+            if key == QtCore.Qt.Key_Shift:
+                self.app.selector.mode = "multi"
+            if key == QtCore.Qt.Key_Control:
+                self.app.selector.mode = "deselect"
+
+    def keyReleaseEvent(self, event):
+        key = event.key()
+        if self.app.selector.enabled:
+            if key == QtCore.Qt.Key_Shift or key == QtCore.Qt.Key_Control:
+                self.app.selector.mode = self.app.selector.overwrite_mode or "single"

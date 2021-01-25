@@ -10,13 +10,15 @@ class Selector:
         self.color_to_exclude = ['#ffffff', '#000000']
         self.instances = {}
         self.enabled = True
-        self.mode = 'single'
+        self.mode = "single"
+        self.overwrite_mode = None
         self.types = []
         self.on_finish_selection = None
 
     def reset(self):
         self.enabled = True
-        self.mode = 'single'
+        self.mode = "single"
+        self.overwrite_mode = None
         self.types = []
         self.on_finish_selection = None
         self.deselect()
@@ -50,9 +52,8 @@ class Selector:
         mode = mode or self.mode
         types = types or self.types
         if mode == 'single':
-            for key in self.instances:
-                self.instances[key].is_selected = False
             if obj:
+                self.deselect()
                 obj.is_selected = True
         elif mode == 'multi':
             if not obj:
@@ -63,6 +64,8 @@ class Selector:
                         obj.is_selected = True
             else:
                 obj.is_selected = True
+        elif mode == 'deselect':
+            self.deselect(obj)
         else:
             raise NotImplementedError
         if update:
@@ -77,12 +80,12 @@ class Selector:
         if update:
             self.app.view.update()
 
-    def start_selection(self, types=None, on_finish_selection=None):
+    def start_selection(self, types=None, on_finish_selection=None, mode="multi"):
         if not isinstance(types, list):
             types = [types]
         self.enabled = True
         self.deselect(update=True)
-        self.mode = 'multi'
+        self.mode = self.overwrite_mode = mode
         self.types = types
         self.on_finish_selection = on_finish_selection
 
