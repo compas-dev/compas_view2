@@ -5,6 +5,7 @@ import numpy as np
 import time
 from .worker import Worker
 
+
 class Selector:
 
     def __init__(self, app):
@@ -16,7 +17,7 @@ class Selector:
         self.mode = "single"
         self.overwrite_mode = None
         self.types = []
-        self.select_from = "pixel" # or "box"
+        self.select_from = "pixel"  # or "box"
         self.paint_instance = False
         self.box_select_coords = np.zeros((4,), np.int)
 
@@ -45,7 +46,7 @@ class Selector:
                         # Pick an object from mouse pixel
                         x = self.app.view.mouse.last_pos.x()
                         y = self.app.view.mouse.last_pos.y()
-                        self.select_pixel_from_instance_map(x, y, instance_map)
+                        self.select_one_from_instance_map(x, y, instance_map)
                     if self.select_from == "box":
                         # Pick objects from box selection
                         self.select_all_from_instance_map(instance_map)
@@ -61,7 +62,7 @@ class Selector:
 
         # Start monitor loop in a separate worker thread
         worker = Worker(monitor_loop)
-        worker.no_signals = True # Prevent signal emit error when closing the app
+        worker.no_signals = True  # Prevent signal emit error when closing the app
         Worker.pool.start(worker)
 
     @property
@@ -81,17 +82,17 @@ class Selector:
         obj.instance_color = hex_to_rgb(unique_hex, normalize=True)
         return unique_hex
 
-    def select_pixel_from_instance_map(self, x, y, instance_map):
+    def select_one_from_instance_map(self, x, y, instance_map):
         rgb = instance_map[y][x]
         hex_key = rgb_to_hex(rgb)
         obj = None
         if hex_key in self.instances:
-            obj = self.instances[hex_key]    
+            obj = self.instances[hex_key]
         self.select(obj)
 
-
     def select_all_from_instance_map(self, instance_map):
-        unique_rgbs = np.unique(instance_map.reshape(-1, instance_map.shape[2]), axis=0)
+        unique_rgbs = np.unique(
+            instance_map.reshape(-1, instance_map.shape[2]), axis=0)
         for rgb in unique_rgbs:
             hex_key = rgb_to_hex(rgb)
             if hex_key in self.instances:

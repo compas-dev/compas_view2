@@ -9,6 +9,7 @@ from ..forms.sphere import SphereForm
 from ..forms.torus import TorusForm
 from .worker import Worker
 
+
 class Controller:
 
     def __init__(self, app):
@@ -18,11 +19,13 @@ class Controller:
         self.app.statusbar.showMessage('Display about in text dialog.')
 
     def opengl_version(self):
-        value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
+        value = "OpenGL {}".format(
+            GL.glGetString(GL.GL_VERSION).decode('ascii'))
         QtWidgets.QMessageBox.information(self.app.window, 'Info', value)
 
     def glsl_version(self):
-        value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
+        value = "GLSL {}".format(GL.glGetString(
+            GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
         QtWidgets.QMessageBox.information(self.app.window, 'Info', value)
 
     # Actions: View
@@ -65,12 +68,10 @@ class Controller:
                 if obj:
                     self.app.add(obj)
                     self.app.view.update()
-                else:
-                    print("No object to add.")
 
             worker = Worker(func, self)
             worker.signals.result.connect(add)
-            Worker.pool.start(worker)  
+            Worker.pool.start(worker)
         return wrapped
 
     # Actions: Primitives
@@ -107,13 +108,14 @@ class Controller:
 
     def add_circle(self):
         pass
-    
+
     @interactive
     def add_line_from_selected_points(self):
         from compas.geometry import Point
         from compas.geometry import Line
-        self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
-        points = self.app.selector.start_selection(types=Point)
+        self.app.statusbar.showMessage(
+            "Select points on screen, Click Enter to finish")
+        points = self.app.selector.start_selection(types=[Point])
         if len(points) == 2:
             line = Line(*points)
             self.app.statusbar.showMessage("Line added")
@@ -122,24 +124,12 @@ class Controller:
             self.app.statusbar.showMessage("Must select 2 points")
             return None
 
-    def add_polyline_from_selected_points(self):
-        from compas.geometry import Point, Polyline
-        if not self.app.selector.select():
-            return
-        objects = self.app.selector.selected()
-        points = []
-        for obj in objects:
-            if isinstance(obj._data, Point):
-                points.append(obj)
-        if len(points) > 1:
-            polyline = Polyline(points)
-            self.app.add(polyline)
-
     # Actions: Shapes
 
     def add_box(self):
         from compas.geometry import Box
-        r = QtWidgets.QInputDialog.getDouble(self.app.window, 'Add Box', 'size', 1)
+        r = QtWidgets.QInputDialog.getDouble(
+            self.app.window, 'Add Box', 'size', 1)
         if r[1] and r[0] > 0:
             size = r[0]
             box = Box.from_width_height_depth(size, size, size)
