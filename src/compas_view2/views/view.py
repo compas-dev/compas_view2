@@ -98,35 +98,14 @@ class View(QtWidgets.QOpenGLWidget):
         self.paint()
 
         if self.app.selector.select_from == "box":
-            self.paint_box(self.app.selector.box_select_coords)
+            self.shader.draw_2d_box(
+                self.app.selector.box_select_coords, self.app.width, self.app.height)
 
     def paint_instances(self):
         pass
 
     def paint(self):
         pass
-
-    def paint_box(self, box_coords):
-        x1, y1, x2, y2 = box_coords
-        x1 = (x1/self.app.width - 0.5)*2
-        x2 = (x2/self.app.width - 0.5)*2
-        y1 = -(y1/self.app.height - 0.5)*2
-        y2 = -(y2/self.app.height - 0.5)*2
-
-        if x1 > x2:
-            x1, x2 = x2, x1
-        if y1 > y2:
-            y1, y2 = y2, y1
-
-        # GL.glLineStipple(1, 0xAAAA);  # [1]
-        # GL.glEnable(GL.GL_LINE_STIPPLE)
-        GL.glBegin(GL.GL_LINE_LOOP)
-        GL.glColor3f(0, 0, 0)
-        GL.glVertex2f(x1, y1)
-        GL.glVertex2f(x2, y1)
-        GL.glVertex2f(x2, y2)
-        GL.glVertex2f(x1, y2)
-        GL.glEnd()
 
     def mouseMoveEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
