@@ -7,7 +7,7 @@ from ..forms.point import PointForm
 from ..forms.line import LineForm
 from ..forms.sphere import SphereForm
 from ..forms.torus import TorusForm
-
+from .worker import Worker
 
 class Controller:
 
@@ -59,6 +59,20 @@ class Controller:
     def view_objects(self):
         pass
 
+    def interactive(func):
+        def wrapped(self):
+            def add(obj):
+                if obj:
+                    self.app.add(obj)
+                    self.app.view.update()
+                else:
+                    print("No object to add.")
+
+            worker = Worker(func, self)
+            worker.signals.result.connect(add)
+            Worker.pool.start(worker)  
+        return wrapped
+
     # Actions: Primitives
 
     def add_point(self):
@@ -93,21 +107,20 @@ class Controller:
 
     def add_circle(self):
         pass
-
+    
+    @interactive
     def add_line_from_selected_points(self):
-        from compas.geometry import Point, Line
-
-        def on_finish_selection(points):
-            if len(points) == 2:
-                line = Line(*points)
-                self.app.add(line)
-                self.app.view.update()
-                self.app.statusbar.showMessage("Line added")
-            else:
-                self.app.statusbar.showMessage("Must select 2 points")
-
+        from compas.geometry import Point
+        from compas.geometry import Line
         self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
-        self.app.selector.start_selection(Point, on_finish_selection)
+        points = self.app.selector.start_selection(types=Point)
+        if len(points) == 2:
+            line = Line(*points)
+            self.app.statusbar.showMessage("Line added")
+            return line
+        else:
+            self.app.statusbar.showMessage("Must select 2 points")
+            return None
 
     def add_polyline_from_selected_points(self):
         from compas.geometry import Point, Polyline

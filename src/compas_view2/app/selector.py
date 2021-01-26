@@ -2,6 +2,8 @@ from random import randint
 from compas.utilities import rgb_to_hex
 from compas.utilities import hex_to_rgb
 import numpy as np
+import time
+from .worker import Worker
 
 class Selector:
 
@@ -9,24 +11,58 @@ class Selector:
         self.app = app
         self.color_to_exclude = ['#ffffff', '#000000']
         self.instances = {}
+        self.instance_map = None
         self.enabled = True
         self.mode = "single"
         self.overwrite_mode = None
         self.types = []
-        self.on_finish_selection = None
-        self.box_selection_settings = {
-            "stage": "",
-            "coords": np.zeros((4,), np.int),
-            "deselect": False
-        }
+        self.select_from = "pixel" # or "box"
+        self.paint_instance = False
+        self.box_select_coords = np.zeros((4,), np.int)
+
+        self.start_monitor_instance_map()
 
     def reset(self):
         self.enabled = True
         self.mode = "single"
         self.overwrite_mode = None
         self.types = []
-        self.on_finish_selection = None
+        self.select_from = "pixel"
+        self.paint_instance = False
+        self.box_select_coords = np.zeros((4,), np.int)
         self.deselect()
+
+    def start_monitor_instance_map(self):
+
+        self.stop_monitor_instance_map = False
+
+        def monitor_loop():
+            while not self.stop_monitor_instance_map:
+                time.sleep(0.02)
+                if self.instance_map is not None:
+                    instance_map = self.instance_map
+                    if self.select_from == "pixel":
+                        # Pick an object from mouse pixel
+                        x = self.app.view.mouse.last_pos.x()
+                        y = self.app.view.mouse.last_pos.y()
+                        self.select_pixel_from_instance_map(x, y, instance_map)
+                    if self.select_from == "box":
+                        # Pick objects from box selection
+                        self.select_all_from_instance_map(instance_map)
+                        self.select_from = "pixel"
+                    self.app.view.update()
+                    self.instance_map = None
+            print("monitor loop stopped")
+
+        # Stop the monitor loop when the app is being closed
+        def stop():
+            self.stop_monitor_instance_map = True
+        self.app._app.aboutToQuit.connect(stop)
+
+        # Start monitor loop in a separate worker thread
+        worker = Worker(monitor_loop)
+        worker.no_signals = True # Prevent signal emit error when closing the app
+        Worker.pool.start(worker)
 
     @property
     def selected(self):
@@ -60,10 +96,7 @@ class Selector:
             hex_key = rgb_to_hex(rgb)
             if hex_key in self.instances:
                 obj = self.instances[hex_key]
-                if self.box_selection_settings["deselect"]:
-                    self.deselect(obj)
-                else:
-                    self.select(obj, "multi")
+                self.select(obj)
 
     def select(self, obj=None, mode=None, types=None, update=False):
         mode = mode or self.mode
@@ -97,27 +130,25 @@ class Selector:
         if update:
             self.app.view.update()
 
-    def start_selection(self, types=None, on_finish_selection=None, mode="multi"):
-        if not isinstance(types, list):
+    def start_selection(self, types=None, mode="multi"):
+        if not isinstance(types, list) and types is not None:
             types = [types]
         self.enabled = True
         self.deselect(update=True)
         self.mode = self.overwrite_mode = mode
         self.types = types
-        self.on_finish_selection = on_finish_selection
+        self.performing_interactive_selection = True
+        while self.performing_interactive_selection:
+            time.sleep(0.05)
+        selected_data = [obj._data for obj in self.selected]
+        self.reset()
+        return selected_data
 
     def finish_selection(self):
-        if self.on_finish_selection:
-            selected_data = [obj._data for obj in self.selected]
-            self.on_finish_selection(selected_data)
-        self.reset()
+        self.performing_interactive_selection = False
 
-    def perform_box_selection(self, x, y, deselect=False):
-        if self.box_selection_settings["stage"] != "selecting":
-            self.box_selection_settings["stage"] = "selecting"
-            self.box_selection_settings["coords"][:2] = x, y
-        self.box_selection_settings["coords"][2:] = x, y
-        self.box_selection_settings["deselect"] = deselect
-
-    def finish_box_selection(self):
-        self.box_selection_settings["stage"] = "paint_instance"
+    def perform_box_selection(self, x, y):
+        if self.select_from != "box":
+            self.select_from = "box"
+            self.box_select_coords[:2] = x, y
+        self.box_select_coords[2:] = x, y

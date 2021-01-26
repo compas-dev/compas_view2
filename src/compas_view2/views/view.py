@@ -22,7 +22,6 @@ class View(QtWidgets.QOpenGLWidget):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
         self.shader = None
-        self.enable_paint_instances = False
         self.app = app
         self.color = color
         self.mode = mode
@@ -87,20 +86,18 @@ class View(QtWidgets.QOpenGLWidget):
     def paintGL(self):
         self.clear()
 
-        if self.app.selector.box_selection_settings["stage"] == "paint_instance":
-            self.paint_instances(self.app.selector.box_selection_settings["coords"])
-            self.app.selector.box_selection_settings["stage"] = ""
-            self.clear()
-
-        if self.enable_paint_instances:
-            self.paint_instances()
-            self.enable_paint_instances = False
+        if self.app.selector.paint_instance:
+            if self.app.selector.select_from == "pixel":
+                self.app.selector.instance_map = self.paint_instances()
+            if self.app.selector.select_from == "box":
+                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
+            self.app.selector.paint_instance = False
             self.clear()
 
         self.paint()
 
-        if self.app.selector.box_selection_settings["stage"] == "selecting":
-            self.paint_selection_box()
+        if self.app.selector.select_from == "box":
+            self.paint_box(self.app.selector.box_select_coords)
 
     def paint_instances(self):
         pass
@@ -108,8 +105,8 @@ class View(QtWidgets.QOpenGLWidget):
     def paint(self):
         pass
 
-    def paint_selection_box(self):
-        x1, y1, x2, y2 = self.app.selector.box_selection_settings["coords"]
+    def paint_box(self, box_coords):
+        x1, y1, x2, y2 = box_coords
         x1 = (x1/self.app.width - 0.5)*2
         x2 = (x2/self.app.width - 0.5)*2
         y1 = -(y1/self.app.height - 0.5)*2
@@ -137,10 +134,8 @@ class View(QtWidgets.QOpenGLWidget):
         dx = self.mouse.dx()
         dy = self.mouse.dy()
         if event.buttons() & QtCore.Qt.LeftButton:
-            if self.keys["shift"]:
+            if self.keys["shift"] or self.keys["control"]:
                 self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
-            elif self.keys["control"]:
-                self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y(), deselect=True)
             else:
                 self.camera.rotate(dx, dy)
             self.mouse.last_pos = event.pos()
@@ -166,10 +161,8 @@ class View(QtWidgets.QOpenGLWidget):
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mouse.buttons['left'] = False
             if self.app.selector.enabled:
-                if self.app.selector.box_selection_settings["stage"] == "selecting":
-                    self.app.selector.finish_box_selection()
-                else:
-                    self.enable_paint_instances = True
+                self.app.selector.paint_instance = True
+
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
         self.update()

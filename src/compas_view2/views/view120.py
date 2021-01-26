@@ -45,12 +45,12 @@ class View120(View):
             obj.draw(self.shader)
         self.shader.release()
 
-    def paint_instances(self, selection_box_coords=None):
+    def paint_instances(self, cropped_box=None):
 
-        if selection_box_coords is None:
+        if cropped_box is None:
             x, y, width, height = 0, 0, self.app.width, self.app.height
         else:
-            x1, y1, x2, y2 = selection_box_coords
+            x1, y1, x2, y2 = cropped_box
             x, y = min(x1, x2), self.app.height - max(y1, y2)
             width, height = abs(x1 - x2), abs(y1 - y2)
 
@@ -66,12 +66,4 @@ class View120(View):
         instance_buffer = GL.glReadPixels(x, y, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
         instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
         instance_map = instance_map[::-r, ::r, :]
-
-        if selection_box_coords is None:
-            # find out which pixel and thus which object was clicked on
-            # it is not intuitive that this happens here
-            x = self.mouse.last_pos.x()
-            y = self.mouse.last_pos.y()
-            self.app.selector.select_pixel_from_instance_map(x, y, instance_map)
-        else:
-            self.app.selector.select_all_from_instance_map(instance_map)
+        return instance_map

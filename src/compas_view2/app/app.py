@@ -80,10 +80,10 @@ class App:
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
         self.controller = Controller(self)
-        self.selector = Selector(self)
 
         self._app = app
         self._app.references.add(self.window)
+        self.selector = Selector(self)
 
         self.init_statusbar()
 
