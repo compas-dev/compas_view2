@@ -63,7 +63,9 @@ class View120(View):
         self.shader.release()
         # create map
         r = self.devicePixelRatio()
-        instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
-        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
+        instance_buffer = GL.glReadPixels(
+            x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
+        instance_map = np.frombuffer(
+            instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
         instance_map = instance_map[::-r, ::r, :]
         return instance_map

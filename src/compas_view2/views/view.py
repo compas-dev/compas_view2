@@ -90,7 +90,8 @@ class View(QtWidgets.QOpenGLWidget):
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
             if self.app.selector.select_from == "box":
-                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
+                self.app.selector.instance_map = self.paint_instances(
+                    self.app.selector.box_select_coords)
             self.app.selector.paint_instance = False
             self.clear()
 
@@ -112,9 +113,9 @@ class View(QtWidgets.QOpenGLWidget):
         y1 = -(y1/self.app.height - 0.5)*2
         y2 = -(y2/self.app.height - 0.5)*2
 
-        if x1>x2:
+        if x1 > x2:
             x1, x2 = x2, x1
-        if y1>y2:
+        if y1 > y2:
             y1, y2 = y2, y1
 
         # GL.glLineStipple(1, 0xAAAA);  # [1]
@@ -135,7 +136,8 @@ class View(QtWidgets.QOpenGLWidget):
         dy = self.mouse.dy()
         if event.buttons() & QtCore.Qt.LeftButton:
             if self.keys["shift"] or self.keys["control"]:
-                self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
+                self.app.selector.perform_box_selection(
+                    self.mouse.pos.x(), self.mouse.pos.y())
             else:
                 self.camera.rotate(dx, dy)
             self.mouse.last_pos = event.pos()
@@ -186,7 +188,6 @@ class View(QtWidgets.QOpenGLWidget):
             if key == QtCore.Qt.Key_Control:
                 self.app.selector.mode = "deselect"
                 self.keys["control"] = True
-
 
     def keyReleaseEvent(self, event):
         key = event.key()
