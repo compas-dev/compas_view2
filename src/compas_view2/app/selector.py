@@ -1,6 +1,4 @@
 from random import randint
-from compas.utilities import rgb_to_hex
-from compas.utilities import hex_to_rgb
 import numpy as np
 import time
 from .worker import Worker
@@ -12,7 +10,7 @@ class Selector:
 
     def __init__(self, app):
         self.app = app
-        self.color_to_exclude = ['#ffffff', '#000000']
+        self.colors_to_exclude = [(0, 0, 0,), (255, 255, 255)]
         self.instances = {}
         self.instance_map = None
         self.enabled = True
@@ -80,31 +78,30 @@ class Selector:
         """
         return [self.instances[key] for key in self.instances if self.instances[key].is_selected]
 
-    def get_hex(self):
+    def get_rgb_key(self):
         """
         Returns
         -------
-        hex string
-            a unique hex string that currently is not used by any instances in the scene
+        rgb_key
+            a tuple of rgb color value in integer 
         """
         while True:
-            unique_hex = '#%02x%02x%02x' % (
-                randint(0, 255), randint(0, 255), randint(0, 255))
-            if unique_hex not in self.instances and unique_hex not in self.color_to_exclude:
-                return unique_hex
+            rgb_key = (randint(0, 255), randint(0, 255), randint(0, 255))
+            if rgb_key not in self.instances and rgb_key not in self.colors_to_exclude:
+                return rgb_key
 
     def add(self, obj):
         """Add an object to the list of selector instances, each object will be assigned a unique hex color key
 
         Returns
         -------
-        hex string
-            a unique hex color key that represents this object 
+        rgb_key
+            a rgb tuple key that represents this object 
         """
-        unique_hex = self.get_hex()
-        self.instances[unique_hex] = obj
-        obj.instance_color = hex_to_rgb(unique_hex, normalize=True)
-        return unique_hex
+        rgb_key = self.get_rgb_key()
+        self.instances[rgb_key] = obj
+        obj.instance_color = np.array(rgb_key)/255
+        return rgb_key
 
     def select_one_from_instance_map(self, x, y, instance_map):
         """Select the object at given pixel location of the instance map
@@ -122,11 +119,10 @@ class Selector:
         -------
         None
         """
-        rgb = instance_map[y][x]
-        hex_key = rgb_to_hex(rgb)
+        rgb_key = tuple(instance_map[y][x])
         obj = None
-        if hex_key in self.instances:
-            obj = self.instances[hex_key]
+        if rgb_key in self.instances:
+            obj = self.instances[rgb_key]
         self.select(obj)
 
     def select_all_from_instance_map(self, instance_map):
@@ -144,9 +140,9 @@ class Selector:
         unique_rgbs = np.unique(
             instance_map.reshape(-1, instance_map.shape[2]), axis=0)
         for rgb in unique_rgbs:
-            hex_key = rgb_to_hex(rgb)
-            if hex_key in self.instances:
-                obj = self.instances[hex_key]
+            rgb_key = tuple(rgb)
+            if rgb_key in self.instances:
+                obj = self.instances[rgb_key]
                 self.select(obj)
 
     def select(self, obj=None, mode=None, types=None, update=False):
