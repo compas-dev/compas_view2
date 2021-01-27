@@ -22,7 +22,6 @@ class View(QtWidgets.QOpenGLWidget):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
         self.shader = None
-        self.enable_paint_instances = False
         self.app = app
         self.color = color
         self.mode = mode
@@ -32,6 +31,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
+        self.keys = {"shift": False, "control": False}
 
     def clear(self):
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
@@ -85,11 +85,21 @@ class View(QtWidgets.QOpenGLWidget):
 
     def paintGL(self):
         self.clear()
-        if self.enable_paint_instances:
-            self.paint_instances()
-            self.enable_paint_instances = False
+
+        if self.app.selector.paint_instance:
+            if self.app.selector.select_from == "pixel":
+                self.app.selector.instance_map = self.paint_instances()
+            if self.app.selector.select_from == "box":
+                self.app.selector.instance_map = self.paint_instances(
+                    self.app.selector.box_select_coords)
+            self.app.selector.paint_instance = False
             self.clear()
+
         self.paint()
+
+        if self.app.selector.select_from == "box":
+            self.shader.draw_2d_box(
+                self.app.selector.box_select_coords, self.app.width, self.app.height)
 
     def paint_instances(self):
         pass
@@ -104,7 +114,11 @@ class View(QtWidgets.QOpenGLWidget):
         dx = self.mouse.dx()
         dy = self.mouse.dy()
         if event.buttons() & QtCore.Qt.LeftButton:
-            self.camera.rotate(dx, dy)
+            if self.keys["shift"] or self.keys["control"]:
+                self.app.selector.perform_box_selection(
+                    self.mouse.pos.x(), self.mouse.pos.y())
+            else:
+                self.camera.rotate(dx, dy)
             self.mouse.last_pos = event.pos()
             self.update()
         elif event.buttons() & QtCore.Qt.RightButton:
@@ -121,16 +135,17 @@ class View(QtWidgets.QOpenGLWidget):
             self.mouse.buttons['right'] = True
         self.mouse.last_pos = event.pos()
         self.update()
-        # Enable painting instance map for pick for next rendered frame
-        if self.mouse.buttons['left']:
-            if self.app.selector.enabled:
-                self.enable_paint_instances = True
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-        self.mouse.buttons['left'] = False
-        self.mouse.buttons['right'] = False
+        if event.button() == QtCore.Qt.MouseButton.LeftButton:
+            self.mouse.buttons['left'] = False
+            if self.app.selector.enabled:
+                self.app.selector.paint_instance = True
+
+        elif event.button() == QtCore.Qt.MouseButton.RightButton:
+            self.mouse.buttons['right'] = False
         self.update()
 
     def wheelEvent(self, event):
@@ -148,11 +163,17 @@ class View(QtWidgets.QOpenGLWidget):
                 self.app.selector.finish_selection()
             if key == QtCore.Qt.Key_Shift:
                 self.app.selector.mode = "multi"
+                self.keys["shift"] = True
             if key == QtCore.Qt.Key_Control:
                 self.app.selector.mode = "deselect"
+                self.keys["control"] = True
 
     def keyReleaseEvent(self, event):
         key = event.key()
         if self.app.selector.enabled:
-            if key == QtCore.Qt.Key_Shift or key == QtCore.Qt.Key_Control:
+            if key == QtCore.Qt.Key_Shift:
                 self.app.selector.mode = self.app.selector.overwrite_mode or "single"
+                self.keys["shift"] = False
+            if key == QtCore.Qt.Key_Control:
+                self.app.selector.mode = self.app.selector.overwrite_mode or "single"
+                self.keys["control"] = False

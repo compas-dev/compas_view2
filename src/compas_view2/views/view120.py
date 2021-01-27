@@ -45,7 +45,15 @@ class View120(View):
             obj.draw(self.shader)
         self.shader.release()
 
-    def paint_instances(self):
+    def paint_instances(self, cropped_box=None):
+
+        if cropped_box is None:
+            x, y, width, height = 0, 0, self.app.width, self.app.height
+        else:
+            x1, y1, x2, y2 = cropped_box
+            x, y = min(x1, x2), self.app.height - max(y1, y2)
+            width, height = abs(x1 - x2), abs(y1 - y2)
+
         self.shader.bind()
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         for guid in self.objects:
@@ -55,12 +63,9 @@ class View120(View):
         self.shader.release()
         # create map
         r = self.devicePixelRatio()
-        instance_buffer = GL.glReadPixels(0, 0, self.app.width*r, self.app.height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
-        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(self.app.height*r, self.app.width*r, 3)
+        instance_buffer = GL.glReadPixels(
+            x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
+        instance_map = np.frombuffer(
+            instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
         instance_map = instance_map[::-r, ::r, :]
-        # find out which pixel and thus which object was clicked on
-        # it is not intuitive that this happens here
-        x = self.mouse.last_pos.x()
-        y = self.mouse.last_pos.y()
-        obj = self.app.selector.find(x, y, instance_map)
-        self.app.selector.select(obj)
+        return instance_map

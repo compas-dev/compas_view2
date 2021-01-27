@@ -69,6 +69,24 @@ class Shader:
         else:
             GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
 
+    def draw_2d_box(self, box_coords, width, height):
+        x1, y1, x2, y2 = box_coords
+        x1 = (x1/width - 0.5)*2
+        x2 = (x2/width - 0.5)*2
+        y1 = -(y1/height - 0.5)*2
+        y2 = -(y2/height - 0.5)*2
+        if x1 > x2:
+            x1, x2 = x2, x1
+        if y1 > y2:
+            y1, y2 = y2, y1
+        GL.glBegin(GL.GL_LINE_LOOP)
+        GL.glColor3f(0, 0, 0)
+        GL.glVertex2f(x1, y1)
+        GL.glVertex2f(x2, y1)
+        GL.glVertex2f(x2, y2)
+        GL.glVertex2f(x1, y2)
+        GL.glEnd()
+
 
 def make_shader_program(name):
     vsource = os.path.join(os.path.dirname(__file__), "{}.vert".format(name))
@@ -111,4 +129,3 @@ def compile_fragment_shader(source):
     if not result:
         raise RuntimeError(GL.glGetShaderInfoLog(shader))
     return shader
-
