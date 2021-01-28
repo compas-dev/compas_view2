@@ -1,8 +1,13 @@
 ********************************************************************************
-API Reference
+app
 ********************************************************************************
 
-.. toctree::
-    :maxdepth: 3
+.. currentmodule:: compas_view2.app
 
-    api/compas_view2
+.. autosummary::
+    :toctree: generated/
+
+    app.App
+    controller.Controller
+    selector.Selector
+    worker.Worker

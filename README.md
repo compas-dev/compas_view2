@@ -1,5 +1,7 @@
 # COMPAS Viewers 2
 
+**THIS PACKAGE IS UNDER DEVELOPMENT. USE IT AT YOUR OWN RISK :)**
+
 Second generation viewers for the COMPAS framework
 
 ## Installation
@@ -36,18 +38,9 @@ In `.vscode/settings.json`
 }
 ```
 
-### Big Sur
+## Features
 
-After updating to Big Sur, a few things had to be updated.
-Some of these fixes will no longer be necessary in Python 3.9
-but COMPAS and Numpy are not yet available for this version of Python...
-
-* <https://stackoverflow.com/questions/63475461/unable-to-import-opengl-gl-in-python-on-macos>
-* <https://developer.apple.com/documentation/xcode/porting_your_macos_apps_to_apple_silicon>
-* <https://github.com/PixarAnimationStudios/USD/issues/1372>
-* <https://forum.openframeworks.cc/t/big-sur-and-opengl/35661>
-* <https://forum.qt.io/topic/120846/big-sur-pyside2-not-showing-a-widgets/7>
-* <https://stackoverflow.com/questions/64833558/apps-not-popping-up-on-macos-big-sur-11-0-1#_=>
+*More info coming soon...*
 
 ## Examples
 
@@ -73,15 +66,25 @@ OpenGL 3.3 (or higher) and corresponding GLSL 3.30 (with Core Profile) works onl
 
 *Under Construction*...
 
-## Notes
+## License
 
-* Provide separate shaders for GLSL 1.20 and GLSL 3.30 and above.
-* Load all available programs into shader for specific version.
-* Align object init and drawing methods with GLSL version.
-* Use VAO for GLSL 3.30 and above.
-* Provide shader programs for different types of COMPAS objects.
-* Add toolbar for basic view operations: Select, Zoom Extents, Zoom Selected, Translate, Rotate, ...
-* Add menu for additional operations: Load objects, Save scene, Load scene, Mesh operations, ...
-* How to visualize script output in open Viewer?
-* Run script button.
+The code in this repo is licensed under the [MIT License](LICENCSE).
 
+The icons used on the toolbars of the viewers are part of the collection of free Font Awesome (FA) icons.
+The free icons of FA are subject to a Creative Commons 4.0 license.
+More information about FA free and the icon license can be found here <https://fontawesome.com/license/free>.
+
+The icons bundled with this repo can be found in `src/compas_view2/icons`.
+
+### Big Sur
+
+After updating to Big Sur, a few things had to be updated.
+Some of these fixes will no longer be necessary in Python 3.9
+but COMPAS and Numpy are not yet available for this version of Python...
+
+* <https://stackoverflow.com/questions/63475461/unable-to-import-opengl-gl-in-python-on-macos>
+* <https://developer.apple.com/documentation/xcode/porting_your_macos_apps_to_apple_silicon>
+* <https://github.com/PixarAnimationStudios/USD/issues/1372>
+* <https://forum.openframeworks.cc/t/big-sur-and-opengl/35661>
+* <https://forum.qt.io/topic/120846/big-sur-pyside2-not-showing-a-widgets/7>
+* <https://stackoverflow.com/questions/64833558/apps-not-popping-up-on-macos-big-sur-11-0-1#_=>

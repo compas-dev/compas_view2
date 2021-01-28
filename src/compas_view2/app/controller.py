@@ -3,10 +3,10 @@ from OpenGL import GL
 from PySide2 import QtWidgets
 
 from ..gl import gl_info
-from ..forms.point import PointForm
-from ..forms.line import LineForm
-from ..forms.sphere import SphereForm
-from ..forms.torus import TorusForm
+from ..forms import PointForm
+from ..forms import LineForm
+from ..forms import SphereForm
+from ..forms import TorusForm
 from .worker import Worker
 
 
