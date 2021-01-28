@@ -40,7 +40,13 @@ In `.vscode/settings.json`
 
 ## Features
 
-*More info coming soon...*
+* Full support for all COMPAS objects (geometry, datastructures)
+* Select: Left mouse click
+* Deselect: CMD/CTRL + Left mouse click
+* Box select: SHIFT + Left mouse window
+* Shaded/Ghosted
+* Mesh faces with individual colors
+* ...
 
 ## Examples
 
