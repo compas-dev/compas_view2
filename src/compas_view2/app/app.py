@@ -4,9 +4,7 @@ import json
 import compas
 
 from functools import partial
-from typing import Optional, Union
 
-import os
 os.environ['QT_MAC_WANTS_LAYER'] = '1'
 
 from PySide2 import QtCore, QtGui, QtWidgets
@@ -17,12 +15,6 @@ from ..objects import Object
 
 from .controller import Controller
 from .selector import Selector
-
-# Data = TypeVar('Data', Union[
-#     compas.geometry.Primitive,
-#     compas.geometry.Shape,
-#     compas.datastructures.Network,
-#     compas.datastructures.Mesh])
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -143,7 +135,7 @@ class App:
 
     """
 
-    def __init__(self, version: str = '120', width: int = 800, height: int = 500, viewmode: str = 'shaded'):
+    def __init__(self, version='120', width=800, height=500, viewmode='shaded'):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -188,7 +180,7 @@ class App:
 
         self.resize(width, height)
 
-    def resize(self, width: int, height: int):
+    def resize(self, width, height):
         self.window.resize(width, height)
         desktop = self._app.desktop()
         rect = desktop.availableGeometry()
