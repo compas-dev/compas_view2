@@ -2,6 +2,9 @@
 
 **THIS PACKAGE IS UNDER DEVELOPMENT. USE IT AT YOUR OWN RISK** :)
 
+![build](https://github.com/compas-dev/compas_view2/workflows/build/badge.svg)
+[![GitHub - License](https://img.shields.io/github/license/compas-dev/compas_view2.svg)](https://github.com/compas-dev/compas_view2)
+
 Second generation viewers for the COMPAS framework
 
 ## Installation
