@@ -27,7 +27,7 @@ class View120(View):
         self.shader.uniform3f("selection_color", self.selection_color)
         self.shader.release()
 
-    def resize(self, w: int, h: int):
+    def resize(self, w, h):
         self.shader.bind()
         self.shader.uniform4x4("projection", self.camera.projection(w, h))
         self.shader.release()
@@ -43,7 +43,6 @@ class View120(View):
         self.shader.release()
 
     def paint_instances(self, cropped_box=None):
-
         if cropped_box is None:
             x, y, width, height = 0, 0, self.app.width, self.app.height
         else:

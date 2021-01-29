@@ -42,3 +42,8 @@ In ``.vscode/settings.json``
 
         ...
     }
+
+First Steps
+===========
+
+Have a look at the examples for basic usage scenarios.
