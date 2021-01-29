@@ -1,4 +1,8 @@
 {
+    "messages":
+    {
+        "about": "COMPAS View2 is the second generation of standalone viewers for the COMPAS framework."
+    },
     "menubar":
     [
         {
@@ -81,10 +85,7 @@
             "text": "Meshes",
             "items":
             [
-                {"type": "action", "text": "Add Mesh from OBJ", "action": "add_mesh_from_obj"},
-                {"type": "action", "text": "Add Mesh from OFF", "action": "add_mesh_from_off"},
-                {"type": "action", "text": "Add Mesh from PLY", "action": "add_mesh_from_ply"},
-                {"type": "action", "text": "Add Mesh from STL", "action": "add_mesh_from_stl"}
+                {"type": "action", "text": "Add Mesh from File", "action": "add_mesh_from_file"}
             ]
         }
     ]
