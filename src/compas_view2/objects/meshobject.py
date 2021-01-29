@@ -7,6 +7,35 @@ from .object import Object
 
 
 class MeshObject(Object):
+    """ COMPAS Mesh Object for the viewer
+
+    Parameters
+    ----------
+    data : :class: `compas.datastructures.Mesh`
+        Mesh for the viewer
+    name : string
+        name of the object
+    show_vertices : bool
+        True to show vertices
+    show_edges : bool
+        True to show edges
+    show_faces : bool
+        True to show faces
+    hide_coplanar_edges : bool
+        True to hide the coplanar edges
+
+    Attributes
+    ----------
+    vertices : list
+        list of mesh vertices
+    edges : list of tuple
+        list of mesh edges in tuple
+    front : dict
+        mesh front face information for the viewer
+    back : dict
+        mesh back face information for the viewer
+
+    """
 
     default_color_vertices = [0.2, 0.2, 0.2]
     default_color_edges = [0.4, 0.4, 0.4]
