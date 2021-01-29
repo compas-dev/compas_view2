@@ -21,7 +21,7 @@
   
 
   
-    <link rel="prev" title="App.show" href="compas_view2.app.app.App.show.html" />
+    <link rel="prev" title="App.warning" href="compas_view2.app.app.App.warning.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -88,7 +88,7 @@
 <h1>Controller</h1>
 <dl class="py class">
 <dt id="compas_view2.app.controller.Controller">
-<em class="property">class </em><code class="sig-prename descclassname">compas_view2.app.controller.</code><code class="sig-name descname">Controller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/src/compas_view2/app/controller.py#12"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">compas_view2.app.controller.</code><code class="sig-name descname">Controller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/src/compas_view2/app/controller.py#22"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -101,43 +101,25 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_box.html#compas_view2.app.controller.Controller.add_box" title="compas_view2.app.controller.Controller.add_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_box</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_circle.html#compas_view2.app.controller.Controller.add_circle" title="compas_view2.app.controller.Controller.add_circle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_circle</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_line.html#compas_view2.app.controller.Controller.add_line" title="compas_view2.app.controller.Controller.add_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_line</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Add a box at the origin.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_line_from_selected_points.html#compas_view2.app.controller.Controller.add_line_from_selected_points" title="compas_view2.app.controller.Controller.add_line_from_selected_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_line_from_selected_points</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_mesh_from_obj.html#compas_view2.app.controller.Controller.add_mesh_from_obj" title="compas_view2.app.controller.Controller.add_mesh_from_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_mesh_from_obj</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_mesh_from_file.html#compas_view2.app.controller.Controller.add_mesh_from_file" title="compas_view2.app.controller.Controller.add_mesh_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_mesh_from_file</span></code></a>()</p></td>
+<td><p>Add a mesh from the data in an file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_network_from_obj.html#compas_view2.app.controller.Controller.add_network_from_obj" title="compas_view2.app.controller.Controller.add_network_from_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_network_from_obj</span></code></a>()</p></td>
+<td><p>Add a network from the data in an OBJ file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_point.html#compas_view2.app.controller.Controller.add_point" title="compas_view2.app.controller.Controller.add_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_point</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_mesh_from_off.html#compas_view2.app.controller.Controller.add_mesh_from_off" title="compas_view2.app.controller.Controller.add_mesh_from_off"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_mesh_from_off</span></code></a>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_sphere.html#compas_view2.app.controller.Controller.add_sphere" title="compas_view2.app.controller.Controller.add_sphere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_sphere</span></code></a>()</p></td>
+<td><p>Add a sphere at the origin.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_mesh_from_ply.html#compas_view2.app.controller.Controller.add_mesh_from_ply" title="compas_view2.app.controller.Controller.add_mesh_from_ply"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_mesh_from_ply</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_mesh_from_stl.html#compas_view2.app.controller.Controller.add_mesh_from_stl" title="compas_view2.app.controller.Controller.add_mesh_from_stl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_mesh_from_stl</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_network_from_obj.html#compas_view2.app.controller.Controller.add_network_from_obj" title="compas_view2.app.controller.Controller.add_network_from_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_network_from_obj</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_point.html#compas_view2.app.controller.Controller.add_point" title="compas_view2.app.controller.Controller.add_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_point</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_sphere.html#compas_view2.app.controller.Controller.add_sphere" title="compas_view2.app.controller.Controller.add_sphere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_sphere</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_torus.html#compas_view2.app.controller.Controller.add_torus" title="compas_view2.app.controller.Controller.add_torus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_torus</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_vector.html#compas_view2.app.controller.Controller.add_vector" title="compas_view2.app.controller.Controller.add_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_vector</span></code></a>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.add_torus.html#compas_view2.app.controller.Controller.add_torus" title="compas_view2.app.controller.Controller.add_torus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_torus</span></code></a>()</p></td>
+<td><p>Add a torus at the origin.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.clear_scene.html#compas_view2.app.controller.Controller.clear_scene" title="compas_view2.app.controller.Controller.clear_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_scene</span></code></a>()</p></td>
 <td><p></p></td>
@@ -173,9 +155,6 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.undo.html#compas_view2.app.controller.Controller.undo" title="compas_view2.app.controller.Controller.undo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undo</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.controller.Controller.view_objects.html#compas_view2.app.controller.Controller.view_objects" title="compas_view2.app.controller.Controller.view_objects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_objects</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -238,11 +217,11 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-        <a href="compas_view2.app.app.App.show.html" title="App.show" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+        <a href="compas_view2.app.app.App.warning.html" title="App.warning" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
           <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
           <div class="nav-title flex-grow-1 align-self-center">
             <div class="nav-direction small font-weight-light">Previous</div>
-            App.show
+            App.warning
           </div>
         </a>
       
