@@ -1,12 +1,11 @@
-from typing import Tuple, Union
+from typing import Tuple
 from OpenGL import GL
 
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtWidgets
 
 from ..camera import Camera
 from ..mouse import Mouse
 from ..objects import GridObject
-from ..objects import AxisObject
 
 
 class View(QtWidgets.QOpenGLWidget):

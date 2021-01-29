@@ -1,11 +1,8 @@
 import sys
 import os
 import json
-import compas
 
 from functools import partial
-
-os.environ['QT_MAC_WANTS_LAYER'] = '1'
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
@@ -37,7 +34,7 @@ class App:
 
     Parameters
     ----------
-    version: {'120', '330'}, optional
+    version: '120' | '330', optional
         The version of the GLSL used by the shaders.
         Default is ``'120'`` with a compatibility profile.
         The option ``'330'`` is not yet available.
@@ -47,10 +44,17 @@ class App:
     height: int, optional
         The height of the app window at startup.
         Default is ``500``.
-    viewmode: {'shaded', 'ghosted'}, optional
+    viewmode: 'shaded' | 'ghosted', optional
         The display mode of the OpenGL view.
         Default is ``'shaded'``.
         In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
+    config: dict | filepath, optional
+        A configuration dict for the UI, or a path to a JSON file containing such a dict.
+        Default is ``None``, in which case the default configuration is used.
+    controller: :class:`compas_view2.app.Controller`, optional
+        A custom controller corresponding to a custom config file.
+        Default is ``None``, in which case the default controller is used,
+        matching the default config file.
 
     Attributes
     ----------
@@ -87,47 +91,37 @@ class App:
 
     To use the app in 'scripted' mode.
 
-    >>> import random
-    >>> import math
     >>> import compas
     >>> from compas.datastructures import Network
     >>> from compas.datastructures import Mesh
-    >>> from compas.geometry import Box
-    >>> from compas.geometry import Torus
-    >>> from compas.geometry import Pointcloud
-    >>> from compas.geometry import Rotation
-    >>> from compas.utilities import i_to_rgb
+    >>> from compas.geometry import Frame, Plane, Box, Torus
     >>> from compas_view2 import app
 
     Create an instance of the viewer.
 
-    >>> viewer = app.App(viewmode='ghosted')
+    >>> viewer = app.App()
 
-    Add a mesh and a network.
+    Add a mesh.
 
     >>> mesh = Mesh.from_off(compas.get('tubemesh.off'))
-    >>> network = Network.from_obj(compas.get('grid_irregular.obj'))
     >>> viewer.add(mesh, show_vertices=False)
+
+    Add a network.
+
+    >>> network = Network.from_obj(compas.get('grid_irregular.obj'))
     >>> viewer.add(network)
 
-    Add a cloud of boxes.
+    Add a box.
 
-    >>> cloud = Pointcloud.from_bounds(10, 5, 3, 100)
-    >>> R1 = Rotation.from_axis_and_angle([0, 0, 1], math.radians(180))
-    >>> R2 = Rotation.from_axis_and_angle([0, 0, 1], math.radians(90))
-    >>> for point in cloud.transformed(R1):
-    ...     box = Box((point, [1, 0, 0], [0, 1, 0]), 0.1, 0.1, 0.1)
-    ...     color = i_to_rgb(random.random(), normalize=True)
-    ...     viewer.add(box, show_vertices=False, color=color, is_selected=random.choice([0, 1]))
-    ...
+    >>> frame = Frame(point, [1, 0, 0], [0, 1, 0])
+    >>> box = Box(frame, 0.1, 0.1, 0.1)
+    >>> viewer.add(box, show_vertices=False)
 
-    Add a cloud of rings.
+    Add a ring.
 
-    >>> for point in cloud.transformed(R2):
-    ...     r1 = 0.1 * random.random()
-    ...     r2 = random.random() * r1
-    ...     torus = Torus((point, [0, 0, 1]), r1, r2)
-    ...     viewer.add(torus, show_vertices=False)
+    >>> plane = Plane(point, [0, 0, 1])
+    >>> torus = Torus(plane, r1, r2)
+    >>> viewer.add(torus, show_vertices=False)
 
     Display the viewer with all added objects.
 
@@ -135,7 +129,7 @@ class App:
 
     """
 
-    def __init__(self, version='120', width=800, height=500, viewmode='shaded'):
+    def __init__(self, version='120', width=800, height=500, viewmode='shaded', controller_cls=None, config=None):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -165,7 +159,9 @@ class App:
         self.view = View(self, mode=viewmode)
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
-        self.controller = Controller(self)
+
+        controller_cls = controller_cls or Controller
+        self.controller = controller_cls(self)
 
         self._app = app
         self._app.references.add(self.window)
@@ -173,10 +169,13 @@ class App:
 
         self.init_statusbar()
 
-        with open(CONFIG) as f:
-            config = json.load(f)
-            self.init_menubar(config.get("menubar"))
-            self.init_toolbar(config.get("toolbar"))
+        config = config or CONFIG
+        if not isinstance(config, dict):
+            with open(config) as f:
+                config = json.load(f)
+
+        self.init_menubar(config.get("menubar"))
+        self.init_toolbar(config.get("toolbar"))
 
         self.resize(width, height)
 
@@ -223,8 +222,8 @@ class App:
         toolbar.setMovable(False)
         toolbar.setObjectName('Tools')
         toolbar.setIconSize(QtCore.QSize(24, 24))
-        undotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', self.undo)
-        redotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', self.redo)
+        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', self.undo)
+        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', self.redo)
 
     def add_menubar_items(self, items, parent):
         if not items:

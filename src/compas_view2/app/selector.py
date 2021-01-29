@@ -83,7 +83,7 @@ class Selector:
         Returns
         -------
         rgb_key
-            a tuple of rgb color value in integer 
+            a tuple of rgb color value in integer
         """
         while True:
             rgb_key = (randint(0, 255), randint(0, 255), randint(0, 255))
@@ -96,7 +96,7 @@ class Selector:
         Returns
         -------
         rgb_key
-            a rgb tuple key that represents this object 
+            a rgb tuple key that represents this object
         """
         rgb_key = self.get_rgb_key()
         self.instances[rgb_key] = obj

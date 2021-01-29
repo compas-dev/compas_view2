@@ -1,6 +1,6 @@
 import os
-import sys
 
+os.environ['QT_MAC_WANTS_LAYER'] = '1'
 
 __author__ = ["tom van mele"]
 __copyright__ = "Block Research Group - ETH Zurich"
@@ -18,10 +18,11 @@ TEMP = os.path.abspath(os.path.join(HOME, "temp"))
 
 
 try:
-    from OpenGL import GL
-except:
+    from OpenGL import GL  # noqa: F401
+except Exception:
     from ctypes import util
     orig_util_find_library = util.find_library
+
     def new_util_find_library(name):
         res = orig_util_find_library(name)
         if res:

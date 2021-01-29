@@ -19,10 +19,4 @@ class Form(QtWidgets.QDialog):
         layout.addWidget(buttons)
 
     def inputs(self):
-        raise NotImplementedError 
-
-    # def accept(self):
-    #     return super().accept()
-
-    # def reject(self):
-    #     return super().reject()
+        raise NotImplementedError

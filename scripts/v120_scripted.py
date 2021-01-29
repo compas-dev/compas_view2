@@ -4,10 +4,8 @@ import math
 import compas
 from compas.datastructures import Network
 from compas.datastructures import Mesh
-from compas.geometry import Box
-from compas.geometry import Torus
-from compas.geometry import Pointcloud
-from compas.geometry import Rotation
+from compas.geometry import Pointcloud, Box
+from compas.geometry import Scale, Rotation, Translation
 from compas.utilities import i_to_rgb
 
 from compas_view2 import app
@@ -15,24 +13,25 @@ from compas_view2 import app
 viewer = app.App(width=800, height=500, viewmode='ghosted')
 
 mesh = Mesh.from_off(compas.get('tubemesh.off'))
-network = Network.from_obj(compas.get('grid_irregular.obj'))
-
 viewer.add(mesh, show_vertices=False)
+
+network = Network.from_obj(compas.get('grid_irregular.obj'))
 viewer.add(network)
 
+bunny = Mesh.from_ply(compas.get('bunny.ply'))
+T = Translation.from_vector([-10, 20, 0])
+R = Rotation.from_axis_and_angle([1, 0, 0], math.radians(90))
+S = Scale.from_factors([100, 100, 100])
+bunny.transform(T * R * S)
+viewer.add(bunny, show_vertices=False)
+
 cloud = Pointcloud.from_bounds(10, 5, 3, 100)
+
 R1 = Rotation.from_axis_and_angle([0, 0, 1], math.radians(180))
-R2 = Rotation.from_axis_and_angle([0, 0, 1], math.radians(90))
-
 for point in cloud.transformed(R1):
-    box = Box((point, [1, 0, 0], [0, 1, 0]), 0.1, 0.1, 0.1)
+    size = random.random()
+    box = Box((point, [1, 0, 0], [0, 1, 0]), size, size, size)
     color = i_to_rgb(random.random(), normalize=True)
-    viewer.add(box, show_vertices=False, color=color, is_selected=random.choice([0, 1]))
-
-for point in cloud.transformed(R2):
-    r1 = 0.1 * random.random()
-    r2 = random.random() * r1
-    torus = Torus((point, [0, 0, 1]), r1, r2)
-    viewer.add(torus, show_vertices=False)
+    viewer.add(box, show_vertices=False, color=color)
 
 viewer.show()

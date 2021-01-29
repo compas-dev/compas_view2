@@ -1,1 +1,1 @@
-from .shader import Shader
+from .shader import Shader  # noqa: F401

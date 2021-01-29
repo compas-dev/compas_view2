@@ -1,4 +1,3 @@
-from compas.datastructures import Mesh
 from compas.utilities import flatten
 
 from ..buffers import make_index_buffer, make_vertex_buffer
@@ -89,7 +88,7 @@ class NetworkObject(Object):
 
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self.instance_color)
-        
+
         shader.bind_attribute('position', self.edges['positions'])
         shader.draw_lines(elements=self.edges['elements'], n=self.edges['n'])
 
