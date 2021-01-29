@@ -24,9 +24,7 @@ def read(*names, **kwargs):
 
 long_description = read("README.md")
 requirements = read("requirements.txt").split("\n")
-optional_requirements = {
-    'dev': read("requirements-dev.txt").split("\n")
-}
+optional_requirements = {}
 
 setup(
     name="compas_view2",
