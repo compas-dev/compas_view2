@@ -6,6 +6,7 @@ from .object import Object
 
 
 class NetworkObject(Object):
+    """Object for displaying COMPAS network data structures."""
 
     default_color_nodes = [0.1, 0.1, 0.1]
     default_color_edges = [0.4, 0.4, 0.4]

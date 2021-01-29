@@ -10,7 +10,7 @@ from compas.utilities import i_to_rgb
 
 from compas_view2 import app
 
-viewer = app.App(width=800, height=500, viewmode='ghosted')
+viewer = app.App()
 
 mesh = Mesh.from_off(compas.get('tubemesh.off'))
 viewer.add(mesh, show_vertices=False)

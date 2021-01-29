@@ -4,6 +4,7 @@ from .shapeobject import ShapeObject
 
 
 class SphereObject(ShapeObject):
+    """Object for displaying COMPAS sphere geometry."""
 
     def __init__(self, data, *args, u=16, v=16, **kwargs):
         super().__init__(data, *args, **kwargs)

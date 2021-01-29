@@ -6,6 +6,7 @@ from .object import Object
 
 
 class MeshObject(Object):
+    """Object for displaying COMPAS mesh data structures."""
 
     default_color_vertices = [0.2, 0.2, 0.2]
     default_color_edges = [0.4, 0.4, 0.4]

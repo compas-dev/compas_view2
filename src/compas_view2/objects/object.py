@@ -5,6 +5,7 @@ DATA_VIEW = {}
 
 
 class Object(ABC):
+    """Base object."""
 
     @staticmethod
     def register(dtype, vtype):

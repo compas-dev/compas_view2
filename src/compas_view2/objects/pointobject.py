@@ -6,6 +6,7 @@ from .object import Object
 
 
 class PointObject(Object):
+    """Object for displaying COMPAS point geometry."""
 
     default_color = [0.1, 0.1, 0.1]
 

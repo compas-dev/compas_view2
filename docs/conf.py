@@ -1,3 +1,4 @@
+# flake8: noqa
 # -*- coding: utf-8 -*-
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -158,6 +159,9 @@ html_theme_options = {
     "package_name"    : "compas_view2",
     "package_title"   : project,
     "package_version" : release,
+    "package_author"  : "compas-dev",
+    "package_docs"    : "https://compas.dev/compas_view2",
+    "package_repo"    : "https://github.com/compas-dev/compas_view2"
 }
 
 html_context = {}

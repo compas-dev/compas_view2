@@ -9,37 +9,7 @@ Second generation viewers for the COMPAS framework
 
 ## Installation
 
-## Windows
-
-```bash
-conda create -n view2 python=3.8 cython freeglut --yes
-conda activate view2
-pip install -r requirements-dev.txt
-```
-
-## Mac
-
-```bash
-conda create -n view2 python=3.8 cython python.app --yes
-conda activate view2
-pip install -r requirements-dev.txt
-```
-
-By installing `python.app` you can use `pythonw` to run the viewers instead of `python`.
-This ensures that all components work as expected.
-
-To configure VS Code to use `pythonw`, change the python path in the settings of the workspace.
-In `.vscode/settings.json`
-
-```json
-{
-    ...
-
-    "python.pythonPath": "/Users/xxx/anaconda3/envs/view2/bin/pythonw"
-
-    ...
-}
-```
+See the [Getting Started](https://compas.dev/compas_view2/latest/gettingstarted.html) instructions in the docs.
 
 ## Features
 

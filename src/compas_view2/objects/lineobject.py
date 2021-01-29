@@ -6,6 +6,7 @@ from .object import Object
 
 
 class LineObject(Object):
+    """Object for displaying COMPAS line geometry."""
 
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
