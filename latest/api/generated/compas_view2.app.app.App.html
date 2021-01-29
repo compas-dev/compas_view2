@@ -140,48 +140,9 @@ to modify the package source code.</p>
 All added COMPAS objects are wrapped in a viewer object and stored in a dictionary,
 mapping the object’s ID (<code class="docutils literal notranslate"><span class="pre">id(object)</span></code>) to the instance.</p>
 <p class="rubric">Examples</p>
-<p>To use the app in ‘interactive’ mode.</p>
 <div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2</span> <span class="kn">import</span> <span class="n">app</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">App</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-</div>
-<p>To use the app in ‘scripted’ mode.</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Network</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Plane</span><span class="p">,</span> <span class="n">Box</span><span class="p">,</span> <span class="n">Torus</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2</span> <span class="kn">import</span> <span class="n">app</span>
-</code></pre></div>
-</div>
-<p>Create an instance of the viewer.</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">App</span><span class="p">()</span>
-</code></pre></div>
-</div>
-<p>Add a mesh.</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="o">.</span><span class="n">from_off</span><span class="p">(</span><span class="n">compas</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tubemesh.off&#39;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">show_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<p>Add a network.</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">network</span> <span class="o">=</span> <span class="n">Network</span><span class="o">.</span><span class="n">from_obj</span><span class="p">(</span><span class="n">compas</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;grid_irregular.obj&#39;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">network</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<p>Add a box.</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">show_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<p>Add a ring.</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plane</span> <span class="o">=</span> <span class="n">Plane</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">torus</span> <span class="o">=</span> <span class="n">Torus</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">torus</span><span class="p">,</span> <span class="n">show_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<p>Display the viewer with all added objects.</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 <p class="rubric">Methods</p>
@@ -192,49 +153,31 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.about.html#compas_view2.app.app.App.about" title="compas_view2.app.app.App.about"><code class="xref py py-obj docutils literal notranslate"><span class="pre">about</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Display the about message as defined in the config file.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.add.html#compas_view2.app.app.App.add" title="compas_view2.app.app.App.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a>(data, **kwargs)</p></td>
-<td><p></p></td>
+<td><p>Add a COMPAS object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.add_action.html#compas_view2.app.app.App.add_action" title="compas_view2.app.app.App.add_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_action</span></code></a>(item, parent)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.critical.html#compas_view2.app.app.App.critical" title="compas_view2.app.app.App.critical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">critical</span></code></a>(message)</p></td>
+<td><p>Display a critical warning.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.add_menubar_items.html#compas_view2.app.app.App.add_menubar_items" title="compas_view2.app.app.App.add_menubar_items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_menubar_items</span></code></a>(items, parent)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.add_toolbar_items.html#compas_view2.app.app.App.add_toolbar_items" title="compas_view2.app.app.App.add_toolbar_items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_toolbar_items</span></code></a>(items, parent)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.critical.html#compas_view2.app.app.App.critical" title="compas_view2.app.app.App.critical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">critical</span></code></a>(message)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.info.html#compas_view2.app.app.App.info" title="compas_view2.app.app.App.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a>(message)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.init_menubar.html#compas_view2.app.app.App.init_menubar" title="compas_view2.app.app.App.init_menubar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_menubar</span></code></a>(items)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.init_statusbar.html#compas_view2.app.app.App.init_statusbar" title="compas_view2.app.app.App.init_statusbar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_statusbar</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.init_toolbar.html#compas_view2.app.app.App.init_toolbar" title="compas_view2.app.app.App.init_toolbar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_toolbar</span></code></a>(items)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.info.html#compas_view2.app.app.App.info" title="compas_view2.app.app.App.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a>(message)</p></td>
+<td><p>Display info.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.question.html#compas_view2.app.app.App.question" title="compas_view2.app.app.App.question"><code class="xref py py-obj docutils literal notranslate"><span class="pre">question</span></code></a>(message)</p></td>
-<td><p></p></td>
+<td><p>Ask a question.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.resize.html#compas_view2.app.app.App.resize" title="compas_view2.app.app.App.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(width, height)</p></td>
-<td><p></p></td>
+<td><p>Resize the main window programmatically.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.show.html#compas_view2.app.app.App.show" title="compas_view2.app.app.App.show"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Show the viewer window.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.app.App.status.html#compas_view2.app.app.App.status" title="compas_view2.app.app.App.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span></code></a>(message)</p></td>
-<td><p></p></td>
+<td><p>Display a message in the status bar.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.app.App.warning.html#compas_view2.app.app.App.warning" title="compas_view2.app.app.App.warning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">warning</span></code></a>(message)</p></td>
-<td><p></p></td>
+<td><p>Display a warning.</p></td>
 </tr>
 </tbody>
 </table>
