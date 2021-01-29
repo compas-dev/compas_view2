@@ -2,7 +2,7 @@ from math import sin, cos, radians
 import numpy as np
 from compas.geometry import Translation, Rotation
 
-from .matrices import ortho, perspective
+from .matrices import perspective
 
 
 class Camera:

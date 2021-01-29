@@ -3,10 +3,6 @@ import os
 import json
 
 from functools import partial
-from typing import Optional
-
-import os
-os.environ['QT_MAC_WANTS_LAYER'] = '1'
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
@@ -17,7 +13,6 @@ from ..objects import Object
 from .controller import Controller
 from .selector import Selector
 
-
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
 CONFIG = os.path.join(HERE, 'config.json')
@@ -26,30 +21,115 @@ VERSIONS = {'120': (2, 1), '330': (3, 3)}
 
 
 class App:
-    """Viewer app and main window.
+    """Viewer app.
+
+    The app has a (main) window with a central OpenGL widget (i.e. the "view"),
+    and a menubar, toolbar, and statusbar.
+    The menubar provides access to all supported "actions".
+    The toolbar is meant to be a "quicknav" to a selected set of actions.
+    The app supports rotate/pan/zoom, and object selection via picking or box selections.
+
+    Currently the app uses OpenGL 2.2 and GLSL 120 with a "compatibility" profile.
+    Support for OpenGL 3.3 and GLSL 330 with a "core" profile is under development.
+
+    Parameters
+    ----------
+    version: '120' | '330', optional
+        The version of the GLSL used by the shaders.
+        Default is ``'120'`` with a compatibility profile.
+        The option ``'330'`` is not yet available.
+    width: int, optional
+        The width of the app window at startup.
+        Default is ``800``.
+    height: int, optional
+        The height of the app window at startup.
+        Default is ``500``.
+    viewmode: 'shaded' | 'ghosted', optional
+        The display mode of the OpenGL view.
+        Default is ``'shaded'``.
+        In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
+    config: dict | filepath, optional
+        A configuration dict for the UI, or a path to a JSON file containing such a dict.
+        Default is ``None``, in which case the default configuration is used.
+    controller: :class:`compas_view2.app.Controller`, optional
+        A custom controller corresponding to a custom config file.
+        Default is ``None``, in which case the default controller is used,
+        matching the default config file.
 
     Attributes
     ----------
-    main : :class:`compas_view2.MainWindow`
+    window: :class:`PySide2.QtWidgets.QMainWindow`
         The main window of the application.
         This window contains the view and any other UI components
         such as the menu, toolbar, statusbar, ...
-    view : :class:`compas_view2.View`
+    view: :class:`compas_view2.View`
         Instance of OpenGL view.
         This view is the central widget of the main window.
+    controller: :class:`compas_view2.app.Controller`
+        The action controller of the app.
 
-    Methods
-    -------
-    add
-    show
+    Notes
+    -----
+    The app can currently only be used "as-is".
+    This means that there is no formal mechanism for adding actions to the controller
+    or to add functionality to the shader, other than by extending the core classes.
+    In the future, such mechanism will be provided by allowing the user to overwrite
+    the configuration file and add actions to the controller, without having
+    to modify the package source code.
+
+    Currently the app has no scene graph.
+    All added COMPAS objects are wrapped in a viewer object and stored in a dictionary,
+    mapping the object's ID (``id(object)``) to the instance.
 
     Examples
     --------
-    >>>
+    To use the app in 'interactive' mode.
+
+    >>> from compas_view2 import app
+    >>> viewer = app.App()
+    >>> viewer.show()
+
+    To use the app in 'scripted' mode.
+
+    >>> import compas
+    >>> from compas.datastructures import Network
+    >>> from compas.datastructures import Mesh
+    >>> from compas.geometry import Frame, Plane, Box, Torus
+    >>> from compas_view2 import app
+
+    Create an instance of the viewer.
+
+    >>> viewer = app.App()
+
+    Add a mesh.
+
+    >>> mesh = Mesh.from_off(compas.get('tubemesh.off'))
+    >>> viewer.add(mesh, show_vertices=False)
+
+    Add a network.
+
+    >>> network = Network.from_obj(compas.get('grid_irregular.obj'))
+    >>> viewer.add(network)
+
+    Add a box.
+
+    >>> frame = Frame(point, [1, 0, 0], [0, 1, 0])
+    >>> box = Box(frame, 0.1, 0.1, 0.1)
+    >>> viewer.add(box, show_vertices=False)
+
+    Add a ring.
+
+    >>> plane = Plane(point, [0, 0, 1])
+    >>> torus = Torus(plane, r1, r2)
+    >>> viewer.add(torus, show_vertices=False)
+
+    Display the viewer with all added objects.
+
+    >>> viewer.show()
 
     """
 
-    def __init__(self, version: str = '120', width: int = 800, height: int = 500, viewmode: str = 'shaded'):
+    def __init__(self, version='120', width=800, height=500, viewmode='shaded', controller_cls=None, config=None):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -79,7 +159,9 @@ class App:
         self.view = View(self, mode=viewmode)
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
-        self.controller = Controller(self)
+
+        controller_cls = controller_cls or Controller
+        self.controller = controller_cls(self)
 
         self._app = app
         self._app.references.add(self.window)
@@ -87,10 +169,13 @@ class App:
 
         self.init_statusbar()
 
-        with open(CONFIG) as f:
-            config = json.load(f)
-            self.init_menubar(config.get("menubar"))
-            self.init_toolbar(config.get("toolbar"))
+        config = config or CONFIG
+        if not isinstance(config, dict):
+            with open(config) as f:
+                config = json.load(f)
+
+        self.init_menubar(config.get("menubar"))
+        self.init_toolbar(config.get("toolbar"))
 
         self.resize(width, height)
 
@@ -137,8 +222,8 @@ class App:
         toolbar.setMovable(False)
         toolbar.setObjectName('Tools')
         toolbar.setIconSize(QtCore.QSize(24, 24))
-        undotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', self.undo)
-        redotool = toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', self.redo)
+        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', self.undo)
+        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', self.redo)
 
     def add_menubar_items(self, items, parent):
         if not items:

@@ -1,6 +1,4 @@
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PySide2.QtCore import QObject, QRunnable, QThreadPool, Slot, Signal
 import traceback
 import sys
 
@@ -8,9 +6,9 @@ import sys
 class WorkerSignals(QObject):
     """Signals to allow worker to communicate with outside in event-driven manner
     """
-    finished = pyqtSignal()
-    error = pyqtSignal(tuple)
-    result = pyqtSignal(object)
+    finished = Signal()
+    error = Signal(tuple)
+    result = Signal(object)
 
 
 class Worker(QRunnable):
@@ -27,7 +25,7 @@ class Worker(QRunnable):
         self.signals = WorkerSignals()
         self.no_signals = False
 
-    @pyqtSlot()
+    @Slot()
     def run(self):
         """Execute the worker function, send on signals on different scenarios
         """
@@ -36,7 +34,7 @@ class Worker(QRunnable):
         else:
             try:
                 result = self.fn(*self.args, **self.kwargs)
-            except:
+            except Exception:
                 traceback.print_exc()
                 exctype, value = sys.exc_info()[:2]
                 self.signals.error.emit(

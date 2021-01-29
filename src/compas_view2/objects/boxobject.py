@@ -1,5 +1,3 @@
-from compas.datastructures import Mesh
-
 from .shapeobject import ShapeObject
 
 

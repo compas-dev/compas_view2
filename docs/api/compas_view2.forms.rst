@@ -1,8 +1,14 @@
 ********************************************************************************
-API Reference
+forms
 ********************************************************************************
 
-.. toctree::
-    :maxdepth: 3
+.. currentmodule:: compas_view2.forms
 
-    api/compas_view2
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    PointForm
+    SphereForm
+    TorusForm

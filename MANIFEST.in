@@ -5,6 +5,8 @@ prune data
 prune docs
 prune tests
 prune temp
+prune scripts
+prune examples
 
 include LICENSE
 include README.md

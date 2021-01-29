@@ -1,4 +1,3 @@
-from compas.datastructures import Mesh
 from compas.utilities import flatten
 
 from ..buffers import make_index_buffer, make_vertex_buffer
@@ -204,7 +203,7 @@ class MeshObject(Object):
         # back
         shader.bind_attribute('position', self.back['positions'])
         shader.draw_triangles(elements=self.back['elements'], n=self.back['n'])
-        
+
         # reset
         shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])

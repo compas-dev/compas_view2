@@ -1,8 +1,13 @@
 ********************************************************************************
-API Reference
+views
 ********************************************************************************
 
-.. toctree::
-    :maxdepth: 3
+.. currentmodule:: compas_view2.views
 
-    api/compas_view2
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    View120
+    View330

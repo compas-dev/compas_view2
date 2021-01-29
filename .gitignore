@@ -116,3 +116,5 @@ temp/**
 scripts/__old/**
 
 .vscode
+
+docs/api/generated/

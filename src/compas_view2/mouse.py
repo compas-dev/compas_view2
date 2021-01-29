@@ -13,4 +13,3 @@ class Mouse:
 
     def dy(self):
         return self.pos.y() - self.last_pos.y()
-

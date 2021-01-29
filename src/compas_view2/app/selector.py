@@ -83,7 +83,7 @@ class Selector:
         Returns
         -------
         rgb_key
-            a tuple of rgb color value in integer 
+            a tuple of rgb color value in integer
         """
         while True:
             rgb_key = (randint(0, 255), randint(0, 255), randint(0, 255))
@@ -96,7 +96,7 @@ class Selector:
         Returns
         -------
         rgb_key
-            a rgb tuple key that represents this object 
+            a rgb tuple key that represents this object
         """
         rgb_key = self.get_rgb_key()
         self.instances[rgb_key] = obj
@@ -244,8 +244,8 @@ class Selector:
         """
         self.performing_interactive_selection = False
 
-    def perform_box_selection(self, x, y):
-        """Start or update a box selection session.
+    def reset_box_selection(self, x, y):
+        """Reset box selection start position
 
         Parameters
         ----------
@@ -258,10 +258,27 @@ class Selector:
         -------
         None
         """
-        # initialize the box selection session if needed
-        if self.select_from != "box":
-            self.select_from = "box"
-            # Set the start mouse location
-            self.box_select_coords[:2] = x, y
+        # Set the start mouse location
+        self.box_select_coords[:2] = x, y
+
+    def perform_box_selection(self, x, y):
+        """Update a box selection session.
+
+        Parameters
+        ----------
+        x : int
+            current x coordinate of the mouse
+        y : int
+            current y coordinate of the mouse
+
+        Returns
+        -------
+        None
+        """
         # Set the current mouse location
-        self.box_select_coords[2:] = x, y
+        box_width = abs(x - self.box_select_coords[0])
+        box_height = abs(y - self.box_select_coords[1])
+
+        if box_width > 0 and box_height > 0:
+            self.select_from = "box"
+            self.box_select_coords[2:] = x, y
