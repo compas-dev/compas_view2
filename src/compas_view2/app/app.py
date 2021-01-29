@@ -163,17 +163,18 @@ class App:
         controller_cls = controller_cls or Controller
         self.controller = controller_cls(self)
 
-        self._app = app
-        self._app.references.add(self.window)
-        self.selector = Selector(self)
-
-        self.init_statusbar()
-
         config = config or CONFIG
         if not isinstance(config, dict):
             with open(config) as f:
                 config = json.load(f)
 
+        self.config = config
+
+        self._app = app
+        self._app.references.add(self.window)
+        self.selector = Selector(self)
+
+        self.init_statusbar()
         self.init_menubar(config.get("menubar"))
         self.init_toolbar(config.get("toolbar"))
 
@@ -197,6 +198,24 @@ class App:
     def show(self):
         self.window.show()
         self._app.exec_()
+
+    def about(self):
+        QtWidgets.QMessageBox.about(self.window, 'About', self.config['messages']['about'])
+
+    def info(self, message):
+        QtWidgets.QMessageBox.information(self.window, 'Info', message)
+
+    def question(self, message):
+        pass
+
+    def warning(self, message):
+        QtWidgets.QMessageBox.warning(self.window, 'Warning', message)
+
+    def critical(self, message):
+        QtWidgets.QMessageBox.critical(self.window, 'Critical', message)
+
+    def status(self, message):
+        self.statusbar.showMessage(message)
 
     # ==============================================================================
     # UI
