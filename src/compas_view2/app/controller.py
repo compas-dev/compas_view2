@@ -3,7 +3,6 @@ from OpenGL import GL
 from PySide2 import QtWidgets
 
 from ..forms import PointForm
-from ..forms import LineForm
 from ..forms import SphereForm
 from ..forms import TorusForm
 from .worker import Worker
@@ -84,29 +83,6 @@ class Controller:
             z = form.z
             point = Point(x, y, z)
             self.app.add(point)
-
-    def add_vector(self):
-        pass
-
-    def add_line(self):
-        from compas.geometry import Point, Line
-        form = LineForm()
-        if form.exec_():
-            Ax = form.Ax
-            Ay = form.Ay
-            Az = form.Az
-            Bx = form.Bx
-            By = form.By
-            Bz = form.Bz
-            show_points = form.show_points
-            if Ax != Bx or Ay != By or Az != Bz:
-                A = Point(Ax, Ay, Az)
-                B = Point(Bx, By, Bz)
-                line = Line(A, B)
-                self.app.add(line, show_points=show_points)
-
-    def add_circle(self):
-        pass
 
     @interactive
     def add_line_from_selected_points(self):

@@ -53,10 +53,7 @@
                     "items":
                     [
                         {"type": "action", "text": "Add Point", "action": "add_point"},
-                        {"type": "action", "text": "Add Vector", "action": "add_vector"},
-                        {"type": "action", "text": "Add Line", "action": "add_line"},
-                        {"type": "action", "text": "Add Circle", "action": "add_circle"},
-                        {"type": "action", "text": "Add Line From Selected Points", "action": "add_line_from_selected_points"}
+                        {"type": "action", "text": "Add Line [2 points]", "action": "add_line_from_selected_points"}
                     ]
                 },
                 {
