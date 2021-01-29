@@ -1,6 +1,6 @@
 # COMPAS Viewers 2
 
-**THIS PACKAGE IS UNDER DEVELOPMENT. USE IT AT YOUR OWN RISK :)**
+**THIS PACKAGE IS UNDER DEVELOPMENT. USE IT AT YOUR OWN RISK** :)
 
 Second generation viewers for the COMPAS framework
 
@@ -50,26 +50,6 @@ In `.vscode/settings.json`
 
 ## Examples
 
-`scripts/minimal_120.py`
-
-OpenGL 2.1 and GLSL 1.20 with Compatibility Profile works on Mac and on Windows (via Parallels).
-
-* VAO not supported.
-* Windows (my machine) only accepts drawing of elements (not arrays).
-* Defaults for shader values not supported.
-* Location binding not supported.
-
-```bash
-python scripts/minimal_120.py
-```
-
-`scripts/minimal_330.py`
-
-OpenGL 3.3 (or higher) and corresponding GLSL 3.30 (with Core Profile) works only on Mac (on my machine).
-
-* State management with VAOs
-* Modern OpenGL and GLSL only
-
 *Under Construction*...
 
 ## License
@@ -81,6 +61,8 @@ The free icons of FA are subject to a Creative Commons 4.0 license.
 More information about FA free and the icon license can be found here <https://fontawesome.com/license/free>.
 
 The icons bundled with this repo can be found in `src/compas_view2/icons`.
+
+## Known Issues
 
 ### Big Sur
 

@@ -24,7 +24,9 @@ def read(*names, **kwargs):
 
 long_description = read("README.md")
 requirements = read("requirements.txt").split("\n")
-optional_requirements = {}
+optional_requirements = {
+    'dev': read("requirements-dev.txt").split("\n")
+}
 
 setup(
     name="compas_view2",
@@ -32,7 +34,7 @@ setup(
     description="Second generation viewers for the COMPAS framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/blockresearchgroup/compas_view2",
+    url="https://github.com/compas-dev/compas_view2",
     author="tom van mele",
     author_email="van.mele@arch.ethz.ch",
     license="MIT license",
