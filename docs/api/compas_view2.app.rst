@@ -7,7 +7,5 @@ app
 .. autosummary::
     :toctree: generated/
 
-    app.App
-    controller.Controller
-    selector.Selector
-    worker.Worker
+    App
+    Controller
