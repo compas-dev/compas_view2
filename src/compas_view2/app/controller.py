@@ -55,6 +55,21 @@ class Controller:
     def to_ghosted(self):
         self.app.view.mode = 'ghosted'
 
+    def capture(self):
+        self.app.info('Not available yet...')
+
+    def view_front(self):
+        self.app.info('Not available yet...')
+
+    def view_right(self):
+        self.app.info('Not available yet...')
+
+    def view_top(self):
+        self.app.info('Not available yet...')
+
+    def view_perspective(self):
+        self.app.info('Not available yet...')
+
     # Actions: Scene
 
     def load_scene(self):

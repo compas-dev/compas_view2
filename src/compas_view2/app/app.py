@@ -201,6 +201,9 @@ class App:
     # UI
     # ==============================================================================
 
+    def _get_icon(self, icon):
+        return QtGui.QIcon(os.path.join(ICONS, icon))
+
     def _init_statusbar(self):
         self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
@@ -217,12 +220,11 @@ class App:
     def _init_toolbar(self, items):
         if not items:
             return
-        toolbar = self.window.addToolBar('Tools')
-        toolbar.setMovable(False)
-        toolbar.setObjectName('Tools')
-        toolbar.setIconSize(QtCore.QSize(24, 24))
-        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', self.undo)
-        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', self.redo)
+        self.toolbar = self.window.addToolBar('Tools')
+        self.toolbar.setMovable(False)
+        self.toolbar.setObjectName('Tools')
+        self.toolbar.setIconSize(QtCore.QSize(16, 16))
+        self._add_toolbar_items(items, self.toolbar)
 
     def _add_menubar_items(self, items, parent):
         if not items:
@@ -263,6 +265,6 @@ class App:
         args = item.get('args', None) or []
         kwargs = item.get('kwargs', None) or {}
         if 'icon' in item:
-            icon = QtGui.QIcon(item['icon'])
+            icon = self._get_icon(item['icon'])
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))
