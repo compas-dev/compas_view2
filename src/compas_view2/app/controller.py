@@ -56,7 +56,14 @@ class Controller:
         self.app.view.mode = 'ghosted'
 
     def capture(self):
-        self.app.info('Not available yet...')
+        result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
+        if not result:
+            return
+        filepath = Path(result[0])
+        if not filepath.suffix:
+            return
+        qimage = self.app.view.grabFramebuffer()
+        qimage.save(str(filepath), filepath.suffix[1:])
 
     def view_front(self):
         self.app.info('Not available yet...')
