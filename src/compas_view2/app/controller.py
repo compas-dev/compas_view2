@@ -37,25 +37,31 @@ class Controller:
         return wrapped
 
     def about(self):
+        """Display the about message."""
         self.app.about()
 
     def opengl_version(self):
+        """Display the OpenGL version."""
         value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
         self.app.info(value)
 
     def glsl_version(self):
+        """Display the version of the shader language."""
         value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
         self.app.info(value)
 
     # Actions: View
 
     def to_shaded(self):
+        """Switch the view to shaded."""
         self.app.view.mode = 'shaded'
 
     def to_ghosted(self):
+        """Switch the view to ghosted."""
         self.app.view.mode = 'ghosted'
 
     def capture(self):
+        """Capture a screenshot."""
         result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
         if not result:
             return
@@ -66,43 +72,63 @@ class Controller:
         qimage.save(str(filepath), filepath.suffix[1:])
 
     def view_front(self):
+        """Swtich to a front view."""
         self.app.info('Not available yet...')
 
     def view_right(self):
+        """Swtich to a right view."""
         self.app.info('Not available yet...')
 
     def view_top(self):
+        """Swtich to a top view."""
         self.app.info('Not available yet...')
 
     def view_perspective(self):
+        """Swtich to a perspective view."""
         self.app.info('Not available yet...')
 
     # Actions: Scene
 
     def load_scene(self):
+        """Load a scene from a file."""
         self.app.info('Not available yet...')
 
     def save_scene(self):
+        """Save the current scene to a file."""
         self.app.info('Not available yet...')
 
     def redraw_scene(self):
-        self.app.info('Not available yet...')
+        """Redraw the current scene."""
+        self.app.view.update()
 
     def clear_scene(self):
+        """Clear all objects from the current scene."""
         self.app.info('Not available yet...')
 
     def undo(self):
+        """Undo the last scene modification."""
         self.app.info('Not available yet...')
 
     def redo(self):
+        """Redo the last scene modification."""
         self.app.info('Not available yet...')
 
     def history(self):
+        """Display the undo history of the scene."""
         self.app.info('Not available yet...')
 
     # Actions: Primitives
 
-    def add_point(self):
+    def add_point(self) -> Union[Point, None]:
+        """Add a point at specific XYZ coordinates.
+
+        Returns
+        -------
+        :class:`Point`
+            If the operation was successful
+        None
+            Otherwise
+        """
         form = PointForm()
         if form.exec_():
             x = form.x
