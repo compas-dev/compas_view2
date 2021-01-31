@@ -8,6 +8,7 @@ forms
 .. autosummary::
     :toctree: generated/
     :nosignatures:
+    :template: autosummary/class_separate_inherited.rst
 
     PointForm
     SphereForm
