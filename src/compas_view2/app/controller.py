@@ -52,15 +52,17 @@ class Controller:
 
     # Actions: View
 
-    def to_shaded(self):
+    def view_shaded(self):
         """Switch the view to shaded."""
         self.app.view.mode = 'shaded'
+        self.app.view.update()
 
-    def to_ghosted(self):
+    def view_ghosted(self):
         """Switch the view to ghosted."""
         self.app.view.mode = 'ghosted'
+        self.app.view.update()
 
-    def capture(self):
+    def view_capture(self):
         """Capture a screenshot."""
         result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
         if not result:
@@ -73,19 +75,23 @@ class Controller:
 
     def view_front(self):
         """Swtich to a front view."""
-        self.app.info('Not available yet...')
+        self.app.view.current = self.app.view.FRONT
+        self.app.view.update()
 
     def view_right(self):
         """Swtich to a right view."""
-        self.app.info('Not available yet...')
+        self.app.view.current = self.app.view.RIGHT
+        self.app.view.update()
 
     def view_top(self):
         """Swtich to a top view."""
-        self.app.info('Not available yet...')
+        self.app.view.current = self.app.view.TOP
+        self.app.view.update()
 
     def view_perspective(self):
         """Swtich to a perspective view."""
-        self.app.info('Not available yet...')
+        self.app.view.current = self.app.view.PERSPECTIVE
+        self.app.view.update()
 
     # Actions: Scene
 

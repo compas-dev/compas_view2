@@ -1,4 +1,3 @@
-from typing import Tuple
 from OpenGL import GL
 
 from PySide2 import QtCore, QtWidgets
@@ -9,45 +8,52 @@ from ..objects import GridObject
 
 
 class View(QtWidgets.QOpenGLWidget):
-    """Base OpenGL widget."""
+    """Base OpenGL view widget.
+
+    Parameters
+    ----------
+    app: :class:`compas_view2.app.App`
+        The parent application of the view.
+    background_color: tuple[float, float, float, float], optional
+        The background or "clear" color of the view.
+        Default is ``(1.0, 1.0, 1.0, 1.0)``.
+    selection_color: tuple[float, float, float], optional
+        The highlight color of selected objects.
+        Default is ``(1.0, 1.0, 0.0)``.
+    mode: 'shaded' | 'ghosted', optional
+        The display mode.
+        Default is ``'shaded'``.
+    show_grid: bool, optional
+        Flag for turning the grid on or off.
+        Default is ``True``, which turns the grid on.
+    """
+
+    FRONT = 1
+    RIGHT = 2
+    TOP = 3
+    PERSPECTIVE = 4
 
     def __init__(self,
                  app,
-                 color: Tuple[float, float, float] = (1, 1, 1, 1),
-                 selection_color: Tuple[float, float, float] = (1.0, 1.0, 0.0),
-                 mode: str = 'shaded',
-                 show_grid: bool = True):
+                 background_color=(1, 1, 1, 1),
+                 selection_color=(1.0, 1.0, 0.0),
+                 mode='shaded',
+                 show_grid=True):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
+        self._current = View.PERSPECTIVE
         self.shader = None
         self.app = app
-        self.color = color
+        self.color = background_color
         self.mode = mode
         self.selection_color = selection_color
         self.show_grid = show_grid
-        self.camera = Camera()
+        self.camera = Camera(self)
         self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
         self.keys = {"shift": False, "control": False}
-
-    def clear(self):
-        GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-
-    def initializeGL(self):
-        GL.glClearColor(* self.color)
-        GL.glPolygonOffset(1.0, 1.0)
-        GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
-        GL.glEnable(GL.GL_CULL_FACE)
-        GL.glCullFace(GL.GL_BACK)
-        GL.glEnable(GL.GL_DEPTH_TEST)
-        GL.glDepthFunc(GL.GL_LESS)
-        GL.glEnable(GL.GL_BLEND)
-        GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
-        GL.glEnable(GL.GL_POINT_SMOOTH)
-        GL.glEnable(GL.GL_LINE_SMOOTH)
-        self.init()
 
     @property
     def mode(self):
@@ -67,38 +73,99 @@ class View(QtWidgets.QOpenGLWidget):
             self.update()
 
     @property
+    def current(self):
+        return self._current
+
+    @current.setter
+    def current(self, current):
+        self._current = current
+        if self.shader:
+            self.shader.bind()
+            self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+            self.shader.release()
+            self.update()
+
+    @property
     def opacity(self):
         return self._opacity
+
+    def clear(self):
+        """Clear the view."""
+        GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
+
+    def initializeGL(self):
+        """Initialize the OpenGL canvas.
+
+        This implements the virtual funtion of the OpenGL widget.
+        See the PySide2 docs [1]_ for more info.
+        It sets the clear color of the view,
+        and enables culling, depth testing, blending, point smoothing, and line smoothing.
+
+        To extend the behaviour of this function,
+        you can implement :meth:`~compas_view2.views.View.init`.
+
+        References
+        ----------
+        .. [1] https://doc.qt.io/qtforpython-5.12/PySide2/QtWidgets/QOpenGLWidget.html#PySide2.QtWidgets.PySide2.QtWidgets.QOpenGLWidget.initializeGL
+
+        """
+        GL.glClearColor(* self.color)
+        # GL.glPolygonOffset(1.0, 1.0)
+        # GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
+        GL.glEnable(GL.GL_CULL_FACE)
+        GL.glCullFace(GL.GL_BACK)
+        GL.glEnable(GL.GL_DEPTH_TEST)
+        GL.glDepthFunc(GL.GL_LESS)
+        GL.glEnable(GL.GL_BLEND)
+        GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
+        GL.glEnable(GL.GL_POINT_SMOOTH)
+        GL.glEnable(GL.GL_LINE_SMOOTH)
+        self.init()
 
     def init(self):
         pass
 
-    def resizeGL(self, w: int, h: int):
+    def resizeGL(self, w, h):
+        """Resize the OpenGL canvas.
+
+        This implements the virtual funtion of the OpenGL widget.
+        See the PySide2 docs [1]_ for more info.
+
+        To extend the behaviour of this function,
+        you can implement :meth:`~compas_view2.views.View.resize`.
+
+        Parameters
+        ----------
+        w: float
+            The width of the canvas.
+        h: float
+            The height of the canvas.
+
+        References
+        ----------
+        .. [1] https://doc.qt.io/qtforpython-5.12/PySide2/QtWidgets/QOpenGLWidget.html#PySide2.QtWidgets.PySide2.QtWidgets.QOpenGLWidget.resizeGL
+
+        """
         GL.glViewport(0, 0, w, h)
         self.app.width = w
         self.app.height = h
         self.resize(w, h)
 
-    def resize(self, w: int, h: int):
+    def resize(self, w, h):
         pass
 
     def paintGL(self):
         self.clear()
-
         if self.app.selector.paint_instance:
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
             if self.app.selector.select_from == "box":
-                self.app.selector.instance_map = self.paint_instances(
-                    self.app.selector.box_select_coords)
+                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
             self.app.selector.paint_instance = False
             self.clear()
-
         self.paint()
-
         if self.app.selector.select_from == "box":
-            self.shader.draw_2d_box(
-                self.app.selector.box_select_coords, self.app.width, self.app.height)
+            self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
 
     def paint_instances(self):
         pass
