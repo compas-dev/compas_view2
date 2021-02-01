@@ -40,8 +40,6 @@ class Arrow(Shape):
 
     """
 
-    __slots__ = ['_circle', '_height']
-
     def __init__(
             self, position=[0, 0, 0],
             direction=[0, 0, 1],
