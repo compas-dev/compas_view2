@@ -6,6 +6,7 @@ from compas_view2.app.timer import Timer
 def movepoint():
     print('test')
     obj._data[0] += 1
+    obj.update()
     viewer.view.update()
 
 
