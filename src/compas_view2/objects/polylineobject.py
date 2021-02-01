@@ -11,8 +11,11 @@ class PolylineObject(Object):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, name=None, is_selected=False,
-                 show_point=False,
+    def __init__(self,
+                 data,
+                 name=None,
+                 is_selected=False,
+                 show_points=False,
                  pointcolor=None,
                  pointsize=10,
                  linecolor=None,
@@ -20,7 +23,7 @@ class PolylineObject(Object):
         super().__init__(data, name=name, is_selected=is_selected)
         self._points = None
         self._polylines = None
-        self.show_point = show_point
+        self.show_points = show_points
         self.pointcolor = pointcolor
         self.pointsize = pointsize
         self.linecolor = linecolor
@@ -49,10 +52,8 @@ class PolylineObject(Object):
         }
         # lines
         color = self.linecolor or self.default_color_line
-        positions = [list(polyline.points[i])
-                     for i in range(len(polyline.points))]
-        colors = list(flatten([[color, color]
-                               for i in range(len(positions))]))
+        positions = [list(polyline.points[i]) for i in range(len(polyline.points))]
+        colors = list(flatten([[color, color] for i in range(len(positions))]))
         elements = [[i, i + 1] for i in range(len(positions) - 1)]
         self._polylines = {
             'positions': make_vertex_buffer(list(flatten(positions))),
@@ -64,7 +65,7 @@ class PolylineObject(Object):
     def draw(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
-        if self.show_point:
+        if self.show_points:
             shader.bind_attribute('position', self.points['positions'])
             shader.bind_attribute('color', self.points['colors'])
             shader.draw_points(size=self.pointsize,

@@ -11,17 +11,19 @@ class LineObject(Object):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, name=None, is_selected=False,
-                 show_point=False,
+    def __init__(self,
+                 data,
+                 name=None,
+                 is_selected=False,
+                 show_points=False,
                  pointcolor=None,
                  pointsize=10,
                  linecolor=None,
                  linewidth=1):
-
         super().__init__(data, name=name, is_selected=is_selected)
         self._points = None
         self._lines = None
-        self.show_point = show_point
+        self.show_points = show_points
         self.pointcolor = pointcolor
         self.pointsize = pointsize
         self.linecolor = linecolor
@@ -63,7 +65,7 @@ class LineObject(Object):
     def draw(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
-        if self.show_point:
+        if self.show_points:
             shader.bind_attribute('position', self.points['positions'])
             shader.bind_attribute('color', self.points['colors'])
             shader.draw_points(size=self.pointsize,
