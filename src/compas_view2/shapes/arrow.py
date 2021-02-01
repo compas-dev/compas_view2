@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 from compas.geometry import Vector
 from compas.geometry import Cone
 from compas.geometry import Circle
@@ -9,6 +5,7 @@ from compas.geometry import Cylinder
 from compas.geometry import Plane
 from compas.geometry import Shape
 from compas.datastructures import Mesh
+
 
 __all__ = ['Arrow']
 
@@ -44,7 +41,7 @@ class Arrow(Shape):
             self, position=[0, 0, 0],
             direction=[0, 0, 1],
             head_portion=0.3, head_width=0.1, body_width=0.02):
-        super(Arrow, self).__init__()
+        super().__init__()
         self.position = Vector(*position)
         self.direction = Vector(*direction)
         self.head_portion = head_portion
@@ -116,7 +113,7 @@ class Arrow(Shape):
         ----------
         u : int, optional
             Number of faces in the "u" direction.
-            Default is ``10``.
+            Default is ``3``.
 
         Returns
         -------
@@ -139,8 +136,7 @@ class Arrow(Shape):
         body_center = self.position + self.direction*(1-self.head_portion)/2
         plane = Plane(body_center, self.direction)
         circle = Circle(plane, self.body_width*self.direction.length)
-        cylinder = Cylinder(circle, self.direction.length *
-                            (1 - self.head_portion))
+        cylinder = Cylinder(circle, self.direction.length * (1 - self.head_portion))
         v, f = cylinder.to_vertices_and_faces(u=u)
         body = Mesh.from_vertices_and_faces(v, f)
 
