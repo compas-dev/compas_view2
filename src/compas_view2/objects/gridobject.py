@@ -6,6 +6,7 @@ from .object import Object
 
 
 class GridObject(Object):
+    """Object for displaying a grid of lines in the XY plane of the world coordinate system."""
 
     default_color_edges = [0.75, 0.75, 0.75]
 

@@ -4,6 +4,7 @@ from .shapeobject import ShapeObject
 
 
 class TorusObject(ShapeObject):
+    """Object for displaying COMPAS torus geometry."""
 
     def __init__(self, data, *args, u=16, v=16, **kwargs):
         super().__init__(data, *args, **kwargs)

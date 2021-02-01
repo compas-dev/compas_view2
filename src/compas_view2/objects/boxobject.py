@@ -2,4 +2,4 @@ from .shapeobject import ShapeObject
 
 
 class BoxObject(ShapeObject):
-    pass
+    """Object for displaying COMPAS box geometry."""

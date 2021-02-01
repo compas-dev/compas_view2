@@ -1,3 +1,4 @@
+# flake8: noqa
 # -*- coding: utf-8 -*-
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -24,7 +25,7 @@ version = ".".join(release.split(".")[0:2])
 
 master_doc = "index"
 source_suffix = [".rst", ]
-templates_path = ["_templates", ]
+templates_path = sphinx_compas_theme.get_autosummary_templates_path()
 exclude_patterns = []
 
 pygments_style   = "sphinx"
@@ -127,23 +128,25 @@ def linkcode_resolve(domain, info):
         return None
 
     module = importlib.import_module(info['module'])
-    filename = info['module'].replace('.', '/')
     parts = info['fullname'].split('.')
 
     if len(parts) == 1:
-        attr = getattr(module, info['fullname'])
-        lineno = inspect.getsourcelines(attr)[1]
+        obj = getattr(module, info['fullname'])
+        filename = inspect.getmodule(obj).__name__.replace('.', '/')
+        lineno = inspect.getsourcelines(obj)[1]
     elif len(parts) == 2:
-        cls_name, attr_name = parts
-        attr = getattr(getattr(module, cls_name), attr_name)
+        obj_name, attr_name = parts
+        obj = getattr(module, obj_name)
+        attr = getattr(obj, attr_name)
         if inspect.isfunction(attr):
+            filename = inspect.getmodule(obj).__name__.replace('.', '/')
             lineno = inspect.getsourcelines(attr)[1]
         else:
             return None
     else:
         return None
 
-    return f"https://github.com/compas-dev/compas_view2/src/{filename}.py#{lineno}"
+    return f"https://github.com/compas-dev/compas_view2/blob/master/src/{filename}.py#L{lineno}"
 
 # extlinks
 
@@ -158,6 +161,9 @@ html_theme_options = {
     "package_name"    : "compas_view2",
     "package_title"   : project,
     "package_version" : release,
+    "package_author"  : "compas-dev",
+    "package_docs"    : "https://compas.dev/compas_view2",
+    "package_repo"    : "https://github.com/compas-dev/compas_view2"
 }
 
 html_context = {}

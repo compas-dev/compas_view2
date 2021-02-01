@@ -4,5 +4,6 @@ API Reference
 
 .. toctree::
     :maxdepth: 3
+    :titlesonly:
 
     api/compas_view2

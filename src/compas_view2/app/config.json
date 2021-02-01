@@ -7,7 +7,7 @@
     [
         {
             "type": "menu",
-            "text": "COMPAS Viewer 2",
+            "text": "COMPASVIEW 2",
             "items":
             [
                 {"type": "action", "text": "About", "action": "about"},
@@ -25,10 +25,17 @@
                     "type": "radio",
                     "items":
                     [
-                        {"type": "action", "text": "Shaded", "checked": true, "action": "to_shaded"},
-                        {"type": "action", "text": "Ghosted", "checked": false, "action": "to_ghosted"}
+                        {"type": "action", "text": "Shaded", "checked": true, "action": "view_shaded"},
+                        {"type": "action", "text": "Ghosted", "checked": false, "action": "view_ghosted"}
                     ]
-                }
+                },
+                {"type": "separator"},
+                {"type": "action", "text": "Catpure", "action": "view_capture"},
+                {"type": "separator"},
+                {"type": "action", "text": "Front", "action": "view_front"},
+                {"type": "action", "text": "Right", "action": "view_right"},
+                {"type": "action", "text": "Top", "action": "view_top"},
+                {"type": "action", "text": "Perspective", "action": "view_perspective"}
             ]
         },
         {
@@ -88,5 +95,17 @@
                 {"type": "action", "text": "Add Mesh from File", "action": "add_mesh_from_file"}
             ]
         }
+    ],
+    "toolbar":
+    [
+        {"type": "action", "text": "Undo", "action": "undo", "icon": "undo-solid.svg"},
+        {"type": "action", "text": "Redo", "action": "redo", "icon": "redo-solid.svg"},
+        {"type": "separator"},
+        {"type": "action", "text": "Catpure", "action": "view_capture"},
+        {"type": "separator"},
+        {"type": "action", "text": "Front", "action": "view_front"},
+        {"type": "action", "text": "Right", "action": "view_right"},
+        {"type": "action", "text": "Top", "action": "view_top"},
+        {"type": "action", "text": "Perspective", "action": "view_perspective"}
     ]
 }

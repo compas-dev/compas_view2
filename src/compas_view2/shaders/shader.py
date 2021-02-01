@@ -4,31 +4,70 @@ from OpenGL import GL
 
 
 class Shader:
+    """The shader used by the OpenGL view."""
 
     def __init__(self, name='120/mesh'):
         self.program = make_shader_program(name)
         self.locations = {}
 
     def uniform4x4(self, name, value):
+        """Store a uniform 4x4 transformation matrix in the shader program at a named location.
+
+        Parameters
+        ----------
+        name: str
+            The name of the location in the shader program.
+        value: array-like
+            A 4x4 transformation matrix in column-major ordering.
+        """
         loc = GL.glGetUniformLocation(self.program, name)
         GL.glUniformMatrix4fv(loc, 1, True, value)
 
     def uniform1i(self, name, value):
+        """Store a uniform integer in the shader program at a named location.
+
+        Parameters
+        ----------
+        name: str
+            The name of the location in the shader program.
+        value: int
+            An integer value.
+        """
         loc = GL.glGetUniformLocation(self.program, name)
         GL.glUniform1i(loc, value)
 
     def uniform1f(self, name, value):
+        """Store a uniform float in the shader program at a named location.
+
+        Parameters
+        ----------
+        name: str
+            The name of the location in the shader program.
+        value: float
+            A float value.
+        """
         loc = GL.glGetUniformLocation(self.program, name)
         GL.glUniform1f(loc, value)
 
     def uniform3f(self, name, value):
+        """Store a uniform list of 3 floats in the shader program at a named location.
+
+        Parameters
+        ----------
+        name: str
+            The name of the location in the shader program.
+        value: (float, float, float) | list[float]
+            An iterable of 3 floats.
+        """
         loc = GL.glGetUniformLocation(self.program, name)
         GL.glUniform3f(loc, *value)
 
     def bind(self):
+        """Bind the shader program."""
         GL.glUseProgram(self.program)
 
     def release(self):
+        """Release (unbind) the shader program."""
         GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
         GL.glUseProgram(0)
 

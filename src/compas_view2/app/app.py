@@ -83,48 +83,8 @@ class App:
 
     Examples
     --------
-    To use the app in 'interactive' mode.
-
     >>> from compas_view2 import app
     >>> viewer = app.App()
-    >>> viewer.show()
-
-    To use the app in 'scripted' mode.
-
-    >>> import compas
-    >>> from compas.datastructures import Network
-    >>> from compas.datastructures import Mesh
-    >>> from compas.geometry import Frame, Plane, Box, Torus
-    >>> from compas_view2 import app
-
-    Create an instance of the viewer.
-
-    >>> viewer = app.App()
-
-    Add a mesh.
-
-    >>> mesh = Mesh.from_off(compas.get('tubemesh.off'))
-    >>> viewer.add(mesh, show_vertices=False)
-
-    Add a network.
-
-    >>> network = Network.from_obj(compas.get('grid_irregular.obj'))
-    >>> viewer.add(network)
-
-    Add a box.
-
-    >>> frame = Frame(point, [1, 0, 0], [0, 1, 0])
-    >>> box = Box(frame, 0.1, 0.1, 0.1)
-    >>> viewer.add(box, show_vertices=False)
-
-    Add a ring.
-
-    >>> plane = Plane(point, [0, 0, 1])
-    >>> torus = Torus(plane, r1, r2)
-    >>> viewer.add(torus, show_vertices=False)
-
-    Display the viewer with all added objects.
-
     >>> viewer.show()
 
     """
@@ -174,13 +134,20 @@ class App:
         self._app.references.add(self.window)
         self.selector = Selector(self)
 
-        self.init_statusbar()
-        self.init_menubar(config.get("menubar"))
-        self.init_toolbar(config.get("toolbar"))
+        self._init_statusbar()
+        self._init_menubar(config.get("menubar"))
+        self._init_toolbar(config.get("toolbar"))
 
         self.resize(width, height)
 
     def resize(self, width, height):
+        """Resize the main window programmatically.
+
+        Parameters
+        ----------
+        width: int
+        height: int
+        """
         self.window.resize(width, height)
         desktop = self._app.desktop()
         rect = desktop.availableGeometry()
@@ -189,6 +156,12 @@ class App:
         self.window.setGeometry(x, y, width, height)
 
     def add(self, data, **kwargs):
+        """Add a COMPAS object.
+
+        Parameters
+        ----------
+        data: :class:`compas.geometry.Primitive` | :class:`compas.geometry.Shape` | :class:`compas.geometry.Datastructure`
+        """
         obj = Object.build(data, **kwargs)
         self.view.objects[obj] = obj
         self.selector.add(obj)
@@ -196,55 +169,64 @@ class App:
             obj.init()
 
     def show(self):
+        """Show the viewer window."""
         self.window.show()
         self._app.exec_()
 
     def about(self):
+        """Display the about message as defined in the config file."""
         QtWidgets.QMessageBox.about(self.window, 'About', self.config['messages']['about'])
 
     def info(self, message):
+        """Display info."""
         QtWidgets.QMessageBox.information(self.window, 'Info', message)
 
     def question(self, message):
+        """Ask a question."""
         pass
 
     def warning(self, message):
+        """Display a warning."""
         QtWidgets.QMessageBox.warning(self.window, 'Warning', message)
 
     def critical(self, message):
+        """Display a critical warning."""
         QtWidgets.QMessageBox.critical(self.window, 'Critical', message)
 
     def status(self, message):
+        """Display a message in the status bar."""
         self.statusbar.showMessage(message)
 
     # ==============================================================================
     # UI
     # ==============================================================================
 
-    def init_statusbar(self):
+    def _get_icon(self, icon):
+        return QtGui.QIcon(os.path.join(ICONS, icon))
+
+    def _init_statusbar(self):
         self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
         self.statusbar.showMessage('Ready')
 
-    def init_menubar(self, items):
+    def _init_menubar(self, items):
         if not items:
             return
         self.menubar = self.window.menuBar()
         self.menubar.setNativeMenuBar(False)
         self.menubar.setContentsMargins(0, 0, 0, 0)
-        self.add_menubar_items(items, self.menubar)
+        self._add_menubar_items(items, self.menubar)
 
-    def init_toolbar(self, items):
+    def _init_toolbar(self, items):
         if not items:
             return
-        toolbar = self.window.addToolBar('Tools')
-        toolbar.setMovable(False)
-        toolbar.setObjectName('Tools')
-        toolbar.setIconSize(QtCore.QSize(24, 24))
-        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'undo-solid.svg')), 'Undo', self.undo)
-        toolbar.addAction(QtGui.QIcon(os.path.join(ICONS, 'redo-solid.svg')), 'Redo', self.redo)
+        self.toolbar = self.window.addToolBar('Tools')
+        self.toolbar.setMovable(False)
+        self.toolbar.setObjectName('Tools')
+        self.toolbar.setIconSize(QtCore.QSize(16, 16))
+        self._add_toolbar_items(items, self.toolbar)
 
-    def add_menubar_items(self, items, parent):
+    def _add_menubar_items(self, items, parent):
         if not items:
             return
         for item in items:
@@ -253,36 +235,36 @@ class App:
             elif item['type'] == 'menu':
                 menu = parent.addMenu(item['text'])
                 if 'items' in item:
-                    self.add_menubar_items(item['items'], menu)
+                    self._add_menubar_items(item['items'], menu)
             elif item['type'] == 'radio':
                 radio = QtWidgets.QActionGroup(self.window, exclusive=True)
                 for item in item['items']:
-                    action = self.add_action(item, parent)
+                    action = self._add_action(item, parent)
                     action.setCheckable(True)
                     action.setChecked(item['checked'])
                     radio.addAction(action)
             elif item['type'] == 'action':
-                self.add_action(item, parent)
+                self._add_action(item, parent)
             else:
                 raise NotImplementedError
 
-    def add_toolbar_items(self, items, parent):
+    def _add_toolbar_items(self, items, parent):
         if not items:
             return
         for item in items:
             if item['type'] == 'separator':
                 parent.addSeparator()
             elif item['type'] == 'action':
-                self.add_action(item, parent)
+                self._add_action(item, parent)
             else:
                 raise NotImplementedError
 
-    def add_action(self, item, parent):
+    def _add_action(self, item, parent):
         text = item['text']
         action = getattr(self.controller, item['action'])
         args = item.get('args', None) or []
         kwargs = item.get('kwargs', None) or {}
         if 'icon' in item:
-            icon = QtGui.QIcon(item['icon'])
+            icon = self._get_icon(item['icon'])
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))

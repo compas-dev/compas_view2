@@ -6,6 +6,7 @@ from .object import Object
 
 
 class AxisObject(Object):
+    """Object for displaying XYZ axes at the origin of the world coordinates system."""
 
     x_axis_color = [1, 0, 0]
     y_axis_color = [0, 1, 0]

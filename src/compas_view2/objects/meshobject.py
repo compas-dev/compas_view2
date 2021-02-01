@@ -7,7 +7,7 @@ from .object import Object
 
 
 class MeshObject(Object):
-    """ COMPAS Mesh Object for the viewer
+    """Object for displaying COMPAS mesh data structures.
 
     Parameters
     ----------
