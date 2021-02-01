@@ -90,9 +90,29 @@
 <h1>MeshObject</h1>
 <dl class="py class">
 <dt id="compas_view2.objects.MeshObject">
-<em class="property">class </em><code class="sig-prename descclassname">compas_view2.objects.</code><code class="sig-name descname">MeshObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">is_selected</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_vertices</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_edges</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_faces</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/meshobject.py#L8"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">compas_view2.objects.</code><code class="sig-name descname">MeshObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">is_selected</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_vertices</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_edges</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_faces</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">hide_coplanar_edges</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/meshobject.py#L9"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.objects.object.Object</span></code></p>
 <p>Object for displaying COMPAS mesh data structures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (:class: <cite>compas.datastructures.Mesh</cite>) – Mesh for the viewer</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – name of the object</p></li>
+<li><p><strong>show_vertices</strong> (<em>bool</em>) – True to show vertices</p></li>
+<li><p><strong>show_edges</strong> (<em>bool</em>) – True to show edges</p></li>
+<li><p><strong>show_faces</strong> (<em>bool</em>) – True to show faces</p></li>
+<li><p><strong>hide_coplanar_edges</strong> (<em>bool</em>) – True to hide the coplanar edges</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>vertices</strong> (<em>list</em>) – list of mesh vertices</p></li>
+<li><p><strong>edges</strong> (<em>list of tuple</em>) – list of mesh edges in tuple</p></li>
+<li><p><strong>front</strong> (<em>dict</em>) – mesh front face information for the viewer</p></li>
+<li><p><strong>back</strong> (<em>dict</em>) – mesh back face information for the viewer</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
