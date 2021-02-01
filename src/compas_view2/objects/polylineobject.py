@@ -11,13 +11,14 @@ class PolylineObject(Object):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, name=None, is_selected=False, show_points=False, color_points=None, color_line=None):
+    def __init__(self, data, name=None, is_selected=False, show_points=False, color_points=None, color_line=None, line_width=1):
         super().__init__(data, name=name, is_selected=is_selected)
         self._points = None
         self._polylines = None
         self.show_points = show_points
         self.color_points = color_points
         self.color_line = color_line
+        self.line_width = line_width
 
     @property
     def points(self):
@@ -62,6 +63,6 @@ class PolylineObject(Object):
             shader.draw_points(size=10, elements=self.points['elements'], n=self.points['n'])
         shader.bind_attribute('position', self.polylines['positions'])
         shader.bind_attribute('color', self.polylines['colors'])
-        shader.draw_lines(elements=self.polylines['elements'], n=self.polylines['n'])
+        shader.draw_lines(width=self.line_width, elements=self.polylines['elements'], n=self.polylines['n'])
         shader.disable_attribute('position')
         shader.disable_attribute('color')
