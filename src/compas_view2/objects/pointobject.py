@@ -1,3 +1,5 @@
+import ctypes as ct
+from OpenGL import GL
 from compas.utilities import flatten
 
 from ..buffers import make_index_buffer, make_vertex_buffer
@@ -24,11 +26,20 @@ class PointObject(Object):
         colors = [self.color or self.default_color]
         elements = [0]
         self._points = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
+            'positions': make_vertex_buffer(list(flatten(positions)), True),
             'colors': make_vertex_buffer(list(flatten(colors))),
             'elements': make_index_buffer(elements),
             'n': 1
         }
+
+    def update(self):
+        data = list(self._data)
+        n = len(data)
+        size = n * ct.sizeof(ct.c_float)
+        data = (ct.c_float * n)(* data)
+        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self._points['positions'])
+        GL.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, size, data)
+        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
 
     def draw(self, shader):
         shader.enable_attribute('position')
@@ -44,13 +55,10 @@ class PointObject(Object):
     def draw_instance(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
-
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self.instance_color)
-
         shader.bind_attribute('position', self.points['positions'])
         shader.draw_points(size=10, elements=self.points['elements'], n=self.points['n'])
-
         # reset
         shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
