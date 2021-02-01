@@ -173,6 +173,8 @@ class App:
         self.window.show()
         self._app.exec_()
 
+    run = show
+
     def about(self):
         """Display the about message as defined in the config file."""
         QtWidgets.QMessageBox.about(self.window, 'About', self.config['messages']['about'])
