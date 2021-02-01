@@ -6,6 +6,7 @@ from compas.geometry import Polyline
 from compas.geometry import Box
 from compas.geometry import Sphere
 from compas.geometry import Torus
+from ..shapes import Arrow
 
 from .object import Object
 
@@ -19,6 +20,7 @@ from .meshobject import MeshObject
 from .boxobject import BoxObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
+from .arrowobject import ArrowObject
 from .gridobject import GridObject  # noqa: F401
 from .axisobject import AxisObject  # noqa: F401
 
@@ -30,3 +32,4 @@ Object.register(Mesh, MeshObject)
 Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
+Object.register(Arrow, ArrowObject)

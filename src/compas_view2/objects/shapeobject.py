@@ -12,7 +12,7 @@ class ShapeObject(MeshObject):
     default_color_back = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
-                 show_vertices=False, show_edges=True, show_faces=True, color=None):
+                 show_vertices=False, show_edges=True, show_faces=True, color=None, hide_coplanar_edges=False):
         self._data = data
         self._mesh = Mesh.from_shape(data)
         self._vertices = None
@@ -24,6 +24,7 @@ class ShapeObject(MeshObject):
         self.show_vertices = show_vertices
         self.show_edges = show_edges
         self.show_faces = show_faces
+        self.hide_coplanar_edges = hide_coplanar_edges
         if color:
             self.default_color_front = color
             self.default_color_back = color
