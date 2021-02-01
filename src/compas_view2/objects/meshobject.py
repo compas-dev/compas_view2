@@ -1,4 +1,5 @@
 from compas.utilities import flatten
+from compas.geometry import is_coplanar
 
 from ..buffers import make_index_buffer, make_vertex_buffer
 
@@ -6,7 +7,35 @@ from .object import Object
 
 
 class MeshObject(Object):
-    """Object for displaying COMPAS mesh data structures."""
+    """Object for displaying COMPAS mesh data structures.
+
+    Parameters
+    ----------
+    data : :class: `compas.datastructures.Mesh`
+        Mesh for the viewer
+    name : string
+        name of the object
+    show_vertices : bool
+        True to show vertices
+    show_edges : bool
+        True to show edges
+    show_faces : bool
+        True to show faces
+    hide_coplanar_edges : bool
+        True to hide the coplanar edges
+
+    Attributes
+    ----------
+    vertices : list
+        list of mesh vertices
+    edges : list of tuple
+        list of mesh edges in tuple
+    front : dict
+        mesh front face information for the viewer
+    back : dict
+        mesh back face information for the viewer
+
+    """
 
     default_color_vertices = [0.2, 0.2, 0.2]
     default_color_edges = [0.4, 0.4, 0.4]
@@ -14,7 +43,7 @@ class MeshObject(Object):
     default_color_back = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False, show_vertices=False,
-                 show_edges=True, show_faces=True):
+                 show_edges=True, show_faces=True, hide_coplanar_edges=False):
         super().__init__(data, name=name, is_selected=is_selected)
         self._mesh = data
         self._vertices = None
@@ -24,6 +53,7 @@ class MeshObject(Object):
         self.show_vertices = show_vertices
         self.show_edges = show_edges
         self.show_faces = show_faces
+        self.hide_coplanar_edges = hide_coplanar_edges
 
     @property
     def vertices(self):
@@ -66,6 +96,17 @@ class MeshObject(Object):
         elements = []
         i = 0
         for u, v in mesh.edges():
+
+            if self.hide_coplanar_edges:
+                # hide the edge if neighbor faces are coplanar
+                fkeys = mesh.edge_faces(u, v)
+                if not mesh.is_edge_on_boundary(u, v):
+                    ps = [mesh.face_center(fkeys[0]),
+                          mesh.face_center(fkeys[1]),
+                          *mesh.edge_coordinates(u, v)]
+                    if is_coplanar(ps, tol=1e-5):
+                        continue
+
             positions.append(vertex_xyz[u])
             positions.append(vertex_xyz[v])
             colors.append(self.default_color_edges)
