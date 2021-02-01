@@ -19,6 +19,6 @@ for i in range(5):
     pts.append([random.uniform(0, 10), random.uniform(0, 10), random.uniform(0, 10)])
 
 polyline = Polyline(pts)
-viewer.add(polyline, show_points=True, color_line=(1, 0, 0), line_width=5)
+viewer.add(polyline, show_points=True, color_lines=(1, 0, 0), width_lines=5)
 
 viewer.show()
