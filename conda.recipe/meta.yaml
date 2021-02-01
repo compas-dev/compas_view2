@@ -1,5 +1,5 @@
-{% set name = "compas_cgal" %}
-{% set version = "0.1.1" %}
+{% set name = "compas_view2" %}
+{% set version = "0.1.0" %}
 {% set hash = "c9a816ed3c5a903d62e6cab8d94d934329d536db4409fc1b549de43d25adf5c9" %}
 
 package:
@@ -11,35 +11,27 @@ source:
   sha256: {{ hash }}
 
 build:
-  number: 2
-  skip: true  # [linux or py<36]
+  number: 1
+  skip: true  # [py<36 or py>38]
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
-  build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - eigen
   host:
     - pip
     - python
-    - pybind11
-    - cgal-cpp >=5.0
   run:
     - python
-    - eigen
-    - cgal-cpp >=5.0
-    - boost-cpp
-    - mpir  # [win]
-    - gmp  # [not win]
-    - mpfr
+    - cython
+    - compas
+    - python.app  # [osx]
+    - freeglut  # [win]
 
 test:
   imports:
-    - compas_cgal
+    - compas_view2
 
 about:
-  home: https://github.com/compas-dev/compas_cgal
+  home: https://github.com/compas-dev/compas_view2
   license: LGPL-3.0-or-later
   license_file: LICENSE
   summary: 'COMPAS friendly wrappers for CGAL algorithms.'
