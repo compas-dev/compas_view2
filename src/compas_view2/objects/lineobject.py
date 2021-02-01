@@ -11,13 +11,21 @@ class LineObject(Object):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, name=None, is_selected=False, show_points=False, color_points=None, color_line=None):
+    def __init__(self, data, name=None, is_selected=False,
+                 show_point=False,
+                 pointcolor=None,
+                 pointsize=10,
+                 linecolor=None,
+                 linewidth=1):
+
         super().__init__(data, name=name, is_selected=is_selected)
         self._points = None
         self._lines = None
-        self.show_points = show_points
-        self.color_points = color_points
-        self.color_line = color_line
+        self.show_point = show_point
+        self.pointcolor = pointcolor
+        self.pointsize = pointsize
+        self.linecolor = linecolor
+        self.linewidth = linewidth
 
     @property
     def points(self):
@@ -30,7 +38,7 @@ class LineObject(Object):
     def init(self):
         line = self._data
         # points
-        color = self.color_points or self.default_color_points
+        color = self.pointcolor or self.default_color_points
         positions = [line.start, line.end]
         colors = [color, color]
         elements = [0, 1]
@@ -41,7 +49,7 @@ class LineObject(Object):
             'n': 2
         }
         # lines
-        color = self.color_line or self.default_color_line
+        color = self.linecolor or self.default_color_line
         positions = [line.start, line.end]
         colors = [color, color]
         elements = [0, 1]
@@ -55,12 +63,16 @@ class LineObject(Object):
     def draw(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
-        if self.show_points:
+        if self.show_point:
             shader.bind_attribute('position', self.points['positions'])
             shader.bind_attribute('color', self.points['colors'])
-            shader.draw_points(size=10, elements=self.points['elements'], n=self.points['n'])
+            shader.draw_points(size=self.pointsize,
+                               elements=self.points['elements'],
+                               n=self.points['n'])
         shader.bind_attribute('position', self.lines['positions'])
         shader.bind_attribute('color', self.lines['colors'])
-        shader.draw_lines(elements=self.lines['elements'], n=self.lines['n'])
+        shader.draw_lines(width=self.linewidth,
+                          elements=self.lines['elements'],
+                          n=self.lines['n'])
         shader.disable_attribute('position')
         shader.disable_attribute('color')
