@@ -19,8 +19,7 @@ class View120(View):
         # create the program
         self.shader = Shader()
         self.shader.bind()
-        self.shader.uniform4x4(
-            "projection", self.camera.projection(self.app.width, self.app.height))
+        self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         self.shader.uniform1i("is_selected", 0)
         self.shader.uniform1f("opacity", self.opacity)
@@ -59,9 +58,7 @@ class View120(View):
         self.shader.release()
         # create map
         r = self.devicePixelRatio()
-        instance_buffer = GL.glReadPixels(
-            x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
-        instance_map = np.frombuffer(
-            instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
+        instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
+        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
         instance_map = instance_map[::-r, ::r, :]
         return instance_map
