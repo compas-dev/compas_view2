@@ -113,6 +113,7 @@ class App:
             app = QtWidgets.QApplication(sys.argv)
         app.references = set()
 
+        self.timer = None
         self.width = width
         self.height = height
         self.window = QtWidgets.QMainWindow()
