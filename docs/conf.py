@@ -124,7 +124,7 @@ def linkcode_resolve(domain, info):
         return None
 
     package = info['module'].split('.')[0]
-    if package != 'compas_view2':
+    if not package.startswith('compas_view2'):
         return None
 
     module = importlib.import_module(info['module'])
