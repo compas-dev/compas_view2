@@ -5,8 +5,8 @@ from ..buffers import make_index_buffer, make_vertex_buffer
 from .object import Object
 
 
-class LineObject(Object):
-    """Object for displaying COMPAS line geometry."""
+class PolylineObject(Object):
+    """Object for displaying COMPAS Polyline geometry."""
 
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
@@ -22,7 +22,7 @@ class LineObject(Object):
                  linewidth=1):
         super().__init__(data, name=name, is_selected=is_selected)
         self._points = None
-        self._lines = None
+        self._polylines = None
         self.show_points = show_points
         self.pointcolor = pointcolor
         self.pointsize = pointsize
@@ -34,32 +34,32 @@ class LineObject(Object):
         return self._points
 
     @property
-    def lines(self):
-        return self._lines
+    def polylines(self):
+        return self._polylines
 
     def init(self):
-        line = self._data
+        polyline = self._data
         # points
         color = self.pointcolor or self.default_color_points
-        positions = [line.start, line.end]
-        colors = [color, color]
-        elements = [0, 1]
+        positions = [point for point in polyline.points]
+        colors = [color for i in range(len(positions))]
+        elements = [i for i in range(len(positions))]
         self._points = {
             'positions': make_vertex_buffer(list(flatten(positions))),
             'colors': make_vertex_buffer(list(flatten(colors))),
             'elements': make_index_buffer(elements),
-            'n': 2
+            'n': len(positions)
         }
         # lines
         color = self.linecolor or self.default_color_line
-        positions = [line.start, line.end]
-        colors = [color, color]
-        elements = [0, 1]
-        self._lines = {
+        positions = [list(polyline.points[i]) for i in range(len(polyline.points))]
+        colors = list(flatten([[color, color] for i in range(len(positions))]))
+        elements = [[i, i + 1] for i in range(len(positions) - 1)]
+        self._polylines = {
             'positions': make_vertex_buffer(list(flatten(positions))),
             'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(elements),
-            'n': 2
+            'elements': make_index_buffer(list(flatten(elements))),
+            'n': len(positions) * 2
         }
 
     def draw(self, shader):
@@ -71,10 +71,10 @@ class LineObject(Object):
             shader.draw_points(size=self.pointsize,
                                elements=self.points['elements'],
                                n=self.points['n'])
-        shader.bind_attribute('position', self.lines['positions'])
-        shader.bind_attribute('color', self.lines['colors'])
+        shader.bind_attribute('position', self.polylines['positions'])
+        shader.bind_attribute('color', self.polylines['colors'])
         shader.draw_lines(width=self.linewidth,
-                          elements=self.lines['elements'],
-                          n=self.lines['n'])
+                          elements=self.polylines['elements'],
+                          n=self.polylines['n'])
         shader.disable_attribute('position')
         shader.disable_attribute('color')
