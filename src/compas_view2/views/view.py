@@ -183,12 +183,13 @@ class View(QtWidgets.QOpenGLWidget):
             if self.keys["shift"] or self.keys["control"]:
                 self.app.selector.perform_box_selection(
                     self.mouse.pos.x(), self.mouse.pos.y())
-            else:
-                self.camera.rotate(dx, dy)
             self.mouse.last_pos = event.pos()
             self.update()
         elif event.buttons() & QtCore.Qt.RightButton:
-            self.camera.pan(dx, dy)
+            if self.keys["shift"]:
+                self.camera.pan(dx, dy)
+            else:
+                self.camera.rotate(dx, dy)
             self.mouse.last_pos = event.pos()
             self.update()
 
