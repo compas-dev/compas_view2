@@ -95,11 +95,9 @@ class GridObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', 0)
-
         shader.bind_attribute('position', self.edges['positions'])
         shader.bind_attribute('color', self.edges['colors'])
         shader.draw_lines(elements=self.edges['elements'], n=self.edges['n'], background=True)
-
         # reset
         shader.disable_attribute('position')
         shader.disable_attribute('color')
@@ -107,10 +105,8 @@ class GridObject(Object):
     def draw_plane(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
-
         shader.bind_attribute('position', self._uvplane['positions'])
         shader.bind_attribute('color', self._uvplane['colors'])
         shader.draw_triangles(elements=self._uvplane['elements'], n=self._uvplane['n'])
-
         shader.disable_attribute('position')
         shader.disable_attribute('color')

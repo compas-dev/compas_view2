@@ -236,7 +236,6 @@ class MeshObject(Object):
     def draw_instance(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
-
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self.instance_color)
         # front
@@ -245,7 +244,6 @@ class MeshObject(Object):
         # back
         shader.bind_attribute('position', self.back['positions'])
         shader.draw_triangles(elements=self.back['elements'], n=self.back['n'])
-
         # reset
         shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
