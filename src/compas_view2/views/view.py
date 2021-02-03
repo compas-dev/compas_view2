@@ -170,59 +170,66 @@ class View(QtWidgets.QOpenGLWidget):
     def mouseMoveEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-
+        # record mouse position
         self.mouse.pos = event.pos()
+        # compute displacement
         dx = self.mouse.dx()
         dy = self.mouse.dy()
-
+        # do a box selection
+        # if left button + SHIFT
         if event.buttons() & QtCore.Qt.LeftButton:
             if self.keys["shift"] or self.keys["control"]:
                 self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
-
+            # record mouse position
             self.mouse.last_pos = event.pos()
             self.update()
-
+        # change the view
+        # if right bottom
         elif event.buttons() & QtCore.Qt.RightButton:
             if self.keys["shift"]:
                 self.camera.pan(dx, dy)
             else:
                 self.camera.rotate(dx, dy)
-
+            # record mouse position
             self.mouse.last_pos = event.pos()
             self.update()
 
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-
+        # start selecting
+        # if left button
         if event.buttons() & QtCore.Qt.LeftButton:
             self.mouse.buttons['left'] = True
             if self.app.selector.enabled:
                 if self.keys["shift"] or self.keys["control"]:
                     self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
-
+        # do nothing
+        # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons['right'] = True
-
+        # recod mouse position
         self.mouse.last_pos = event.pos()
         self.update()
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-
+        # finalize selecting
+        # if left button
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mouse.buttons['left'] = False
-
             if self.app.selector.enabled:
+                # select location on grid
                 if self.app.selector.performing_interactive_selection_on_plane:
                     self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
+                # trigger object selection
                 else:
-                    self.app.selector.paint_instance = True
-
+                    self.app.selector.performing_interactive_selection = True
+        # do nothing
+        # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
-
         self.update()
 
     def wheelEvent(self, event):
