@@ -78,6 +78,8 @@ class PolylineObject(Object):
         shader.draw_lines(width=self.linewidth,
                           elements=self.polylines['elements'],
                           n=self.polylines['n'])
+
+        shader.uniform1i('is_selected', 0)
         shader.disable_attribute('position')
         shader.disable_attribute('color')
 
