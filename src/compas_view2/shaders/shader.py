@@ -118,6 +118,7 @@ class Shader:
             x1, x2 = x2, x1
         if y1 > y2:
             y1, y2 = y2, y1
+        GL.glLineWidth(1)
         GL.glBegin(GL.GL_LINE_LOOP)
         GL.glColor3f(0, 0, 0)
         GL.glVertex2f(x1, y1)
