@@ -20,6 +20,9 @@ class Selector:
         self.select_from = "pixel"  # or "box"
         self.paint_instance = False
         self.box_select_coords = np.zeros((4,), np.int)
+        self.performing_interactive_selection = False
+        self.performing_interactive_selection_on_plane = False
+        self.snap_to_grid = False
         self.start_monitor_instance_map()
 
     def reset(self):
@@ -32,6 +35,9 @@ class Selector:
         self.select_from = "pixel"
         self.paint_instance = False
         self.box_select_coords = np.zeros((4,), np.int)
+        self.performing_interactive_selection = False
+        self.performing_interactive_selection_on_plane = False
+        self.snap_to_grid = False
         self.deselect()
 
     def start_monitor_instance_map(self):
@@ -239,10 +245,63 @@ class Selector:
         self.reset()
         return selected_data
 
+    def start_selection_on_plane(self, snap_to_grid=False):
+        """Start an interactive selection session to pick a location on the grid plane.
+
+        Parameters
+        ----------
+        snap_to_grid : bool
+            Whether to snap the location on the grid
+
+        Returns
+        -------
+        List of 3 float numbers, selected location on the plane
+
+        Notes
+        -----
+        This function has to be called inside a interactive (non-blocking) session,
+        Otherwise it will freeze the main programme.
+        """
+        self.performing_interactive_selection_on_plane = True
+        self.snap_to_grid = snap_to_grid
+        while self.performing_interactive_selection_on_plane:
+            time.sleep(0.05)
+        return self.selected_location_on_plane
+
+    def finish_selection_on_plane(self, x, y):
+        """Finish selecting location on the grid plane.
+
+        Parameters
+        ----------
+        x : int
+            mouse x coordinate on uv_plane_map
+        y : int
+            mouse y coordinate on uv_plane_map
+
+        Returns
+        -------
+        None
+        """
+        u, v, w = self.app.selector.uv_plane_map[y, x]
+        if [u, v, w] == [1, 1, 1]:
+            # When clicked outside of the grid
+            self.selected_location_on_plane = None
+        else:
+            x_size = self.app.view.grid.x_cells * self.app.view.grid.cell_size
+            y_size = self.app.view.grid.y_cells * self.app.view.grid.cell_size
+            x = -x_size + 2*x_size*u
+            y = -y_size + 2*y_size*v
+            if self.snap_to_grid:
+                x = round(x / self.app.view.grid.cell_size) * self.app.view.grid.cell_size
+                y = round(y / self.app.view.grid.cell_size) * self.app.view.grid.cell_size
+            self.selected_location_on_plane = [x, y, 0]
+        self.performing_interactive_selection_on_plane = False
+
     def finish_selection(self):
         """Finish the interactive selection session.
         """
         self.performing_interactive_selection = False
+        self.performing_interactive_selection_on_plane = False
 
     def reset_box_selection(self, x, y):
         """Reset box selection start position
