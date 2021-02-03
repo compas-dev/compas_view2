@@ -32,31 +32,25 @@ class View120(View):
         self.shader.uniform4x4("projection", self.camera.projection(w, h))
         self.shader.release()
 
-    def paintGL(self):
+    def paint(self):
+        self.shader.bind()
         if self.current != self.PERSPECTIVE:
-            self.shader.bind()
-            self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-            self.shader.release()
-        self.clear()
-        if self.app.selector.paint_instance:
+            self.self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+        self.shader.uniform4x4("viewworld", self.camera.viewworld())
+        if self.app.selector.enabled:
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
             if self.app.selector.select_from == "box":
                 self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
-            self.app.selector.paint_instance = False
+            self.app.selector.enabled = False
             self.clear()
-        self.paint()
-        if self.app.selector.select_from == "box":
-            self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
-
-    def paint(self):
-        self.shader.bind()
-        self.shader.uniform4x4("viewworld", self.camera.viewworld())
         if self.show_grid:
             self.grid.draw(self.shader)
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.shader)
+        if self.app.selector.select_from == "box":
+            self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
         self.shader.release()
 
     def paint_instances(self, cropped_box=None):
@@ -67,13 +61,10 @@ class View120(View):
             x, y = min(x1, x2), self.app.height - max(y1, y2)
             width, height = abs(x1 - x2), abs(y1 - y2)
 
-        self.shader.bind()
-        self.shader.uniform4x4("viewworld", self.camera.viewworld())
         for guid in self.objects:
             obj = self.objects[guid]
             if hasattr(obj, "draw_instance"):
                 obj.draw_instance(self.shader)
-        self.shader.release()
         # create map
         r = self.devicePixelRatio()
         instance_buffer = GL.glReadPixels(

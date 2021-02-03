@@ -155,12 +155,13 @@ class View(QtWidgets.QOpenGLWidget):
         pass
 
     def paintGL(self):
+        self.clear()
+        self.paint()
+
+    def paint(self):
         pass
 
     def paint_instances(self):
-        pass
-
-    def paint(self):
         pass
 
     def mouseMoveEvent(self, event):
