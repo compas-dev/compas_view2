@@ -223,7 +223,7 @@ class View(QtWidgets.QOpenGLWidget):
                 self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
             # trigger object selection
             else:
-                self.app.selector.paint_instance = True
+                self.app.selector.enabled = True
         # do nothing
         # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:

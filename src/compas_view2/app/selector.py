@@ -24,7 +24,7 @@ class Selector:
         Selectable types.
     select_from: "pixel" | "box"
         The selection mechanism.
-    paint_instance: bool
+    enabled: bool
         Flag indicating to the view that an instance map should be drawn.
     wait_for_selection: bool
         Flag indicating to wait for the interatice selection to finish
@@ -53,7 +53,7 @@ class Selector:
         self.types = []
         self.select_from = "pixel"  # or "box"
         # Selector state flags
-        self.paint_instance = False
+        self.enabled = False
         self.wait_for_selection = False
         self.wait_for_selection_on_plane = False
         self.snap_to_grid = False
@@ -73,7 +73,7 @@ class Selector:
         self.overwrite_mode = None
         self.types = []
         self.select_from = "pixel"
-        self.paint_instance = False
+        self.enabled = False
         self.box_select_coords = np.zeros((4,), np.int)
         self.wait_for_selection = False
         self.wait_for_selection_on_plane = False
