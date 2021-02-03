@@ -40,7 +40,7 @@ class Selector:
         The painted instance map as np array
     box_select_coords: list of 4 floats
         The 2D box selection coordinates on view window: [minX, minY, maxX, maxY]
-    location_on_plane: 
+    location_on_plane:
         The selected location on plane
     """
 
