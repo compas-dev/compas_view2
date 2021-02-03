@@ -155,21 +155,7 @@ class View(QtWidgets.QOpenGLWidget):
         pass
 
     def paintGL(self):
-        if self.current != self.PERSPECTIVE:
-            self.shader.bind()
-            self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-            self.shader.release()
-        self.clear()
-        if self.app.selector.paint_instance:
-            if self.app.selector.select_from == "pixel":
-                self.app.selector.instance_map = self.paint_instances()
-            if self.app.selector.select_from == "box":
-                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
-            self.app.selector.paint_instance = False
-            self.clear()
-        self.paint()
-        if self.app.selector.select_from == "box":
-            self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
+        pass
 
     def paint_instances(self):
         pass
