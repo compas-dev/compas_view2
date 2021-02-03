@@ -69,6 +69,8 @@ class View120(View):
             self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
 
     def paint_instances(self, cropped_box=None):
+        GL.glDisable(GL.GL_POINT_SMOOTH)
+        GL.glDisable(GL.GL_LINE_SMOOTH)
         if cropped_box is None:
             x, y, width, height = 0, 0, self.app.width, self.app.height
         else:
@@ -84,6 +86,8 @@ class View120(View):
         instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
         instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
         instance_map = instance_map[::-r, ::r, :]
+        GL.glEnable(GL.GL_POINT_SMOOTH)
+        GL.glEnable(GL.GL_LINE_SMOOTH)
         return instance_map
 
     def paint_plane(self):
