@@ -16,46 +16,54 @@ class Selector:
     ----------
     app: :class:`compas_view2.app.App`
         The parent application.
-    colors_to_exclude: list[tuple[int, int, int]]
-        The instance colors to exclude from the selection process.
-    instances: dict
-        Mapping between pixel colors and scene objects.
-    instance_map: ?
-        ???
     mode: "single" | "multi" | "deselect"
         The selection mode.
-    overwrite_mode: ?
-        ???
+    overwrite_mode: "single" | "multi" | "deselect"
+        Used in interative selection sessions to temporarily overwrite default select mode
     types: list
         Selectable types.
     select_from: "pixel" | "box"
         The selection mechanism.
     paint_instance: bool
         Flag indicating to the view that an instance map should be drawn.
-    box_select_coords: ?
-        ???
-    performing_interactive_selection: bool
-        ???
-    performing_interactive_selection_on_plane: bool
-        ???
+    wait_for_selection: bool
+        Flag indicating to wait for the interatice selection to finish
+    wait_for_selection_on_plane: bool
+        Flag indicating to wait for the user to pick a location on plane
     snap_to_grid: bool
         Turn grid snap on or off.
+    colors_to_exclude: list[tuple[int, int, int]]
+        The instance colors to exclude from the selection process.
+    instances: dict
+        Mapping between pixel colors and scene objects.
+    instance_map: np.array with shape (?,?,3)
+        The painted instance map as np array
+    box_select_coords: list of 4 floats
+        The 2D box selection coordinates on view window: [minX, minY, maxX, maxY]
+    location_on_plane: 
+        The selected location on plane
     """
 
     def __init__(self, app):
         self.app = app
-        self.colors_to_exclude = [(0, 0, 0,), (255, 255, 255)]
-        self.instances = {}
-        self.instance_map = None
+
+        # Selector options
         self.mode = "single"
         self.overwrite_mode = None
         self.types = []
         self.select_from = "pixel"  # or "box"
+        # Selector state flags
         self.paint_instance = False
-        self.box_select_coords = np.zeros((4,), np.int)
-        self.performing_interactive_selection = False
-        self.performing_interactive_selection_on_plane = False
+        self.wait_for_selection = False
+        self.wait_for_selection_on_plane = False
         self.snap_to_grid = False
+        # Selector data
+        self.colors_to_exclude = [(0, 0, 0,), (255, 255, 255)]
+        self.instances = {}
+        self.instance_map = None
+        self.box_select_coords = np.zeros((4,), np.int)
+        self.location_on_plane = None
+
         self.start_monitor_instance_map()
 
     def reset(self):
@@ -67,8 +75,9 @@ class Selector:
         self.select_from = "pixel"
         self.paint_instance = False
         self.box_select_coords = np.zeros((4,), np.int)
-        self.performing_interactive_selection = False
-        self.performing_interactive_selection_on_plane = False
+        self.wait_for_selection = False
+        self.wait_for_selection_on_plane = False
+        self.location_on_plane = None
         self.snap_to_grid = False
         self.deselect()
 
@@ -268,8 +277,8 @@ class Selector:
         self.deselect(update=True)
         self.mode = self.overwrite_mode = mode
         self.types = types
-        self.performing_interactive_selection = True
-        while self.performing_interactive_selection:
+        self.wait_for_selection = True
+        while self.wait_for_selection:
             time.sleep(0.05)
         selected_data = [obj._data for obj in self.selected]
         self.reset()
@@ -292,11 +301,11 @@ class Selector:
         This function has to be called inside a interactive (non-blocking) session,
         Otherwise it will freeze the main programme.
         """
-        self.performing_interactive_selection_on_plane = True
+        self.wait_for_selection_on_plane = True
         self.snap_to_grid = snap_to_grid
-        while self.performing_interactive_selection_on_plane:
+        while self.wait_for_selection_on_plane:
             time.sleep(0.05)
-        return self.selected_location_on_plane
+        return self.location_on_plane
 
     def finish_selection_on_plane(self, x, y):
         """Finish selecting location on the grid plane.
@@ -315,7 +324,7 @@ class Selector:
         u, v, w = self.app.selector.uv_plane_map[y, x]
         if [u, v, w] == [1, 1, 1]:
             # When clicked outside of the grid
-            self.selected_location_on_plane = None
+            self.location_on_plane = None
         else:
             x_size = self.app.view.grid.x_cells * self.app.view.grid.cell_size
             y_size = self.app.view.grid.y_cells * self.app.view.grid.cell_size
@@ -324,14 +333,14 @@ class Selector:
             if self.snap_to_grid:
                 x = round(x / self.app.view.grid.cell_size) * self.app.view.grid.cell_size
                 y = round(y / self.app.view.grid.cell_size) * self.app.view.grid.cell_size
-            self.selected_location_on_plane = [x, y, 0]
-        self.performing_interactive_selection_on_plane = False
+            self.location_on_plane = [x, y, 0]
+        self.wait_for_selection_on_plane = False
 
     def finish_selection(self):
         """Finish the interactive selection session.
         """
-        self.performing_interactive_selection = False
-        self.performing_interactive_selection_on_plane = False
+        self.wait_for_selection = False
+        self.wait_for_selection_on_plane = False
 
     def reset_box_selection(self, x, y):
         """Reset box selection start position

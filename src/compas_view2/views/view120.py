@@ -50,7 +50,7 @@ class View120(View):
             self.clear()
         # create grid uv map
         # if interactive selection on plane is going on
-        if self.app.selector.performing_interactive_selection_on_plane:
+        if self.app.selector.wait_for_selection_on_plane:
             self.shader.uniform1f("opacity", 1)
             self.app.selector.uv_plane_map = self.paint_plane()
             self.shader.uniform1f("opacity", self.opacity)

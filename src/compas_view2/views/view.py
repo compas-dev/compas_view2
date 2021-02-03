@@ -219,7 +219,7 @@ class View(QtWidgets.QOpenGLWidget):
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mouse.buttons['left'] = False
             # select location on grid
-            if self.app.selector.performing_interactive_selection_on_plane:
+            if self.app.selector.wait_for_selection_on_plane:
                 self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
             # trigger object selection
             else:
