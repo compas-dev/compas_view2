@@ -10,10 +10,11 @@ class PointObject(Object):
 
     default_color = [0.1, 0.1, 0.1]
 
-    def __init__(self, data, name=None, is_selected=False, color=None):
+    def __init__(self, data, name=None, is_selected=False, color=None, size=10):
         super().__init__(data, name=name, is_selected=is_selected)
         self._points = None
         self.color = color
+        self.size = size
 
     @property
     def points(self):
@@ -36,7 +37,7 @@ class PointObject(Object):
         shader.uniform1i('is_selected', self.is_selected)
         shader.bind_attribute('position', self.points['positions'])
         shader.bind_attribute('color', self.points['colors'])
-        shader.draw_points(size=10, elements=self.points['elements'], n=self.points['n'])
+        shader.draw_points(size=self.size, elements=self.points['elements'], n=self.points['n'])
         shader.uniform1i('is_selected', 0)
         shader.disable_attribute('position')
         shader.disable_attribute('color')
@@ -49,7 +50,7 @@ class PointObject(Object):
         shader.uniform3f('instance_color', self.instance_color)
 
         shader.bind_attribute('position', self.points['positions'])
-        shader.draw_points(size=10, elements=self.points['elements'], n=self.points['n'])
+        shader.draw_points(size=self.size, elements=self.points['elements'], n=self.points['n'])
 
         # reset
         shader.uniform1i('is_instance_mask', 0)
