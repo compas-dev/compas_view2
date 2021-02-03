@@ -146,9 +146,19 @@ class Controller:
             return point
 
     @interactive
+    def add_point_on_grid(self) -> Union[Point, None]:
+        self.app.statusbar.showMessage("Select a location on grid")
+        location = self.app.selector.start_selection_on_plane(snap_to_grid=True)
+        if location:
+            self.app.statusbar.showMessage("Created a Point.")
+            return Point(*location)
+        else:
+            self.app.statusbar.showMessage("No location provided.")
+            return None
+
+    @interactive
     def add_line_from_selected_points(self):
-        self.app.statusbar.showMessage(
-            "Select points on screen, Click Enter to finish")
+        self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
         points = self.app.selector.start_selection(types=[Point])
         if len(points) != 2:
             self.app.statusbar.showMessage("Must select 2 points")

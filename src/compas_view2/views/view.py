@@ -191,8 +191,7 @@ class View(QtWidgets.QOpenGLWidget):
             self.mouse.buttons['left'] = True
             if self.app.selector.enabled:
                 if self.keys["shift"] or self.keys["control"]:
-                    self.app.selector.reset_box_selection(
-                        event.pos().x(), event.pos().y())
+                    self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons['right'] = True
         self.mouse.last_pos = event.pos()
@@ -204,7 +203,10 @@ class View(QtWidgets.QOpenGLWidget):
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mouse.buttons['left'] = False
             if self.app.selector.enabled:
-                self.app.selector.paint_instance = True
+                if self.app.selector.performing_interactive_selection_on_plane:
+                    self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
+                else:
+                    self.app.selector.paint_instance = True
 
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False

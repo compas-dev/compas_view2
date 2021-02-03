@@ -64,6 +64,7 @@
                     "items":
                     [
                         {"type": "action", "text": "Add Point", "action": "add_point"},
+                        {"type": "action", "text": "Add Point On Grid", "action": "add_point_on_grid"},
                         {"type": "action", "text": "Add Line [2 points]", "action": "add_line_from_selected_points"}
                     ]
                 },
