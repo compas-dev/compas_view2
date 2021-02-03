@@ -34,11 +34,13 @@ class View120(View):
 
     def paint(self):
         self.shader.bind()
-
+        # set projection matrix
         if self.current != self.PERSPECTIVE:
             self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+        # set view world matrix
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
-
+        # create object color map
+        # if interactive selection is going on
         if self.app.selector.paint_instance:
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
@@ -46,21 +48,22 @@ class View120(View):
                 self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
             self.app.selector.paint_instance = False
             self.clear()
-
+        # create grid uv map
+        # if interactive selection on plane is going on
         if self.app.selector.performing_interactive_selection_on_plane:
             self.app.selector.uv_plane_map = self.paint_plane()
             self.clear()
-
+        # draw grid
         if self.show_grid:
             self.grid.draw(self.shader)
-
+        # draw all objects
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.shader)
-
+        # draw a box?
         if self.app.selector.select_from == "box":
             self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
-
+        # finish
         self.shader.release()
 
     def paint_instances(self, cropped_box=None):
