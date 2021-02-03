@@ -20,6 +20,13 @@ from .worker import Worker
 
 
 class Controller:
+    """Action controller for the default config file.
+
+    Parameters
+    ----------
+    app: :class:`compas_view2.app.App`
+        The parent application.
+    """
 
     def __init__(self, app):
         self.app = app
@@ -36,6 +43,10 @@ class Controller:
             Worker.pool.start(worker)
         return wrapped
 
+    # ==============================================================================
+    # App actions
+    # ==============================================================================
+
     def about(self):
         """Display the about message."""
         self.app.about()
@@ -50,7 +61,9 @@ class Controller:
         value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
         self.app.info(value)
 
-    # Actions: View
+    # ==============================================================================
+    # View actions
+    # ==============================================================================
 
     def view_shaded(self):
         """Switch the view to shaded."""
@@ -93,7 +106,9 @@ class Controller:
         self.app.view.current = self.app.view.PERSPECTIVE
         self.app.view.update()
 
-    # Actions: Scene
+    # ==============================================================================
+    # Scene actions
+    # ==============================================================================
 
     def load_scene(self):
         """Load a scene from a file."""
@@ -123,7 +138,9 @@ class Controller:
         """Display the undo history of the scene."""
         self.app.info('Not available yet...')
 
-    # Actions: Primitives
+    # ==============================================================================
+    # Primitive actions
+    # ==============================================================================
 
     def add_point(self) -> Union[Point, None]:
         """Add a point at specific XYZ coordinates.
@@ -167,7 +184,9 @@ class Controller:
         self.app.statusbar.showMessage("Line added")
         return line
 
-    # Actions: Shapes
+    # ==============================================================================
+    # Shape actions
+    # ==============================================================================
 
     def add_box(self) -> Union[Box, None]:
         """Add a box at the origin.
@@ -227,7 +246,9 @@ class Controller:
             self.app.view.update()
             return torus
 
-    # Actions: Networks
+    # ==============================================================================
+    # Network actions
+    # ==============================================================================
 
     def add_network_from_obj(self) -> Union[Network, None]:
         """Add a network from the data in an OBJ file.
@@ -249,7 +270,9 @@ class Controller:
             self.app.view.update()
             return network
 
-    # Actions: Meshes
+    # ==============================================================================
+    # Mesh actions
+    # ==============================================================================
 
     def add_mesh_from_file(self) -> Union[Mesh, None]:
         """Add a mesh from the data in an file.
@@ -289,3 +312,15 @@ class Controller:
             self.app.add(mesh)
             self.app.view.update()
             return mesh
+
+    # ==============================================================================
+    # Robot actions
+    # ==============================================================================
+
+    # ==============================================================================
+    # Assembly actions
+    # ==============================================================================
+
+    # ==============================================================================
+    # FEA actions
+    # ==============================================================================

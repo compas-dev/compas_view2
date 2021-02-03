@@ -5,7 +5,43 @@ from .worker import Worker
 
 
 class Selector:
-    """Selector class manages all selection operations for the viewer
+    """Selector class manages all selection operations for the viewer.
+
+    Parameters
+    ----------
+    app: :class:`compas_view2.app.App`
+        The parent application.
+
+    Attributes
+    ----------
+    app: :class:`compas_view2.app.App`
+        The parent application.
+    colors_to_exclude: list[tuple[int, int, int]]
+        The instance colors to exclude from the selection process.
+    instances: dict
+        Mapping between pixel colors and scene objects.
+    instance_map: ?
+        ???
+    enabled: bool
+        Flag indicating that the selector is turned on or off.
+    mode: "single" | "multi" | "deselect"
+        The selection mode.
+    overwrite_mode: ?
+        ???
+    types: list
+        Selectable types.
+    select_from: "pixel" | "box"
+        The selection mechanism.
+    paint_instance: bool
+        Flag indicating to the view that an instance map should be drawn.
+    box_select_coords: ?
+        ???
+    performing_interactive_selection: bool
+        ???
+    performing_interactive_selection_on_plane: bool
+        ???
+    snap_to_grid: bool
+        Turn grid snap on or off.
     """
 
     def __init__(self, app):
