@@ -106,7 +106,7 @@ class Arrow(Shape):
     # methods
     # ==========================================================================
 
-    def to_vertices_and_faces(self, u=3):
+    def to_vertices_and_faces(self, u=4):
         """Returns a list of vertices and faces.
 
         Parameters
