@@ -19,8 +19,7 @@ class View120(View):
         # create the program
         self.shader = Shader()
         self.shader.bind()
-        self.shader.uniform4x4(
-            "projection", self.camera.projection(self.app.width, self.app.height))
+        self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         self.shader.uniform1i("is_selected", 0)
         self.shader.uniform1f("opacity", self.opacity)

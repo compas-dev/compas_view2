@@ -143,8 +143,7 @@ class Selector:
         -------
         None
         """
-        unique_rgbs = np.unique(
-            instance_map.reshape(-1, instance_map.shape[2]), axis=0)
+        unique_rgbs = np.unique(instance_map.reshape(-1, instance_map.shape[2]), axis=0)
         for rgb in unique_rgbs:
             rgb_key = tuple(rgb)
             if rgb_key in self.instances:

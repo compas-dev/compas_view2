@@ -95,7 +95,6 @@ class GridObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', 0)
-
         shader.bind_attribute('position', self.edges['positions'])
         shader.bind_attribute('color', self.edges['colors'])
         shader.draw_lines(elements=self.edges['elements'], n=self.edges['n'], background=True)
