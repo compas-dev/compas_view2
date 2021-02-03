@@ -246,6 +246,22 @@ class Selector:
         return selected_data
 
     def start_selection_on_plane(self, snap_to_grid=False):
+        """Start an interactive selection session to pick a location on the grid plane.
+
+        Parameters
+        ----------
+        snap_to_grid : bool
+            Whether to snap the location on the grid
+
+        Returns
+        -------
+        List of 3 float numbers, selected location on the plane
+
+        Notes
+        -----
+        This function has to be called inside a interactive (non-blocking) session,
+        Otherwise it will freeze the main programme.
+        """
         self.performing_interactive_selection_on_plane = True
         self.snap_to_grid = snap_to_grid
         while self.performing_interactive_selection_on_plane:
@@ -253,6 +269,19 @@ class Selector:
         return self.selected_location_on_plane
 
     def finish_selection_on_plane(self, x, y):
+        """Finish selecting location on the grid plane.
+
+        Parameters
+        ----------
+        x : int
+            mouse x coordinate on uv_plane_map
+        y : int
+            mouse y coordinate on uv_plane_map
+
+        Returns
+        -------
+        None
+        """
         u, v, w = self.app.selector.uv_plane_map[y, x]
         if [u, v, w] == [1, 1, 1]:
             # When clicked outside of the grid
