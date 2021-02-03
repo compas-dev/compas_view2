@@ -215,7 +215,7 @@ class App:
         if not items:
             return
         self.menubar = self.window.menuBar()
-        self.menubar.setNativeMenuBar(False)
+        self.menubar.setNativeMenuBar(True)
         self.menubar.setContentsMargins(0, 0, 0, 0)
         self._add_menubar_items(items, self.menubar)
 
