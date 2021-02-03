@@ -51,7 +51,9 @@ class View120(View):
         # create grid uv map
         # if interactive selection on plane is going on
         if self.app.selector.performing_interactive_selection_on_plane:
+            self.shader.uniform1f("opacity", 1)
             self.app.selector.uv_plane_map = self.paint_plane()
+            self.shader.uniform1f("opacity", self.opacity)
             self.clear()
         # draw grid
         if self.show_grid:
@@ -62,7 +64,7 @@ class View120(View):
             obj.draw(self.shader)
         # finish
         self.shader.release()
-        # draw a box?
+        # draw 2D box for multi-selection
         if self.app.selector.select_from == "box":
             self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
 
