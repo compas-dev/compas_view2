@@ -35,14 +35,14 @@ class View120(View):
     def paint(self):
         self.shader.bind()
         if self.current != self.PERSPECTIVE:
-            self.self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+            self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
-        if self.app.selector.enabled:
+        if self.app.selector.paint_instance:
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
             if self.app.selector.select_from == "box":
                 self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
-            self.app.selector.enabled = False
+            self.app.selector.paint_instance = False
             self.clear()
         if self.show_grid:
             self.grid.draw(self.shader)

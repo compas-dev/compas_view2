@@ -172,8 +172,7 @@ class View(QtWidgets.QOpenGLWidget):
         dy = self.mouse.dy()
         if event.buttons() & QtCore.Qt.LeftButton:
             if self.keys["shift"] or self.keys["control"]:
-                self.app.selector.perform_box_selection(
-                    self.mouse.pos.x(), self.mouse.pos.y())
+                self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
             self.mouse.last_pos = event.pos()
             self.update()
         elif event.buttons() & QtCore.Qt.RightButton:
