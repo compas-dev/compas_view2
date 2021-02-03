@@ -22,8 +22,6 @@ class Selector:
         Mapping between pixel colors and scene objects.
     instance_map: ?
         ???
-    enabled: bool
-        Flag indicating that the selector is turned on or off.
     mode: "single" | "multi" | "deselect"
         The selection mode.
     overwrite_mode: ?
@@ -49,7 +47,6 @@ class Selector:
         self.colors_to_exclude = [(0, 0, 0,), (255, 255, 255)]
         self.instances = {}
         self.instance_map = None
-        self.enabled = True
         self.mode = "single"
         self.overwrite_mode = None
         self.types = []
@@ -64,7 +61,6 @@ class Selector:
     def reset(self):
         """Reset the selector state
         """
-        self.enabled = True
         self.mode = "single"
         self.overwrite_mode = None
         self.types = []
@@ -269,7 +265,6 @@ class Selector:
         """
         if not isinstance(types, list) and types is not None:
             types = [types]
-        self.enabled = True
         self.deselect(update=True)
         self.mode = self.overwrite_mode = mode
         self.types = types

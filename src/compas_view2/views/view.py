@@ -201,9 +201,8 @@ class View(QtWidgets.QOpenGLWidget):
         # if left button
         if event.buttons() & QtCore.Qt.LeftButton:
             self.mouse.buttons['left'] = True
-            if self.app.selector.enabled:
-                if self.keys["shift"] or self.keys["control"]:
-                    self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
+            if self.keys["shift"] or self.keys["control"]:
+                self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
         # do nothing
         # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
@@ -219,13 +218,12 @@ class View(QtWidgets.QOpenGLWidget):
         # if left button
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mouse.buttons['left'] = False
-            if self.app.selector.enabled:
-                # select location on grid
-                if self.app.selector.performing_interactive_selection_on_plane:
-                    self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
-                # trigger object selection
-                else:
-                    self.app.selector.paint_instance = True
+            # select location on grid
+            if self.app.selector.performing_interactive_selection_on_plane:
+                self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
+            # trigger object selection
+            else:
+                self.app.selector.paint_instance = True
         # do nothing
         # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
@@ -242,22 +240,20 @@ class View(QtWidgets.QOpenGLWidget):
 
     def keyPressEvent(self, event):
         key = event.key()
-        if self.app.selector.enabled:
-            if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
-                self.app.selector.finish_selection()
-            if key == QtCore.Qt.Key_Shift:
-                self.app.selector.mode = "multi"
-                self.keys["shift"] = True
-            if key == QtCore.Qt.Key_Control:
-                self.app.selector.mode = "deselect"
-                self.keys["control"] = True
+        if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
+            self.app.selector.finish_selection()
+        if key == QtCore.Qt.Key_Shift:
+            self.app.selector.mode = "multi"
+            self.keys["shift"] = True
+        if key == QtCore.Qt.Key_Control:
+            self.app.selector.mode = "deselect"
+            self.keys["control"] = True
 
     def keyReleaseEvent(self, event):
         key = event.key()
-        if self.app.selector.enabled:
-            if key == QtCore.Qt.Key_Shift:
-                self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-                self.keys["shift"] = False
-            if key == QtCore.Qt.Key_Control:
-                self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-                self.keys["control"] = False
+        if key == QtCore.Qt.Key_Shift:
+            self.app.selector.mode = self.app.selector.overwrite_mode or "single"
+            self.keys["shift"] = False
+        if key == QtCore.Qt.Key_Control:
+            self.app.selector.mode = self.app.selector.overwrite_mode or "single"
+            self.keys["control"] = False
