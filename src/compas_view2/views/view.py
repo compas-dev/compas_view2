@@ -164,50 +164,65 @@ class View(QtWidgets.QOpenGLWidget):
     def paint_instances(self):
         pass
 
+    def paint_plane(self):
+        pass
+
     def mouseMoveEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
+
         self.mouse.pos = event.pos()
         dx = self.mouse.dx()
         dy = self.mouse.dy()
+
         if event.buttons() & QtCore.Qt.LeftButton:
             if self.keys["shift"] or self.keys["control"]:
                 self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
+
             self.mouse.last_pos = event.pos()
             self.update()
+
         elif event.buttons() & QtCore.Qt.RightButton:
             if self.keys["shift"]:
                 self.camera.pan(dx, dy)
             else:
                 self.camera.rotate(dx, dy)
+
             self.mouse.last_pos = event.pos()
             self.update()
 
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
+
         if event.buttons() & QtCore.Qt.LeftButton:
             self.mouse.buttons['left'] = True
             if self.app.selector.enabled:
                 if self.keys["shift"] or self.keys["control"]:
                     self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
+
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons['right'] = True
+
         self.mouse.last_pos = event.pos()
         self.update()
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
+
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mouse.buttons['left'] = False
+
             if self.app.selector.enabled:
                 if self.app.selector.performing_interactive_selection_on_plane:
                     self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
                 else:
                     self.app.selector.paint_instance = True
+
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
+
         self.update()
 
     def wheelEvent(self, event):

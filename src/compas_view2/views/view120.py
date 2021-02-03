@@ -34,9 +34,11 @@ class View120(View):
 
     def paint(self):
         self.shader.bind()
+
         if self.current != self.PERSPECTIVE:
             self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
+
         if self.app.selector.paint_instance:
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
@@ -44,13 +46,21 @@ class View120(View):
                 self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
             self.app.selector.paint_instance = False
             self.clear()
+
+        if self.app.selector.performing_interactive_selection_on_plane:
+            self.app.selector.uv_plane_map = self.paint_plane()
+            self.clear()
+
         if self.show_grid:
             self.grid.draw(self.shader)
+
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.shader)
+
         if self.app.selector.select_from == "box":
             self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
+
         self.shader.release()
 
     def paint_instances(self, cropped_box=None):
@@ -73,10 +83,7 @@ class View120(View):
 
     def paint_plane(self):
         x, y, width, height = 0, 0, self.app.width, self.app.height
-        self.shader.bind()
-        self.shader.uniform4x4("viewworld", self.camera.viewworld())
         self.grid.draw_plane(self.shader)
-        self.shader.release()
         r = self.devicePixelRatio()
         plane_uv_map = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_FLOAT)
         plane_uv_map = plane_uv_map.reshape(height*r, width*r, 3)
