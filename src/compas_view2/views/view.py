@@ -206,7 +206,6 @@ class View(QtWidgets.QOpenGLWidget):
                     self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
                 else:
                     self.app.selector.paint_instance = True
-
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
         self.update()
