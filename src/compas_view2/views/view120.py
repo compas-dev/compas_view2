@@ -41,16 +41,16 @@ class View120(View):
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         # create object color map
         # if interactive selection is going on
-        if self.app.selector.paint_instance:
+        if self.app.selector.enabled:
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
             if self.app.selector.select_from == "box":
                 self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
-            self.app.selector.paint_instance = False
+            self.app.selector.enabled = False
             self.clear()
         # create grid uv map
         # if interactive selection on plane is going on
-        if self.app.selector.performing_interactive_selection_on_plane:
+        if self.app.selector.wait_for_selection_on_plane:
             self.shader.uniform1f("opacity", 1)
             self.app.selector.uv_plane_map = self.paint_plane()
             self.shader.uniform1f("opacity", self.opacity)
