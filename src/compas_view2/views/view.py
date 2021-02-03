@@ -155,6 +155,10 @@ class View(QtWidgets.QOpenGLWidget):
         pass
 
     def paintGL(self):
+        if self.current != self.PERSPECTIVE:
+            self.shader.bind()
+            self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+            self.shader.release()
         self.clear()
         if self.app.selector.paint_instance:
             if self.app.selector.select_from == "pixel":
