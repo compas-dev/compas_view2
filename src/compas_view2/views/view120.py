@@ -60,11 +60,11 @@ class View120(View):
         for guid in self.objects:
             obj = self.objects[guid]
             obj.draw(self.shader)
+        # finish
+        self.shader.release()
         # draw a box?
         if self.app.selector.select_from == "box":
             self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
-        # finish
-        self.shader.release()
 
     def paint_instances(self, cropped_box=None):
         if cropped_box is None:
