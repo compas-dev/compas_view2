@@ -6,6 +6,13 @@ from compas.geometry import Polyline
 from compas.geometry import Box
 from compas.geometry import Sphere
 from compas.geometry import Torus
+
+try:
+    from compas_assembly.datastructures import Block
+    is_assembly = True
+except ModuleNotFoundError:
+    is_assembly = False
+
 from ..shapes import Arrow
 
 from .object import Object
@@ -33,3 +40,6 @@ Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
+
+if is_assembly:
+    Object.register(Block, MeshObject)
