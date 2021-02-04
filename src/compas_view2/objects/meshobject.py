@@ -21,7 +21,17 @@ class MeshObject(Object):
         True to show edges
     show_faces : bool
         True to show faces
-    hide_coplanar_edges : bool
+    facecolor : list
+        Face color
+    linecolor : list
+        Line color
+    pointcolor : list
+        Face color
+    linewidth : float
+        Line width
+    pointsize : float
+        Point size
+    hide_coplanaredges : bool
         True to hide the coplanar edges
 
     Attributes
@@ -42,8 +52,11 @@ class MeshObject(Object):
     default_color_front = [0.8, 0.8, 0.8]
     default_color_back = [0.8, 0.8, 0.8]
 
-    def __init__(self, data, name=None, is_selected=False, show_vertices=False,
-                 show_edges=True, show_faces=True, hide_coplanar_edges=False):
+    def __init__(self, data, name=None, is_selected=False,
+                 show_vertices=False, show_edges=True, show_faces=True,
+                 facecolor=None, linecolor=None, pointcolor=None,
+                 linewidth=1, pointsize=10,
+                 hide_coplanaredges=False):
         super().__init__(data, name=name, is_selected=is_selected)
         self._mesh = data
         self._vertices = None
@@ -53,7 +66,12 @@ class MeshObject(Object):
         self.show_vertices = show_vertices
         self.show_edges = show_edges
         self.show_faces = show_faces
-        self.hide_coplanar_edges = hide_coplanar_edges
+        self.facecolor = facecolor
+        self.linecolor = linecolor
+        self.pointcolor = pointcolor
+        self.linewidth = linewidth
+        self.pointsize = pointsize
+        self.hide_coplanaredges = hide_coplanaredges
 
     @property
     def vertices(self):
@@ -78,10 +96,11 @@ class MeshObject(Object):
         positions = []
         colors = []
         elements = []
+        color = self.pointcolor or self.default_color_vertices
         i = 0
         for vertex in mesh.vertices():
             positions.append(vertex_xyz[vertex])
-            colors.append(self.default_color_vertices)
+            colors.append(color)
             elements.append(i)
             i += 1
         self._vertices = {
@@ -94,10 +113,11 @@ class MeshObject(Object):
         positions = []
         colors = []
         elements = []
+        color = self.linecolor or self.default_color_edges
         i = 0
         for u, v in mesh.edges():
 
-            if self.hide_coplanar_edges:
+            if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
                 fkeys = mesh.edge_faces(u, v)
                 if not mesh.is_edge_on_boundary(u, v):
@@ -109,8 +129,8 @@ class MeshObject(Object):
 
             positions.append(vertex_xyz[u])
             positions.append(vertex_xyz[v])
-            colors.append(self.default_color_edges)
-            colors.append(self.default_color_edges)
+            colors.append(color)
+            colors.append(color)
             elements.append([i + 0, i + 1])
             i += 2
         self._edges = {
@@ -123,7 +143,7 @@ class MeshObject(Object):
         positions = []
         colors = []
         elements = []
-        color = self.default_color_front
+        color = self.facecolor or self.default_color_front
         i = 0
         for face in mesh.faces():
             vertices = mesh.face_vertices(face)
@@ -166,7 +186,7 @@ class MeshObject(Object):
         positions = []
         colors = []
         elements = []
-        color = self.default_color_back
+        color = self.facecolor or self.default_color_back
         i = 0
         for face in mesh.faces():
             vertices = mesh.face_vertices(face)[::-1]
@@ -224,11 +244,11 @@ class MeshObject(Object):
         if self.show_edges:
             shader.bind_attribute('position', self.edges['positions'])
             shader.bind_attribute('color', self.edges['colors'])
-            shader.draw_lines(elements=self.edges['elements'], n=self.edges['n'])
+            shader.draw_lines(width=self.linewidth, elements=self.edges['elements'], n=self.edges['n'])
         if self.show_vertices:
             shader.bind_attribute('position', self.vertices['positions'])
             shader.bind_attribute('color', self.vertices['colors'])
-            shader.draw_points(size=10, elements=self.vertices['elements'], n=self.vertices['n'])
+            shader.draw_points(size=self.pointsize, elements=self.vertices['elements'], n=self.vertices['n'])
         # reset
         shader.disable_attribute('position')
         shader.disable_attribute('color')
