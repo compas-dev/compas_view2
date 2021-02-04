@@ -48,6 +48,9 @@ class App:
         The display mode of the OpenGL view.
         Default is ``'shaded'``.
         In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
+    show_grid: bool, optional
+        Show the XY plane.
+        Default is ``True``.
     config: dict | filepath, optional
         A configuration dict for the UI, or a path to a JSON file containing such a dict.
         Default is ``None``, in which case the default configuration is used.
@@ -89,7 +92,7 @@ class App:
 
     """
 
-    def __init__(self, version='120', width=800, height=500, viewmode='shaded', controller_cls=None, config=None):
+    def __init__(self, version='120', width=800, height=500, viewmode='shaded', show_grid=True, controller_cls=None, config=None):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -116,7 +119,7 @@ class App:
         self.width = width
         self.height = height
         self.window = QtWidgets.QMainWindow()
-        self.view = View(self, mode=viewmode)
+        self.view = View(self, mode=viewmode, show_grid=show_grid)
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
 
