@@ -7,11 +7,6 @@ from compas.geometry import Box
 from compas.geometry import Sphere
 from compas.geometry import Torus
 
-try:
-    from compas_assembly.datastructures import Block
-except ModuleNotFoundError as e:
-    print(e)
-
 from ..shapes import Arrow
 
 from .object import Object
@@ -41,6 +36,8 @@ Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
 
 try:
-    Object.register(Block, MeshObject)
-except:
+    from compas_assembly.datastructures import Block
+except ModuleNotFoundError:
     pass
+else:
+    Object.register(Block, MeshObject)
