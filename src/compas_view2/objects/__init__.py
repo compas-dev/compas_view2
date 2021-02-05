@@ -6,8 +6,8 @@ from compas.geometry import Polyline
 from compas.geometry import Box
 from compas.geometry import Sphere
 from compas.geometry import Torus
-from ..shapes import Arrow
 
+from ..shapes import Arrow
 from .object import Object
 
 from .pointobject import PointObject
@@ -27,8 +27,10 @@ from .axisobject import AxisObject  # noqa: F401
 Object.register(Point, PointObject)
 Object.register(Line, LineObject)
 Object.register(Polyline, PolylineObject)
+
 Object.register(Network, NetworkObject)
 Object.register(Mesh, MeshObject)
+
 Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
