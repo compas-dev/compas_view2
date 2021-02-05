@@ -110,8 +110,8 @@ class View(QtWidgets.QOpenGLWidget):
 
         """
         GL.glClearColor(* self.color)
-        # GL.glPolygonOffset(1.0, 1.0)
-        # GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
+        GL.glPolygonOffset(1.0, 1.0)
+        GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
         GL.glEnable(GL.GL_CULL_FACE)
         GL.glCullFace(GL.GL_BACK)
         GL.glEnable(GL.GL_DEPTH_TEST)

@@ -113,7 +113,7 @@ class Arrow(Shape):
         ----------
         u : int, optional
             Number of faces in the "u" direction.
-            Default is ``3``.
+            Default is ``4``.
 
         Returns
         -------
