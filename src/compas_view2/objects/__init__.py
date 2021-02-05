@@ -9,9 +9,8 @@ from compas.geometry import Torus
 
 try:
     from compas_assembly.datastructures import Block
-    is_assembly = True
-except ModuleNotFoundError:
-    is_assembly = False
+except ModuleNotFoundError as e:
+    print(e)
 
 from ..shapes import Arrow
 
@@ -41,5 +40,7 @@ Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
 
-if is_assembly:
+try:
     Object.register(Block, MeshObject)
+except:
+    pass
