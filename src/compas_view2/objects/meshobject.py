@@ -97,50 +97,53 @@ class MeshObject(Object):
     @property
     def pointcolor(self):
         if not self._pointcolor:
-            self._pointcolor = {vertex: self.default_color_points for vertex in self._mesh.vertices()}
+            self._pointcolor = {vertex: self._mesh.vertex_attribute(vertex, 'color') or self.default_color_points for vertex in self._mesh.vertices()}
         return self._pointcolor
 
     @pointcolor.setter
     def pointcolor(self, color):
-        if isinstance(color, dict):
-            self.pointcolor.update(color)
-        else:
-            pointcolor = self.pointcolor
-            color = color or self.default_color_points
-            for vertex in pointcolor:
-                pointcolor[vertex] = color
+        if color:
+            if isinstance(color, dict):
+                self.pointcolor.update(color)
+            else:
+                pointcolor = self.pointcolor
+                color = color or self.default_color_points
+                for vertex in pointcolor:
+                    pointcolor[vertex] = color
 
     @property
     def linecolor(self):
         if not self._linecolor:
-            self._linecolor = {edge: self.default_color_lines for edge in self._mesh.edges()}
+            self._linecolor = {edge: self._mesh.edge_attribute(edge, 'color') or self.default_color_lines for edge in self._mesh.edges()}
         return self._linecolor
 
     @linecolor.setter
     def linecolor(self, color):
-        if isinstance(color, dict):
-            self.linecolor.update(color)
-        else:
-            linecolor = self.linecolor
-            color = color or self.default_color_lines
-            for edge in linecolor:
-                linecolor[edge] = color
+        if color:
+            if isinstance(color, dict):
+                self.linecolor.update(color)
+            else:
+                linecolor = self.linecolor
+                color = color or self.default_color_lines
+                for edge in linecolor:
+                    linecolor[edge] = color
 
     @property
     def facecolor(self):
         if not self._facecolor:
-            self._facecolor = {face: self.default_color_faces for face in self._mesh.faces()}
+            self._facecolor = {face: self._mesh.face_attribute(face, 'color') or self.default_color_faces for face in self._mesh.faces()}
         return self._facecolor
 
     @facecolor.setter
     def facecolor(self, color):
-        if isinstance(color, dict):
-            self.facecolor.update(color)
-        else:
-            facecolor = self.facecolor
-            color = color or self.default_color_faces
-            for face in facecolor:
-                facecolor[face] = color
+        if color:
+            if isinstance(color, dict):
+                self.facecolor.update(color)
+            else:
+                facecolor = self.facecolor
+                color = color or self.default_color_faces
+                for face in facecolor:
+                    facecolor[face] = color
 
     def init(self):
         mesh = self._mesh
