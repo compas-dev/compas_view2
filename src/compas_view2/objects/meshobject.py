@@ -152,7 +152,6 @@ class MeshObject(Object):
         positions = []
         colors = []
         elements = []
-        color = self.pointcolor or self.default_color_vertices
         i = 0
         for vertex in mesh.vertices():
             positions.append(vertex_xyz[vertex])
@@ -169,7 +168,6 @@ class MeshObject(Object):
         positions = []
         colors = []
         elements = []
-        color = self.linecolor or self.default_color_edges
         i = 0
         for u, v in mesh.edges():
             color = edge_color[u, v]
