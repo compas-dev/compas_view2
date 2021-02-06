@@ -3,6 +3,7 @@ from compas.datastructures import Mesh
 from compas.geometry import Point
 from compas.geometry import Line
 from compas.geometry import Polyline
+from compas.geometry import Frame
 from compas.geometry import Box
 from compas.geometry import Sphere
 from compas.geometry import Torus
@@ -13,6 +14,7 @@ from .object import Object
 from .pointobject import PointObject
 from .lineobject import LineObject
 from .polylineobject import PolylineObject
+from .frameobject import FrameObject
 
 from .networkobject import NetworkObject
 from .meshobject import MeshObject
@@ -27,6 +29,7 @@ from .axisobject import AxisObject  # noqa: F401
 Object.register(Point, PointObject)
 Object.register(Line, LineObject)
 Object.register(Polyline, PolylineObject)
+Object.register(Frame, FrameObject)
 
 Object.register(Network, NetworkObject)
 Object.register(Mesh, MeshObject)
