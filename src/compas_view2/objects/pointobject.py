@@ -45,14 +45,10 @@ class PointObject(Object):
     def draw_instance(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
-
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self.instance_color)
-
         shader.bind_attribute('position', self.points['positions'])
         shader.draw_points(size=self.size, elements=self.points['elements'], n=self.points['n'])
-
-        # reset
         shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
         shader.disable_attribute('position')
