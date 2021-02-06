@@ -99,9 +99,6 @@
     ],
     "toolbar":
     [
-        {"type": "action", "text": "Undo", "action": "undo", "icon": "undo-solid.svg"},
-        {"type": "action", "text": "Redo", "action": "redo", "icon": "redo-solid.svg"},
-        {"type": "separator"},
         {"type": "action", "text": "Catpure", "action": "view_capture"},
         {"type": "separator"},
         {"type": "action", "text": "Front", "action": "view_front"},
