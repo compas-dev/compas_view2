@@ -1,5 +1,5 @@
-from compas.utilities import flatten
-from compas.geometry import is_coplanar
+from compas.utilities import flatten, pairwise
+from compas.geometry import is_coplanar, centroid_points
 
 from ..buffers import make_index_buffer, make_vertex_buffer
 
@@ -231,7 +231,17 @@ class MeshObject(Object):
                 elements.append([i + 3, i + 4, i + 5])
                 i += 6
             else:
-                raise NotImplementedError
+                points = [vertex_xyz[vertex] for vertex in vertices]
+                c = centroid_points(points)
+                for a, b in pairwise(points + points[:1]):
+                    positions.append(a)
+                    positions.append(b)
+                    positions.append(c)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    elements.append([i + 0, i + 1, i + 2])
+                    i += 3
         self._front = {
             'positions': make_vertex_buffer(list(flatten(positions))),
             'colors': make_vertex_buffer(list(flatten(colors))),
@@ -274,7 +284,17 @@ class MeshObject(Object):
                 elements.append([i + 3, i + 4, i + 5])
                 i += 6
             else:
-                raise NotImplementedError
+                points = [vertex_xyz[vertex] for vertex in vertices]
+                c = centroid_points(points)
+                for a, b in pairwise(points + points[:1]):
+                    positions.append(a)
+                    positions.append(b)
+                    positions.append(c)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    elements.append([i + 0, i + 1, i + 2])
+                    i += 3
         self._back = {
             'positions': make_vertex_buffer(list(flatten(positions))),
             'colors': make_vertex_buffer(list(flatten(colors))),
