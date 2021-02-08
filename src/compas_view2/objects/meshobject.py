@@ -1,12 +1,10 @@
-from compas.utilities import flatten, pairwise
+from compas.utilities import pairwise
 from compas.geometry import is_coplanar, centroid_points
 
-from ..buffers import make_index_buffer, make_vertex_buffer
-
-from .object import Object
+from .bufferobject import BufferObject
 
 
-class MeshObject(Object):
+class MeshObject(BufferObject):
     """Object for displaying COMPAS mesh data structures.
 
     Parameters
@@ -52,24 +50,20 @@ class MeshObject(Object):
     default_color_faces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
-                 show_vertices=False, show_edges=True, show_faces=True,
+                 show_points=False, show_lines=True, show_faces=True,
                  facecolor=None, linecolor=None, pointcolor=None,
                  color=None,
                  linewidth=1, pointsize=10,
                  hide_coplanaredges=False):
         super().__init__(data, name=name, is_selected=is_selected)
         self._mesh = data
-        self._vertices = None
-        self._edges = None
-        self._front = None
-        self._back = None
         self._pointcolor = None
         self._linecolor = None
         self._facecolor = None
         self._linewidth = None
         self._pointsize = None
-        self.show_vertices = show_vertices
-        self.show_edges = show_edges
+        self.show_points = show_points
+        self.show_lines = show_lines
         self.show_faces = show_faces
         self.facecolor = color or facecolor
         self.linecolor = color or linecolor
@@ -161,12 +155,9 @@ class MeshObject(Object):
             colors.append(vertex_color[vertex])
             elements.append(i)
             i += 1
-        self._vertices = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(elements),
-            'n': i
-        }
+        self._points = positions
+        self._pointcolors = colors
+        self._pointelements = elements
         # edges
         positions = []
         colors = []
@@ -189,12 +180,9 @@ class MeshObject(Object):
             colors.append(color)
             elements.append([i + 0, i + 1])
             i += 2
-        self._edges = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(list(flatten(elements))),
-            'n': i
-        }
+        self._linevertices = positions
+        self._linevertexcolors = colors
+        self._lineelements = elements
         # front faces
         positions = []
         colors = []
@@ -242,12 +230,9 @@ class MeshObject(Object):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._front = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(list(flatten(elements))),
-            'n': i
-        }
+        self._frontfacevertices = positions
+        self._frontfacevertexcolors = colors
+        self._frontfacevertexelements = elements
         # back faces
         positions = []
         colors = []
@@ -295,53 +280,8 @@ class MeshObject(Object):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._back = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(list(flatten(elements))),
-            'n': i
-        }
-
-    def draw(self, shader):
-        shader.enable_attribute('position')
-        shader.enable_attribute('color')
-        if self.show_faces:
-            shader.uniform1i('is_selected', self.is_selected)
-            # front
-            shader.bind_attribute('position', self.front['positions'])
-            shader.bind_attribute('color', self.front['colors'])
-            shader.draw_triangles(elements=self.front['elements'], n=self.front['n'])
-            # back
-            shader.bind_attribute('position', self.back['positions'])
-            shader.bind_attribute('color', self.back['colors'])
-            shader.draw_triangles(elements=self.back['elements'], n=self.back['n'])
-            # reset
-            shader.uniform1i('is_selected', 0)
-        if self.show_edges:
-            shader.bind_attribute('position', self.edges['positions'])
-            shader.bind_attribute('color', self.edges['colors'])
-            shader.draw_lines(width=self.linewidth, elements=self.edges['elements'], n=self.edges['n'])
-        if self.show_vertices:
-            shader.bind_attribute('position', self.vertices['positions'])
-            shader.bind_attribute('color', self.vertices['colors'])
-            shader.draw_points(size=self.pointsize, elements=self.vertices['elements'], n=self.vertices['n'])
-        # reset
-        shader.disable_attribute('position')
-        shader.disable_attribute('color')
-
-    def draw_instance(self, shader):
-        shader.enable_attribute('position')
-        shader.enable_attribute('color')
-        shader.uniform1i('is_instance_mask', 1)
-        shader.uniform3f('instance_color', self.instance_color)
-        # front
-        shader.bind_attribute('position', self.front['positions'])
-        shader.draw_triangles(elements=self.front['elements'], n=self.front['n'])
-        # back
-        shader.bind_attribute('position', self.back['positions'])
-        shader.draw_triangles(elements=self.back['elements'], n=self.back['n'])
-        # reset
-        shader.uniform1i('is_instance_mask', 0)
-        shader.uniform3f('instance_color', [0, 0, 0])
-        shader.disable_attribute('position')
-        shader.disable_attribute('color')
+        self._backfacevertices = positions
+        self._backfacevertexcolors = colors
+        self._backfacevertexelements = elements
+        # Make buffers for the attributes
+        self.make_buffers()
