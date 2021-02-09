@@ -64,6 +64,7 @@
                     "items":
                     [
                         {"type": "action", "text": "Add Point", "action": "add_point"},
+                        {"type": "action", "text": "Add Point On Grid", "action": "add_point_on_grid"},
                         {"type": "action", "text": "Add Line [2 points]", "action": "add_line_from_selected_points"}
                     ]
                 },
@@ -98,9 +99,6 @@
     ],
     "toolbar":
     [
-        {"type": "action", "text": "Undo", "action": "undo", "icon": "undo-solid.svg"},
-        {"type": "action", "text": "Redo", "action": "redo", "icon": "redo-solid.svg"},
-        {"type": "separator"},
         {"type": "action", "text": "Catpure", "action": "view_capture"},
         {"type": "separator"},
         {"type": "action", "text": "Front", "action": "view_front"},

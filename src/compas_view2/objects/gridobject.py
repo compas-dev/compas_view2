@@ -78,15 +78,35 @@ class GridObject(Object):
             'n': len(elements)
         }
 
+        x_size = self.x_cells * self.cell_size
+        y_size = self.y_cells * self.cell_size
+        positions = [[-x_size, -y_size, 0], [x_size, -y_size, 0], [x_size, y_size, 0], [-x_size, y_size, 0]]
+        color = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]]
+        elements = [[0, 1, 3], [1, 2, 3], [1, 0, 3], [2, 1, 3]]
+
+        self._uvplane = {
+            'positions': make_vertex_buffer(list(flatten(positions))),
+            'colors': make_vertex_buffer(list(flatten(color))),
+            'elements': make_index_buffer(list(flatten(elements))),
+            'n': len(list(flatten(elements))),
+        }
+
     def draw(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', 0)
-
         shader.bind_attribute('position', self.edges['positions'])
         shader.bind_attribute('color', self.edges['colors'])
-        shader.draw_lines(elements=self.edges['elements'], n=self.edges['n'])
-
+        shader.draw_lines(elements=self.edges['elements'], n=self.edges['n'], background=True)
         # reset
+        shader.disable_attribute('position')
+        shader.disable_attribute('color')
+
+    def draw_plane(self, shader):
+        shader.enable_attribute('position')
+        shader.enable_attribute('color')
+        shader.bind_attribute('position', self._uvplane['positions'])
+        shader.bind_attribute('color', self._uvplane['colors'])
+        shader.draw_triangles(elements=self._uvplane['elements'], n=self._uvplane['n'])
         shader.disable_attribute('position')
         shader.disable_attribute('color')

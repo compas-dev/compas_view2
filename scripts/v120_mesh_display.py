@@ -13,7 +13,7 @@ mesh.transform(T*S)
 
 mesh2 = mesh.transformed(Translation.from_vector([-6, 0, 0]))
 
-viewer.add(mesh, show_vertices=False, hide_coplanar_edges=False)
-viewer.add(mesh2, show_vertices=False, hide_coplanar_edges=True)
+viewer.add(mesh, show_vertices=False, hide_coplanaredges=False)
+viewer.add(mesh2, show_vertices=False, hide_coplanaredges=True)
 
 viewer.show()

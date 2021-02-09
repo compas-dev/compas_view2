@@ -48,6 +48,9 @@ class App:
         The display mode of the OpenGL view.
         Default is ``'shaded'``.
         In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
+    show_grid: bool, optional
+        Show the XY plane.
+        Default is ``True``.
     controller_class: :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
         Default is ``None``, in which case the default controller is used,
@@ -89,7 +92,7 @@ class App:
 
     """
 
-    def __init__(self, version='120', width=800, height=500, viewmode='shaded', controller_class=None, config=None):
+    def __init__(self, version='120', width=800, height=500, viewmode='shaded', controller_class=None, show_grid=True, config=None):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -117,7 +120,7 @@ class App:
         self.width = width
         self.height = height
         self.window = QtWidgets.QMainWindow()
-        self.view = View(self, mode=viewmode)
+        self.view = View(self, mode=viewmode, show_grid=show_grid)
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
 
@@ -221,7 +224,7 @@ class App:
         if not items:
             return
         self.menubar = self.window.menuBar()
-        self.menubar.setNativeMenuBar(False)
+        self.menubar.setNativeMenuBar(True)
         self.menubar.setContentsMargins(0, 0, 0, 0)
         self._add_menubar_items(items, self.menubar)
 

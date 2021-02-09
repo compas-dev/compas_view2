@@ -14,9 +14,14 @@ and run the event loop.
     viewer = App()
     viewer.run()
 
-.. figure:: /_images/
-     :figclass: figure
-     :class: figure-img img-fluid
+.. raw:: html
+
+    <div class="mx-auto">
+        <video width="800" height="500" controls>
+            <source src="_videos/test.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>
+    </div>
 
 Scripting
 =========

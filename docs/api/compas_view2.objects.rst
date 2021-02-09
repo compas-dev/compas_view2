@@ -1,11 +1,11 @@
 ********************************************************************************
-objects
+compas_view2.objects
 ********************************************************************************
 
 .. currentmodule:: compas_view2.objects
 
-Geometry
-========
+Primitives
+==========
 
 .. autosummary::
     :toctree: generated/
@@ -13,9 +13,19 @@ Geometry
 
     PointObject
     LineObject
+    PolylineObject
+
+Shapes
+======
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
     BoxObject
     SphereObject
     TorusObject
+    ArrowObject
 
 Datastructures
 ==============
@@ -26,6 +36,11 @@ Datastructures
 
     NetworkObject
     MeshObject
+
+Robots
+======
+
+*Coming soon*...
 
 Miscellaneous
 =============

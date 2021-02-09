@@ -110,8 +110,8 @@ class View(QtWidgets.QOpenGLWidget):
 
         """
         GL.glClearColor(* self.color)
-        # GL.glPolygonOffset(1.0, 1.0)
-        # GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
+        GL.glPolygonOffset(1.0, 1.0)
+        GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
         GL.glEnable(GL.GL_CULL_FACE)
         GL.glCullFace(GL.GL_BACK)
         GL.glEnable(GL.GL_DEPTH_TEST)
@@ -174,21 +174,15 @@ class View(QtWidgets.QOpenGLWidget):
 
         """
         self.clear()
-        if self.app.selector.paint_instance:
-            if self.app.selector.select_from == "pixel":
-                self.app.selector.instance_map = self.paint_instances()
-            if self.app.selector.select_from == "box":
-                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
-            self.app.selector.paint_instance = False
-            self.clear()
         self.paint()
-        if self.app.selector.select_from == "box":
-            self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
 
     def paint(self):
         pass
 
     def paint_instances(self):
+        pass
+
+    def paint_plane(self):
         pass
 
     def mouseMoveEvent(self, event):
@@ -199,44 +193,62 @@ class View(QtWidgets.QOpenGLWidget):
         """
         if not self.isActiveWindow() or not self.underMouse():
             return
+        # record mouse position
         self.mouse.pos = event.pos()
+        # compute displacement
         dx = self.mouse.dx()
         dy = self.mouse.dy()
+        # do a box selection
+        # if left button + SHIFT
         if event.buttons() & QtCore.Qt.LeftButton:
             if self.keys["shift"] or self.keys["control"]:
-                self.app.selector.perform_box_selection(
-                    self.mouse.pos.x(), self.mouse.pos.y())
-            else:
-                self.camera.rotate(dx, dy)
+                self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
+            # record mouse position
             self.mouse.last_pos = event.pos()
             self.update()
+        # change the view
+        # if right bottom
         elif event.buttons() & QtCore.Qt.RightButton:
-            self.camera.pan(dx, dy)
+            if self.keys["shift"]:
+                self.camera.pan(dx, dy)
+            else:
+                self.camera.rotate(dx, dy)
+            # record mouse position
             self.mouse.last_pos = event.pos()
             self.update()
 
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
+        # start selecting
+        # if left button
         if event.buttons() & QtCore.Qt.LeftButton:
             self.mouse.buttons['left'] = True
-            if self.app.selector.enabled:
-                if self.keys["shift"] or self.keys["control"]:
-                    self.app.selector.reset_box_selection(
-                        event.pos().x(), event.pos().y())
+            if self.keys["shift"] or self.keys["control"]:
+                self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
+        # do nothing
+        # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons['right'] = True
+        # recod mouse position
         self.mouse.last_pos = event.pos()
         self.update()
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
+        # finalize selecting
+        # if left button
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
             self.mouse.buttons['left'] = False
-            if self.app.selector.enabled:
-                self.app.selector.paint_instance = True
-
+            # select location on grid
+            if self.app.selector.wait_for_selection_on_plane:
+                self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
+            # trigger object selection
+            else:
+                self.app.selector.enabled = True
+        # do nothing
+        # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
         self.update()
@@ -251,22 +263,20 @@ class View(QtWidgets.QOpenGLWidget):
 
     def keyPressEvent(self, event):
         key = event.key()
-        if self.app.selector.enabled:
-            if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
-                self.app.selector.finish_selection()
-            if key == QtCore.Qt.Key_Shift:
-                self.app.selector.mode = "multi"
-                self.keys["shift"] = True
-            if key == QtCore.Qt.Key_Control:
-                self.app.selector.mode = "deselect"
-                self.keys["control"] = True
+        if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
+            self.app.selector.finish_selection()
+        if key == QtCore.Qt.Key_Shift:
+            self.app.selector.mode = "multi"
+            self.keys["shift"] = True
+        if key == QtCore.Qt.Key_Control:
+            self.app.selector.mode = "deselect"
+            self.keys["control"] = True
 
     def keyReleaseEvent(self, event):
         key = event.key()
-        if self.app.selector.enabled:
-            if key == QtCore.Qt.Key_Shift:
-                self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-                self.keys["shift"] = False
-            if key == QtCore.Qt.Key_Control:
-                self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-                self.keys["control"] = False
+        if key == QtCore.Qt.Key_Shift:
+            self.app.selector.mode = self.app.selector.overwrite_mode or "single"
+            self.keys["shift"] = False
+        if key == QtCore.Qt.Key_Control:
+            self.app.selector.mode = self.app.selector.overwrite_mode or "single"
+            self.keys["control"] = False
