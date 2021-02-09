@@ -12,6 +12,7 @@ from ..objects import Object
 
 from .controller import Controller
 from .selector import Selector
+from .timer import Timer
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -279,3 +280,15 @@ class App:
             icon = self._get_icon(item['icon'])
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))
+
+    def animate(self, interval=100):
+        self.frame_count = 0
+
+        def outer(func):
+            def render():
+                func(self.frame_count)
+                self.view.update()
+                self.frame_count += 1
+
+            self.timer = Timer(interval=interval, callback=render)
+        return outer
