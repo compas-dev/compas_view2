@@ -30,54 +30,55 @@ class BufferObject(Object):
 
     def make_buffers(self):
 
-        if hasattr(self, '_points'):
+        if hasattr(self, '_point_positions'):
             self._points_buffer = {
-                'positions': make_vertex_buffer(list(flatten(self._points))),
-                'colors': make_vertex_buffer(list(flatten(self._pointcolors))),
-                'elements': make_index_buffer([i for i in range(len(self._pointelements))]),
-                'n': len(self._points)
+                'positions': make_vertex_buffer(list(flatten(self._point_positions))),
+                'colors': make_vertex_buffer(list(flatten(self._point_colors))),
+                'elements': make_index_buffer([i for i in range(len(self._point_elements))]),
+                'n': len(self._point_positions)
             }
 
-        if hasattr(self, '_linevertices'):
+        if hasattr(self, '_line_positions'):
             self._lines_buffer = {
-                'positions': make_vertex_buffer(list(flatten(self._linevertices))),
-                'colors': make_vertex_buffer(list(flatten(self._linevertexcolors))),
-                'elements': make_index_buffer(list(flatten(self._lineelements))),
-                'n': len(self._linevertices)
+                'positions': make_vertex_buffer(list(flatten(self._line_positions))),
+                'colors': make_vertex_buffer(list(flatten(self._line_colors))),
+                'elements': make_index_buffer(list(flatten(self._line_elements))),
+                'n': len(self._line_positions)
             }
 
-        if hasattr(self, '_frontfacevertices'):
+        if hasattr(self, '_frontface_positions'):
             self._frontfaces_buffer = {
-                'positions': make_vertex_buffer(list(flatten(self._frontfacevertices))),
-                'colors': make_vertex_buffer(list(flatten(self._frontfacevertexcolors))),
-                'elements': make_index_buffer(list(flatten(self._frontfacevertexelements))),
-                'n': len(self._frontfacevertices)
+                'positions': make_vertex_buffer(list(flatten(self._frontface_positions))),
+                'colors': make_vertex_buffer(list(flatten(self._frontface_colors))),
+                'elements': make_index_buffer(list(flatten(self._frontface_elements))),
+                'n': len(self._frontface_positions)
             }
 
-        if hasattr(self, '_backfacevertices'):
+        if hasattr(self, '_backface_positions'):
             self._backfaces_buffer = {
-                'positions': make_vertex_buffer(list(flatten(self._backfacevertices))),
-                'colors': make_vertex_buffer(list(flatten(self._backfacevertexcolors))),
-                'elements': make_index_buffer(list(flatten(self._backfacevertexelements))),
-                'n': len(self._backfacevertices)
+                'positions': make_vertex_buffer(list(flatten(self._backface_positions))),
+                'colors': make_vertex_buffer(list(flatten(self._backface_colors))),
+                'elements': make_index_buffer(list(flatten(self._backface_elements))),
+                'n': len(self._backface_positions)
             }
 
     def draw(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
-        if self.show_points:
+        if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
-        if self.show_lines:
+        if hasattr(self, "_points_buffer") and self.show_lines:
             shader.bind_attribute('position', self._lines_buffer['positions'])
             shader.bind_attribute('color', self._lines_buffer['colors'])
             shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
-        if self.show_faces:
+        if hasattr(self, "_frontfaces_buffer") and self.show_faces:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
             shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
+        if hasattr(self, "_backfaces_buffer") and self.show_faces:
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
