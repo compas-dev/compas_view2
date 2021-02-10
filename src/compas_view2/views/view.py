@@ -155,6 +155,24 @@ class View(QtWidgets.QOpenGLWidget):
         pass
 
     def paintGL(self):
+        """Paint the OpenGL canvas.
+
+        This implements the virtual funtion of the OpenGL widget.
+        See the PySide2 docs [1]_ for more info.
+
+        To extend the behaviour of this function,
+        you can implement :meth:`~compas_view2.views.View.paint`.
+
+        Notes
+        -----
+        This method also paints the instance map used by the selector to identify selected objects.
+        The instance map is immediately cleared again, after which the real scene objects are drawn.
+
+        References
+        ----------
+        .. [1] https://doc.qt.io/qtforpython-5.12/PySide2/QtWidgets/QOpenGLWidget.html#PySide2.QtWidgets.PySide2.QtWidgets.QOpenGLWidget.paintGL
+
+        """
         self.clear()
         self.paint()
 
@@ -168,6 +186,11 @@ class View(QtWidgets.QOpenGLWidget):
         pass
 
     def mouseMoveEvent(self, event):
+        """Callback for the mouse move event.
+
+        This method registers selections, if the left button is pressed,
+        and modifies the view (pan/rotate), if the right button is pressed.
+        """
         if not self.isActiveWindow() or not self.underMouse():
             return
         # record mouse position
