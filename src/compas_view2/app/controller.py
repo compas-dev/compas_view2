@@ -14,7 +14,6 @@ from compas.datastructures import Network
 from compas.datastructures import Mesh
 
 from ..forms import PointForm
-from ..forms import PointEditForm
 from ..forms import SphereForm
 from ..forms import TorusForm
 from .worker import Worker
@@ -35,15 +34,18 @@ class Controller:
     def interactive(action="add"):
         def outer(func):
             def wrapped(self):
-                def add(obj):
-                    if obj:
-                        self.app.add(obj)
+                def add(data):
+                    if data:
+                        self.app.add(data)
                         self.app.view.update()
 
                 def edit(obj):
+                    def on_update():
+                        obj.update()
+                        self.app.view.update()
+
                     if obj:
-                        self.editform = PointEditForm(obj)
-                        self.editform.show()
+                        obj.edit(on_update)
 
                 worker = Worker(func, self)
                 if action == "add":
@@ -197,13 +199,16 @@ class Controller:
         return line
 
     @interactive("edit")
-    def edit_selected_point(self):
-        self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
-        points = self.app.selector.start_selection(types=[Point], mode="single")
-        if len(points) != 1:
-            self.app.statusbar.showMessage("Must select 1 point")
-            return None
-        return points[0]
+    def edit_selected_object(self):
+        self.app.statusbar.showMessage("Select one object on screen, Click Enter to finish")
+        if len(self.app.selector.selected) == 1:
+            return self.app.selector.selected[0]
+        else:
+            objects = self.app.selector.start_selection(types=[Point], mode="single", returns="object")
+            if len(objects) != 1:
+                self.app.statusbar.showMessage("Must select 1 object")
+                return None
+            return objects[0]
 
     # ==============================================================================
     # Shape actions

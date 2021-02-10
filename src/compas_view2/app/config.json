@@ -64,7 +64,6 @@
                     "items":
                     [
                         {"type": "action", "text": "Add Point", "action": "add_point"},
-                        {"type": "action", "text": "Edit Point", "action": "edit_selected_point"},
                         {"type": "action", "text": "Add Point On Grid", "action": "add_point_on_grid"},
                         {"type": "action", "text": "Add Line [2 points]", "action": "add_line_from_selected_points"}
                     ]
@@ -78,7 +77,8 @@
                         {"type": "action", "text": "Add Sphere", "action": "add_sphere"},
                         {"type": "action", "text": "Add Torus", "action": "add_torus"}
                     ]
-                }
+                },
+                {"type": "action", "text": "Edit Object", "action": "edit_selected_object"}
             ]
         },
         {
