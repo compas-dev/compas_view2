@@ -5,6 +5,7 @@ from compas.utilities import flatten
 from ..buffers import make_index_buffer, make_vertex_buffer
 
 from .object import Object
+from ..forms import PointEditForm
 
 
 class PointObject(Object):
@@ -32,6 +33,10 @@ class PointObject(Object):
             'elements': make_index_buffer(elements),
             'n': 1
         }
+
+    def edit(self, on_update=None):
+        self.editform = PointEditForm(self, on_update=on_update)
+        self.editform.show()
 
     def update(self):
         data = list(self._data)
