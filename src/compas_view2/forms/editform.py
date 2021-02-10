@@ -4,6 +4,18 @@ from .form import Form
 
 
 class EditForm(Form):
+    """Form class for real-time editing of objects
+
+    Parameters
+    ----------
+    title: string
+        The title of the form
+
+    Attributes
+    ----------
+    on_update: function
+        the function to be called when object attributes are updated from the form
+    """
 
     def __init__(self, title, on_update=None):
         super().__init__(title)
@@ -11,6 +23,17 @@ class EditForm(Form):
 
     def map_number(self, obj, attribute):
         """Map number input field to an object attribute
+
+        Parameters
+        ----------
+        obj: compas_view2.objects.Object
+            object to be edited
+        attribute: string
+            the name of attribute to be mapped
+
+        Returns
+        -------
+        None
         """
         layout = QtWidgets.QHBoxLayout()
         label = QtWidgets.QLabel(attribute)
@@ -36,4 +59,10 @@ class EditForm(Form):
         raise NotImplementedError()
 
     def inputs(self):
+        """Creates layout for input fields
+
+        Returns
+        -------
+        QtWidgets.QVBoxLayout
+        """
         return QtWidgets.QVBoxLayout()
