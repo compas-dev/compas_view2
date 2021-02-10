@@ -12,6 +12,7 @@ from ..objects import Object
 
 from .controller import Controller
 from .selector import Selector
+from .timer import Timer
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -51,13 +52,13 @@ class App:
     show_grid: bool, optional
         Show the XY plane.
         Default is ``True``.
-    config: dict | filepath, optional
-        A configuration dict for the UI, or a path to a JSON file containing such a dict.
-        Default is ``None``, in which case the default configuration is used.
-    controller: :class:`compas_view2.app.Controller`, optional
+    controller_class: :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
         Default is ``None``, in which case the default controller is used,
         matching the default config file.
+    config: dict | filepath, optional
+        A configuration dict for the UI, or a path to a JSON file containing such a dict.
+        Default is ``None``, in which case the default configuration is used.
 
     Attributes
     ----------
@@ -92,7 +93,7 @@ class App:
 
     """
 
-    def __init__(self, version='120', width=800, height=500, viewmode='shaded', show_grid=True, controller_cls=None, config=None):
+    def __init__(self, version='120', width=800, height=500, viewmode='shaded', controller_class=None, show_grid=True, config=None):
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -116,6 +117,7 @@ class App:
             app = QtWidgets.QApplication(sys.argv)
         app.references = set()
 
+        self.timer = None
         self.width = width
         self.height = height
         self.window = QtWidgets.QMainWindow()
@@ -123,8 +125,8 @@ class App:
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
 
-        controller_cls = controller_cls or Controller
-        self.controller = controller_cls(self)
+        controller_class = controller_class or Controller
+        self.controller = controller_class(self)
 
         config = config or CONFIG
         if not isinstance(config, dict):
@@ -164,12 +166,17 @@ class App:
         Parameters
         ----------
         data: :class:`compas.geometry.Primitive` | :class:`compas.geometry.Shape` | :class:`compas.geometry.Datastructure`
+
+        Returns
+        -------
+        :class:`compas_view2.objects.Object`
         """
         obj = Object.build(data, **kwargs)
         self.view.objects[obj] = obj
         self.selector.add(obj)
         if self.view.isValid():
             obj.init()
+        return obj
 
     def show(self):
         """Show the viewer window."""
@@ -273,3 +280,21 @@ class App:
             icon = self._get_icon(item['icon'])
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))
+
+    def on(self, interval=None, timeout=None):
+        self.frame_count = 0
+
+        if (not interval and not timeout) or (interval and timeout):
+            raise ValueError("Must specify either interval or timeout")
+
+        def outer(func):
+            def render():
+                func(self.frame_count)
+                self.view.update()
+                self.frame_count += 1
+
+            if interval:
+                self.timer = Timer(interval=interval, callback=render)
+            if timeout:
+                self.timer = Timer(interval=timeout, callback=render, singleshot=True)
+        return outer
