@@ -1,8 +1,11 @@
+import ctypes as ct
+from OpenGL import GL
 from compas.utilities import flatten
 
 from ..buffers import make_index_buffer, make_vertex_buffer
 
 from .object import Object
+from ..forms import PointEditForm
 
 
 class PointObject(Object):
@@ -25,11 +28,24 @@ class PointObject(Object):
         colors = [self.color or self.default_color]
         elements = [0]
         self._points = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
+            'positions': make_vertex_buffer(list(flatten(positions)), True),
             'colors': make_vertex_buffer(list(flatten(colors))),
             'elements': make_index_buffer(elements),
             'n': 1
         }
+
+    def edit(self, on_update=None):
+        self.editform = PointEditForm(self, on_update=on_update)
+        self.editform.show()
+
+    def update(self):
+        data = list(self._data)
+        n = len(data)
+        size = n * ct.sizeof(ct.c_float)
+        data = (ct.c_float * n)(* data)
+        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self._points['positions'])
+        GL.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, size, data)
+        GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
 
     def draw(self, shader):
         shader.enable_attribute('position')

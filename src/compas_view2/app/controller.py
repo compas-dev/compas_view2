@@ -31,18 +31,32 @@ class Controller:
     def __init__(self, app):
         self.app = app
 
-    def interactive(func):
-        def wrapped(self):
-            def add(obj):
-                if obj:
-                    self.app.add(obj)
-                    self.app.view.update()
+    def interactive(action="add"):
+        def outer(func):
+            def wrapped(self):
+                def add(data):
+                    if data:
+                        self.app.add(data)
+                        self.app.view.update()
 
-            worker = Worker(func, self)
-            worker.signals.result.connect(add)
-            Worker.pool.start(worker)
-        return wrapped
+                def edit(obj):
+                    def on_update():
+                        obj.update()
+                        self.app.view.update()
 
+                    if obj:
+                        obj.edit(on_update)
+
+                worker = Worker(func, self)
+                if action == "add":
+                    worker.signals.result.connect(add)
+                elif action == "edit":
+                    worker.signals.result.connect(edit)
+                else:
+                    raise NotImplementedError()
+                Worker.pool.start(worker)
+            return wrapped
+        return outer
     # ==============================================================================
     # App actions
     # ==============================================================================
@@ -162,7 +176,7 @@ class Controller:
             self.app.view.update()
             return point
 
-    @interactive
+    @interactive("add")
     def add_point_on_grid(self) -> Union[Point, None]:
         self.app.statusbar.showMessage("Select a location on grid")
         location = self.app.selector.start_selection_on_plane(snap_to_grid=True)
@@ -173,7 +187,7 @@ class Controller:
             self.app.statusbar.showMessage("No location provided.")
             return None
 
-    @interactive
+    @interactive("add")
     def add_line_from_selected_points(self):
         self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
         points = self.app.selector.start_selection(types=[Point])
@@ -183,6 +197,18 @@ class Controller:
         line = Line(*points)
         self.app.statusbar.showMessage("Line added")
         return line
+
+    @interactive("edit")
+    def edit_selected_object(self):
+        self.app.statusbar.showMessage("Select one object on screen, Click Enter to finish")
+        if len(self.app.selector.selected) == 1:
+            return self.app.selector.selected[0]
+        else:
+            objects = self.app.selector.start_selection(types=[Point], mode="single", returns="object")
+            if len(objects) != 1:
+                self.app.statusbar.showMessage("Must select 1 object")
+                return None
+            return objects[0]
 
     # ==============================================================================
     # Shape actions
