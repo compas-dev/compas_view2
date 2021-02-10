@@ -281,8 +281,11 @@ class App:
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))
 
-    def animate(self, interval=100):
+    def on(self, interval=None, timeout=None):
         self.frame_count = 0
+
+        if (not interval and not timeout) or (interval and timeout):
+            raise ValueError("Must specify either interval or timeout")
 
         def outer(func):
             def render():
@@ -290,5 +293,8 @@ class App:
                 self.view.update()
                 self.frame_count += 1
 
-            self.timer = Timer(interval=interval, callback=render)
+            if interval:
+                self.timer = Timer(interval=interval, callback=render)
+            if timeout:
+                self.timer = Timer(interval=timeout, callback=render, singleshot=True)
         return outer
