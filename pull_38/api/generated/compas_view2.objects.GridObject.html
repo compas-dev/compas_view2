@@ -85,11 +85,11 @@
         
         
         <div class="detail section" id="gridobject">
-<h1>GridObject</h1>
+<h1>GridObject<a class="headerlink" href="#gridobject" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="compas_view2.objects.GridObject">
-<em class="property">class </em><code class="sig-prename descclassname">compas_view2.objects.</code><code class="sig-name descname">GridObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cell_size</span></em>, <em class="sig-param"><span class="n">x_cells</span></em>, <em class="sig-param"><span class="n">y_cells</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/gridobject.py#L8"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.objects.object.Object</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></code><code class="sig-name descname"><span class="pre">GridObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_cells</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_cells</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/gridobject.py#L8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#compas_view2.objects.GridObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.objects.bufferobject.BufferObject</span></code></p>
 <p>Object for displaying a grid of lines in the XY plane of the world coordinate system.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -107,13 +107,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.draw.html#compas_view2.objects.GridObject.draw" title="compas_view2.objects.GridObject.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>(shader)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.draw_plane.html#compas_view2.objects.GridObject.draw_plane" title="compas_view2.objects.GridObject.draw_plane"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_plane</span></code></a>(shader)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.draw_instance.html#compas_view2.objects.GridObject.draw_instance" title="compas_view2.objects.GridObject.draw_instance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_instance</span></code></a>(shader)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.edit.html#compas_view2.objects.GridObject.edit" title="compas_view2.objects.GridObject.edit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.draw_plane.html#compas_view2.objects.GridObject.draw_plane" title="compas_view2.objects.GridObject.draw_plane"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_plane</span></code></a>(shader)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.init.html#compas_view2.objects.GridObject.init" title="compas_view2.objects.GridObject.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.edit.html#compas_view2.objects.GridObject.edit" title="compas_view2.objects.GridObject.edit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.init.html#compas_view2.objects.GridObject.init" title="compas_view2.objects.GridObject.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.make_buffers.html#compas_view2.objects.GridObject.make_buffers" title="compas_view2.objects.GridObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.GridObject.register.html#compas_view2.objects.GridObject.register" title="compas_view2.objects.GridObject.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(dtype, vtype)</p></td>
