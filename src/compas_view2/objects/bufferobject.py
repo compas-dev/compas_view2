@@ -15,7 +15,7 @@ class BufferObject(Object):
     default_color_backfaces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False, show_points=False,
-                 show_lines=False, show_faces=False):
+                 show_lines=False, show_faces=False, linewidth=1, pointsize=10):
         super().__init__(data, name=name, is_selected=is_selected)
         self._data = data
         self._points_buffer = None
@@ -25,8 +25,8 @@ class BufferObject(Object):
         self.show_points = show_points
         self.show_lines = show_lines
         self.show_faces = show_faces
-        self.linewidth = 1
-        self.pointsize = 10
+        self.linewidth = linewidth
+        self.pointsize = pointsize
 
     def make_buffers(self):
 
@@ -43,7 +43,7 @@ class BufferObject(Object):
                 'positions': make_vertex_buffer(list(flatten(self._line_positions))),
                 'colors': make_vertex_buffer(list(flatten(self._line_colors))),
                 'elements': make_index_buffer(list(flatten(self._line_elements))),
-                'n': len(self._line_positions)
+                'n': len(self._line_elements*2)
             }
 
         if hasattr(self, '_frontface_positions'):

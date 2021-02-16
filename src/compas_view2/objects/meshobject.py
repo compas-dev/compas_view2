@@ -55,38 +55,15 @@ class MeshObject(BufferObject):
                  color=None,
                  linewidth=1, pointsize=10,
                  hide_coplanaredges=False):
-        super().__init__(data, name=name, is_selected=is_selected)
+        super().__init__(data, name=name, is_selected=is_selected, show_points=show_points, show_lines=show_lines, show_faces=show_faces, linewidth=linewidth, pointsize=pointsize)
         self._mesh = data
         self._pointcolor = None
         self._linecolor = None
         self._facecolor = None
-        self._linewidth = None
-        self._pointsize = None
-        self.show_points = show_points
-        self.show_lines = show_lines
-        self.show_faces = show_faces
         self.facecolor = color or facecolor
         self.linecolor = color or linecolor
         self.pointcolor = color or pointcolor
-        self.linewidth = linewidth
-        self.pointsize = pointsize
         self.hide_coplanaredges = hide_coplanaredges
-
-    @property
-    def vertices(self):
-        return self._vertices
-
-    @property
-    def edges(self):
-        return self._edges
-
-    @property
-    def front(self):
-        return self._front
-
-    @property
-    def back(self):
-        return self._back
 
     @property
     def pointcolor(self):
@@ -155,9 +132,9 @@ class MeshObject(BufferObject):
             colors.append(vertex_color[vertex])
             elements.append(i)
             i += 1
-        self._points = positions
-        self._pointcolors = colors
-        self._pointelements = elements
+        self._point_positions = positions
+        self._point_colors = colors
+        self._point_elements = elements
         # edges
         positions = []
         colors = []
@@ -180,9 +157,9 @@ class MeshObject(BufferObject):
             colors.append(color)
             elements.append([i + 0, i + 1])
             i += 2
-        self._linevertices = positions
-        self._linevertexcolors = colors
-        self._lineelements = elements
+        self._line_positions = positions
+        self._line_colors = colors
+        self._line_elements = elements
         # front faces
         positions = []
         colors = []
@@ -230,9 +207,9 @@ class MeshObject(BufferObject):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._frontfacevertices = positions
-        self._frontfacevertexcolors = colors
-        self._frontfacevertexelements = elements
+        self._frontface_positions = positions
+        self._frontface_colors = colors
+        self._frontface_elements = elements
         # back faces
         positions = []
         colors = []
@@ -280,8 +257,8 @@ class MeshObject(BufferObject):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._backfacevertices = positions
-        self._backfacevertexcolors = colors
-        self._backfacevertexelements = elements
+        self._backface_positions = positions
+        self._backface_colors = colors
+        self._backface_elements = elements
         # Make buffers for the attributes
         self.make_buffers()
