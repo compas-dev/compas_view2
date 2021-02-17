@@ -23,7 +23,7 @@
   
 
   
-    <link rel="prev" title="LineObject.register" href="compas_view2.objects.LineObject.register.html" />
+    <link rel="prev" title="LineObject.update_buffer_from_data" href="compas_view2.objects.LineObject.update_buffer_from_data.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -88,7 +88,7 @@
 <h1>PolylineObject<a class="headerlink" href="#polylineobject" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="compas_view2.objects.PolylineObject">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></code><code class="sig-name descname"><span class="pre">PolylineObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_selected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linecolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/polylineobject.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#compas_view2.objects.PolylineObject" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></code><code class="sig-name descname"><span class="pre">PolylineObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_selected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linecolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/polylineobject.py#L4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#compas_view2.objects.PolylineObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.objects.bufferobject.BufferObject</span></code></p>
 <p>Object for displaying COMPAS Polyline geometry.</p>
 <p class="rubric">Methods</p>
@@ -116,11 +116,17 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.PolylineObject.init.html#compas_view2.objects.PolylineObject.init" title="compas_view2.objects.PolylineObject.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.PolylineObject.make_buffers.html#compas_view2.objects.PolylineObject.make_buffers" title="compas_view2.objects.PolylineObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.PolylineObject.make_buffer_from_data.html#compas_view2.objects.PolylineObject.make_buffer_from_data" title="compas_view2.objects.PolylineObject.make_buffer_from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffer_from_data</span></code></a>(data)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.PolylineObject.register.html#compas_view2.objects.PolylineObject.register" title="compas_view2.objects.PolylineObject.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(dtype, vtype)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.PolylineObject.make_buffers.html#compas_view2.objects.PolylineObject.make_buffers" title="compas_view2.objects.PolylineObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.PolylineObject.register.html#compas_view2.objects.PolylineObject.register" title="compas_view2.objects.PolylineObject.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(dtype, vtype)</p></td>
 <td><p>Register a virtual subclass of an ABC.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.PolylineObject.update_buffer_from_data.html#compas_view2.objects.PolylineObject.update_buffer_from_data" title="compas_view2.objects.PolylineObject.update_buffer_from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_buffer_from_data</span></code></a>(data)</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -161,7 +167,6 @@
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ArrowObject.html">ArrowObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NetworkObject.html">NetworkObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.MeshObject.html">MeshObject</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.AxisObject.html">AxisObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.GridObject.html">GridObject</a></li>
 </ul>
 </li>
@@ -192,11 +197,11 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-        <a href="compas_view2.objects.LineObject.register.html" title="LineObject.register" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+        <a href="compas_view2.objects.LineObject.update_buffer_from_data.html" title="LineObject.update_buffer_from_data" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
           <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
           <div class="nav-title flex-grow-1 align-self-center">
             <div class="nav-direction small font-weight-light">Previous</div>
-            LineObject.register
+            LineObject.update_buffer_from_data
           </div>
         </a>
       
