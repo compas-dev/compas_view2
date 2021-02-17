@@ -18,7 +18,7 @@ class NetworkObject(BufferObject):
     def edges(self):
         return self._edges
 
-    def init(self):
+    def _points_data(self):
         data = self._data
         node_xyz = {node: data.node_attributes(node, 'xyz') for node in data.nodes()}
         # nodes
@@ -26,16 +26,15 @@ class NetworkObject(BufferObject):
         colors = []
         elements = []
         color = self.default_color_points
-        i = 0
-        for node in data.nodes():
+        for i, node in enumerate(data.nodes()):
             positions.append(node_xyz[node])
             colors.append(color)
-            elements.append(i)
-            i += 1
-        self._point_positions = positions
-        self._point_colors = colors
-        self._point_elements = elements
-        # edges
+            elements.append([i])
+        return positions, colors, elements
+
+    def _lines_data(self):
+        data = self._data
+        node_xyz = {node: data.node_attributes(node, 'xyz') for node in data.nodes()}
         positions = []
         colors = []
         elements = []
@@ -44,11 +43,8 @@ class NetworkObject(BufferObject):
         for u, v in data.edges():
             positions.append(node_xyz[u])
             positions.append(node_xyz[v])
-            colors.append(self.default_color_lines)
-            colors.append(self.default_color_lines)
+            colors.append(color)
+            colors.append(color)
             elements.append([i + 0, i + 1])
             i += 2
-        self._line_positions = positions
-        self._line_colors = colors
-        self._line_elements = elements
-        self.make_buffers()
+        return positions, colors, elements

@@ -16,13 +16,12 @@ class GridObject(BufferObject):
         self.x_cells = x_cells
         self.y_cells = y_cells
 
-    def init(self):
+    def _lines_data(self):
         positions = []
         colors = []
         elements = []
         color = self.default_color_lines
         n = 0
-
         for x in range(- self.x_cells, self.x_cells + 1):
             if x == 0:
                 positions.append([x * self.cell_size, -self.x_cells * self.cell_size, 0])
@@ -64,10 +63,9 @@ class GridObject(BufferObject):
                 colors.append(color)
                 n = len(elements)*2
                 elements.append([n, n + 1])
+        return positions, colors, elements
 
-        self._line_positions = positions
-        self._line_colors = colors
-        self._line_elements = elements
+    def init(self):
         self.make_buffers()
 
         # Create uv plane

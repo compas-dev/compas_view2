@@ -24,7 +24,6 @@ from .sphereobject import SphereObject
 from .torusobject import TorusObject
 from .arrowobject import ArrowObject
 from .gridobject import GridObject  # noqa: F401
-from .axisobject import AxisObject  # noqa: F401
 
 Object.register(Point, PointObject)
 Object.register(Line, LineObject)

@@ -2,7 +2,7 @@
 # from OpenGL import GL
 
 from .bufferobject import BufferObject
-from ..forms import PointEditForm
+# from ..forms import PointEditForm
 
 
 class PointObject(BufferObject):
@@ -12,18 +12,11 @@ class PointObject(BufferObject):
         super().__init__(data, name=name, is_selected=is_selected, show_points=True, pointsize=size)
         self.color = color
 
-    @property
-    def points(self):
-        return self._points
-
-    def init(self):
+    def _points_data(self):
         positions = [self._data]
         colors = [self.color or self.default_color_points]
-        elements = [0]
-        self._point_positions = positions
-        self._point_colors = colors
-        self._point_elements = elements
-        self.make_buffers()
+        elements = [[0]]
+        return positions, colors, elements
 
     # def edit(self, on_update=None):
     #     self.editform = PointEditForm(self, on_update=on_update)

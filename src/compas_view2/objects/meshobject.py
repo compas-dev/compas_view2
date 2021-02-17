@@ -116,13 +116,10 @@ class MeshObject(BufferObject):
                 for face in facecolor:
                     facecolor[face] = color
 
-    def init(self):
+    def _points_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
         vertex_color = self.pointcolor
-        edge_color = self.linecolor
-        face_color = self.facecolor
-        # vertices
         positions = []
         colors = []
         elements = []
@@ -130,18 +127,20 @@ class MeshObject(BufferObject):
         for vertex in mesh.vertices():
             positions.append(vertex_xyz[vertex])
             colors.append(vertex_color[vertex])
-            elements.append(i)
+            elements.append([i])
             i += 1
-        self._point_positions = positions
-        self._point_colors = colors
-        self._point_elements = elements
-        # edges
+        return positions, colors, elements
+
+    def _lines_data(self):
+        mesh = self._mesh
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        linecolor = self.linecolor
         positions = []
         colors = []
         elements = []
         i = 0
         for u, v in mesh.edges():
-            color = edge_color[u, v]
+            color = linecolor[u, v]
             if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
                 fkeys = mesh.edge_faces(u, v)
@@ -157,10 +156,12 @@ class MeshObject(BufferObject):
             colors.append(color)
             elements.append([i + 0, i + 1])
             i += 2
-        self._line_positions = positions
-        self._line_colors = colors
-        self._line_elements = elements
-        # front faces
+        return positions, colors, elements
+
+    def _frontfaces_data(self):
+        mesh = self._mesh
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        face_color = self.facecolor
         positions = []
         colors = []
         elements = []
@@ -207,10 +208,13 @@ class MeshObject(BufferObject):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._frontface_positions = positions
-        self._frontface_colors = colors
-        self._frontface_elements = elements
-        # back faces
+
+        return positions, colors, elements
+
+    def _backfaces_data(self):
+        mesh = self._mesh
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        face_color = {face: self._mesh.face_attribute(face, 'color') or self.default_color_faces for face in self._mesh.faces()}
         positions = []
         colors = []
         elements = []
@@ -257,8 +261,4 @@ class MeshObject(BufferObject):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._backface_positions = positions
-        self._backface_colors = colors
-        self._backface_elements = elements
-        # Make buffers for the attributes
-        self.make_buffers()
+        return positions, colors, elements

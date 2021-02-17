@@ -20,23 +20,18 @@ class LineObject(BufferObject):
         self.pointcolor = pointcolor
         self.linecolor = linecolor
 
-    def init(self):
+    def _points_data(self):
         line = self._data
-        # points
         color = self.pointcolor or self.default_color_points
         positions = [line.start, line.end]
         colors = [color, color]
-        elements = [0, 1]
-        self._point_positions = positions
-        self._point_colors = colors
-        self._point_elements = elements
+        elements = [[0], [1]]
+        return positions, colors, elements
 
-        # lines
+    def _lines_data(self):
+        line = self._data
         color = self.linecolor or self.default_color_lines
         positions = [line.start, line.end]
         colors = [color, color]
         elements = [[0, 1]]
-        self._line_positions = positions
-        self._line_colors = colors
-        self._line_elements = elements
-        self.make_buffers()
+        return positions, colors, elements

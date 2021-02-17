@@ -1,5 +1,4 @@
 from .bufferobject import BufferObject
-from compas.utilities import flatten
 
 
 class PolylineObject(BufferObject):
@@ -21,22 +20,24 @@ class PolylineObject(BufferObject):
         self.pointcolor = pointcolor
         self.linecolor = linecolor
 
-    def init(self):
+    def _points_data(self):
         polyline = self._data
-        # points
         color = self.pointcolor or self.default_color_points
         positions = [point for point in polyline.points]
         colors = [color for i in range(len(positions))]
-        elements = [i for i in range(len(positions))]
-        self._point_positions = positions
-        self._point_colors = colors
-        self._point_elements = elements
-        # lines
+        elements = [[i] for i in range(len(positions))]
+        return positions, colors, elements
+
+    def _lines_data(self):
+        polyline = self._data
         color = self.linecolor or self.default_color_line
-        positions = [list(polyline.points[i]) for i in range(len(polyline.points))]
-        colors = list(flatten([[color, color] for i in range(len(positions))]))
-        elements = [[i, i + 1] for i in range(len(positions) - 1)]
-        self._line_positions = positions
-        self._line_colors = colors
-        self._line_elements = elements
-        self.make_buffers()
+        positions = []
+        colors = []
+        elements = []
+        for i in range(len(polyline.points)-1):
+            positions.append(list(polyline.points[i]))
+            positions.append(list(polyline.points[i+1]))
+            colors.append(color)
+            colors.append(color)
+            elements.append([i*2, i*2+1])
+        return positions, colors, elements
