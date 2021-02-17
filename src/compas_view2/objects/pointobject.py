@@ -1,8 +1,5 @@
-# import ctypes as ct
-# from OpenGL import GL
-
 from .bufferobject import BufferObject
-# from ..forms import PointEditForm
+from ..forms import PointEditForm
 
 
 class PointObject(BufferObject):
@@ -18,15 +15,6 @@ class PointObject(BufferObject):
         elements = [[0]]
         return positions, colors, elements
 
-    # def edit(self, on_update=None):
-    #     self.editform = PointEditForm(self, on_update=on_update)
-    #     self.editform.show()
-
-    # def update(self):
-    #     data = list(self._data)
-    #     n = len(data)
-    #     size = n * ct.sizeof(ct.c_float)
-    #     data = (ct.c_float * n)(* data)
-    #     GL.glBindBuffer(GL.GL_ARRAY_BUFFER, self._points['positions'])
-    #     GL.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, size, data)
-    #     GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
+    def edit(self, on_update=None):
+        self.editform = PointEditForm(self, on_update=on_update)
+        self.editform.show()

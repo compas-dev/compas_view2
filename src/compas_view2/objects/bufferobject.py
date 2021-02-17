@@ -1,7 +1,5 @@
 from compas.utilities import flatten
-
-from ..buffers import make_index_buffer, make_vertex_buffer
-
+from ..buffers import make_index_buffer, make_vertex_buffer, update_vertex_buffer, update_index_buffer
 from .object import Object
 
 
@@ -33,8 +31,15 @@ class BufferObject(Object):
                 'n': len(positions)
             }
 
-    def update_buffer_from_data(self, data):
-        pass
+    def update_buffer_from_data(self, data, buffer, update_positions=True, update_colors=True, update_elements=True):
+        positions, colors, elements = data
+        if update_positions:
+            update_vertex_buffer(list(flatten(positions)), buffer["positions"])
+        if update_colors:
+            update_vertex_buffer(list(flatten(colors)), buffer["colors"])
+        if update_elements:
+            update_index_buffer(list(flatten(elements)), buffer["elements"])
+        buffer["n"] = len(positions)
 
     def make_buffers(self):
         if hasattr(self, '_points_data'):
@@ -46,8 +51,21 @@ class BufferObject(Object):
         if hasattr(self, '_backfaces_data'):
             self._backfaces_buffer = self.make_buffer_from_data(self._backfaces_data())
 
+    def update_buffers(self):
+        if hasattr(self, '_points_data'):
+            self.update_buffer_from_data(self._points_data(), self._points_buffer)
+        if hasattr(self, '_lines_data'):
+            self.update_buffer_from_data(self._lines_data(), self._lines_buffer)
+        if hasattr(self, '_frontfaces_data'):
+            self.update_buffer_from_data(self._frontfaces_data(), self._frontfaces_buffer)
+        if hasattr(self, '_backfaces_data'):
+            self.update_buffer_from_data(self._backfaces_data(), self._backfaces_buffer)
+
     def init(self):
         self.make_buffers()
+
+    def update(self):
+        self.update_buffers()
 
     def draw(self, shader):
         shader.enable_attribute('position')
