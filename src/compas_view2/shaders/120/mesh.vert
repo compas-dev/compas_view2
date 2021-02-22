@@ -5,6 +5,7 @@ attribute vec3 color;
 
 uniform mat4 projection;
 uniform mat4 viewworld;
+uniform mat4 transform;
 
 uniform bool is_selected;
 uniform float opacity;
@@ -21,5 +22,5 @@ void main()
         vertex_color = vec4(color, opacity);
     }
 
-    gl_Position = projection * viewworld * vec4(position, 1.0);
+    gl_Position = projection * viewworld * transform * vec4(position, 1.0);
 }

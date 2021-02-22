@@ -147,7 +147,7 @@ class Selector:
         """
         rgb_key = self.get_rgb_key()
         self.instances[rgb_key] = obj
-        obj.instance_color = np.array(rgb_key)/255
+        obj._instance_color = np.array(rgb_key)/255
         return rgb_key
 
     def select_one_from_instance_map(self, x, y, instance_map):

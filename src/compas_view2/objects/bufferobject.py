@@ -116,6 +116,7 @@ class BufferObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
+        shader.uniform4x4('transform', self.matrix)
         if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
@@ -140,7 +141,8 @@ class BufferObject(Object):
         """Draw the object instance for picking"""
         shader.enable_attribute('position')
         shader.uniform1i('is_instance_mask', 1)
-        shader.uniform3f('instance_color', self.instance_color)
+        shader.uniform3f('instance_color', self._instance_color)
+        shader.uniform4x4('transform', self.matrix)
         if self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
