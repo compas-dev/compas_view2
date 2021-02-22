@@ -13,9 +13,9 @@ class MeshObject(BufferObject):
         Mesh for the viewer
     name : string
         name of the object
-    show_vertices : bool
+    show_points : bool
         True to show vertices
-    show_edges : bool
+    show_lines : bool
         True to show edges
     show_faces : bool
         True to show faces
@@ -24,7 +24,7 @@ class MeshObject(BufferObject):
     linecolor : list
         Line color
     pointcolor : list
-        Face color
+        point color
     linewidth : float
         Line width
     pointsize : float
