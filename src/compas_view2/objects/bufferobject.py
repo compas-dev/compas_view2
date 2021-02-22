@@ -4,7 +4,20 @@ from .object import Object
 
 
 class BufferObject(Object):
-    """Object for displaying COMPAS mesh data structures.
+    """A shared object to handle GL buffer creation and drawings
+
+    Attributes
+    ----------
+    show_points : bool
+        Whether to show points/vertices of the object
+    show_lines : bool
+        Whether to show lines/edges of the object
+    show_faces : bool
+        Whether to show faces of the object
+    linewidth : int
+        The line width to be drawn on screen
+    pointsize : int
+        The point size to be drawn on screen
     """
 
     default_color_points = [0.2, 0.2, 0.2]
@@ -23,6 +36,18 @@ class BufferObject(Object):
         self.pointsize = pointsize
 
     def make_buffer_from_data(self, data):
+        """Create buffers from point/line/face data.
+
+        Parameters
+        ----------
+        data: tuple
+            Contains positions, colors, elements for the buffer
+
+        Returns
+        -------
+        buffer_dict
+           A dict with created buffer indexes
+        """
         positions, colors, elements = data
         return {
                 'positions': make_vertex_buffer(list(flatten(positions))),
@@ -32,6 +57,21 @@ class BufferObject(Object):
             }
 
     def update_buffer_from_data(self, data, buffer, update_positions=True, update_colors=True, update_elements=True):
+        """Update existing buffers from point/line/face data.
+
+        Parameters
+        ----------
+        data: tuple
+            Contains positions, colors, elements for the buffer
+        buffer: dict
+            The dict with created buffer indexes
+        update_positions : bool
+            Whether to update positions in the buffer dict
+        update_colors : bool
+            Whether to update colors in the buffer dict
+        update_elements : bool
+            Whether to update elements in the buffer dict
+        """
         positions, colors, elements = data
         if update_positions:
             update_vertex_buffer(list(flatten(positions)), buffer["positions"])
@@ -42,6 +82,7 @@ class BufferObject(Object):
         buffer["n"] = len(positions)
 
     def make_buffers(self):
+        """Create all buffers from object's data"""
         if hasattr(self, '_points_data'):
             self._points_buffer = self.make_buffer_from_data(self._points_data())
         if hasattr(self, '_lines_data'):
@@ -52,6 +93,7 @@ class BufferObject(Object):
             self._backfaces_buffer = self.make_buffer_from_data(self._backfaces_data())
 
     def update_buffers(self):
+        """Update all buffers from object's data"""
         if hasattr(self, '_points_data'):
             self.update_buffer_from_data(self._points_data(), self._points_buffer)
         if hasattr(self, '_lines_data'):
@@ -62,12 +104,15 @@ class BufferObject(Object):
             self.update_buffer_from_data(self._backfaces_data(), self._backfaces_buffer)
 
     def init(self):
+        """Initialize the object"""
         self.make_buffers()
 
     def update(self):
+        """Update the object"""
         self.update_buffers()
 
     def draw(self, shader):
+        """Draw the object from its buffers"""
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
@@ -92,6 +137,7 @@ class BufferObject(Object):
         shader.disable_attribute('color')
 
     def draw_instance(self, shader):
+        """Draw the object instance for picking"""
         shader.enable_attribute('position')
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self.instance_color)

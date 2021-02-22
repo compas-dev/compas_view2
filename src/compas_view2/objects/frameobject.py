@@ -2,7 +2,7 @@ from .bufferobject import BufferObject
 
 
 class FrameObject(BufferObject):
-    """Object for displaying COMPAS line geometry."""
+    """Object for displaying COMPAS Frame geometry."""
 
     def __init__(self,
                  data,
