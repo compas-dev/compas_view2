@@ -45,7 +45,7 @@ class App:
     height: int, optional
         The height of the app window at startup.
         Default is ``500``.
-    viewmode: 'shaded' | 'ghosted', optional
+    viewmode: 'shaded' | 'ghosted' | 'wireframe', optional
         The display mode of the OpenGL view.
         Default is ``'shaded'``.
         In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
