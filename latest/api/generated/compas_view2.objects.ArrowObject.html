@@ -23,7 +23,7 @@
   
 
   
-    <link rel="prev" title="TorusObject.register" href="compas_view2.objects.TorusObject.register.html" />
+    <link rel="prev" title="TorusObject.update_buffers" href="compas_view2.objects.TorusObject.update_buffers.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -85,10 +85,10 @@
         
         
         <div class="detail section" id="arrowobject">
-<h1>ArrowObject</h1>
+<h1>ArrowObject<a class="headerlink" href="#arrowobject" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="compas_view2.objects.ArrowObject">
-<em class="property">class </em><code class="sig-prename descclassname">compas_view2.objects.</code><code class="sig-name descname">ArrowObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">u</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/arrowobject.py#L5"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></code><code class="sig-name descname"><span class="pre">ArrowObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/arrowobject.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#compas_view2.objects.ArrowObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.objects.meshobject.MeshObject</span></code></p>
 <p>Object for displaying COMPAS arrow geometry.</p>
 <p class="rubric">Methods</p>
@@ -105,19 +105,34 @@
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.draw.html#compas_view2.objects.ArrowObject.draw" title="compas_view2.objects.ArrowObject.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>(shader)</p></td>
-<td><p></p></td>
+<td><p>Draw the object from its buffers</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.draw_instance.html#compas_view2.objects.ArrowObject.draw_instance" title="compas_view2.objects.ArrowObject.draw_instance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_instance</span></code></a>(shader)</p></td>
-<td><p></p></td>
+<td><p>Draw the object instance for picking</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.edit.html#compas_view2.objects.ArrowObject.edit" title="compas_view2.objects.ArrowObject.edit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.init.html#compas_view2.objects.ArrowObject.init" title="compas_view2.objects.ArrowObject.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Initialize the object</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.make_buffer_from_data.html#compas_view2.objects.ArrowObject.make_buffer_from_data" title="compas_view2.objects.ArrowObject.make_buffer_from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffer_from_data</span></code></a>(data)</p></td>
+<td><p>Create buffers from point/line/face data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.make_buffers.html#compas_view2.objects.ArrowObject.make_buffers" title="compas_view2.objects.ArrowObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a>()</p></td>
+<td><p>Create all buffers from object’s data</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.register.html#compas_view2.objects.ArrowObject.register" title="compas_view2.objects.ArrowObject.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(dtype, vtype)</p></td>
 <td><p>Register a virtual subclass of an ABC.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.update.html#compas_view2.objects.ArrowObject.update" title="compas_view2.objects.ArrowObject.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>()</p></td>
+<td><p>Update the object</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.update_buffer_from_data.html#compas_view2.objects.ArrowObject.update_buffer_from_data" title="compas_view2.objects.ArrowObject.update_buffer_from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_buffer_from_data</span></code></a>(data, buffer[, …])</p></td>
+<td><p>Update existing buffers from point/line/face data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.update_buffers.html#compas_view2.objects.ArrowObject.update_buffers" title="compas_view2.objects.ArrowObject.update_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_buffers</span></code></a>()</p></td>
+<td><p>Update all buffers from object’s data</p></td>
 </tr>
 </tbody>
 </table>
@@ -158,7 +173,6 @@
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">ArrowObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NetworkObject.html">NetworkObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.MeshObject.html">MeshObject</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.AxisObject.html">AxisObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.GridObject.html">GridObject</a></li>
 </ul>
 </li>
@@ -189,11 +203,11 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-        <a href="compas_view2.objects.TorusObject.register.html" title="TorusObject.register" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+        <a href="compas_view2.objects.TorusObject.update_buffers.html" title="TorusObject.update_buffers" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
           <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
           <div class="nav-title flex-grow-1 align-self-center">
             <div class="nav-direction small font-weight-light">Previous</div>
-            TorusObject.register
+            TorusObject.update_buffers
           </div>
         </a>
       
