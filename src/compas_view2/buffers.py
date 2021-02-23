@@ -48,3 +48,21 @@ def make_index_buffer(data, dynamic=False):
     GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, size, data, access)
     GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, 0)
     return vbo
+
+
+def update_vertex_buffer(data, buffer):
+    n = len(data)
+    size = n * ct.sizeof(ct.c_float)
+    data = (ct.c_float * n)(* data)
+    GL.glBindBuffer(GL.GL_ARRAY_BUFFER, buffer)
+    GL.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, size, data)
+    GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
+
+
+def update_index_buffer(data, buffer):
+    n = len(data)
+    size = n * ct.sizeof(ct.c_uint)
+    data = (ct.c_int * n)(* data)
+    GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, buffer)
+    GL.glBufferSubData(GL.GL_ELEMENT_ARRAY_BUFFER, 0, size, data)
+    GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, 0)

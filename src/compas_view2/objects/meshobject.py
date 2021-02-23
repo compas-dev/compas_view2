@@ -1,12 +1,10 @@
-from compas.utilities import flatten, pairwise
+from compas.utilities import pairwise
 from compas.geometry import is_coplanar, centroid_points
 
-from ..buffers import make_index_buffer, make_vertex_buffer
-
-from .object import Object
+from .bufferobject import BufferObject
 
 
-class MeshObject(Object):
+class MeshObject(BufferObject):
     """Object for displaying COMPAS mesh data structures.
 
     Parameters
@@ -52,47 +50,20 @@ class MeshObject(Object):
     default_color_faces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
-                 show_vertices=False, show_edges=True, show_faces=True,
+                 show_points=False, show_lines=True, show_faces=True,
                  facecolor=None, linecolor=None, pointcolor=None,
                  color=None,
                  linewidth=1, pointsize=10,
                  hide_coplanaredges=False):
-        super().__init__(data, name=name, is_selected=is_selected)
+        super().__init__(data, name=name, is_selected=is_selected, show_points=show_points, show_lines=show_lines, show_faces=show_faces, linewidth=linewidth, pointsize=pointsize)
         self._mesh = data
-        self._vertices = None
-        self._edges = None
-        self._front = None
-        self._back = None
         self._pointcolor = None
         self._linecolor = None
         self._facecolor = None
-        self._linewidth = None
-        self._pointsize = None
-        self.show_vertices = show_vertices
-        self.show_edges = show_edges
-        self.show_faces = show_faces
         self.facecolor = color or facecolor
         self.linecolor = color or linecolor
         self.pointcolor = color or pointcolor
-        self.linewidth = linewidth
-        self.pointsize = pointsize
         self.hide_coplanaredges = hide_coplanaredges
-
-    @property
-    def vertices(self):
-        return self._vertices
-
-    @property
-    def edges(self):
-        return self._edges
-
-    @property
-    def front(self):
-        return self._front
-
-    @property
-    def back(self):
-        return self._back
 
     @property
     def pointcolor(self):
@@ -145,13 +116,10 @@ class MeshObject(Object):
                 for face in facecolor:
                     facecolor[face] = color
 
-    def init(self):
+    def _points_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
         vertex_color = self.pointcolor
-        edge_color = self.linecolor
-        face_color = self.facecolor
-        # vertices
         positions = []
         colors = []
         elements = []
@@ -159,21 +127,20 @@ class MeshObject(Object):
         for vertex in mesh.vertices():
             positions.append(vertex_xyz[vertex])
             colors.append(vertex_color[vertex])
-            elements.append(i)
+            elements.append([i])
             i += 1
-        self._vertices = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(elements),
-            'n': i
-        }
-        # edges
+        return positions, colors, elements
+
+    def _lines_data(self):
+        mesh = self._mesh
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        linecolor = self.linecolor
         positions = []
         colors = []
         elements = []
         i = 0
         for u, v in mesh.edges():
-            color = edge_color[u, v]
+            color = linecolor[u, v]
             if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
                 fkeys = mesh.edge_faces(u, v)
@@ -189,13 +156,12 @@ class MeshObject(Object):
             colors.append(color)
             elements.append([i + 0, i + 1])
             i += 2
-        self._edges = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(list(flatten(elements))),
-            'n': i
-        }
-        # front faces
+        return positions, colors, elements
+
+    def _frontfaces_data(self):
+        mesh = self._mesh
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        face_color = self.facecolor
         positions = []
         colors = []
         elements = []
@@ -242,13 +208,13 @@ class MeshObject(Object):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._front = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(list(flatten(elements))),
-            'n': i
-        }
-        # back faces
+
+        return positions, colors, elements
+
+    def _backfaces_data(self):
+        mesh = self._mesh
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        face_color = {face: self._mesh.face_attribute(face, 'color') or self.default_color_faces for face in self._mesh.faces()}
         positions = []
         colors = []
         elements = []
@@ -295,53 +261,4 @@ class MeshObject(Object):
                     colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-        self._back = {
-            'positions': make_vertex_buffer(list(flatten(positions))),
-            'colors': make_vertex_buffer(list(flatten(colors))),
-            'elements': make_index_buffer(list(flatten(elements))),
-            'n': i
-        }
-
-    def draw(self, shader):
-        shader.enable_attribute('position')
-        shader.enable_attribute('color')
-        if self.show_faces:
-            shader.uniform1i('is_selected', self.is_selected)
-            # front
-            shader.bind_attribute('position', self.front['positions'])
-            shader.bind_attribute('color', self.front['colors'])
-            shader.draw_triangles(elements=self.front['elements'], n=self.front['n'])
-            # back
-            shader.bind_attribute('position', self.back['positions'])
-            shader.bind_attribute('color', self.back['colors'])
-            shader.draw_triangles(elements=self.back['elements'], n=self.back['n'])
-            # reset
-            shader.uniform1i('is_selected', 0)
-        if self.show_edges:
-            shader.bind_attribute('position', self.edges['positions'])
-            shader.bind_attribute('color', self.edges['colors'])
-            shader.draw_lines(width=self.linewidth, elements=self.edges['elements'], n=self.edges['n'])
-        if self.show_vertices:
-            shader.bind_attribute('position', self.vertices['positions'])
-            shader.bind_attribute('color', self.vertices['colors'])
-            shader.draw_points(size=self.pointsize, elements=self.vertices['elements'], n=self.vertices['n'])
-        # reset
-        shader.disable_attribute('position')
-        shader.disable_attribute('color')
-
-    def draw_instance(self, shader):
-        shader.enable_attribute('position')
-        shader.enable_attribute('color')
-        shader.uniform1i('is_instance_mask', 1)
-        shader.uniform3f('instance_color', self.instance_color)
-        # front
-        shader.bind_attribute('position', self.front['positions'])
-        shader.draw_triangles(elements=self.front['elements'], n=self.front['n'])
-        # back
-        shader.bind_attribute('position', self.back['positions'])
-        shader.draw_triangles(elements=self.back['elements'], n=self.back['n'])
-        # reset
-        shader.uniform1i('is_instance_mask', 0)
-        shader.uniform3f('instance_color', [0, 0, 0])
-        shader.disable_attribute('position')
-        shader.disable_attribute('color')
+        return positions, colors, elements
