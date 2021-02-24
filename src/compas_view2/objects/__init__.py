@@ -9,6 +9,7 @@ from compas.geometry import Sphere
 from compas.geometry import Torus
 
 from ..shapes import Arrow
+from ..shapes import Text
 from .object import Object
 
 from .pointobject import PointObject
@@ -23,6 +24,7 @@ from .boxobject import BoxObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
 from .arrowobject import ArrowObject
+from .textobject import TextObeject
 from .gridobject import GridObject  # noqa: F401
 
 Object.register(Point, PointObject)
@@ -37,6 +39,7 @@ Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
+Object.register(Text, TextObeject)
 
 try:
     from compas_assembly.datastructures import Block
