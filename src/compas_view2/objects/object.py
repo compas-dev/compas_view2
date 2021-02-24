@@ -1,5 +1,4 @@
 import abc
-from compas.geometry import Vector
 from compas.geometry import Transformation
 from compas.geometry import Translation
 from compas.geometry import Rotation
