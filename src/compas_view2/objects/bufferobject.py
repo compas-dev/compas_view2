@@ -116,14 +116,6 @@ class BufferObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
-        if hasattr(self, "_points_buffer") and self.show_points:
-            shader.bind_attribute('position', self._points_buffer['positions'])
-            shader.bind_attribute('color', self._points_buffer['colors'])
-            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
-        if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
-            shader.bind_attribute('position', self._lines_buffer['positions'])
-            shader.bind_attribute('color', self._lines_buffer['colors'])
-            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
@@ -132,6 +124,17 @@ class BufferObject(Object):
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
+        if self.show_faces and not wireframe:
+            # skip coloring lines and points if faces are already highlighted
+            shader.uniform1i('is_selected', 0)
+        if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
+            shader.bind_attribute('position', self._lines_buffer['positions'])
+            shader.bind_attribute('color', self._lines_buffer['colors'])
+            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
+        if hasattr(self, "_points_buffer") and self.show_points:
+            shader.bind_attribute('position', self._points_buffer['positions'])
+            shader.bind_attribute('color', self._points_buffer['colors'])
+            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
         shader.uniform1i('is_selected', 0)
         shader.disable_attribute('position')
         shader.disable_attribute('color')
