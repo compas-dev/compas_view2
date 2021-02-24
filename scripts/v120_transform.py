@@ -16,11 +16,11 @@ s = 1
 
 @viewer.on(interval=100)
 def transform(frame):
-    obj1.translation.x += 0.1
-    obj1.rotation.z += 0.1
+    obj1.translation[0] += 0.1
+    obj1.rotation[2] += 0.1
 
-    obj2.translation.z += 0.1
-    obj2.rotation.x += 0.1
+    obj2.translation[2] += 0.1
+    obj2.rotation[0] += 0.1
 
     global s
     s += 0.05

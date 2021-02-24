@@ -21,12 +21,12 @@ class Object(ABC):
         The name of the object.
     is_selected : bool
         Whether the object is selected.
-    translation : :class: `compas.geometry.Vector`
+    translation : list
         The translation vector of the object.
-    rotation : :class: `compas.geometry.Vector`
-        The Euler rotation vector of the object in XYZ order.
-    scale : :class: `compas.geometry.Vector`
-        The scale vector of the object.
+    rotation : list
+        The Euler rotation of the object in XYZ order.
+    scale : list
+        The scale factor of the object.
     matrix: list
         The 4x4 transformation matrix that is composed from translation, rotation and scale.
     """
@@ -46,9 +46,9 @@ class Object(ABC):
         self.name = name
         self.is_selected = is_selected
         self._instance_color = None
-        self._translation = Vector(0, 0, 0)
-        self._rotation = Vector(0, 0, 0)
-        self._scale = Vector(1, 1, 1)
+        self._translation = [0, 0, 0]
+        self._rotation = [0, 0, 0]
+        self._scale = [1, 1, 1]
         self._transformation = Transformation()
 
     @abc.abstractmethod
@@ -70,24 +70,30 @@ class Object(ABC):
         return self._translation
 
     @translation.setter
-    def translation(self, data):
-        self._translation.data = data
+    def translation(self, vector):
+        self._translation[0] = vector[0]
+        self._translation[1] = vector[1]
+        self._translation[2] = vector[2]
 
     @property
     def rotation(self):
         return self._rotation
 
     @rotation.setter
-    def rotation(self, data):
-        self._rotation.data = data
+    def rotation(self, rotation_euler):
+        self._rotation[0] = rotation_euler[0]
+        self._rotation[1] = rotation_euler[1]
+        self._rotation[2] = rotation_euler[2]
 
     @property
     def scale(self):
         return self._scale
 
     @scale.setter
-    def scale(self, data):
-        self._scale.data = data
+    def scale(self, scale_factor):
+        self._scale[0] = scale_factor[0]
+        self._scale[1] = scale_factor[1]
+        self._scale[2] = scale_factor[2]
 
     def _update_matrix(self):
         """Update the matrix from object's translation, rotation and scale"""
