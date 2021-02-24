@@ -95,7 +95,7 @@ class Object(ABC):
         R1 = Rotation.from_euler_angles(self.rotation)
         S1 = Scale.from_factors(self.scale)
         M = T1 * R1 * S1
-        self._transformation.data = M.data
+        self._transformation.matrix = M.matrix
 
     @property
     def matrix(self):
