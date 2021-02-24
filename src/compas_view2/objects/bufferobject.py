@@ -111,49 +111,52 @@ class BufferObject(Object):
         """Update the object"""
         self.update_buffers()
 
-    def draw(self, shader):
+    def draw(self, shader, wireframe=False):
         """Draw the object from its buffers"""
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
-        shader.uniform4x4('transform', self.matrix)
+        if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
+            shader.bind_attribute('position', self._frontfaces_buffer['positions'])
+            shader.bind_attribute('color', self._frontfaces_buffer['colors'])
+            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
+        if hasattr(self, "_backfaces_buffer") and self.show_faces and not wireframe:
+            shader.bind_attribute('position', self._backfaces_buffer['positions'])
+            shader.bind_attribute('color', self._backfaces_buffer['colors'])
+            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
+        if self.show_faces and not wireframe:
+            # skip coloring lines and points if faces are already highlighted
+            shader.uniform1i('is_selected', 0)
+        if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
+            shader.bind_attribute('position', self._lines_buffer['positions'])
+            shader.bind_attribute('color', self._lines_buffer['colors'])
+            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
         if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
-        if hasattr(self, "_lines_buffer") and self.show_lines:
-            shader.bind_attribute('position', self._lines_buffer['positions'])
-            shader.bind_attribute('color', self._lines_buffer['colors'])
-            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
-        if hasattr(self, "_frontfaces_buffer") and self.show_faces:
-            shader.bind_attribute('position', self._frontfaces_buffer['positions'])
-            shader.bind_attribute('color', self._frontfaces_buffer['colors'])
-            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
-        if hasattr(self, "_backfaces_buffer") and self.show_faces:
-            shader.bind_attribute('position', self._backfaces_buffer['positions'])
-            shader.bind_attribute('color', self._backfaces_buffer['colors'])
-            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
         shader.uniform1i('is_selected', 0)
         shader.disable_attribute('position')
         shader.disable_attribute('color')
 
-    def draw_instance(self, shader):
+    def draw_instance(self, shader, wireframe=False):
         """Draw the object instance for picking"""
         shader.enable_attribute('position')
+        shader.enable_attribute('color')
         shader.uniform1i('is_instance_mask', 1)
-        shader.uniform3f('instance_color', self._instance_color)
-        shader.uniform4x4('transform', self.matrix)
-        if self.show_points:
+        shader.uniform3f('instance_color', self.instance_color)
+        if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
-        if self.show_lines:
+        if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
             shader.bind_attribute('position', self._lines_buffer['positions'])
             shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
-        if self.show_faces:
+        if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
         shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
+        shader.disable_attribute('color')
         shader.disable_attribute('position')
