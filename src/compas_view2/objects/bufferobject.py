@@ -139,6 +139,7 @@ class BufferObject(Object):
     def draw_instance(self, shader, wireframe=False):
         """Draw the object instance for picking"""
         shader.enable_attribute('position')
+        shader.enable_attribute('color')
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self.instance_color)
         if hasattr(self, "_points_buffer") and self.show_points:
@@ -154,4 +155,5 @@ class BufferObject(Object):
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
         shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
+        shader.disable_attribute('color')
         shader.disable_attribute('position')
