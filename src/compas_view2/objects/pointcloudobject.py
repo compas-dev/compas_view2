@@ -24,12 +24,18 @@ class PointcloudObject(BufferObject):
     ----------
     colors : list
         list of point colors
+
+    Raises
+    -------
+    ValueError
+        If number of colors does not equal to number of points.
     """
 
     def __init__(self, data, name=None, is_selected=False, color=None, colors=None, size=10):
         super().__init__(data, name=name, is_selected=is_selected, show_points=True, pointsize=size)
         self.colors = colors or [color or self.default_color_points] * len(data)
-        assert len(self.colors) == len(data)
+        if len(self.colors) != len(data):
+            raise ValueError("Number of colors must equal to number of points")
 
     def _points_data(self):
         positions = self._data
