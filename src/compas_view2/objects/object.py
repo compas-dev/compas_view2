@@ -79,20 +79,20 @@ class Object(ABC):
         return self._rotation
 
     @rotation.setter
-    def rotation(self, rotation_euler):
-        self._rotation[0] = rotation_euler[0]
-        self._rotation[1] = rotation_euler[1]
-        self._rotation[2] = rotation_euler[2]
+    def rotation(self, angles):
+        self._rotation[0] = angles[0]
+        self._rotation[1] = angles[1]
+        self._rotation[2] = angles[2]
 
     @property
     def scale(self):
         return self._scale
 
     @scale.setter
-    def scale(self, scale_factor):
-        self._scale[0] = scale_factor[0]
-        self._scale[1] = scale_factor[1]
-        self._scale[2] = scale_factor[2]
+    def scale(self, factors):
+        self._scale[0] = factors[0]
+        self._scale[1] = factors[1]
+        self._scale[2] = factors[2]
 
     def _update_matrix(self):
         """Update the matrix from object's translation, rotation and scale"""
