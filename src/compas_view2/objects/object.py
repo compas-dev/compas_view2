@@ -71,7 +71,7 @@ class Object(ABC):
 
     @translation.setter
     def translation(self, data):
-        self._translation = data
+        self._translation.data = data
 
     @property
     def rotation(self):
@@ -79,7 +79,7 @@ class Object(ABC):
 
     @rotation.setter
     def rotation(self, data):
-        self._rotation = data
+        self._rotation.data = data
 
     @property
     def scale(self):
@@ -87,7 +87,7 @@ class Object(ABC):
 
     @scale.setter
     def scale(self, data):
-        self._scale = data
+        self._scale.data = data
 
     def _update_matrix(self):
         """Update the matrix from object's translation, rotation and scale"""
