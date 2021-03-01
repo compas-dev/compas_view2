@@ -8,10 +8,12 @@ uniform mat4 viewworld;
 uniform mat4 transform;
 
 uniform bool is_selected;
-uniform bool is_text;
-uniform int text_size;
 uniform float opacity;
 uniform vec3 selection_color;
+
+uniform bool is_text;
+uniform int text_height;
+uniform int text_num;
 
 varying vec4 vertex_color;
 
@@ -25,7 +27,7 @@ void main()
     }
 
     if (is_text){
-        gl_PointSize = text_size;
+        gl_PointSize = text_height * text_num;
     }
 
     gl_Position = projection * viewworld * transform * vec4(position, 1.0);

@@ -142,9 +142,10 @@ class BufferObject(Object):
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
         if hasattr(self, "_texts_buffer") and self.show_texts:
             shader.uniform1i('is_text', 1)
-            shader.uniform1i('text_size', self._data.size)
+            shader.uniform1i('text_height', self._data.height)
+            shader.uniform1i('text_num', len(self._data.text))
+            shader.uniform3f('text_color', self.color)
             shader.bind_attribute('position', self._texts_buffer['positions'])
-            shader.bind_attribute('color', self._texts_buffer['colors'])
             shader.uniformTex("tex", self.texture)
             shader.draw_texts(elements=self._texts_buffer['elements'], n=self._texts_buffer['n'])
             shader.uniform1i('is_text', 0)

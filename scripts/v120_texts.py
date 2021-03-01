@@ -4,10 +4,14 @@ from compas_view2 import app
 
 viewer = app.App()
 
-# for i in range(10):
-#     point = Point(random()*10, random()*10, random()*10)
-#     viewer.add(point, color=(random(), random(), random()), size=10)
 
-t = Text("123321")
+t = Text("a", [0, 0, 0], height=50)
 viewer.add(t)
+
+t = Text("123", [3, 0, 0], height=50)
+viewer.add(t)
+
+t = Text("ABC", [3, 3, 0], height=100)
+viewer.add(t, color=(1, 0, 0))
+
 viewer.show()

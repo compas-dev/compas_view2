@@ -10,8 +10,8 @@ class Text(Shape):
     """
 
     def __init__(
-            self, text, position=[0, 0, 0], size=100):
+            self, text, position=[0, 0, 0], height=50):
         super().__init__()
         self.text = text
         self.position = Vector(*position)
-        self.size = size
+        self.height = height

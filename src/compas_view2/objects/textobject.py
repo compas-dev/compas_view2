@@ -2,16 +2,18 @@ from .bufferobject import BufferObject
 import freetype as ft
 from OpenGL.GL import *
 import numpy as np
-import cv2
+import os
+from compas_view2 import DATA
 
 class TextObeject(BufferObject):
     """Object for displaying COMPAS point geometry."""
 
-    def __init__(self, data, name=None, is_selected=False, color=None, size=10):
-        super().__init__(data, name=name, is_selected=is_selected, show_texts=True, pointsize=size)
-        self.color = color
+    def __init__(self, data, name=None, is_selected=False, color=None, height=10):
+        super().__init__(data, name=name, is_selected=is_selected, show_texts=True)
+        self.color = color or [0, 0, 0]
         self.characters = []
         self.buffers = []
+        self.height = height
 
     def init(self):
         self.make_buffers()
@@ -19,14 +21,14 @@ class TextObeject(BufferObject):
 
     def make_fonts(self):
         # change the filename if necessary
-        face = ft.Face("temp/FreeSans.ttf")
+        face = ft.Face(os.path.join(DATA, "FreeSans.ttf"))
         # the size is specified in 1/64 pixel
         face.set_char_size(48*64)
 
-        text = "Test text"
+        text = self._data.text
 
         char_width = 48
-        char_height = 64
+        char_height = 80
         text_buffer = np.zeros(shape=(char_height, char_width*len(text)))
 
         # glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
@@ -44,7 +46,7 @@ class TextObeject(BufferObject):
             print(char.shape)
 
 
-        cv2.imwrite("test.png", text_buffer)
+        # cv2.imwrite("test.png", text_buffer)
         text_buffer = text_buffer.reshape((text_buffer.shape[0]*text_buffer.shape[1]))
 
         # create glyph texture
