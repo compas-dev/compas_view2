@@ -109,6 +109,7 @@ class BufferObject(Object):
 
     def update(self):
         """Update the object"""
+        self._update_matrix()
         self.update_buffers()
 
     def draw(self, shader, wireframe=False):
