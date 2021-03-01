@@ -1,9 +1,10 @@
 from .bufferobject import BufferObject
 import freetype as ft
-from OpenGL.GL import *
+from OpenGL import GL
 import numpy as np
 import os
 from compas_view2 import DATA
+
 
 class TextObeject(BufferObject):
     """Object for displaying COMPAS point geometry."""
@@ -43,18 +44,16 @@ class TextObeject(BufferObject):
             char = np.array(bitmap.buffer)
             char = char.reshape((bitmap.rows, bitmap.width))
             text_buffer[-char.shape[0]:, i*char_width: i*char_width+char.shape[1]] = char
-            print(char.shape)
+            # print(char.shape)
 
-
-        # cv2.imwrite("test.png", text_buffer)
         text_buffer = text_buffer.reshape((text_buffer.shape[0]*text_buffer.shape[1]))
 
         # create glyph texture
-        texture = glGenTextures(1)
-        glBindTexture( GL_TEXTURE_2D, texture )
-        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR )
-        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR )
-        glTexImage2D( GL_TEXTURE_2D, 0, GL_R8, char_width*len(text), char_height, 0, GL_RED, GL_UNSIGNED_BYTE, text_buffer )
+        texture = GL.glGenTextures(1)
+        GL.glBindTexture(GL.GL_TEXTURE_2D, texture)
+        GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR)
+        GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR)
+        GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_R8, char_width*len(text), char_height, 0, GL.GL_RED, GL.GL_UNSIGNED_BYTE, text_buffer)
 
         self.texture = texture
 

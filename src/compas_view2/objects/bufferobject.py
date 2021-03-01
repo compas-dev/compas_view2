@@ -1,7 +1,6 @@
 from compas.utilities import flatten
 from ..buffers import make_index_buffer, make_vertex_buffer, update_vertex_buffer, update_index_buffer
 from .object import Object
-from OpenGL.GL import *
 
 
 class BufferObject(Object):
