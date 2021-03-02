@@ -89,6 +89,11 @@ class Controller:
         self.app.view.mode = 'ghosted'
         self.app.view.update()
 
+    def view_wireframe(self):
+        """Switch the view to wireframe."""
+        self.app.view.mode = 'wireframe'
+        self.app.view.update()
+
     def view_capture(self):
         """Capture a screenshot."""
         result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
