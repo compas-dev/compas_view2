@@ -214,7 +214,7 @@ class MeshObject(BufferObject):
     def _backfaces_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        face_color = {face: self._mesh.face_attribute(face, 'color') or self.default_color_faces for face in self._mesh.faces()}
+        face_color = self.facecolor
         positions = []
         colors = []
         elements = []
