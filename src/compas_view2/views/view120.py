@@ -60,7 +60,7 @@ class View120(View):
         # draw all objects
         for guid in self.objects:
             obj = self.objects[guid]
-            obj.draw(self.shader, self.mode == "wireframe")
+            obj.draw(self.shader, self.mode == "wireframe", self.mode == "lighted")
         # finish
         self.shader.release()
         # draw 2D box for multi-selection
