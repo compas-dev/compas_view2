@@ -10,7 +10,7 @@ from compas.geometry import Sphere
 from compas.geometry import Torus
 
 from ..shapes import Arrow
-from ..shapes import Collection
+from ..collections import Collection
 from .object import Object
 
 from .pointobject import PointObject

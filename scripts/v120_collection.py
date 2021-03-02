@@ -1,11 +1,10 @@
 from compas_view2 import app
 from compas.geometry import Sphere
-from compas_view2.shapes import Collection
+from compas_view2.collections import Collection
 
 viewer = app.App()
 
 spheres = []
-
 colors = []
 
 for x in range(5):
@@ -17,5 +16,5 @@ for x in range(5):
 
 spherecollection = Collection(spheres)
 
-viewer.add(spherecollection, show_lines=False, colors=colors)
+viewer.add(spherecollection, colors=colors)
 viewer.show()
