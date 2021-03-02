@@ -105,7 +105,6 @@ class Object(ABC):
     @property
     def matrix(self):
         """Get the updated matrix from object's translation, rotation and scale"""
-        self._update_matrix()
         return self._transformation.matrix
 
     @matrix.setter
