@@ -54,7 +54,8 @@ class MeshObject(BufferObject):
                  facecolor=None, linecolor=None, pointcolor=None,
                  color=None,
                  linewidth=1, pointsize=10,
-                 hide_coplanaredges=False, opacity=1):
+                 hide_coplanaredges=False, opacity=1,
+                 vertices=None, edges=None, faces=None,):
         super().__init__(
             data, name=name, is_selected=is_selected, show_points=show_points,
             show_lines=show_lines, show_faces=show_faces, linewidth=linewidth,
@@ -67,6 +68,9 @@ class MeshObject(BufferObject):
         self.linecolor = color or linecolor
         self.pointcolor = color or pointcolor
         self.hide_coplanaredges = hide_coplanaredges
+        self.vertices = vertices
+        self.edges = edges
+        self.faces = faces
 
     @property
     def pointcolor(self):
@@ -127,7 +131,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for vertex in mesh.vertices():
+        vertices = self.vertices or mesh.vertices()
+        for vertex in vertices:
             positions.append(vertex_xyz[vertex])
             colors.append(vertex_color[vertex])
             elements.append([i])
@@ -142,7 +147,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for u, v in mesh.edges():
+        edges = self.edges or mesh.edges()
+        for u, v in edges:
             color = linecolor[u, v]
             if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
@@ -169,7 +175,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for face in mesh.faces():
+        faces = self.faces or mesh.faces()
+        for face in faces:
             color = face_color[face]
             vertices = mesh.face_vertices(face)
             if len(vertices) == 3:
@@ -222,7 +229,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for face in mesh.faces():
+        faces = self.faces or mesh.faces()
+        for face in faces:
             color = face_color[face]
             vertices = mesh.face_vertices(face)[::-1]
             if len(vertices) == 3:
