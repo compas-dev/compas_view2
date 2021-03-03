@@ -27,7 +27,8 @@
                     [
                         {"type": "action", "text": "Shaded", "checked": true, "action": "view_shaded"},
                         {"type": "action", "text": "Ghosted", "checked": false, "action": "view_ghosted"},
-                        {"type": "action", "text": "Wireframe", "checked": false, "action": "view_wireframe"}
+                        {"type": "action", "text": "Wireframe", "checked": false, "action": "view_wireframe"},
+                        {"type": "action", "text": "Lighted", "checked": false, "action": "view_lighted"}
                     ]
                 },
                 {"type": "separator"},
