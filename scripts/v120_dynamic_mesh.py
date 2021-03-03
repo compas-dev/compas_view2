@@ -6,7 +6,7 @@ import compas
 viewer = app.App()
 
 mesh = Mesh.from_off(compas.get('tubemesh.off'))
-obj = viewer.add(mesh, show_points=False)
+obj = viewer.add(mesh)
 
 
 @viewer.on(interval=1000)
