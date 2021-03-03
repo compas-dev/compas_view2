@@ -112,13 +112,13 @@ class BufferObject(Object):
         self._update_matrix()
         self.update_buffers()
 
-    def draw(self, shader, wireframe=False, lighted=False):
+    def draw(self, shader, wireframe=False, is_lighted=False):
         """Draw the object from its buffers"""
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
         shader.uniform4x4('transform', self.matrix)
-        shader.uniform1i('lighted', lighted)
+        shader.uniform1i('is_lighted', is_lighted)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
@@ -127,7 +127,7 @@ class BufferObject(Object):
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
-        shader.uniform1i('lighted', False)
+        shader.uniform1i('is_lighted', False)
         if self.show_faces and not wireframe:
             # skip coloring lines and points if faces are already highlighted
             shader.uniform1i('is_selected', 0)
