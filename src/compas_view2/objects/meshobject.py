@@ -31,17 +31,37 @@ class MeshObject(BufferObject):
         Point size
     hide_coplanaredges : bool
         True to hide the coplanar edges
+    opacity : float
+        The opacity of mesh
+    vertices : list
+        Subset of vertices to be displayed
+    edges : list
+        Subset of edges to be displayed
+    faces : list
+        Subset of faces to be displayed
 
     Attributes
     ----------
+    facecolor : list
+        Face color
+    linecolor : list
+        Line color
+    pointcolor : list
+        Face color
+    linewidth : float
+        Line width
+    pointsize : float
+        Point size
+    hide_coplanaredges : bool
+        True to hide the coplanar edges
+    opacity : float
+        The opacity of mesh
     vertices : list
-        list of mesh vertices
-    edges : list of tuple
-        list of mesh edges in tuple
-    front : dict
-        mesh front face information for the viewer
-    back : dict
-        mesh back face information for the viewer
+        Subset of vertices to be displayed
+    edges : list
+        Subset of edges to be displayed
+    faces : list
+        Subset of faces to be displayed
 
     """
 
@@ -50,15 +70,15 @@ class MeshObject(BufferObject):
     default_color_faces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
-                 show_points=False, show_lines=True, show_faces=True,
+                 show_vertices=False, show_edges=True, show_faces=True,
                  facecolor=None, linecolor=None, pointcolor=None,
                  color=None,
                  linewidth=1, pointsize=10,
                  hide_coplanaredges=False, opacity=1,
                  vertices=None, edges=None, faces=None):
         super().__init__(
-            data, name=name, is_selected=is_selected, show_points=show_points,
-            show_lines=show_lines, show_faces=show_faces, linewidth=linewidth,
+            data, name=name, is_selected=is_selected, show_points=show_vertices,
+            show_lines=show_edges, show_faces=show_faces, linewidth=linewidth,
             pointsize=pointsize, opacity=opacity)
         self._mesh = data
         self._pointcolor = None
