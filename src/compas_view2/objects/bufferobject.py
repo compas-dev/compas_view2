@@ -26,7 +26,7 @@ class BufferObject(Object):
     default_color_backfaces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False, show_points=False,
-                 show_lines=False, show_faces=False, linewidth=1, pointsize=10):
+                 show_lines=False, show_faces=False, linewidth=1, pointsize=10, opacity=1):
         super().__init__(data, name=name, is_selected=is_selected)
         self._data = data
         self.show_points = show_points
@@ -34,6 +34,7 @@ class BufferObject(Object):
         self.show_faces = show_faces
         self.linewidth = linewidth
         self.pointsize = pointsize
+        self.opacity = opacity
 
     def make_buffer_from_data(self, data):
         """Create buffers from point/line/face data.
@@ -119,6 +120,7 @@ class BufferObject(Object):
         shader.uniform1i('is_selected', self.is_selected)
         shader.uniform4x4('transform', self.matrix)
         shader.uniform1i('is_lighted', is_lighted)
+        shader.uniform1f('object_opacity', self.opacity)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
@@ -140,6 +142,7 @@ class BufferObject(Object):
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
         shader.uniform1i('is_selected', 0)
+        shader.uniform1f('object_opacity', 1)
         shader.disable_attribute('position')
         shader.disable_attribute('color')
 

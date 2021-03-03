@@ -32,6 +32,6 @@ for point in cloud.transformed(R1):
     size = random.random()
     box = Box((point, [1, 0, 0], [0, 1, 0]), size, size, size)
     color = i_to_rgb(random.random(), normalize=True)
-    viewer.add(box, show_points=False, color=color)
+    viewer.add(box, show_points=False, color=color, opacity=random.random())
 
 viewer.show()

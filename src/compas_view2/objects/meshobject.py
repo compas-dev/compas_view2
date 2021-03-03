@@ -54,8 +54,11 @@ class MeshObject(BufferObject):
                  facecolor=None, linecolor=None, pointcolor=None,
                  color=None,
                  linewidth=1, pointsize=10,
-                 hide_coplanaredges=False):
-        super().__init__(data, name=name, is_selected=is_selected, show_points=show_points, show_lines=show_lines, show_faces=show_faces, linewidth=linewidth, pointsize=pointsize)
+                 hide_coplanaredges=False, opacity=1):
+        super().__init__(
+            data, name=name, is_selected=is_selected, show_points=show_points,
+            show_lines=show_lines, show_faces=show_faces, linewidth=linewidth,
+            pointsize=pointsize, opacity=opacity)
         self._mesh = data
         self._pointcolor = None
         self._linecolor = None
