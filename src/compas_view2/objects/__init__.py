@@ -1,6 +1,7 @@
 from compas.datastructures import Network
 from compas.datastructures import Mesh
 from compas.geometry import Point
+from compas.geometry import Pointcloud
 from compas.geometry import Line
 from compas.geometry import Polyline
 from compas.geometry import Frame
@@ -13,6 +14,7 @@ from ..shapes import Arrow
 from .object import Object
 
 from .pointobject import PointObject
+from .pointcloudobject import PointcloudObject
 from .lineobject import LineObject
 from .polylineobject import PolylineObject
 from .frameobject import FrameObject
@@ -28,6 +30,7 @@ from .gridobject import GridObject  # noqa: F401
 from .cylinderobject import CylinderObject
 
 Object.register(Point, PointObject)
+Object.register(Pointcloud, PointcloudObject)
 Object.register(Line, LineObject)
 Object.register(Polyline, PolylineObject)
 Object.register(Frame, FrameObject)
