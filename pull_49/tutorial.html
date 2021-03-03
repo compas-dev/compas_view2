@@ -84,19 +84,16 @@
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="basic-usage">
 <h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
-<p>To launch the viewer and add objects interactively, create an instance of the app
-and run the event loop.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+<p>Add COMPAS objects in a script and visualize the result.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas.geometry</span>
+<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
 <span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+
+
 <span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </code></pre></div>
 </div>
-<div class="mx-auto">
-    <video width="800" height="500" controls>
-        <source src="_videos/test.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-    </video>
-</div></div>
+</div>
 <div class="section" id="scripting">
 <h2>Scripting<a class="headerlink" href="#scripting" title="Permalink to this headline">¶</a></h2>
 <p>To add COMPAS objects through scripting, before launching the viewer window,
