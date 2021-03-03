@@ -10,11 +10,12 @@ class GridObject(BufferObject):
 
     default_color_lines = [0.75, 0.75, 0.75]
 
-    def __init__(self, cell_size, x_cells, y_cells):
+    def __init__(self, cell_size, x_cells, y_cells, background=True):
         super().__init__({}, name="Grid", show_lines=True)
         self.cell_size = cell_size
         self.x_cells = x_cells
         self.y_cells = y_cells
+        self.background = background
 
     def _lines_data(self):
         positions = []
