@@ -1,4 +1,4 @@
-#version 130
+#version 120
 
 varying vec4 vertex_color;
 uniform bool is_instance_mask;
@@ -18,7 +18,7 @@ void main()
         if (xy.y > 0 || xy.y < -0.5) {
             discard;
         }
-        float a = texture(tex, xy).r;
+        float a = texture2D(tex, xy).r;
         gl_FragColor = vec4(text_color, a);
         if (a <= 0){
             discard;
