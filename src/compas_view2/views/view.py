@@ -5,6 +5,7 @@ from PySide2 import QtCore, QtWidgets
 from ..camera import Camera
 from ..mouse import Mouse
 from ..objects import GridObject
+import time
 
 
 class View(QtWidgets.QOpenGLWidget):
@@ -54,6 +55,8 @@ class View(QtWidgets.QOpenGLWidget):
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
         self.keys = {"shift": False, "control": False}
+        self._frames = 0
+        self._now = time.time()
 
     @property
     def mode(self):
@@ -175,6 +178,11 @@ class View(QtWidgets.QOpenGLWidget):
         """
         self.clear()
         self.paint()
+        self._frames += 1
+        if time.time() - self._now > 1:
+            self._now = time.time()
+            self.app.fps(self._frames)
+            self._frames = 0
 
     def paint(self):
         pass
