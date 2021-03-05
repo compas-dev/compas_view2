@@ -26,13 +26,12 @@ class BufferObject(Object):
     default_color_backfaces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False, show_points=False,
-                 show_lines=False, show_faces=False, linewidth=1, pointsize=10):
+                 show_lines=False, show_faces=False, linewidth=1, pointsize=10, opacity=1):
         super().__init__(data, name=name, is_selected=is_selected)
         self._data = data
         self.show_points = show_points
         self.show_lines = show_lines
         self.show_faces = show_faces
-        self.show_texts = show_texts
         self.linewidth = linewidth
         self.pointsize = pointsize
         self.opacity = opacity
@@ -94,8 +93,6 @@ class BufferObject(Object):
             self._frontfaces_buffer = self.make_buffer_from_data(self._frontfaces_data())
         if hasattr(self, '_backfaces_data'):
             self._backfaces_buffer = self.make_buffer_from_data(self._backfaces_data())
-        if hasattr(self, '_texts_data'):
-            self._texts_buffer = self.make_buffer_from_data(self._texts_data())
 
     def update_buffers(self):
         """Update all buffers from object's data"""
@@ -145,15 +142,6 @@ class BufferObject(Object):
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)
-        if hasattr(self, "_texts_buffer") and self.show_texts:
-            shader.uniform1i('is_text', 1)
-            shader.uniform1i('text_height', self._data.height)
-            shader.uniform1i('text_num', len(self._data.text))
-            shader.uniform3f('text_color', self.color)
-            shader.bind_attribute('position', self._texts_buffer['positions'])
-            shader.uniformTex("tex", self.texture)
-            shader.draw_texts(elements=self._texts_buffer['elements'], n=self._texts_buffer['n'])
-            shader.uniform1i('is_text', 0)
 
         shader.uniform1i('is_selected', 0)
         shader.uniform1f('object_opacity', 1)

@@ -4,6 +4,8 @@ from ..shaders import Shader
 from .view import View
 
 import numpy as np
+from ..objects.bufferobject import BufferObject
+from ..objects.textobject import TextObeject
 
 
 class View120(View):
@@ -25,6 +27,13 @@ class View120(View):
         self.shader.uniform1f("opacity", self.opacity)
         self.shader.uniform3f("selection_color", self.selection_color)
         self.shader.release()
+
+        self.shader_text = Shader(name='120/text')
+        self.shader_text.bind()
+        self.shader_text.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+        self.shader_text.uniform4x4("viewworld", self.camera.viewworld())
+        self.shader_text.uniform1f("opacity", self.opacity)
+        self.shader_text.release()
 
     def resize(self, w, h):
         self.shader.bind()
@@ -60,9 +69,24 @@ class View120(View):
         # draw all objects
         for guid in self.objects:
             obj = self.objects[guid]
-            obj.draw(self.shader, self.mode == "wireframe", self.mode == "lighted")
+            if isinstance(obj, BufferObject):
+                obj.draw(self.shader, self.mode == "wireframe", self.mode == "lighted")
+
         # finish
         self.shader.release()
+
+        # draw text sprites
+        self.shader_text.bind()
+        # set projection matrix
+        if self.current != self.PERSPECTIVE:
+            self.shader_text.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+        self.shader_text.uniform4x4("viewworld", self.camera.viewworld())
+        for guid in self.objects:
+            obj = self.objects[guid]
+            if isinstance(obj, TextObeject):
+                obj.draw(self.shader_text)
+        self.shader_text.release()
+
         # draw 2D box for multi-selection
         if self.app.selector.select_from == "box":
             self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)

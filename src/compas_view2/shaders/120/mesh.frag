@@ -8,10 +8,6 @@ uniform float object_opacity;
 uniform bool is_instance_mask;
 uniform bool is_lighted;
 uniform vec3 instance_color;
-uniform bool is_text;
-uniform sampler2D tex;
-uniform int text_num;
-uniform vec3 text_color;
 
 
 void main()

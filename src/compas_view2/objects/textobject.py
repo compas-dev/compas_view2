@@ -1,26 +1,37 @@
-from .bufferobject import BufferObject
-import freetype as ft
-from OpenGL import GL
-import numpy as np
-import os
+from .object import Object
 from compas_view2 import DATA
 
+from OpenGL import GL
+from ..buffers import make_index_buffer, make_vertex_buffer
 
-class TextObeject(BufferObject):
-    """Object for displaying COMPAS point geometry."""
+import freetype as ft
+import numpy as np
+import os
 
-    def __init__(self, data, name=None, is_selected=False, color=None, height=10):
-        super().__init__(data, name=name, is_selected=is_selected, show_texts=True)
+
+class TextObeject(Object):
+    """Object for displaying text sprites."""
+
+    def __init__(self, data, name=None, color=None, height=10, opacity=1):
+        super().__init__(data, name=name)
         self.color = color or [0, 0, 0]
         self.characters = []
         self.buffers = []
         self.height = height
+        self.opacity = opacity
 
     def init(self):
         self.make_buffers()
-        self.make_fonts()
 
-    def make_fonts(self):
+    def make_buffers(self):
+        self._text_buffer = {
+            'positions': make_vertex_buffer(self._data.position),
+            'elements': make_index_buffer([0]),
+            'text_texture': self.make_text_texture(),
+            'n': 1
+        }
+
+    def make_text_texture(self):
         # change the filename if necessary
         face = ft.Face(os.path.join(DATA, "FreeSans.ttf"))
         # the size is specified in 1/64 pixel
@@ -30,10 +41,7 @@ class TextObeject(BufferObject):
 
         char_width = 48
         char_height = 80
-        text_buffer = np.zeros(shape=(char_height, char_width*len(text)))
-
-        # glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
-        # glActiveTexture(GL_TEXTURE0)
+        string_buffer = np.zeros(shape=(char_height, char_width*len(text)))
 
         for i, c in enumerate(text):
             if c == " ":
@@ -43,25 +51,29 @@ class TextObeject(BufferObject):
             bitmap = glyph.bitmap
             char = np.array(bitmap.buffer)
             char = char.reshape((bitmap.rows, bitmap.width))
-            text_buffer[-char.shape[0]:, i*char_width: i*char_width+char.shape[1]] = char
-            # print(char.shape)
+            string_buffer[-char.shape[0]:, i*char_width: i*char_width+char.shape[1]] = char
 
-        text_buffer = text_buffer.reshape((text_buffer.shape[0]*text_buffer.shape[1]))
+        string_buffer = string_buffer.reshape((string_buffer.shape[0]*string_buffer.shape[1]))
 
         # create glyph texture
         texture = GL.glGenTextures(1)
         GL.glBindTexture(GL.GL_TEXTURE_2D, texture)
         GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR)
         GL.glTexParameterf(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR)
-        GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_R8, char_width*len(text), char_height, 0, GL.GL_RED, GL.GL_UNSIGNED_BYTE, text_buffer)
+        GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_R8, char_width*len(text), char_height, 0, GL.GL_RED, GL.GL_UNSIGNED_BYTE, string_buffer)
+        return texture
 
-        self.texture = texture
-
-        # glPixelStorei(GL_UNPACK_ALIGNMENT, 4)
-        # glBindTexture(GL_TEXTURE_2D, 0)
-
-    def _texts_data(self):
-        positions = [self._data.position]
-        colors = [self.color or self.default_color_points]
-        elements = [[0]]
-        return positions, colors, elements
+    def draw(self, shader):
+        """Draw the object from its buffers"""
+        shader.enable_attribute('position')
+        shader.uniform4x4('transform', self.matrix)
+        shader.uniform1f('object_opacity', self.opacity)
+        shader.uniform1i('text_height', self._data.height)
+        shader.uniform1i('text_num', len(self._data.text))
+        shader.uniform3f('text_color', self.color)
+        shader.uniformTex("text_texture", self._text_buffer['text_texture'])
+        shader.bind_attribute('position', self._text_buffer['positions'])
+        shader.draw_texts(elements=self._text_buffer['elements'], n=self._text_buffer['n'])
+        shader.uniform1i('is_text', 0)
+        shader.uniform1f('object_opacity', 1)
+        shader.disable_attribute('position')

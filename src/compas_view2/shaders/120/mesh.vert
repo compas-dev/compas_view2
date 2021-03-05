@@ -22,10 +22,6 @@ void main()
         vertex_color = color;
     }
 
-    if (is_text){
-        gl_PointSize = text_height * text_num;
-    }
-
     gl_Position = projection * viewworld * transform * vec4(position, 1.0);
     ec_pos = vec3(viewworld * transform * vec4(position, 1.0));
     
