@@ -38,7 +38,11 @@ class Object(ABC):
     @staticmethod
     def build(data, **kwargs):
         """Build an object class according to its corrensponding data type"""
-        return DATA_VIEW[data.__class__](data, **kwargs)
+        try:
+            obj = DATA_VIEW[data.__class__](data, **kwargs)
+        except KeyError:
+            raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
+        return obj
 
     def __init__(self, data, name=None, is_selected=False):
         self._data = data
@@ -105,7 +109,6 @@ class Object(ABC):
     @property
     def matrix(self):
         """Get the updated matrix from object's translation, rotation and scale"""
-        self._update_matrix()
         return self._transformation.matrix
 
     @matrix.setter

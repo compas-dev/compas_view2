@@ -26,7 +26,7 @@ class BufferObject(Object):
     default_color_backfaces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False, show_points=False,
-                 show_lines=False, show_faces=False, show_texts=False, linewidth=1, pointsize=10):
+                 show_lines=False, show_faces=False, linewidth=1, pointsize=10):
         super().__init__(data, name=name, is_selected=is_selected)
         self._data = data
         self.show_points = show_points
@@ -35,6 +35,8 @@ class BufferObject(Object):
         self.show_texts = show_texts
         self.linewidth = linewidth
         self.pointsize = pointsize
+        self.opacity = opacity
+        self.background = False
 
     def make_buffer_from_data(self, data):
         """Create buffers from point/line/face data.
@@ -112,33 +114,37 @@ class BufferObject(Object):
 
     def update(self):
         """Update the object"""
+        self._update_matrix()
         self.update_buffers()
 
-    def draw(self, shader, wireframe=False):
+    def draw(self, shader, wireframe=False, is_lighted=False):
         """Draw the object from its buffers"""
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
         shader.uniform4x4('transform', self.matrix)
+        shader.uniform1i('is_lighted', is_lighted)
+        shader.uniform1f('object_opacity', self.opacity)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
-            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
+            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'], background=self.background)
         if hasattr(self, "_backfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
-            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
+            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'], background=self.background)
+        shader.uniform1i('is_lighted', False)
         if self.show_faces and not wireframe:
             # skip coloring lines and points if faces are already highlighted
             shader.uniform1i('is_selected', 0)
         if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
             shader.bind_attribute('position', self._lines_buffer['positions'])
             shader.bind_attribute('color', self._lines_buffer['colors'])
-            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
+            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'], background=self.background)
         if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
-            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
+            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)
         if hasattr(self, "_texts_buffer") and self.show_texts:
             shader.uniform1i('is_text', 1)
             shader.uniform1i('text_height', self._data.height)
@@ -150,6 +156,7 @@ class BufferObject(Object):
             shader.uniform1i('is_text', 0)
 
         shader.uniform1i('is_selected', 0)
+        shader.uniform1f('object_opacity', 1)
         shader.disable_attribute('position')
         shader.disable_attribute('color')
 

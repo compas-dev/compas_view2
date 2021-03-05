@@ -18,14 +18,17 @@ s = 1
 def transform(frame):
     obj1.translation[0] += 0.1
     obj1.rotation[2] += 0.1
+    obj1.update()
 
     obj2.translation[2] += 0.1
     obj2.rotation[0] += 0.1
+    obj2.update()
 
     global s
     s += 0.05
     S = Scale.from_factors([s, s, s])
     obj3.matrix = S.matrix
+    obj3.update()
 
 
 viewer.run()

@@ -7,23 +7,19 @@ uniform mat4 projection;
 uniform mat4 viewworld;
 uniform mat4 transform;
 
+
 uniform bool is_selected;
-uniform float opacity;
 uniform vec3 selection_color;
 
-uniform bool is_text;
-uniform int text_height;
-uniform int text_num;
-
-varying vec4 vertex_color;
+varying vec3 vertex_color;
+varying vec3 ec_pos;
 
 void main()
 {
     if (is_selected) {
-        vertex_color = vec4(selection_color, opacity);
-    }
-    else {
-        vertex_color = vec4(color, opacity);
+        vertex_color = selection_color;
+    } else {
+        vertex_color = color;
     }
 
     if (is_text){
@@ -31,4 +27,6 @@ void main()
     }
 
     gl_Position = projection * viewworld * transform * vec4(position, 1.0);
+    ec_pos = vec3(viewworld * transform * vec4(position, 1.0));
+    
 }
