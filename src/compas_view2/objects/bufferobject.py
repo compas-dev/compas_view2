@@ -120,7 +120,7 @@ class BufferObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
-        if self._matrix_updated:
+        if self._matrix_buffer is not None:
             shader.uniform4x4('transform', self._matrix_buffer)
         shader.uniform1i('is_lighted', is_lighted)
         shader.uniform1f('object_opacity', self.opacity)
@@ -146,9 +146,8 @@ class BufferObject(Object):
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)
         shader.uniform1i('is_selected', 0)
         shader.uniform1f('object_opacity', 1)
-        if self._matrix_updated:
+        if self._matrix_buffer is not None:
             shader.uniform4x4('transform', np.identity(4).flatten())
-            self._matrix_updated = False
         shader.disable_attribute('position')
         shader.disable_attribute('color')
 
