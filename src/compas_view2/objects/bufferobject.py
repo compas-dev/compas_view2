@@ -119,7 +119,7 @@ class BufferObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
-        shader.uniform4x4('transform', self.matrix)
+        shader.uniform4x4('transform', self._matrix_buffer)
         shader.uniform1i('is_lighted', is_lighted)
         shader.uniform1f('object_opacity', self.opacity)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
@@ -153,7 +153,7 @@ class BufferObject(Object):
         shader.enable_attribute('color')
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self._instance_color)
-        shader.uniform4x4('transform', self.matrix)
+        shader.uniform4x4('transform', self._matrix_buffer)
         if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
