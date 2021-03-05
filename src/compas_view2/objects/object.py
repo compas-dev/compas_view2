@@ -55,6 +55,7 @@ class Object(ABC):
         self._scale = [1, 1, 1]
         self._transformation = Transformation()
         self._matrix_buffer = np.array(self.matrix).flatten()
+        self._matrix_updated = False
 
     @abc.abstractmethod
     def init(self):
@@ -108,6 +109,7 @@ class Object(ABC):
         M = T1 * R1 * S1
         self._transformation.matrix = M.matrix
         self._matrix_buffer = np.array(self.matrix).flatten()
+        self._matrix_updated = True
 
     @property
     def matrix(self):
