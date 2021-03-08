@@ -4,6 +4,7 @@ from compas.geometry import Translation
 from compas.geometry import Rotation
 from compas.geometry import Scale
 from compas.geometry import decompose_matrix
+import numpy as np
 
 
 ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
@@ -53,6 +54,7 @@ class Object(ABC):
         self._rotation = [0, 0, 0]
         self._scale = [1, 1, 1]
         self._transformation = Transformation()
+        self._matrix_buffer = None
 
     @abc.abstractmethod
     def init(self):
@@ -105,6 +107,7 @@ class Object(ABC):
         S1 = Scale.from_factors(self.scale)
         M = T1 * R1 * S1
         self._transformation.matrix = M.matrix
+        self._matrix_buffer = np.array(self.matrix).flatten()
 
     @property
     def matrix(self):
