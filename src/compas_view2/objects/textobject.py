@@ -34,13 +34,13 @@ class TextObeject(Object):
     def make_text_texture(self):
         # change the filename if necessary
         face = ft.Face(os.path.join(DATA, "FreeSans.ttf"))
-        # the size is specified in 1/64 pixel
-        face.set_char_size(48*64)
-
-        text = self._data.text
 
         char_width = 48
         char_height = 80
+        # the size is specified in 1/64 pixel
+        face.set_char_size(64*char_width)
+
+        text = self._data.text
         string_buffer = np.zeros(shape=(char_height, char_width*len(text)))
 
         for i, c in enumerate(text):
