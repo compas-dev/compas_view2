@@ -54,7 +54,7 @@ class Object(ABC):
         self._rotation = [0, 0, 0]
         self._scale = [1, 1, 1]
         self._transformation = Transformation()
-        self._matrix_buffer = np.array(self.matrix).flatten()
+        self._matrix_buffer = None
 
     @abc.abstractmethod
     def init(self):
