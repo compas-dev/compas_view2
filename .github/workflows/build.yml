@@ -9,40 +9,8 @@ on:
       - main
 
 jobs:
-
-  # This step gets the commit message from either push or pull request:
-  # https://github.community/t/accessing-commit-message-in-pull-request-event/17158/8
-  pre_ci:
-    name: Prepare CI environment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Project
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-
-      - name: "[Push] Get commit message"
-        if: github.event_name == 'push'
-        id: push_get_commit_message
-        run: |
-          echo ::set-output name=push_commit_message::$(git log --format=%B -n 1 HEAD)
-          echo $(git log --format=%B -n 1 HEAD)
-
-      - name: "[Pull Request] Get commit message"
-        if: github.event_name == 'pull_request'
-        id: pr_get_commit_message
-        run: |
-          echo ::set-output name=pr_commit_message::$(git log --format=%B -n 1 HEAD^2)
-          echo $(git log --format=%B -n 1 HEAD^2)
-
-    outputs:
-      commit_message: $( [ -z "${{ steps.pr_get_commit_message.outputs.pr_commit_message }}" ] && echo "${{ steps.push_get_commit_message.outputs.push_commit_message }}" || echo "${{ steps.pr_get_commit_message.outputs.pr_commit_message }}" )
-
-
   build-package:
-    needs: pre_ci
-    # Skip the job if the message contains [docs-only] 
-    if: "!contains(needs.pre_ci.outputs.commit_message, '[docs-only]')"
+    if: "!contains(github.event.pull_request.labels.*.name, 'docs-only')"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
