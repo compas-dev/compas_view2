@@ -120,6 +120,7 @@ class BufferObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
+        shader.uniformObject('obj', 12321)
         if self._matrix_buffer is not None:
             shader.uniform4x4('transform', self._matrix_buffer)
         shader.uniform1i('is_lighted', is_lighted)

@@ -1,6 +1,8 @@
 import os
 
 from OpenGL import GL
+from .uniform import UniformBlock
+from .uniform import UniformBlockBuffer
 
 
 class Shader:
@@ -61,6 +63,11 @@ class Shader:
         """
         loc = GL.glGetUniformLocation(self.program, name)
         GL.glUniform3f(loc, *value)
+
+    def uniformObject(self, name, value):
+        ub = UniformBlock(self.program, name)
+        ubb = UniformBlockBuffer(ub)
+        ubb.BindDataFloat(b'color', [1.0, 0.1, 0.1, 1.0])
 
     def bind(self):
         """Bind the shader program."""

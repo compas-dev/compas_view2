@@ -8,6 +8,10 @@ uniform float object_opacity;
 uniform bool is_instance_mask;
 uniform bool is_lighted;
 uniform vec3 instance_color;
+uniform obj
+{
+    vec4  color;
+};
 
 void main()
 {   
