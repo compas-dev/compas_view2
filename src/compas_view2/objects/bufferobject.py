@@ -157,7 +157,8 @@ class BufferObject(Object):
         shader.enable_attribute('color')
         shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self._instance_color)
-        shader.uniform4x4('transform', self._matrix_buffer)
+        if self._matrix_buffer is not None:
+            shader.uniform4x4('transform', self._matrix_buffer)
         if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
@@ -169,6 +170,8 @@ class BufferObject(Object):
             shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
+        if self._matrix_buffer is not None:
+            shader.uniform4x4('transform', np.identity(4).flatten())
         shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
         shader.disable_attribute('color')
