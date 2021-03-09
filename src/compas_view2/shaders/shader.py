@@ -6,7 +6,7 @@ from OpenGL import GL
 class Shader:
     """The shader used by the OpenGL view."""
 
-    def __init__(self, name='120/mesh'):
+    def __init__(self, name='330/mesh'):
         self.program = make_shader_program(name)
         self.locations = {}
 
