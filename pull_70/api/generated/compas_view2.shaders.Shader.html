@@ -88,7 +88,7 @@
 <h1>Shader</h1>
 <dl class="py class">
 <dt id="compas_view2.shaders.Shader">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.shaders.</span></code><code class="sig-name descname"><span class="pre">Shader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'120/mesh'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/shaders/shader.py#L7"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.shaders.</span></code><code class="sig-name descname"><span class="pre">Shader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'120/mesh'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/shaders/shader.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>The shader used by the OpenGL view.</p>
 <p class="rubric">Methods</p>
@@ -131,25 +131,22 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.enable_background.html#compas_view2.shaders.Shader.enable_background" title="compas_view2.shaders.Shader.enable_background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_background</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.make_vao_buffer.html#compas_view2.shaders.Shader.make_vao_buffer" title="compas_view2.shaders.Shader.make_vao_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_vao_buffer</span></code></a>(data, mode)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.release.html#compas_view2.shaders.Shader.release" title="compas_view2.shaders.Shader.release"><code class="xref py py-obj docutils literal notranslate"><span class="pre">release</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.release.html#compas_view2.shaders.Shader.release" title="compas_view2.shaders.Shader.release"><code class="xref py py-obj docutils literal notranslate"><span class="pre">release</span></code></a>()</p></td>
 <td><p>Release (unbind) the shader program.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.set_pointsize.html#compas_view2.shaders.Shader.set_pointsize" title="compas_view2.shaders.Shader.set_pointsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pointsize</span></code></a>(pointsize)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.set_pointsize.html#compas_view2.shaders.Shader.set_pointsize" title="compas_view2.shaders.Shader.set_pointsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_pointsize</span></code></a>(pointsize)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform1f.html#compas_view2.shaders.Shader.uniform1f" title="compas_view2.shaders.Shader.uniform1f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform1f</span></code></a>(name, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform1f.html#compas_view2.shaders.Shader.uniform1f" title="compas_view2.shaders.Shader.uniform1f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform1f</span></code></a>(name, value)</p></td>
 <td><p>Store a uniform float in the shader program at a named location.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform1i.html#compas_view2.shaders.Shader.uniform1i" title="compas_view2.shaders.Shader.uniform1i"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform1i</span></code></a>(name, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform1i.html#compas_view2.shaders.Shader.uniform1i" title="compas_view2.shaders.Shader.uniform1i"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform1i</span></code></a>(name, value)</p></td>
 <td><p>Store a uniform integer in the shader program at a named location.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform3f.html#compas_view2.shaders.Shader.uniform3f" title="compas_view2.shaders.Shader.uniform3f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform3f</span></code></a>(name, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform3f.html#compas_view2.shaders.Shader.uniform3f" title="compas_view2.shaders.Shader.uniform3f"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform3f</span></code></a>(name, value)</p></td>
 <td><p>Store a uniform list of 3 floats in the shader program at a named location.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform4x4.html#compas_view2.shaders.Shader.uniform4x4" title="compas_view2.shaders.Shader.uniform4x4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform4x4</span></code></a>(name, value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.shaders.Shader.uniform4x4.html#compas_view2.shaders.Shader.uniform4x4" title="compas_view2.shaders.Shader.uniform4x4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform4x4</span></code></a>(name, value)</p></td>
 <td><p>Store a uniform 4x4 transformation matrix in the shader program at a named location.</p></td>
 </tr>
 </tbody>
