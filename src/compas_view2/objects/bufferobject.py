@@ -1,6 +1,6 @@
 from compas.utilities import flatten
 from ..buffers import make_index_buffer, make_vertex_buffer, update_vertex_buffer, update_index_buffer
-from ..buffers import make_vao_buffer
+from ..buffers import make_vao_buffer, make_object_ubo, update_object_ubo
 from .object import Object
 import numpy as np
 
@@ -110,6 +110,9 @@ class BufferObject(Object):
         if hasattr(self, '_backfaces_data'):
             self._backfaces_buffer = make_vao_buffer(self._backfaces_data(), "triangles")
 
+        self.ubo = make_object_ubo()
+        update_object_ubo(self.ubo, self.matrix, self.opacity, self.is_selected)
+
     def update_buffers(self):
         """Update all buffers from object's data"""
         if hasattr(self, '_points_data'):
@@ -175,6 +178,7 @@ class BufferObject(Object):
 
     def draw_330(self, shader, wireframe=False, is_lighted=False):
         """Draw the object from vao buffers"""
+        shader.bind_ubo("object", 1, self.ubo)
         if self.background:
             shader.enable_background()
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:

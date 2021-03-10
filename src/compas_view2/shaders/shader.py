@@ -94,6 +94,11 @@ class Shader:
     def set_pointsize(self, pointsize):
         GL.glPointSize(pointsize)
 
+    def bind_ubo(self, name, location, ubo):
+        ubi = GL.glGetUniformBlockIndex(self.program, name)
+        GL.glUniformBlockBinding(self.program, ubi, location)
+        GL.glBindBufferBase(GL.GL_UNIFORM_BUFFER, location, ubo)
+
     def draw_vao_buffer(self, buffer):
         GL.glBindVertexArray(buffer['vao'])
         GL.glDrawElements(buffer["mode"], buffer["n"], GL.GL_UNSIGNED_INT,  None)

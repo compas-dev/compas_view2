@@ -1,6 +1,7 @@
 from OpenGL import GL
 
 from ..shaders import Shader
+from ..buffers import make_camera_ubo, update_camera_ubo
 from .view120 import View120
 import numpy as np
 
@@ -13,19 +14,51 @@ class View330(View120):
         # create the program
         self.shader = Shader(name="330/mesh")
         self.shader.bind()
-        self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-        self.shader.uniform4x4("viewworld", self.camera.viewworld())
-        self.shader.uniform4x4("transform", np.identity(4))
-        self.shader.uniform1i("is_selected", 0)
         self.shader.uniform1f("opacity", self.opacity)
         self.shader.uniform3f("selection_color", self.selection_color)
         self.shader.release()
+
+        # Create and bind camera uniform buffer object
+        self.cam_ubo = make_camera_ubo()
+        self.shader.bind_ubo("camera", 0, self.cam_ubo)
 
         self.grid.init(shader_version="330")
         # init the buffers
         for guid in self.objects:
             obj = self.objects[guid]
             obj.init(shader_version="330")
+
+    def paint(self):
+        self.shader.bind()
+        update_camera_ubo(self.cam_ubo, self.camera)
+        # create object color map
+        # if interactive selection is going on
+        if self.app.selector.enabled:
+            if self.app.selector.select_from == "pixel":
+                self.app.selector.instance_map = self.paint_instances()
+            if self.app.selector.select_from == "box":
+                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
+            self.app.selector.enabled = False
+            self.clear()
+        # create grid uv map
+        # if interactive selection on plane is going on
+        if self.app.selector.wait_for_selection_on_plane:
+            self.shader.uniform1f("opacity", 1)
+            self.app.selector.uv_plane_map = self.paint_plane()
+            self.shader.uniform1f("opacity", self.opacity)
+            self.clear()
+        # draw grid
+        if self.show_grid:
+            self.grid.draw(self.shader)
+        # draw all objects
+        for guid in self.objects:
+            obj = self.objects[guid]
+            obj.draw(self.shader, self.mode == "wireframe", self.mode == "lighted")
+        # finish
+        self.shader.release()
+        # draw 2D box for multi-selection
+        if self.app.selector.select_from == "box":
+            self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
 
     def paint_instances(self, cropped_box=None):
         if cropped_box is None:
