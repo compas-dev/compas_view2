@@ -21,11 +21,11 @@ class View330(View120):
         self.shader.uniform3f("selection_color", self.selection_color)
         self.shader.release()
 
-        self.grid.init(shader=self.shader)
+        self.grid.init(shader_version="330")
         # init the buffers
         for guid in self.objects:
             obj = self.objects[guid]
-            obj.init(shader=self.shader)
+            obj.init(shader_version="330")
 
     def paint_instances(self, cropped_box=None):
         if cropped_box is None:

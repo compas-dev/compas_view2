@@ -37,6 +37,7 @@ class BufferObject(Object):
         self.pointsize = pointsize
         self.opacity = opacity
         self.background = False
+        self._shader_version = None
 
     def make_buffer_from_data(self, data):
         """Create buffers from point/line/face data.
@@ -82,7 +83,7 @@ class BufferObject(Object):
         buffer["n"] = len(positions)
 
     def make_buffers(self):
-        if self.shader and self.shader.name == "330/mesh":
+        if self._shader_version == "330":
             self.make_buffers_330()
         else:
             self.make_buffers_120()
@@ -120,9 +121,9 @@ class BufferObject(Object):
         if hasattr(self, '_backfaces_data'):
             self.update_buffer_from_data(self._backfaces_data(), self._backfaces_buffer)
 
-    def init(self, shader=None):
+    def init(self, shader_version="120"):
         """Initialize the object"""
-        self.shader = shader
+        self._shader_version = shader_version
         self.make_buffers()
 
     def update(self):
@@ -131,7 +132,7 @@ class BufferObject(Object):
         self.update_buffers()
 
     def draw(self, shader, wireframe=False, is_lighted=False):
-        if self.shader and self.shader.name == "330/mesh":
+        if self._shader_version == "330":
             self.draw_330(shader, wireframe, is_lighted)
         else:
             self.draw_120(shader, wireframe, is_lighted)
@@ -188,7 +189,7 @@ class BufferObject(Object):
         shader.disable_background()
 
     def draw_instance(self, shader, wireframe=False):
-        if self.shader and self.shader.name == "330/mesh":
+        if self._shader_version == "330":
             self.draw_instance_330(shader, wireframe)
         else:
             self.draw_instance_120(shader, wireframe)
