@@ -1,10 +1,10 @@
 #version 330
 
 in vec3 vertex_color;
-
+out vec4 out_color;
 
 void main()
 {   
-    gl_FragColor = vec4(vertex_color, 1);
+    out_color = vec4(vertex_color, 1);
 
 }

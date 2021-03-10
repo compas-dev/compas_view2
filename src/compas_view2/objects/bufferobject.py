@@ -2,13 +2,10 @@ from compas.utilities import flatten
 from ..buffers import make_index_buffer, make_vertex_buffer, update_vertex_buffer, update_index_buffer
 from .object import Object
 import numpy as np
-from OpenGL.arrays.vbo import VBO
-from OpenGL.arrays import ArrayDatatype
-from OpenGL import GL
+
 
 class BufferObject(Object):
     """A shared object to handle GL buffer creation and drawings
-
     Attributes
     ----------
     show_points : bool
@@ -42,64 +39,54 @@ class BufferObject(Object):
 
     def make_buffer_from_data(self, data):
         """Create buffers from point/line/face data.
-
         Parameters
         ----------
         data: tuple
             Contains positions, colors, elements for the buffer
-
         Returns
         -------
         buffer_dict
            A dict with created buffer indexes
         """
         positions, colors, elements = data
-        positions = np.array(positions)
-        colors = np.array(colors)
-        elements = np.array(elements).flatten()
-        vertices = np.concatenate((positions, colors), axis=1)
         return {
-            "vbo": VBO(np.array(vertices, 'f')),
-            "ebo": VBO(elements, target=GL.GL_ELEMENT_ARRAY_BUFFER)
-        }
+                'positions': make_vertex_buffer(list(flatten(positions))),
+                'colors': make_vertex_buffer(list(flatten(colors))),
+                'elements': make_index_buffer(list(flatten(elements))),
+                'n': len(positions)
+            }
 
-    def draw_buffer(self, shader, buffer, gl_draw_type):
-        buffer['vbo'].bind()
-        buffer['ebo'].bind()
-        position = GL.glGetAttribLocation(shader.program, 'position')
-        GL.glVertexAttribPointer(position, 3, GL.GL_FLOAT, GL.GL_FALSE, 24, GL.ctypes.c_void_p(0))
-        GL.glEnableVertexAttribArray(position)
-        color = GL.glGetAttribLocation(shader.program, 'color')
-        GL.glVertexAttribPointer(color, 3, GL.GL_FLOAT, GL.GL_FALSE, 24, GL.ctypes.c_void_p(12))
-        GL.glEnableVertexAttribArray(color)
-        GL.glDrawElements(gl_draw_type, len(buffer['ebo'].data), GL.GL_UNSIGNED_INT,  None)
-
-    # def update_buffer_from_data(self, data, buffer, update_positions=True, update_colors=True, update_elements=True):
-    #     """Update existing buffers from point/line/face data.
-
-    #     Parameters
-    #     ----------
-    #     data: tuple
-    #         Contains positions, colors, elements for the buffer
-    #     buffer: dict
-    #         The dict with created buffer indexes
-    #     update_positions : bool
-    #         Whether to update positions in the buffer dict
-    #     update_colors : bool
-    #         Whether to update colors in the buffer dict
-    #     update_elements : bool
-    #         Whether to update elements in the buffer dict
-    #     """
-    #     positions, colors, elements = data
-    #     if update_positions:
-    #         update_vertex_buffer(list(flatten(positions)), buffer["positions"])
-    #     if update_colors:
-    #         update_vertex_buffer(list(flatten(colors)), buffer["colors"])
-    #     if update_elements:
-    #         update_index_buffer(list(flatten(elements)), buffer["elements"])
-    #     buffer["n"] = len(positions)
+    def update_buffer_from_data(self, data, buffer, update_positions=True, update_colors=True, update_elements=True):
+        """Update existing buffers from point/line/face data.
+        Parameters
+        ----------
+        data: tuple
+            Contains positions, colors, elements for the buffer
+        buffer: dict
+            The dict with created buffer indexes
+        update_positions : bool
+            Whether to update positions in the buffer dict
+        update_colors : bool
+            Whether to update colors in the buffer dict
+        update_elements : bool
+            Whether to update elements in the buffer dict
+        """
+        positions, colors, elements = data
+        if update_positions:
+            update_vertex_buffer(list(flatten(positions)), buffer["positions"])
+        if update_colors:
+            update_vertex_buffer(list(flatten(colors)), buffer["colors"])
+        if update_elements:
+            update_index_buffer(list(flatten(elements)), buffer["elements"])
+        buffer["n"] = len(positions)
 
     def make_buffers(self):
+        if self.shader and self.shader.name == "330/mesh":
+            self.make_buffers_330()
+        else:
+            self.make_buffers_120()
+
+    def make_buffers_120(self):
         """Create all buffers from object's data"""
         if hasattr(self, '_points_data'):
             self._points_buffer = self.make_buffer_from_data(self._points_data())
@@ -109,6 +96,17 @@ class BufferObject(Object):
             self._frontfaces_buffer = self.make_buffer_from_data(self._frontfaces_data())
         if hasattr(self, '_backfaces_data'):
             self._backfaces_buffer = self.make_buffer_from_data(self._backfaces_data())
+
+    def make_buffers_330(self):
+        """Create all buffers from object's data"""
+        if hasattr(self, '_points_data'):
+            self._points_buffer = self.shader.make_vao_buffer(self._points_data(), "points")
+        if hasattr(self, '_lines_data'):
+            self._lines_buffer = self.shader.make_vao_buffer(self._lines_data(), "lines")
+        if hasattr(self, '_frontfaces_data'):
+            self._frontfaces_buffer = self.shader.make_vao_buffer(self._frontfaces_data(), "triangles")
+        if hasattr(self, '_backfaces_data'):
+            self._backfaces_buffer = self.shader.make_vao_buffer(self._backfaces_data(), "triangles")
 
     def update_buffers(self):
         """Update all buffers from object's data"""
@@ -121,8 +119,9 @@ class BufferObject(Object):
         if hasattr(self, '_backfaces_data'):
             self.update_buffer_from_data(self._backfaces_data(), self._backfaces_buffer)
 
-    def init(self):
+    def init(self, shader=None):
         """Initialize the object"""
+        self.shader = shader
         self.make_buffers()
 
     def update(self):
@@ -131,63 +130,93 @@ class BufferObject(Object):
         self.update_buffers()
 
     def draw(self, shader, wireframe=False, is_lighted=False):
+        if self.shader and self.shader.name == "330/mesh":
+            self.draw_330(shader, wireframe, is_lighted)
+        else:
+            self.draw_120(shader, wireframe, is_lighted)
+
+    def draw_120(self, shader, wireframe=False, is_lighted=False):
         """Draw the object from its buffers"""
-        # shader.enable_attribute('position')
-        # shader.enable_attribute('color')
-        # shader.uniform1i('is_selected', self.is_selected)
-        # if self._matrix_buffer is not None:
-        #     shader.uniform4x4('transform', self._matrix_buffer)
-        # shader.uniform1i('is_lighted', is_lighted)
-        # shader.uniform1f('object_opacity', self.opacity)
-
-        if self.background:
-            GL.glDisable(GL.GL_DEPTH_TEST)
-
+        shader.enable_attribute('position')
+        shader.enable_attribute('color')
+        shader.uniform1i('is_selected', self.is_selected)
+        if self._matrix_buffer is not None:
+            shader.uniform4x4('transform', self._matrix_buffer)
+        shader.uniform1i('is_lighted', is_lighted)
+        shader.uniform1f('object_opacity', self.opacity)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
-            self.draw_buffer(shader, self._frontfaces_buffer, GL.GL_TRIANGLES)
+            shader.bind_attribute('position', self._frontfaces_buffer['positions'])
+            shader.bind_attribute('color', self._frontfaces_buffer['colors'])
+            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'], background=self.background)
         if hasattr(self, "_backfaces_buffer") and self.show_faces and not wireframe:
-            self.draw_buffer(shader, self._backfaces_buffer, GL.GL_TRIANGLES)
-        # shader.uniform1i('is_lighted', False)
-        # if self.show_faces and not wireframe:
-        #     # skip coloring lines and points if faces are already highlighted
-        #     shader.uniform1i('is_selected', 0)
+            shader.bind_attribute('position', self._backfaces_buffer['positions'])
+            shader.bind_attribute('color', self._backfaces_buffer['colors'])
+            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'], background=self.background)
+        shader.uniform1i('is_lighted', False)
+        if self.show_faces and not wireframe:
+            # skip coloring lines and points if faces are already highlighted
+            shader.uniform1i('is_selected', 0)
         if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
-            GL.glLineWidth(self.linewidth)
-            self.draw_buffer(shader, self._lines_buffer, GL.GL_LINES)
+            shader.bind_attribute('position', self._lines_buffer['positions'])
+            shader.bind_attribute('color', self._lines_buffer['colors'])
+            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'], background=self.background)
         if hasattr(self, "_points_buffer") and self.show_points:
-            GL.glPointSize(self.pointsize)
-            self.draw_buffer(shader, self._points_buffer, GL.GL_POINTS)
-        # shader.uniform1i('is_selected', 0)
-        # shader.uniform1f('object_opacity', 1)
-        # if self._matrix_buffer is not None:
-        #     shader.uniform4x4('transform', np.identity(4).flatten())
-        # shader.disable_attribute('position')
-        # shader.disable_attribute('color')
-        GL.glEnable(GL.GL_DEPTH_TEST)
-  
+            shader.bind_attribute('position', self._points_buffer['positions'])
+            shader.bind_attribute('color', self._points_buffer['colors'])
+            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)
+        shader.uniform1i('is_selected', 0)
+        shader.uniform1f('object_opacity', 1)
+        if self._matrix_buffer is not None:
+            shader.uniform4x4('transform', np.identity(4).flatten())
+        shader.disable_attribute('position')
+        shader.disable_attribute('color')
 
-    # def draw_instance(self, shader, wireframe=False):
-    #     """Draw the object instance for picking"""
-    #     shader.enable_attribute('position')
-    #     shader.enable_attribute('color')
-    #     shader.uniform1i('is_instance_mask', 1)
-    #     shader.uniform3f('instance_color', self._instance_color)
-    #     if self._matrix_buffer is not None:
-    #         shader.uniform4x4('transform', self._matrix_buffer)
-    #     if hasattr(self, "_points_buffer") and self.show_points:
-    #         shader.bind_attribute('position', self._points_buffer['positions'])
-    #         shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
-    #     if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
-    #         shader.bind_attribute('position', self._lines_buffer['positions'])
-    #         shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
-    #     if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
-    #         shader.bind_attribute('position', self._frontfaces_buffer['positions'])
-    #         shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
-    #         shader.bind_attribute('position', self._backfaces_buffer['positions'])
-    #         shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
-    #     if self._matrix_buffer is not None:
-    #         shader.uniform4x4('transform', np.identity(4).flatten())
-    #     shader.uniform1i('is_instance_mask', 0)
-    #     shader.uniform3f('instance_color', [0, 0, 0])
-    #     shader.disable_attribute('color')
-    #     shader.disable_attribute('position')
+    def draw_330(self, shader, wireframe=False, is_lighted=False):
+        """Draw the object from vao buffers"""
+        if self.background:
+            shader.enable_background()
+        if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
+            shader.draw_vao_buffer(self._frontfaces_buffer)
+        if hasattr(self, "_backfaces_buffer") and self.show_faces and not wireframe:
+            shader.draw_vao_buffer(self._backfaces_buffer)
+        if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
+            shader.draw_vao_buffer(self._lines_buffer)
+        if hasattr(self, "_points_buffer") and self.show_points:
+            shader.set_pointsize(self.pointsize)
+            shader.draw_vao_buffer(self._points_buffer)
+        shader.disable_background()
+
+    def draw_instance(self, shader, wireframe=False):
+        if self.shader and self.shader.name == "330/mesh":
+            self.draw_instance_330(shader, wireframe)
+        else:
+            self.draw_instance_120(shader, wireframe)
+
+    def draw_instance_120(self, shader, wireframe=False):
+        """Draw the object instance for picking"""
+        shader.enable_attribute('position')
+        shader.enable_attribute('color')
+        shader.uniform1i('is_instance_mask', 1)
+        shader.uniform3f('instance_color', self._instance_color)
+        if self._matrix_buffer is not None:
+            shader.uniform4x4('transform', self._matrix_buffer)
+        if hasattr(self, "_points_buffer") and self.show_points:
+            shader.bind_attribute('position', self._points_buffer['positions'])
+            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
+        if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
+            shader.bind_attribute('position', self._lines_buffer['positions'])
+            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
+        if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
+            shader.bind_attribute('position', self._frontfaces_buffer['positions'])
+            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
+            shader.bind_attribute('position', self._backfaces_buffer['positions'])
+            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
+        if self._matrix_buffer is not None:
+            shader.uniform4x4('transform', np.identity(4).flatten())
+        shader.uniform1i('is_instance_mask', 0)
+        shader.uniform3f('instance_color', [0, 0, 0])
+        shader.disable_attribute('color')
+        shader.disable_attribute('position')
+
+    def draw_instance_330(self, shader, wireframe=False):
+        pass

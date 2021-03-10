@@ -66,7 +66,8 @@ class GridObject(BufferObject):
                 elements.append([n, n + 1])
         return positions, colors, elements
 
-    def init(self):
+    def init(self, shader=None):
+        self.shader = shader
         self.make_buffers()
 
         # Create uv plane
