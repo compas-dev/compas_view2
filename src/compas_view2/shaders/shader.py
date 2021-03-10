@@ -1,7 +1,5 @@
 import os
-import numpy as np
 from OpenGL import GL
-from OpenGL.arrays.vbo import VBO
 
 
 class Shader:
@@ -95,53 +93,6 @@ class Shader:
 
     def set_pointsize(self, pointsize):
         GL.glPointSize(pointsize)
-
-    def make_vao_buffer(self, data, mode):
-        positions, colors, elements = data
-        positions = np.array(positions)
-        colors = np.array(colors)
-        elements = np.array(elements).flatten()
-        # Vertices positions and colors are combined and will be loaded into a single vbo
-        vertices = np.concatenate((positions, colors), axis=1)
-
-        # Create Vertex Array Object, Vertex Buffer object and Element Buffer Object
-        vao = GL.glGenVertexArrays(1)
-        vbo = VBO(np.array(vertices, 'f'))
-        ebo = VBO(elements, target=GL.GL_ELEMENT_ARRAY_BUFFER)
-
-        # Bind all of them
-        GL.glBindVertexArray(vao)
-        vbo.bind()
-        ebo.bind()
-
-        # Write data to vbo
-        position = GL.glGetAttribLocation(self.program, 'position')
-        GL.glEnableVertexAttribArray(position)
-        GL.glVertexAttribPointer(position, 3, GL.GL_FLOAT, GL.GL_FALSE, 24, GL.ctypes.c_void_p(0))
-        color = GL.glGetAttribLocation(self.program, 'color')
-        GL.glEnableVertexAttribArray(color)
-        GL.glVertexAttribPointer(color, 3, GL.GL_FLOAT, GL.GL_FALSE, 24, GL.ctypes.c_void_p(12))
-
-        # Unbind everthing
-        GL.glBindVertexArray(0)
-        GL.glDisableVertexAttribArray(position)
-        GL.glDisableVertexAttribArray(color)
-        vbo.unbind()
-        ebo.unbind()
-
-        gl_modes = {
-            "points": GL.GL_POINTS,
-            "lines": GL.GL_LINES,
-            "triangles": GL.GL_TRIANGLES
-        }
-
-        return {
-            "vao": vao,
-            "vbo": vbo,
-            "ebo": ebo,
-            "mode": gl_modes[mode],
-            "n": len(elements)
-        }
 
     def draw_vao_buffer(self, buffer):
         GL.glBindVertexArray(buffer['vao'])

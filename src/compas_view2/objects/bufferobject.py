@@ -1,5 +1,6 @@
 from compas.utilities import flatten
 from ..buffers import make_index_buffer, make_vertex_buffer, update_vertex_buffer, update_index_buffer
+from ..buffers import make_vao_buffer
 from .object import Object
 import numpy as np
 
@@ -100,13 +101,13 @@ class BufferObject(Object):
     def make_buffers_330(self):
         """Create all buffers from object's data"""
         if hasattr(self, '_points_data'):
-            self._points_buffer = self.shader.make_vao_buffer(self._points_data(), "points")
+            self._points_buffer = make_vao_buffer(self._points_data(), "points")
         if hasattr(self, '_lines_data'):
-            self._lines_buffer = self.shader.make_vao_buffer(self._lines_data(), "lines")
+            self._lines_buffer = make_vao_buffer(self._lines_data(), "lines")
         if hasattr(self, '_frontfaces_data'):
-            self._frontfaces_buffer = self.shader.make_vao_buffer(self._frontfaces_data(), "triangles")
+            self._frontfaces_buffer = make_vao_buffer(self._frontfaces_data(), "triangles")
         if hasattr(self, '_backfaces_data'):
-            self._backfaces_buffer = self.shader.make_vao_buffer(self._backfaces_data(), "triangles")
+            self._backfaces_buffer = make_vao_buffer(self._backfaces_data(), "triangles")
 
     def update_buffers(self):
         """Update all buffers from object's data"""
