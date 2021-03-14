@@ -2,6 +2,8 @@
 
 ![build](https://github.com/compas-dev/compas_view2/workflows/build/badge.svg)
 [![GitHub - License](https://img.shields.io/github/license/compas-dev/compas_view2.svg)](https://github.com/compas-dev/compas_view2)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/compas_view2.svg)](https://pypi.python.org/project/compas_view2)
+[![PyPI - Latest Release](https://img.shields.io/pypi/v/compas_view2.svg)](https://pypi.python.org/project/compas_view2)
 
 Second generation viewers for the COMPAS framework
 
