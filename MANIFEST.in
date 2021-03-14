@@ -6,8 +6,6 @@ prune docs
 prune tests
 prune temp
 prune scripts
-prune examples
-prune conda.recipe
 
 include LICENSE
 include README.md
