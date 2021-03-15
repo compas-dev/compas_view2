@@ -13,9 +13,9 @@ class MeshObject(BufferObject):
         Mesh for the viewer
     name : string
         name of the object
-    show_points : bool
+    show_vertices : bool
         True to show vertices
-    show_lines : bool
+    show_edges : bool
         True to show edges
     show_faces : bool
         True to show faces
