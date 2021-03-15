@@ -85,8 +85,10 @@ class Shader:
         GL.glDisableVertexAttribArray(self.locations[name])
         del self.locations[name]
 
-    def draw_triangles(self, elements=None, n=0):
+    def draw_triangles(self, elements=None, n=0, background=False):
         if elements:
+            if background:
+                GL.glDisable(GL.GL_DEPTH_TEST)
             GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
             GL.glDrawElements(GL.GL_TRIANGLES, n, GL.GL_UNSIGNED_INT, None)
         else:
@@ -103,9 +105,11 @@ class Shader:
         else:
             GL.glDrawArrays(GL.GL_LINES, 0, GL.GL_BUFFER_SIZE)
 
-    def draw_points(self, size=1, elements=None, n=0):
+    def draw_points(self, size=1, elements=None, n=0, background=False):
         GL.glPointSize(size)
         if elements:
+            if background:
+                GL.glDisable(GL.GL_DEPTH_TEST)
             GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
             GL.glDrawElements(GL.GL_POINTS, n, GL.GL_UNSIGNED_INT, None)
         else:

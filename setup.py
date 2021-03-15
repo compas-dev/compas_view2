@@ -28,7 +28,7 @@ optional_requirements = {}
 
 setup(
     name="compas_view2",
-    version="0.1.0",
+    version="0.2.1",
     description="Second generation viewers for the COMPAS framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -60,7 +60,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=requirements,
-    python_requires=">=3.6",
+    python_requires=">=3.6,<3.9",
     extras_require=optional_requirements,
     entry_points={
         "console_scripts": [],

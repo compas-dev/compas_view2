@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
 project = "COMPAS Viewers 2"
 copyright = "Block Research Group - ETH Zurich"
 author = "tom van mele"
-release = "0.1.0"
+release = "0.2.1"
 version = ".".join(release.split(".")[0:2])
 
 master_doc = "index"
@@ -168,10 +168,10 @@ html_theme_options = {
 
 html_context = {}
 html_static_path = []
-html_extra_path = ['_videos']
+html_extra_path = []
 html_last_updated_fmt = ""
 html_copy_source = False
 html_show_sourcelink = False
-html_add_permalinks = ""
-html_experimental_html5_writer = True
+html_permalinks = False
+html_add_permalinks = None
 html_compact_lists = True

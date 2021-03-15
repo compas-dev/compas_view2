@@ -13,12 +13,35 @@ class MeshObject(BufferObject):
         Mesh for the viewer
     name : string
         name of the object
-    show_vertices : bool
+    show_points : bool
         True to show vertices
-    show_edges : bool
+    show_lines : bool
         True to show edges
     show_faces : bool
         True to show faces
+    facecolor : list
+        Face color
+    linecolor : list
+        Line color
+    pointcolor : list
+        point color
+    linewidth : float
+        Line width
+    pointsize : float
+        Point size
+    hide_coplanaredges : bool
+        True to hide the coplanar edges
+    opacity : float
+        The opacity of mesh
+    vertices : list
+        Subset of vertices to be displayed
+    edges : list
+        Subset of edges to be displayed
+    faces : list
+        Subset of faces to be displayed
+
+    Attributes
+    ----------
     facecolor : list
         Face color
     linecolor : list
@@ -31,17 +54,14 @@ class MeshObject(BufferObject):
         Point size
     hide_coplanaredges : bool
         True to hide the coplanar edges
-
-    Attributes
-    ----------
+    opacity : float
+        The opacity of mesh
     vertices : list
-        list of mesh vertices
-    edges : list of tuple
-        list of mesh edges in tuple
-    front : dict
-        mesh front face information for the viewer
-    back : dict
-        mesh back face information for the viewer
+        Subset of vertices to be displayed
+    edges : list
+        Subset of edges to be displayed
+    faces : list
+        Subset of faces to be displayed
 
     """
 
@@ -50,12 +70,16 @@ class MeshObject(BufferObject):
     default_color_faces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
-                 show_points=False, show_lines=True, show_faces=True,
+                 show_vertices=False, show_edges=True, show_faces=True,
                  facecolor=None, linecolor=None, pointcolor=None,
                  color=None,
                  linewidth=1, pointsize=10,
-                 hide_coplanaredges=False):
-        super().__init__(data, name=name, is_selected=is_selected, show_points=show_points, show_lines=show_lines, show_faces=show_faces, linewidth=linewidth, pointsize=pointsize)
+                 hide_coplanaredges=False, opacity=1,
+                 vertices=None, edges=None, faces=None):
+        super().__init__(
+            data, name=name, is_selected=is_selected, show_points=show_vertices,
+            show_lines=show_edges, show_faces=show_faces, linewidth=linewidth,
+            pointsize=pointsize, opacity=opacity)
         self._mesh = data
         self._pointcolor = None
         self._linecolor = None
@@ -64,6 +88,9 @@ class MeshObject(BufferObject):
         self.linecolor = color or linecolor
         self.pointcolor = color or pointcolor
         self.hide_coplanaredges = hide_coplanaredges
+        self.vertices = vertices
+        self.edges = edges
+        self.faces = faces
 
     @property
     def pointcolor(self):
@@ -124,7 +151,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for vertex in mesh.vertices():
+        vertices = self.vertices or mesh.vertices()
+        for vertex in vertices:
             positions.append(vertex_xyz[vertex])
             colors.append(vertex_color[vertex])
             elements.append([i])
@@ -139,7 +167,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for u, v in mesh.edges():
+        edges = self.edges or mesh.edges()
+        for u, v in edges:
             color = linecolor[u, v]
             if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
@@ -166,7 +195,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for face in mesh.faces():
+        faces = self.faces or mesh.faces()
+        for face in faces:
             color = face_color[face]
             vertices = mesh.face_vertices(face)
             if len(vertices) == 3:
@@ -219,7 +249,8 @@ class MeshObject(BufferObject):
         colors = []
         elements = []
         i = 0
-        for face in mesh.faces():
+        faces = self.faces or mesh.faces()
+        for face in faces:
             color = face_color[face]
             vertices = mesh.face_vertices(face)[::-1]
             if len(vertices) == 3:

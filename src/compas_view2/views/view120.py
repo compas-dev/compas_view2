@@ -21,6 +21,7 @@ class View120(View):
         self.shader.bind()
         self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
+        self.shader.uniform4x4("transform", np.identity(4))
         self.shader.uniform1i("is_selected", 0)
         self.shader.uniform1f("opacity", self.opacity)
         self.shader.uniform3f("selection_color", self.selection_color)
@@ -60,7 +61,7 @@ class View120(View):
         # draw all objects
         for guid in self.objects:
             obj = self.objects[guid]
-            obj.draw(self.shader, self.mode == "wireframe")
+            obj.draw(self.shader, self.mode == "wireframe", self.mode == "lighted")
         # finish
         self.shader.release()
         # draw 2D box for multi-selection

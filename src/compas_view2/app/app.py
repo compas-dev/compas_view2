@@ -45,7 +45,7 @@ class App:
     height: int, optional
         The height of the app window at startup.
         Default is ``500``.
-    viewmode: 'shaded' | 'ghosted' | 'wireframe', optional
+    viewmode: 'shaded' | 'ghosted' | 'wireframe' | 'lighted', optional
         The display mode of the OpenGL view.
         Default is ``'shaded'``.
         In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
@@ -207,7 +207,11 @@ class App:
 
     def status(self, message):
         """Display a message in the status bar."""
-        self.statusbar.showMessage(message)
+        self.statusText.setText(message)
+
+    def fps(self, _fps):
+        """Update fps info in the status bar."""
+        self.statusFps.setText("fps: {}".format(_fps))
 
     # ==============================================================================
     # UI
@@ -219,7 +223,10 @@ class App:
     def _init_statusbar(self):
         self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
-        self.statusbar.showMessage('Ready')
+        self.statusText = QtWidgets.QLabel("Ready")
+        self.statusbar.addWidget(self.statusText, 1)
+        self.statusFps = QtWidgets.QLabel("fps: ")
+        self.statusbar.addWidget(self.statusFps)
 
     def _init_menubar(self, items):
         if not items:
