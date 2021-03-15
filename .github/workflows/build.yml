@@ -10,6 +10,7 @@ on:
 
 jobs:
   build-package:
+    if: "!contains(github.event.pull_request.labels.*.name, 'docs-only')"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
