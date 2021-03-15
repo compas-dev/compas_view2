@@ -162,8 +162,9 @@ html_theme_options = {
     "package_title"   : project,
     "package_version" : release,
     "package_author"  : "compas-dev",
-    "package_docs"    : "https://compas.dev/compas_view2",
-    "package_repo"    : "https://github.com/compas-dev/compas_view2"
+    "package_docs"    : "https://compas.dev/compas_view2/",
+    "package_repo"    : "https://github.com/compas-dev/compas_view2",
+    "package_old_versions_txt": "https://compas.dev/compas_view2/doc_versions.txt"
 }
 
 html_context = {}
