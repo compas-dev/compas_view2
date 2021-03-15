@@ -85,10 +85,10 @@
         
         
         <div class="detail section" id="app">
-<h1>App<a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h1>
+<h1>App</h1>
 <dl class="py class">
 <dt id="compas_view2.app.App">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></code><code class="sig-name descname"><span class="pre">App</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'120'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/app.py#L24"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#compas_view2.app.App" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></code><code class="sig-name descname"><span class="pre">App</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'120'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/app.py#L24"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Viewer app.</p>
 <p>The app has a (main) window with a central OpenGL widget (i.e. the “view”),
@@ -108,7 +108,7 @@ The option <code class="docutils literal notranslate"><span class="pre">'330'</s
 Default is <code class="docutils literal notranslate"><span class="pre">800</span></code>.</p></li>
 <li><p><strong>height</strong> (<em>int, optional</em>) – The height of the app window at startup.
 Default is <code class="docutils literal notranslate"><span class="pre">500</span></code>.</p></li>
-<li><p><strong>viewmode</strong> (<em>‘shaded’ | ‘ghosted’ | ‘wireframe’, optional</em>) – The display mode of the OpenGL view.
+<li><p><strong>viewmode</strong> (<em>‘shaded’ | ‘ghosted’ | ‘wireframe’ | ‘lighted’, optional</em>) – The display mode of the OpenGL view.
 Default is <code class="docutils literal notranslate"><span class="pre">'shaded'</span></code>.
 In <code class="docutils literal notranslate"><span class="pre">'ghosted'</span></code> mode, all objects have a default opacity of <code class="docutils literal notranslate"><span class="pre">0.7</span></code>.</p></li>
 <li><p><strong>show_grid</strong> (<em>bool, optional</em>) – Show the XY plane.
@@ -163,28 +163,31 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.critical.html#compas_view2.app.App.critical" title="compas_view2.app.App.critical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">critical</span></code></a>(message)</p></td>
 <td><p>Display a critical warning.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.info.html#compas_view2.app.App.info" title="compas_view2.app.App.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a>(message)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.fps.html#compas_view2.app.App.fps" title="compas_view2.app.App.fps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fps</span></code></a>(_fps)</p></td>
+<td><p>Update fps info in the status bar.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.info.html#compas_view2.app.App.info" title="compas_view2.app.App.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a>(message)</p></td>
 <td><p>Display info.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.on.html#compas_view2.app.App.on" title="compas_view2.app.App.on"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on</span></code></a>([interval, timeout])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.on.html#compas_view2.app.App.on" title="compas_view2.app.App.on"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on</span></code></a>([interval, timeout])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.question.html#compas_view2.app.App.question" title="compas_view2.app.App.question"><code class="xref py py-obj docutils literal notranslate"><span class="pre">question</span></code></a>(message)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.question.html#compas_view2.app.App.question" title="compas_view2.app.App.question"><code class="xref py py-obj docutils literal notranslate"><span class="pre">question</span></code></a>(message)</p></td>
 <td><p>Ask a question.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.resize.html#compas_view2.app.App.resize" title="compas_view2.app.App.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(width, height)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.resize.html#compas_view2.app.App.resize" title="compas_view2.app.App.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(width, height)</p></td>
 <td><p>Resize the main window programmatically.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.run.html#compas_view2.app.App.run" title="compas_view2.app.App.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.run.html#compas_view2.app.App.run" title="compas_view2.app.App.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
 <td><p>Show the viewer window.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.show.html#compas_view2.app.App.show" title="compas_view2.app.App.show"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.show.html#compas_view2.app.App.show" title="compas_view2.app.App.show"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></a>()</p></td>
 <td><p>Show the viewer window.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.status.html#compas_view2.app.App.status" title="compas_view2.app.App.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span></code></a>(message)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.status.html#compas_view2.app.App.status" title="compas_view2.app.App.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span></code></a>(message)</p></td>
 <td><p>Display a message in the status bar.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.warning.html#compas_view2.app.App.warning" title="compas_view2.app.App.warning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">warning</span></code></a>(message)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.warning.html#compas_view2.app.App.warning" title="compas_view2.app.App.warning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">warning</span></code></a>(message)</p></td>
 <td><p>Display a warning.</p></td>
 </tr>
 </tbody>
@@ -304,7 +307,7 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
   URL_ROOT          : '',
-  VERSION           : '0.1.0',
+  VERSION           : '0.2.1',
   COLLAPSE_INDEX    : false,
   FILE_SUFFIX       : '.html',
   HAS_SOURCE        : 'false',
