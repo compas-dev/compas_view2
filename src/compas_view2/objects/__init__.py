@@ -24,7 +24,6 @@ from .frameobject import FrameObject
 from .networkobject import NetworkObject
 from .meshobject import MeshObject
 
-
 from .boxobject import BoxObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
@@ -32,8 +31,6 @@ from .arrowobject import ArrowObject
 from .collectionobject import CollectionObject
 from .gridobject import GridObject  # noqa: F401
 from .cylinderobject import CylinderObject
-
-from .collectionobject import CollectionObject
 
 Object.register(Point, PointObject)
 Object.register(Pointcloud, PointcloudObject)
