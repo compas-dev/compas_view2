@@ -3,7 +3,6 @@ from .bufferobject import BufferObject
 
 class PointcloudObject(BufferObject):
     """Object for displaying COMPAS point geometry.
-
     Parameters
     ----------
     data : :class: `compas.datastructures.Pointcloud`
@@ -19,12 +18,10 @@ class PointcloudObject(BufferObject):
         If provided, the `color` parameter will be ignored.
     size : float
         The point size to be drawn on screen.
-
     Attributes
     ----------
     colors : list
         list of point colors
-
     Raises
     -------
     ValueError

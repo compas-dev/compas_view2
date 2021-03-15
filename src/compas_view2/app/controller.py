@@ -94,6 +94,11 @@ class Controller:
         self.app.view.mode = 'wireframe'
         self.app.view.update()
 
+    def view_lighted(self):
+        """Switch the view to lighted."""
+        self.app.view.mode = 'lighted'
+        self.app.view.update()
+
     def view_capture(self):
         """Capture a screenshot."""
         result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
@@ -183,35 +188,35 @@ class Controller:
 
     @interactive("add")
     def add_point_on_grid(self) -> Union[Point, None]:
-        self.app.statusbar.showMessage("Select a location on grid")
+        self.app.status("Select a location on grid")
         location = self.app.selector.start_selection_on_plane(snap_to_grid=True)
         if location:
-            self.app.statusbar.showMessage("Created a Point.")
+            self.app.status("Created a Point.")
             return Point(*location)
         else:
-            self.app.statusbar.showMessage("No location provided.")
+            self.app.status("No location provided.")
             return None
 
     @interactive("add")
     def add_line_from_selected_points(self):
-        self.app.statusbar.showMessage("Select points on screen, Click Enter to finish")
+        self.app.status("Select points on screen, Click Enter to finish")
         points = self.app.selector.start_selection(types=[Point])
         if len(points) != 2:
-            self.app.statusbar.showMessage("Must select 2 points")
+            self.app.status("Must select 2 points")
             return None
         line = Line(*points)
-        self.app.statusbar.showMessage("Line added")
+        self.app.status("Line added")
         return line
 
     @interactive("edit")
     def edit_selected_object(self):
-        self.app.statusbar.showMessage("Select one object on screen, Click Enter to finish")
+        self.app.status("Select one object on screen, Click Enter to finish")
         if len(self.app.selector.selected) == 1:
             return self.app.selector.selected[0]
         else:
             objects = self.app.selector.start_selection(types=[Point], mode="single", returns="object")
             if len(objects) != 1:
-                self.app.statusbar.showMessage("Must select 1 object")
+                self.app.status("Must select 1 object")
                 return None
             return objects[0]
 
