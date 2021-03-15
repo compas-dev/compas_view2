@@ -15,10 +15,12 @@ class LineObject(BufferObject):
                  pointcolor=None,
                  pointsize=10,
                  linecolor=None,
-                 linewidth=1):
+                 linewidth=1,
+                 color=None
+                 ):
         super().__init__(data, name=name, is_selected=is_selected, show_lines=True, show_points=show_points, pointsize=pointsize, linewidth=linewidth)
-        self.pointcolor = pointcolor
-        self.linecolor = linecolor
+        self.pointcolor = pointcolor or color
+        self.linecolor = linecolor or color
 
     def _points_data(self):
         line = self._data
