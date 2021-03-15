@@ -9,6 +9,7 @@ uniform bool is_instance_mask;
 uniform bool is_lighted;
 uniform vec3 instance_color;
 
+
 void main()
 {   
     vec3 light_pos = vec3(0, 0, 0);
