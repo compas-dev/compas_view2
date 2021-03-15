@@ -27,7 +27,7 @@ from .boxobject import BoxObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
 from .arrowobject import ArrowObject
-from .textobject import TextObeject
+from .textobject import TextObject
 from .gridobject import GridObject  # noqa: F401
 from .cylinderobject import CylinderObject
 
@@ -45,7 +45,7 @@ Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
 Object.register(Cylinder, CylinderObject)
-Object.register(Text, TextObeject)
+Object.register(Text, TextObject)
 
 try:
     from compas_assembly.datastructures import Block

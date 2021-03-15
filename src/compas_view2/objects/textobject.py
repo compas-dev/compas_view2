@@ -1,5 +1,5 @@
 from .object import Object
-from compas_view2 import DATA
+from compas_view2 import HOME
 
 from OpenGL import GL
 from ..buffers import make_index_buffer, make_vertex_buffer
@@ -9,16 +9,17 @@ import numpy as np
 import os
 
 
-class TextObeject(Object):
+class TextObject(Object):
     """Object for displaying text sprites."""
 
-    def __init__(self, data, name=None, color=None, height=10, opacity=1):
+    def __init__(self, data, name=None, color=None, height=10, opacity=1, font="FreeSans.ttf"):
         super().__init__(data, name=name)
         self.color = color or [0, 0, 0]
         self.characters = []
         self.buffers = []
         self.height = height
         self.opacity = opacity
+        self.font = font
 
     def init(self):
         self.make_buffers()
@@ -33,7 +34,7 @@ class TextObeject(Object):
 
     def make_text_texture(self):
         # change the filename if necessary
-        face = ft.Face(os.path.join(DATA, "FreeSans.ttf"))
+        face = ft.Face(os.path.join(HOME, "fonts", self.font))
 
         char_width = 48
         char_height = 80

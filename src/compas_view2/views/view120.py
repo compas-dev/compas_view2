@@ -5,7 +5,7 @@ from .view import View
 
 import numpy as np
 from ..objects.bufferobject import BufferObject
-from ..objects.textobject import TextObeject
+from ..objects.textobject import TextObject
 
 
 class View120(View):
@@ -19,15 +19,15 @@ class View120(View):
             obj = self.objects[guid]
             obj.init()
         # create the program
-        self.shader = Shader()
-        self.shader.bind()
-        self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-        self.shader.uniform4x4("viewworld", self.camera.viewworld())
-        self.shader.uniform4x4("transform", np.identity(4))
-        self.shader.uniform1i("is_selected", 0)
-        self.shader.uniform1f("opacity", self.opacity)
-        self.shader.uniform3f("selection_color", self.selection_color)
-        self.shader.release()
+        self.shader_model = Shader()
+        self.shader_model.bind()
+        self.shader_model.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+        self.shader_model.uniform4x4("viewworld", self.camera.viewworld())
+        self.shader_model.uniform4x4("transform", np.identity(4))
+        self.shader_model.uniform1i("is_selected", 0)
+        self.shader_model.uniform1f("opacity", self.opacity)
+        self.shader_model.uniform3f("selection_color", self.selection_color)
+        self.shader_model.release()
 
         self.shader_text = Shader(name='120/text')
         self.shader_text.bind()
@@ -37,17 +37,17 @@ class View120(View):
         self.shader_text.release()
 
     def resize(self, w, h):
-        self.shader.bind()
-        self.shader.uniform4x4("projection", self.camera.projection(w, h))
-        self.shader.release()
+        self.shader_model.bind()
+        self.shader_model.uniform4x4("projection", self.camera.projection(w, h))
+        self.shader_model.release()
 
     def paint(self):
-        self.shader.bind()
+        self.shader_model.bind()
         # set projection matrix
         if self.current != self.PERSPECTIVE:
-            self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+            self.shader_model.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         # set view world matrix
-        self.shader.uniform4x4("viewworld", self.camera.viewworld())
+        self.shader_model.uniform4x4("viewworld", self.camera.viewworld())
         # create object color map
         # if interactive selection is going on
         if self.app.selector.enabled:
@@ -60,21 +60,21 @@ class View120(View):
         # create grid uv map
         # if interactive selection on plane is going on
         if self.app.selector.wait_for_selection_on_plane:
-            self.shader.uniform1f("opacity", 1)
+            self.shader_model.uniform1f("opacity", 1)
             self.app.selector.uv_plane_map = self.paint_plane()
-            self.shader.uniform1f("opacity", self.opacity)
+            self.shader_model.uniform1f("opacity", self.opacity)
             self.clear()
         # draw grid
         if self.show_grid:
-            self.grid.draw(self.shader)
+            self.grid.draw(self.shader_model)
         # draw all objects
         for guid in self.objects:
             obj = self.objects[guid]
             if isinstance(obj, BufferObject):
-                obj.draw(self.shader, self.mode == "wireframe", self.mode == "lighted")
+                obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
 
         # finish
-        self.shader.release()
+        self.shader_model.release()
 
         # draw text sprites
         self.shader_text.bind()
@@ -84,13 +84,13 @@ class View120(View):
         self.shader_text.uniform4x4("viewworld", self.camera.viewworld())
         for guid in self.objects:
             obj = self.objects[guid]
-            if isinstance(obj, TextObeject):
+            if isinstance(obj, TextObject):
                 obj.draw(self.shader_text)
         self.shader_text.release()
 
         # draw 2D box for multi-selection
         if self.app.selector.select_from == "box":
-            self.shader.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
+            self.shader_model.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
 
     def paint_instances(self, cropped_box=None):
         GL.glDisable(GL.GL_POINT_SMOOTH)
@@ -104,7 +104,7 @@ class View120(View):
         for guid in self.objects:
             obj = self.objects[guid]
             if hasattr(obj, "draw_instance"):
-                obj.draw_instance(self.shader, self.mode == "wireframe")
+                obj.draw_instance(self.shader_model, self.mode == "wireframe")
         # create map
         r = self.devicePixelRatio()
         instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
@@ -116,7 +116,7 @@ class View120(View):
 
     def paint_plane(self):
         x, y, width, height = 0, 0, self.app.width, self.app.height
-        self.grid.draw_plane(self.shader)
+        self.grid.draw_plane(self.shader_model)
         r = self.devicePixelRatio()
         plane_uv_map = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_FLOAT)
         plane_uv_map = plane_uv_map.reshape(height*r, width*r, 3)

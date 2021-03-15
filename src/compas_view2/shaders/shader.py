@@ -130,6 +130,7 @@ class Shader:
             GL.glDrawElements(GL.GL_POINTS, n, GL.GL_UNSIGNED_INT, None)
         else:
             GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
+        GL.glDisable(GL.GL_POINT_SPRITE)
         GL.glEnable(GL.GL_POINT_SMOOTH)
 
     def draw_2d_box(self, box_coords, width, height):
