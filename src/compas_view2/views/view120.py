@@ -56,9 +56,10 @@ class View120(View):
                     centers.append(transform_points_numpy([obj.bounding_box_center], obj.matrix)[0])
                 else:
                     opaque_objects.append(obj)
-        centers = transform_points_numpy(centers, viewworld)
-        transparent_objects = sorted(zip(transparent_objects, centers), key=lambda pair: pair[1][2])
-        transparent_objects, _ = (zip(*transparent_objects))
+        if transparent_objects:
+            centers = transform_points_numpy(centers, viewworld)
+            transparent_objects = sorted(zip(transparent_objects, centers), key=lambda pair: pair[1][2])
+            transparent_objects, _ = (zip(*transparent_objects))
         return opaque_objects + list(transparent_objects)
 
     def paint(self):
