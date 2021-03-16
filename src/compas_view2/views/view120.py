@@ -7,6 +7,8 @@ import numpy as np
 from ..objects.bufferobject import BufferObject
 from ..objects.textobject import TextObject
 
+from compas.geometry import transform_points_numpy
+
 
 class View120(View):
     """View widget for OpenGL version 2.1 and GLSL 120 with a Compatibility Profile.
@@ -41,13 +43,32 @@ class View120(View):
         self.shader_model.uniform4x4("projection", self.camera.projection(w, h))
         self.shader_model.release()
 
+    def sort_objects_from_viewworld(self, viewworld):
+        """Sort objects by the distances from their bounding box centers to camera location"""
+        opaque_objects = []
+        transparent_objects = []
+        centers = []
+        for guid in self.objects:
+            obj = self.objects[guid]
+            if isinstance(obj, BufferObject):
+                if obj.opacity * self.opacity < 1:
+                    transparent_objects.append(obj)
+                    centers.append(obj.bounding_box_center)
+                else:
+                    opaque_objects.append(obj)
+        centers = transform_points_numpy(centers, viewworld)
+        transparent_objects = sorted(zip(transparent_objects, centers), key=lambda pair: pair[1][2])
+        transparent_objects, _ = (zip(*transparent_objects))
+        return opaque_objects + list(transparent_objects)
+
     def paint(self):
         self.shader_model.bind()
         # set projection matrix
         if self.current != self.PERSPECTIVE:
             self.shader_model.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         # set view world matrix
-        self.shader_model.uniform4x4("viewworld", self.camera.viewworld())
+        viewworld = self.camera.viewworld()
+        self.shader_model.uniform4x4("viewworld", viewworld)
         # create object color map
         # if interactive selection is going on
         if self.app.selector.enabled:
@@ -68,10 +89,8 @@ class View120(View):
         if self.show_grid:
             self.grid.draw(self.shader_model)
         # draw all objects
-        for guid in self.objects:
-            obj = self.objects[guid]
-            if isinstance(obj, BufferObject):
-                obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
+        for obj in self.sort_objects_from_viewworld(viewworld):
+            obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
 
         # finish
         self.shader_model.release()
@@ -81,7 +100,7 @@ class View120(View):
         # set projection matrix
         if self.current != self.PERSPECTIVE:
             self.shader_text.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-        self.shader_text.uniform4x4("viewworld", self.camera.viewworld())
+        self.shader_text.uniform4x4("viewworld", viewworld)
         for guid in self.objects:
             obj = self.objects[guid]
             if isinstance(obj, TextObject):
