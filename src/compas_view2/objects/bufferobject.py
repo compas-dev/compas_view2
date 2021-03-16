@@ -121,6 +121,7 @@ class BufferObject(Object):
     def init(self):
         """Initialize the object"""
         self.make_buffers()
+        self._update_matrix()
 
     def update(self):
         """Update the object"""

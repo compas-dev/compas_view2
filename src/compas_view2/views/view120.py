@@ -53,7 +53,7 @@ class View120(View):
             if isinstance(obj, BufferObject):
                 if obj.opacity * self.opacity < 1:
                     transparent_objects.append(obj)
-                    centers.append(obj.bounding_box_center)
+                    centers.append(transform_points_numpy([obj.bounding_box_center], obj.matrix)[0])
                 else:
                     opaque_objects.append(obj)
         centers = transform_points_numpy(centers, viewworld)
