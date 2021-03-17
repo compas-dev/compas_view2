@@ -83,6 +83,16 @@ class GridObject(BufferObject):
             'n': len(list(flatten(elements))),
         }
 
+    def draw(self, shader):
+        """Draw the object from its buffers"""
+        shader.enable_attribute('position')
+        shader.enable_attribute('color')
+        shader.bind_attribute('position', self._lines_buffer['positions'])
+        shader.bind_attribute('color', self._lines_buffer['colors'])
+        shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'], background=True)
+        shader.disable_attribute('position')
+        shader.disable_attribute('color')
+
     def draw_plane(self, shader):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
