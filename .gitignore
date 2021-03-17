@@ -119,3 +119,5 @@ scripts/__old/**
 .idea
 
 docs/api/generated/
+
+conda.recipe/

@@ -38,6 +38,16 @@ class BufferObject(Object):
         self.opacity = opacity
         self.background = False
         self._shader_version = None
+        self._bounding_box = None
+        self._bounding_box_center = None
+
+    @property
+    def bounding_box(self):
+        return self._bounding_box
+
+    @property
+    def bounding_box_center(self):
+        return self._bounding_box_center
 
     def make_buffer_from_data(self, data):
         """Create buffers from point/line/face data.
@@ -91,7 +101,9 @@ class BufferObject(Object):
     def make_buffers_120(self):
         """Create all buffers from object's data"""
         if hasattr(self, '_points_data'):
-            self._points_buffer = self.make_buffer_from_data(self._points_data())
+            data = self._points_data()
+            self._points_buffer = self.make_buffer_from_data(data)
+            self._update_bounding_box(data[0])
         if hasattr(self, '_lines_data'):
             self._lines_buffer = self.make_buffer_from_data(self._lines_data())
         if hasattr(self, '_frontfaces_data'):
@@ -128,11 +140,18 @@ class BufferObject(Object):
         """Initialize the object"""
         self._shader_version = shader_version
         self.make_buffers()
+        self._update_matrix()
 
     def update(self):
         """Update the object"""
         self._update_matrix()
         self.update_buffers()
+
+    def _update_bounding_box(self, positions=None):
+        """Update the bounding box of the object"""
+        positions = np.array(positions or self._points_data()[0])
+        self._bounding_box = np.array([positions.min(axis=0), positions.max(axis=0)])
+        self._bounding_box_center = np.average(self.bounding_box, axis=0)
 
     def draw(self, shader, wireframe=False, is_lighted=False):
         if self._shader_version == "330":
@@ -169,6 +188,7 @@ class BufferObject(Object):
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)
+
         shader.uniform1i('is_selected', 0)
         shader.uniform1f('object_opacity', 1)
         if self._matrix_buffer is not None:

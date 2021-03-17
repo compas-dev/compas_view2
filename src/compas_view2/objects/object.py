@@ -4,6 +4,8 @@ from compas.geometry import Translation
 from compas.geometry import Rotation
 from compas.geometry import Scale
 from compas.geometry import decompose_matrix
+from compas.geometry import identity_matrix
+
 import numpy as np
 
 
@@ -102,12 +104,16 @@ class Object(ABC):
 
     def _update_matrix(self):
         """Update the matrix from object's translation, rotation and scale"""
-        T1 = Translation.from_vector(self.translation)
-        R1 = Rotation.from_euler_angles(self.rotation)
-        S1 = Scale.from_factors(self.scale)
-        M = T1 * R1 * S1
-        self._transformation.matrix = M.matrix
-        self._matrix_buffer = np.array(self.matrix).flatten()
+        if self.translation == [0, 0, 0] and self.rotation == [0, 0, 0] and self.scale == [1, 1, 1]:
+            self._transformation.matrix = identity_matrix(4)
+            self._matrix_buffer = None
+        else:
+            T1 = Translation.from_vector(self.translation)
+            R1 = Rotation.from_euler_angles(self.rotation)
+            S1 = Scale.from_factors(self.scale)
+            M = T1 * R1 * S1
+            self._transformation.matrix = M.matrix
+            self._matrix_buffer = np.array(self.matrix).flatten()
 
     @property
     def matrix(self):

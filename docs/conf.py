@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
 project = "COMPAS Viewers 2"
 copyright = "Block Research Group - ETH Zurich"
 author = "tom van mele"
-release = "0.1.0"
+release = "0.2.1"
 version = ".".join(release.split(".")[0:2])
 
 master_doc = "index"
@@ -162,8 +162,9 @@ html_theme_options = {
     "package_title"   : project,
     "package_version" : release,
     "package_author"  : "compas-dev",
-    "package_docs"    : "https://compas.dev/compas_view2",
-    "package_repo"    : "https://github.com/compas-dev/compas_view2"
+    "package_docs"    : "https://compas.dev/compas_view2/",
+    "package_repo"    : "https://github.com/compas-dev/compas_view2",
+    "package_old_versions_txt": "https://compas.dev/compas_view2/doc_versions.txt"
 }
 
 html_context = {}

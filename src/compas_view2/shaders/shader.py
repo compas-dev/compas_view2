@@ -62,6 +62,12 @@ class Shader:
         loc = GL.glGetUniformLocation(self.program, name)
         GL.glUniform3f(loc, *value)
 
+    def uniformTex(self, name, texture):
+        # loc = GL.glGetUniformLocation(self.program, name)
+        # print(loc)
+        GL.glActiveTexture(GL.GL_TEXTURE0 + 0)
+        GL.glBindTexture(GL.GL_TEXTURE_2D, texture)
+
     def bind(self):
         """Bind the shader program."""
         GL.glUseProgram(self.program)
@@ -133,6 +139,18 @@ class Shader:
             GL.glDrawElements(GL.GL_POINTS, n, GL.GL_UNSIGNED_INT, None)
         else:
             GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
+
+    def draw_texts(self, elements=None, n=0):
+        GL.glDisable(GL.GL_POINT_SMOOTH)
+        GL.glEnable(GL.GL_POINT_SPRITE)
+        GL.glEnable(GL.GL_PROGRAM_POINT_SIZE)
+        if elements:
+            GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
+            GL.glDrawElements(GL.GL_POINTS, n, GL.GL_UNSIGNED_INT, None)
+        else:
+            GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
+        GL.glDisable(GL.GL_POINT_SPRITE)
+        GL.glEnable(GL.GL_POINT_SMOOTH)
 
     def draw_2d_box(self, box_coords, width, height):
         x1, y1, x2, y2 = box_coords

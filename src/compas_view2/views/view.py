@@ -44,7 +44,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
         self._current = View.PERSPECTIVE
-        self.shader = None
+        self.shader_model = None
         self.app = app
         self.color = background_color
         self.mode = mode
@@ -69,10 +69,10 @@ class View(QtWidgets.QOpenGLWidget):
             self._opacity = 0.7
         else:
             self._opacity = 1.0
-        if self.shader:
-            self.shader.bind()
-            self.shader.uniform1f("opacity", self._opacity)
-            self.shader.release()
+        if self.shader_model:
+            self.shader_model.bind()
+            self.shader_model.uniform1f("opacity", self._opacity)
+            self.shader_model.release()
             self.update()
 
     @property
@@ -82,10 +82,10 @@ class View(QtWidgets.QOpenGLWidget):
     @current.setter
     def current(self, current):
         self._current = current
-        if self.shader:
-            self.shader.bind()
-            self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-            self.shader.release()
+        if self.shader_model:
+            self.shader_model.bind()
+            self.shader_model.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+            self.shader_model.release()
             self.update()
 
     @property
