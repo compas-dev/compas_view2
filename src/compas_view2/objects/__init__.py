@@ -12,6 +12,8 @@ from compas.geometry import Cylinder
 
 from ..shapes import Arrow
 from ..shapes import Text
+from ..collections import Collection
+
 from .object import Object
 
 from .pointobject import PointObject
@@ -28,6 +30,7 @@ from .sphereobject import SphereObject
 from .torusobject import TorusObject
 from .arrowobject import ArrowObject
 from .textobject import TextObject
+from .collectionobject import CollectionObject
 from .gridobject import GridObject  # noqa: F401
 from .cylinderobject import CylinderObject
 
@@ -44,6 +47,7 @@ Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
+Object.register(Collection, CollectionObject)
 Object.register(Cylinder, CylinderObject)
 Object.register(Text, TextObject)
 

@@ -24,7 +24,7 @@ class MeshObject(BufferObject):
     linecolor : list
         Line color
     pointcolor : list
-        Face color
+        point color
     linewidth : float
         Line width
     pointsize : float
