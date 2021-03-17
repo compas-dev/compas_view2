@@ -174,8 +174,6 @@ class BufferObject(Object):
     def draw_instance(self, shader, wireframe=False):
         """Draw the object instance for picking"""
         shader.enable_attribute('position')
-        shader.enable_attribute('color')
-        shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self._instance_color)
         if self._matrix_buffer is not None:
             shader.uniform4x4('transform', self._matrix_buffer)
@@ -192,7 +190,5 @@ class BufferObject(Object):
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
         if self._matrix_buffer is not None:
             shader.uniform4x4('transform', np.identity(4).flatten())
-        shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
-        shader.disable_attribute('color')
         shader.disable_attribute('position')
