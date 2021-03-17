@@ -34,17 +34,26 @@
   <header id="header" class="compas-header d-flex align-items-center">
     <nav class="navbar navbar-expand navbar-dark col flex-column flex-md-row text-center">
       <!-- brand -->
-      <a class="navbar-brand" href="https://compas.dev/compas_view2">
+      <a class="navbar-brand" href="https://compas.dev/compas_view2/">
         <img src="../../_static/images/compas_icon_white.png" alt="COMPAS Viewers 2" width="48px" height="48px" />
       </a>
       <!-- brand -->
       <!-- primary -->
       <ul class="navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="https://compas.dev/compas_view2">COMPAS Viewers 2</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://compas.dev/compas_view2/">COMPAS Viewers 2</a></li>
       </ul>
       <!-- primary -->
       <ul class="navbar-nav d-none d-md-flex ml-md-auto">
         <!-- version -->
+        
+        <meta id="doc_versions" data-url="https://compas.dev/compas_view2/doc_versions.txt" data-docs="https://compas.dev/compas_view2/">
+        <li class="nav-item nav-versions dropdown">
+          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            0.2.1
+          </a>
+          <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
+        </li>
         
         <!-- version -->
         <!-- social -->
@@ -88,7 +97,7 @@
 <h1>View120</h1>
 <dl class="py class">
 <dt id="compas_view2.views.View120">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.views.</span></code><code class="sig-name descname"><span class="pre">View120</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/views/view120.py#L9"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.views.</span></code><code class="sig-name descname"><span class="pre">View120</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/views/view120.py#L13"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.views.view.View</span></code></p>
 <p>View widget for OpenGL version 2.1 and GLSL 120 with a Compatibility Profile.</p>
 <p class="rubric">Methods</p>
@@ -112,6 +121,9 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.resize.html#compas_view2.views.View120.resize" title="compas_view2.views.View120.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(self, arg__1)</p></td>
 <td><p>resize(self, w: int, h: int) -&gt; None</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.sort_objects_from_viewworld.html#compas_view2.views.View120.sort_objects_from_viewworld" title="compas_view2.views.View120.sort_objects_from_viewworld"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_objects_from_viewworld</span></code></a>(viewworld)</p></td>
+<td><p>Sort objects by the distances from their bounding box centers to camera location</p></td>
 </tr>
 </tbody>
 </table>
