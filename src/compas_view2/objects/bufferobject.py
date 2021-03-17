@@ -144,6 +144,7 @@ class BufferObject(Object):
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)
+
         shader.uniform1i('is_selected', 0)
         shader.uniform1f('object_opacity', 1)
         if self._matrix_buffer is not None:
