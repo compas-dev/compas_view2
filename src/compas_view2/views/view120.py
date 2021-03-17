@@ -61,7 +61,7 @@ class View120(View):
         projection = self.camera.projection(w, h)
 
         self.shader_model.bind()
-        self.shader_model.uniform4x4("projection", projection) 
+        self.shader_model.uniform4x4("projection", projection)
         self.shader_model.release()
 
         self.shader_text.bind()
