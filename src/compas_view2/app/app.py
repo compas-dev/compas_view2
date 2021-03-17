@@ -142,6 +142,7 @@ class App:
         self._init_statusbar()
         self._init_menubar(config.get("menubar"))
         self._init_toolbar(config.get("toolbar"))
+        self._init_sidebar(config.get("sidebar"))
 
         self.resize(width, height)
 
@@ -245,6 +246,15 @@ class App:
         self.toolbar.setIconSize(QtCore.QSize(16, 16))
         self._add_toolbar_items(items, self.toolbar)
 
+    def _init_sidebar(self, items):
+        if not items:
+            return
+        self.sidebar = QtWidgets.QToolBar(self.window)
+        self.window.addToolBar(QtCore.Qt.LeftToolBarArea, self.sidebar)
+        self.sidebar.setObjectName('Sidebar')
+        self.sidebar.setIconSize(QtCore.QSize(16, 16))
+        self._add_menubar_items(items, self.sidebar)
+
     def _add_menubar_items(self, items, parent):
         if not items:
             return
@@ -264,6 +274,8 @@ class App:
                     radio.addAction(action)
             elif item['type'] == 'action':
                 self._add_action(item, parent)
+            elif item['type'] == 'slider':
+                self._add_slider(item, parent)
             else:
                 raise NotImplementedError
 
@@ -287,6 +299,27 @@ class App:
             icon = self._get_icon(item['icon'])
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))
+
+    def _add_slider(self, item, parent):
+        box = QtWidgets.QWidget()
+        box_layout = QtWidgets.QHBoxLayout()
+        text_label = QtWidgets.QLabel(item.get("text", ""))
+        value_label = QtWidgets.QLabel(str(item.get("value", 0)))
+        slider = QtWidgets.QSlider()
+        slider.setOrientation(QtCore.Qt.Horizontal)
+        slider.setValue(item.get("value", 0))
+        slider.setTickInterval(item.get("interval", 0))
+        slider.setMinimum(item.get("min", 0))
+        slider.setMaximum(item.get("max", 100))
+        box_layout.addWidget(text_label)
+        box_layout.addWidget(slider)
+        box_layout.addWidget(value_label)
+        box.setLayout(box_layout)
+        parent.addWidget(box)
+        slider.valueChanged.connect(lambda v: value_label.setText(str(v)))
+        if "action" in item:
+            action = getattr(self.controller, item['action'])
+            slider.valueChanged.connect(action)
 
     def on(self, interval=None, timeout=None):
         self.frame_count = 0

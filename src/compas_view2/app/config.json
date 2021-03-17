@@ -108,5 +108,10 @@
         {"type": "action", "text": "Right", "action": "view_right"},
         {"type": "action", "text": "Top", "action": "view_top"},
         {"type": "action", "text": "Perspective", "action": "view_perspective"}
+    ],
+
+    "sidebar":
+    [
+        {"type": "slider", "text": "Something", "value": 50}
     ]
 }
