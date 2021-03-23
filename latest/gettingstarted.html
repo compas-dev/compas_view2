@@ -93,9 +93,20 @@
 <h1>Getting Started</h1>
 <div class="section" id="installation">
 <h2>Installation</h2>
-<p>The package is not yet available on <code class="docutils literal notranslate"><span class="pre">PyPI</span></code> or <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code>.
-Therefore, currently, the recommended way to install <code class="docutils literal notranslate"><span class="pre">compas_view2</span></code> is directly
-from the GitHub repo with <code class="docutils literal notranslate"><span class="pre">pip</span></code> in a <code class="docutils literal notranslate"><span class="pre">conda</span></code> environment.</p>
+<p>The recommended way to install <code class="docutils literal notranslate"><span class="pre">compas_view2</span></code> is with <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n view2 -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 compas compas_view2 --yes
+conda activate view2
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="first-steps">
+<h2>First Steps</h2>
+<p>Have a look at the examples for basic usage scenarios.</p>
+</div>
+<div class="section" id="dev-install">
+<h2>Dev Install</h2>
+<p>To get the latest unreleased version, you can install with <code class="docutils literal notranslate"><span class="pre">pip</span></code> in a <code class="docutils literal notranslate"><span class="pre">conda</span></code> environment
+directly from the github repo.</p>
 <div class="section" id="windows">
 <h3>Windows</h3>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 git cython freeglut --yes
@@ -125,10 +136,14 @@ In <code class="docutils literal notranslate"><span class="pre">.vscode/settings
 </code></pre></div>
 </div>
 </div>
+<div class="section" id="linux">
+<h3>Linux</h3>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython freetype-py --yes
+conda activate view2
+pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
+</code></pre></div>
 </div>
-<div class="section" id="first-steps">
-<h2>First Steps</h2>
-<p>Have a look at the examples for basic usage scenarios.</p>
+</div>
 </div>
 </div>
 
@@ -165,12 +180,14 @@ In <code class="docutils literal notranslate"><span class="pre">.vscode/settings
         
         <ul class="nav flex-column" id="compas-toc">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#installation">Installation</a><ul class="nav flex-column">
+<li class="nav-item"><a class="nav-link reference internal" href="#installation">Installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#first-steps">First Steps</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#dev-install">Dev Install</a><ul class="nav flex-column">
 <li class="nav-item"><a class="nav-link reference internal" href="#windows">Windows</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#mac">Mac</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#linux">Linux</a></li>
 </ul>
 </li>
-<li class="nav-item"><a class="nav-link reference internal" href="#first-steps">First Steps</a></li>
 </ul>
 </li>
 </ul>
