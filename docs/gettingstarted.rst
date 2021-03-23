@@ -9,7 +9,7 @@ The recommended way to install ``compas_view2`` is with ``conda``.
 
 .. code-block:: bash
 
-    conda create -n view2 -c conda-forge python=3.8 compas compas_view2 --yes
+    conda create -n view2 -c conda-forge compas compas_view2 --yes
     conda activate view2
 
 

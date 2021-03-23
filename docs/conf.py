@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
 
 # -- General configuration ------------------------------------------------
 
-project = "COMPAS Viewers 2"
+project = "COMPAS View2"
 copyright = "Block Research Group - ETH Zurich"
 author = "tom van mele"
 release = "0.2.1"
