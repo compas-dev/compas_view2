@@ -19,6 +19,8 @@ See the [Getting Started](https://compas.dev/compas_view2/latest/gettingstarted.
 * Mesh faces with individual colors
 * Dynamic visualisation with simple decorators
 * Text annotations
+* Customizable UI and UI Controller
+* ...
 
 ## Examples
 
