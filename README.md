@@ -20,7 +20,20 @@ See the [Getting Started](https://compas.dev/compas_view2/latest/gettingstarted.
 * Dynamic visualisation with simple decorators
 * Text annotations
 * Customizable UI and UI Controller
+* Transformations in object space
 * ...
+
+### Create Objects
+
+| Object   | Script             | Form               | Interactive        |
+| -------- | ------------------ | ------------------ | ------------------ |
+| Point    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Vector   | :heavy_check_mark: | :x:                | :x:                |
+| Line     | :heavy_check_mark: | :x:                | :heavy_check_mark: |
+| Plane    | :x:                | :x:                | :x:                |
+| Circle   | :x:                | :x:                | :x:                |
+| Polygon  | :x:                | :x:                | :x:                |
+| Polyline | :heavy_check_mark: | :x:                | :x:                |
 
 ## Examples
 
