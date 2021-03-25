@@ -23,18 +23,6 @@ See the [Getting Started](https://compas.dev/compas_view2/latest/gettingstarted.
 * Transformations in object space
 * ...
 
-### Create Objects
-
-| Object   | Script             | Form               | Interactive        |
-| -------- | ------------------ | ------------------ | ------------------ |
-| Point    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| Vector   | :heavy_check_mark: | :x:                | :x:                |
-| Line     | :heavy_check_mark: | :x:                | :heavy_check_mark: |
-| Plane    | :x:                | :x:                | :x:                |
-| Circle   | :x:                | :x:                | :x:                |
-| Polygon  | :x:                | :x:                | :x:                |
-| Polyline | :heavy_check_mark: | :x:                | :x:                |
-
 ## Examples
 
 The example section in the docs is under construction.
@@ -47,3 +35,39 @@ The code in this repo is licensed under the [MIT License](LICENCSE).
 ## Known Issues
 
 Please check the [Issue Tracker](https://github.com/compas-dev/compas_view2/issues) of the repo for known issues and their solutions.
+
+## Roadmap
+
+### Primitives
+
+| Object   | Script             | Form               | Interactive        |
+| -------- | ------------------ | ------------------ | ------------------ |
+| Point    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Vector   | :heavy_check_mark: | :x:                | :x:                |
+| Line     | :heavy_check_mark: | :x:                | :heavy_check_mark: |
+| Plane    | :x:                | :x:                | :x:                |
+| Circle   | :x:                | :x:                | :x:                |
+| Polygon  | :x:                | :x:                | :x:                |
+| Polyline | :heavy_check_mark: | :x:                | :x:                |
+
+### Shapes
+
+| Object     | Script             | Form               | Interactive        |
+| ---------- | ------------------ | ------------------ | ------------------ |
+| Box        | :heavy_check_mark: | :heavy_check_mark: | :x:                |
+| Sphere     | :heavy_check_mark: | :heavy_check_mark: | :x:                |
+| Cone       | :x:                | :x:                | :x:                |
+| Cylinder   | :heavy_check_mark: | :x:                | :x:                |
+| Capsule    | :x:                | :x:                | :x:                |
+| Torus      | :heavy_check_mark: | :x:                | :x:                |
+| Polyhedron | :x:                | :x:                | :x:                |
+
+### Datastructures
+
+| Object   | Script             | Form               | Interactive        |
+| -------- | ------------------ | ------------------ | ------------------ |
+| Network  | :heavy_check_mark: | :x:                | :x:                |
+| Mesh     | :heavy_check_mark: | :x:                | :x:                |
+| VolMesh  | :heavy_check_mark: | :x:                | :x:                |
+
+### Robots
