@@ -5,9 +5,25 @@ Getting Started
 Installation
 ============
 
-The package is not yet available on ``PyPI`` or ``conda-forge``.
-Therefore, currently, the recommended way to install ``compas_view2`` is directly
-from the GitHub repo with ``pip`` in a ``conda`` environment.
+The recommended way to install ``compas_view2`` is with ``conda``.
+
+.. code-block:: bash
+
+    conda create -n view2 -c conda-forge compas compas_view2 --yes
+    conda activate view2
+
+
+First Steps
+===========
+
+Have a look at the examples for basic usage scenarios.
+
+
+Dev Install
+===========
+
+To get the latest unreleased version, you can install with ``pip`` in a ``conda`` environment
+directly from the github repo.
 
 Windows
 -------
@@ -43,7 +59,11 @@ In ``.vscode/settings.json``
         ...
     }
 
-First Steps
-===========
+Linux
+-----
 
-Have a look at the examples for basic usage scenarios.
+.. code-block:: bash
+
+    conda create -n view2 python=3.8 cython freetype-py --yes
+    conda activate view2
+    pip install git+https://github.com/compas-dev/compas_view2.git#egg=compas_view2

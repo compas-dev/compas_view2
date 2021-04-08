@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
 
 # -- General configuration ------------------------------------------------
 
-project = "COMPAS Viewers 2"
+project = "COMPAS View2"
 copyright = "Block Research Group - ETH Zurich"
 author = "tom van mele"
 release = "0.2.1"
@@ -75,7 +75,7 @@ autosummary_generate = True
 
 # napoleon options
 
-napoleon_google_docstring = True
+napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 napoleon_include_init_with_doc = False
 napoleon_include_private_with_doc = False
