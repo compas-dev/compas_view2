@@ -15,10 +15,11 @@ class PolylineObject(BufferObject):
                  pointcolor=None,
                  pointsize=10,
                  linecolor=None,
+                 color=None,
                  linewidth=1):
         super().__init__(data, name=name, show_lines=True, is_selected=is_selected, show_points=show_points, linewidth=linewidth, pointsize=pointsize)
-        self.pointcolor = pointcolor
-        self.linecolor = linecolor
+        self.pointcolor = pointcolor or color
+        self.linecolor = linecolor or color
 
     def _points_data(self):
         polyline = self._data
