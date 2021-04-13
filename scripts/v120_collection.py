@@ -1,6 +1,6 @@
 from compas_view2 import app
 from compas.geometry import Sphere
-from compas.geometry import Line
+from compas.geometry import Polyline
 from compas_view2.collections import Collection
 from random import random
 
@@ -18,12 +18,12 @@ for x in range(5):
 
 
 spherecollection = Collection(spheres)
-viewer.add(spherecollection, colors=colors)
+viewer.add(spherecollection, colors=colors, u=20, v=5, linecolor=(0.2, 0, 0), show_edges=True)
 
 lines = []
 colors = []
-for i in range(1000):
-    line = Line((random()*5 + 5, random()*5, random()*5), (random()*5 + 5, random()*5, random()*5))
+for i in range(100):
+    line = Polyline([(random()*5 + 5, random()*5, random()*5), (random()*5 + 5, random()*5, random()*5), (random()*5 + 5, random()*5, random()*5)])
     lines.append(line)
     colors.append((random(), random(), random()))
 
