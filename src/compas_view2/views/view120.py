@@ -20,12 +20,16 @@ class View120(View):
         for guid in self.objects:
             obj = self.objects[guid]
             obj.init()
+
+        projection = self.camera.projection(self.app.width, self.app.height)
+        viewworld = self.camera.viewworld()
+        transform = np.identity(4)
         # create the program
-        self.shader_model = Shader()
+        self.shader_model = Shader(name='120/model')
         self.shader_model.bind()
-        self.shader_model.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-        self.shader_model.uniform4x4("viewworld", self.camera.viewworld())
-        self.shader_model.uniform4x4("transform", np.identity(4))
+        self.shader_model.uniform4x4("projection", projection)
+        self.shader_model.uniform4x4("viewworld", viewworld)
+        self.shader_model.uniform4x4("transform", transform)
         self.shader_model.uniform1i("is_selected", 0)
         self.shader_model.uniform1f("opacity", self.opacity)
         self.shader_model.uniform3f("selection_color", self.selection_color)
@@ -33,15 +37,44 @@ class View120(View):
 
         self.shader_text = Shader(name='120/text')
         self.shader_text.bind()
-        self.shader_text.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-        self.shader_text.uniform4x4("viewworld", self.camera.viewworld())
+        self.shader_text.uniform4x4("projection", projection)
+        self.shader_text.uniform4x4("viewworld", viewworld)
+        self.shader_text.uniform4x4("transform", transform)
         self.shader_text.uniform1f("opacity", self.opacity)
         self.shader_text.release()
 
+        self.shader_instance = Shader(name='120/instance')
+        self.shader_instance.bind()
+        self.shader_instance.uniform4x4("projection", projection)
+        self.shader_instance.uniform4x4("viewworld", viewworld)
+        self.shader_instance.uniform4x4("transform", transform)
+        self.shader_instance.release()
+
+        self.shader_grid = Shader(name='120/grid')
+        self.shader_grid.bind()
+        self.shader_grid.uniform4x4("projection", projection)
+        self.shader_grid.uniform4x4("viewworld", viewworld)
+        self.shader_grid.uniform4x4("transform", transform)
+        self.shader_grid.release()
+
     def resize(self, w, h):
+        projection = self.camera.projection(w, h)
+
         self.shader_model.bind()
-        self.shader_model.uniform4x4("projection", self.camera.projection(w, h))
+        self.shader_model.uniform4x4("projection", projection)
         self.shader_model.release()
+
+        self.shader_text.bind()
+        self.shader_text.uniform4x4("projection", projection)
+        self.shader_text.release()
+
+        self.shader_instance.bind()
+        self.shader_instance.uniform4x4("projection", projection)
+        self.shader_instance.release()
+
+        self.shader_grid.bind()
+        self.shader_grid.uniform4x4("projection", projection)
+        self.shader_grid.release()
 
     def sort_objects_from_viewworld(self, viewworld):
         """Sort objects by the distances from their bounding box centers to camera location"""
@@ -63,44 +96,49 @@ class View120(View):
         return opaque_objects + list(transparent_objects)
 
     def paint(self):
-        self.shader_model.bind()
-        # set projection matrix
-        if self.current != self.PERSPECTIVE:
-            self.shader_model.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
-        # set view world matrix
+        projection = self.camera.projection(self.app.width, self.app.height)
         viewworld = self.camera.viewworld()
-        self.shader_model.uniform4x4("viewworld", viewworld)
-        # create object color map
-        # if interactive selection is going on
+
+        # Draw instance maps
         if self.app.selector.enabled:
+            self.shader_instance.bind()
+            # set projection matrix
+            if self.current != self.PERSPECTIVE:
+                self.shader_instance.uniform4x4("projection", projection)
+            self.shader_instance.uniform4x4("viewworld", viewworld)
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
             if self.app.selector.select_from == "box":
                 self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
             self.app.selector.enabled = False
             self.clear()
-        # create grid uv map
-        # if interactive selection on plane is going on
+            self.shader_model.release()
+
+        # Draw grid
+        self.shader_grid.bind()
+        if self.current != self.PERSPECTIVE:
+            self.shader_grid.uniform4x4("projection", projection)
+        self.shader_grid.uniform4x4("viewworld", viewworld)
         if self.app.selector.wait_for_selection_on_plane:
-            self.shader_model.uniform1f("opacity", 1)
             self.app.selector.uv_plane_map = self.paint_plane()
-            self.shader_model.uniform1f("opacity", self.opacity)
             self.clear()
-        # draw grid
         if self.show_grid:
-            self.grid.draw(self.shader_model)
-        # draw all objects
+            self.grid.draw(self.shader_grid)
+        self.shader_grid.release()
+
+        # Draw model objects in the scene
+        self.shader_model.bind()
+        if self.current != self.PERSPECTIVE:
+            self.shader_model.uniform4x4("projection", projection)
+        self.shader_model.uniform4x4("viewworld", viewworld)
         for obj in self.sort_objects_from_viewworld(viewworld):
             obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
-
-        # finish
         self.shader_model.release()
 
         # draw text sprites
         self.shader_text.bind()
-        # set projection matrix
         if self.current != self.PERSPECTIVE:
-            self.shader_text.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
+            self.shader_text.uniform4x4("projection", projection)
         self.shader_text.uniform4x4("viewworld", viewworld)
         for guid in self.objects:
             obj = self.objects[guid]
@@ -124,7 +162,7 @@ class View120(View):
         for guid in self.objects:
             obj = self.objects[guid]
             if hasattr(obj, "draw_instance"):
-                obj.draw_instance(self.shader_model, self.mode == "wireframe")
+                obj.draw_instance(self.shader_instance, self.mode == "wireframe")
         # create map
         r = self.devicePixelRatio()
         instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
@@ -136,7 +174,7 @@ class View120(View):
 
     def paint_plane(self):
         x, y, width, height = 0, 0, self.app.width, self.app.height
-        self.grid.draw_plane(self.shader_model)
+        self.grid.draw_plane(self.shader_grid)
         r = self.devicePixelRatio()
         plane_uv_map = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_FLOAT)
         plane_uv_map = plane_uv_map.reshape(height*r, width*r, 3)

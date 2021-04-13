@@ -143,6 +143,7 @@ class BufferObject(Object):
             shader.uniform4x4('transform', self._matrix_buffer)
         shader.uniform1i('is_lighted', is_lighted)
         shader.uniform1f('object_opacity', self.opacity)
+        shader.uniform1i('element_type', 2)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
@@ -152,13 +153,12 @@ class BufferObject(Object):
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'], background=self.background)
         shader.uniform1i('is_lighted', False)
-        if self.show_faces and not wireframe:
-            # skip coloring lines and points if faces are already highlighted
-            shader.uniform1i('is_selected', 0)
+        shader.uniform1i('element_type', 1)
         if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
             shader.bind_attribute('position', self._lines_buffer['positions'])
             shader.bind_attribute('color', self._lines_buffer['colors'])
             shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'], background=self.background)
+        shader.uniform1i('element_type', 0)
         if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
@@ -174,8 +174,6 @@ class BufferObject(Object):
     def draw_instance(self, shader, wireframe=False):
         """Draw the object instance for picking"""
         shader.enable_attribute('position')
-        shader.enable_attribute('color')
-        shader.uniform1i('is_instance_mask', 1)
         shader.uniform3f('instance_color', self._instance_color)
         if self._matrix_buffer is not None:
             shader.uniform4x4('transform', self._matrix_buffer)
@@ -192,7 +190,5 @@ class BufferObject(Object):
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
         if self._matrix_buffer is not None:
             shader.uniform4x4('transform', np.identity(4).flatten())
-        shader.uniform1i('is_instance_mask', 0)
         shader.uniform3f('instance_color', [0, 0, 0])
-        shader.disable_attribute('color')
         shader.disable_attribute('position')
