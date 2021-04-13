@@ -4,14 +4,8 @@ from .bufferobject import BufferObject
 class FrameObject(BufferObject):
     """Object for displaying COMPAS Frame geometry."""
 
-    def __init__(self,
-                 data,
-                 name=None,
-                 is_selected=False,
-                 show_point=True,
-                 pointsize=10,
-                 linewidth=1):
-        super().__init__(data, name=name, is_selected=is_selected, show_points=show_point, show_lines=True, pointsize=pointsize, linewidth=linewidth)
+    def __init__(self, data, show_point=True, show_lines=True, **kwargs):
+        super().__init__(data, show_points=show_point, show_lines=show_lines, **kwargs)
 
     def _points_data(self):
         frame = self._data
