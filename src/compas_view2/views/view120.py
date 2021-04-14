@@ -1,4 +1,5 @@
 from OpenGL import GL
+from PIL import Image
 
 from ..shaders import Shader
 from .view import View
@@ -149,6 +150,16 @@ class View120(View):
         # draw 2D box for multi-selection
         if self.app.selector.select_from == "box":
             self.shader_model.draw_2d_box(self.app.selector.box_select_coords, self.app.width, self.app.height)
+
+        if self.app.record:
+            r = self.devicePixelRatio()
+            x, y, width, height = 0, 0, self.app.width, self.app.height
+            buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
+            arr = np.frombuffer(buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
+            arr = arr[::-r, ::r, :]
+            im = Image.fromarray(arr)
+            print("recording frame:", self.app.frame_count)
+            self.app.recorded_frames.append(im)
 
     def paint_instances(self, cropped_box=None):
         GL.glDisable(GL.GL_POINT_SMOOTH)
