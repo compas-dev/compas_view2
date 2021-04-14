@@ -1,3 +1,6 @@
+import compas_view2
+
 
 def test_trivial():
-    return True
+    print(compas_view2.__version__)
+    assert True
