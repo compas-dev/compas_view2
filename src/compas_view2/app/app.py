@@ -306,7 +306,11 @@ class App:
                     self.timer.stop()
                     if self.record:
                         self.record = False
-                        self.recorded_frames[0].save(record_path, save_all=True, optimize=True, duration=playback_interval or interval, append_images=self.recorded_frames[1:])
+                        self.recorded_frames[0].save(
+                            record_path, save_all=True, optimize=True,
+                            duration=playback_interval or interval,
+                            append_images=self.recorded_frames[1:],
+                            loop=100)
                         print("Recorded to ", record_path)
 
             if interval:
