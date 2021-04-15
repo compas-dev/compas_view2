@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Removed
+
+
+## Unreleased
+
+### Added
+
 * Separate shaders for background, model, and overlay objects.
 * Collection object for large numbers of individual objects.
 
