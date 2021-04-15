@@ -69,24 +69,18 @@ class MeshObject(BufferObject):
     default_color_lines = [0.4, 0.4, 0.4]
     default_color_faces = [0.8, 0.8, 0.8]
 
-    def __init__(self, data, name=None, is_selected=False,
-                 show_vertices=False, show_edges=True, show_faces=True,
+    def __init__(self, data, color=None,
                  facecolor=None, linecolor=None, pointcolor=None,
-                 color=None,
-                 linewidth=1, pointsize=10,
-                 hide_coplanaredges=False, opacity=1,
-                 vertices=None, edges=None, faces=None):
-        super().__init__(
-            data, name=name, is_selected=is_selected, show_points=show_vertices,
-            show_lines=show_edges, show_faces=show_faces, linewidth=linewidth,
-            pointsize=pointsize, opacity=opacity)
+                 vertices=None, edges=None, faces=None,
+                 hide_coplanaredges=False, **kwargs):
+        super().__init__(data,  **kwargs)
         self._mesh = data
         self._pointcolor = None
         self._linecolor = None
         self._facecolor = None
-        self.facecolor = color or facecolor
-        self.linecolor = color or linecolor
-        self.pointcolor = color or pointcolor
+        self.facecolor = facecolor or color
+        self.linecolor = linecolor or color
+        self.pointcolor = pointcolor or color
         self.hide_coplanaredges = hide_coplanaredges
         self.vertices = vertices
         self.edges = edges

@@ -7,17 +7,8 @@ class PolylineObject(BufferObject):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self,
-                 data,
-                 name=None,
-                 is_selected=False,
-                 show_points=False,
-                 pointcolor=None,
-                 pointsize=10,
-                 linecolor=None,
-                 color=None,
-                 linewidth=1):
-        super().__init__(data, name=name, show_lines=True, is_selected=is_selected, show_points=show_points, linewidth=linewidth, pointsize=pointsize)
+    def __init__(self, data, pointcolor=None, linecolor=None, color=None, **kwargs):
+        super().__init__(data, show_lines=True, **kwargs)
         self.pointcolor = pointcolor or color
         self.linecolor = linecolor or color
 

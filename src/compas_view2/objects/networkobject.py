@@ -7,8 +7,8 @@ class NetworkObject(BufferObject):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_lines = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, name=None, is_selected=False, show_points=True, show_lines=True):
-        super().__init__(data, name=name, is_selected=is_selected, show_points=show_points, show_lines=show_lines)
+    def __init__(self, data, show_points=True, show_lines=True, **kwargs):
+        super().__init__(data, show_points=show_points, show_lines=show_lines, **kwargs)
 
     @property
     def nodes(self):

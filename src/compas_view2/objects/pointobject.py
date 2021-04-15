@@ -5,8 +5,8 @@ from ..forms import PointEditForm
 class PointObject(BufferObject):
     """Object for displaying COMPAS point geometry."""
 
-    def __init__(self, data, name=None, is_selected=False, color=None, size=10):
-        super().__init__(data, name=name, is_selected=is_selected, show_points=True, pointsize=size)
+    def __init__(self, data, color=None, size=10, **kwargs):
+        super().__init__(data, show_points=True, pointsize=size, **kwargs)
         self.color = color
 
     def _points_data(self):
