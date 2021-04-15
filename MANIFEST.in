@@ -13,6 +13,8 @@ include AUTHORS.md
 include CHANGELOG.md
 include requirements.txt
 
+recursive-include fonts *.ttf
+
 exclude requirements-dev.txt
 exclude pytest.ini .bumpversion.cfg .editorconfig
 exclude tasks.py
