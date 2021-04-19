@@ -27,13 +27,17 @@ class BufferObject(Object):
     default_color_backfaces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
-                 show_points=False, show_vertices=False, show_lines=False, show_edges=False,
-                 show_faces=True, linewidth=None, pointsize=None, opacity=1):
+                 show_points=False, show_vertices=False, show_lines=False, show_edges=False, show_faces=True,
+                 pointcolor=None, linecolor=None, facecolor=None,
+                 linewidth=None, pointsize=None, opacity=1):
         super().__init__(data, name=name, is_selected=is_selected)
         self._data = data
         self.show_points = show_points or show_vertices
         self.show_lines = show_lines or show_edges
         self.show_faces = show_faces
+        self.pointcolor = pointcolor
+        self.linecolor = linecolor
+        self.facecolor = facecolor
         self.linewidth = linewidth or 1
         self.pointsize = pointsize or 10
         self.opacity = opacity
