@@ -65,19 +65,12 @@ class MeshObject(BufferObject):
 
     """
 
-    default_color_points = [0.2, 0.2, 0.2]
-    default_color_lines = [0.4, 0.4, 0.4]
-    default_color_faces = [0.8, 0.8, 0.8]
-
     def __init__(self, data, color=None,
                  facecolor=None, linecolor=None, pointcolor=None,
                  vertices=None, edges=None, faces=None,
                  hide_coplanaredges=False, **kwargs):
         super().__init__(data,  **kwargs)
         self._mesh = data
-        self._pointcolor = None
-        self._linecolor = None
-        self._facecolor = None
         self.facecolor = facecolor or color
         self.linecolor = linecolor or color
         self.pointcolor = pointcolor or color
@@ -86,61 +79,13 @@ class MeshObject(BufferObject):
         self.edges = edges
         self.faces = faces
 
-    @property
-    def pointcolor(self):
-        if not self._pointcolor:
-            self._pointcolor = {vertex: self._mesh.vertex_attribute(vertex, 'color') or self.default_color_points for vertex in self._mesh.vertices()}
-        return self._pointcolor
-
-    @pointcolor.setter
-    def pointcolor(self, color):
-        if color:
-            if isinstance(color, dict):
-                self.pointcolor.update(color)
-            else:
-                pointcolor = self.pointcolor
-                color = color or self.default_color_points
-                for vertex in pointcolor:
-                    pointcolor[vertex] = color
-
-    @property
-    def linecolor(self):
-        if not self._linecolor:
-            self._linecolor = {edge: self._mesh.edge_attribute(edge, 'color') or self.default_color_lines for edge in self._mesh.edges()}
-        return self._linecolor
-
-    @linecolor.setter
-    def linecolor(self, color):
-        if color:
-            if isinstance(color, dict):
-                self.linecolor.update(color)
-            else:
-                linecolor = self.linecolor
-                color = color or self.default_color_lines
-                for edge in linecolor:
-                    linecolor[edge] = color
-
-    @property
-    def facecolor(self):
-        if not self._facecolor:
-            self._facecolor = {face: self._mesh.face_attribute(face, 'color') or self.default_color_faces for face in self._mesh.faces()}
-        return self._facecolor
-
-    @facecolor.setter
-    def facecolor(self, color):
-        if color:
-            if isinstance(color, dict):
-                self.facecolor.update(color)
-            else:
-                facecolor = self.facecolor
-                color = color or self.default_color_faces
-                for face in facecolor:
-                    facecolor[face] = color
-
     def _points_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        vertex_color = self.pointcolor
+        vertex_color = {
+            vertex: self._mesh.vertex_attribute(vertex, 'color') or self.pointcolor or self.default_color_points
+            for vertex in self._mesh.vertices()
+            }
         positions = []
         colors = []
         elements = []
@@ -156,7 +101,10 @@ class MeshObject(BufferObject):
     def _lines_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        linecolor = self.linecolor
+        linecolor = {
+            edge: self._mesh.edge_attribute(edge, 'color') or self.linecolor or self.default_color_lines
+            for edge in self._mesh.edges()
+            }
         positions = []
         colors = []
         elements = []
@@ -184,7 +132,10 @@ class MeshObject(BufferObject):
     def _frontfaces_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        face_color = self.facecolor
+        face_color = {
+            face: self._mesh.face_attribute(face, 'color') or self.facecolor or self.default_color_faces
+            for face in self._mesh.faces()
+            }
         positions = []
         colors = []
         elements = []
@@ -238,7 +189,10 @@ class MeshObject(BufferObject):
     def _backfaces_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        face_color = self.facecolor
+        face_color = {
+            face: self._mesh.face_attribute(face, 'color') or self.facecolor or self.default_color_faces
+            for face in self._mesh.faces()
+            }
         positions = []
         colors = []
         elements = []
