@@ -23,8 +23,7 @@ class BufferObject(Object):
 
     default_color_points = [0.2, 0.2, 0.2]
     default_color_lines = [0.4, 0.4, 0.4]
-    default_color_frontfaces = [0.8, 0.8, 0.8]
-    default_color_backfaces = [0.8, 0.8, 0.8]
+    default_color_faces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False,
                  show_points=False, show_vertices=False, show_lines=False, show_edges=False, show_faces=True,
