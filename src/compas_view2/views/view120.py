@@ -57,9 +57,11 @@ class View120(View):
         self.shader_grid.uniform4x4("transform", transform)
         self.shader_grid.release()
 
-    def resize(self, w, h):
-        projection = self.camera.projection(w, h)
+    def update_projection(self, w=None, h=None):
+        w = w or self.app.width
+        h = h or self.app.height
 
+        projection = self.camera.projection(w, h)
         self.shader_model.bind()
         self.shader_model.uniform4x4("projection", projection)
         self.shader_model.release()
@@ -75,6 +77,9 @@ class View120(View):
         self.shader_grid.bind()
         self.shader_grid.uniform4x4("projection", projection)
         self.shader_grid.release()
+
+    def resize(self, w, h):
+        self.update_projection(w, h)
 
     def sort_objects_from_viewworld(self, viewworld):
         """Sort objects by the distances from their bounding box centers to camera location"""
@@ -96,15 +101,14 @@ class View120(View):
         return opaque_objects + list(transparent_objects)
 
     def paint(self):
-        projection = self.camera.projection(self.app.width, self.app.height)
         viewworld = self.camera.viewworld()
+        if self.current != self.PERSPECTIVE:
+            self.update_projection()
 
         # Draw instance maps
         if self.app.selector.enabled:
             self.shader_instance.bind()
             # set projection matrix
-            if self.current != self.PERSPECTIVE:
-                self.shader_instance.uniform4x4("projection", projection)
             self.shader_instance.uniform4x4("viewworld", viewworld)
             if self.app.selector.select_from == "pixel":
                 self.app.selector.instance_map = self.paint_instances()
@@ -116,8 +120,6 @@ class View120(View):
 
         # Draw grid
         self.shader_grid.bind()
-        if self.current != self.PERSPECTIVE:
-            self.shader_grid.uniform4x4("projection", projection)
         self.shader_grid.uniform4x4("viewworld", viewworld)
         if self.app.selector.wait_for_selection_on_plane:
             self.app.selector.uv_plane_map = self.paint_plane()
@@ -128,8 +130,6 @@ class View120(View):
 
         # Draw model objects in the scene
         self.shader_model.bind()
-        if self.current != self.PERSPECTIVE:
-            self.shader_model.uniform4x4("projection", projection)
         self.shader_model.uniform4x4("viewworld", viewworld)
         for obj in self.sort_objects_from_viewworld(viewworld):
             obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
@@ -137,8 +137,6 @@ class View120(View):
 
         # draw text sprites
         self.shader_text.bind()
-        if self.current != self.PERSPECTIVE:
-            self.shader_text.uniform4x4("projection", projection)
         self.shader_text.uniform4x4("viewworld", viewworld)
         for guid in self.objects:
             obj = self.objects[guid]

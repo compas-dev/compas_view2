@@ -113,21 +113,25 @@ class Controller:
     def view_front(self):
         """Swtich to a front view."""
         self.app.view.current = self.app.view.FRONT
+        self.app.view.update_projection()
         self.app.view.update()
 
     def view_right(self):
         """Swtich to a right view."""
         self.app.view.current = self.app.view.RIGHT
+        self.app.view.update_projection()
         self.app.view.update()
 
     def view_top(self):
         """Swtich to a top view."""
         self.app.view.current = self.app.view.TOP
+        self.app.view.update_projection()
         self.app.view.update()
 
     def view_perspective(self):
         """Swtich to a perspective view."""
         self.app.view.current = self.app.view.PERSPECTIVE
+        self.app.view.update_projection()
         self.app.view.update()
 
     # ==============================================================================
