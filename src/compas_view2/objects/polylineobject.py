@@ -7,10 +7,11 @@ class PolylineObject(BufferObject):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, pointcolor=None, linecolor=None, color=None, **kwargs):
+    def __init__(self, data, closed=False, pointcolor=None, linecolor=None, color=None, **kwargs):
         super().__init__(data, show_lines=True, **kwargs)
         self.pointcolor = pointcolor or color
         self.linecolor = linecolor or color
+        self.closed = closed
 
     def _points_data(self):
         polyline = self._data
@@ -26,9 +27,13 @@ class PolylineObject(BufferObject):
         positions = []
         colors = []
         elements = []
-        for i in range(len(polyline.points)-1):
+        if self.closed:
+            indexes = range(len(polyline.points))
+        else:
+            indexes = range(len(polyline.points)-1)
+        for i in indexes:
             positions.append(list(polyline.points[i]))
-            positions.append(list(polyline.points[i+1]))
+            positions.append(list(polyline.points[(i+1) % len(polyline.points)]))
             colors.append(color)
             colors.append(color)
             elements.append([i*2, i*2+1])
