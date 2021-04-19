@@ -45,10 +45,12 @@ Please check the [Issue Tracker](https://github.com/compas-dev/compas_view2/issu
 | Point    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Vector   | :heavy_check_mark: | :x:                | :x:                |
 | Line     | :heavy_check_mark: | :x:                | :heavy_check_mark: |
-| Plane    | :x:                | :x:                | :x:                |
-| Circle   | :x:                | :x:                | :x:                |
-| Polygon  | :x:                | :x:                | :x:                |
+| Plane    | :heavy_check_mark: | :x:                | :x:                |
+| Frame    | :heavy_check_mark: | :x:                | :x:                |
+| Circle   | :heavy_check_mark: | :x:                | :x:                |
+| Polygon  | :heavy_check_mark: | :x:                | :x:                |
 | Polyline | :heavy_check_mark: | :x:                | :x:                |
+| Text     | :heavy_check_mark: | :x:                | :x:                |
 
 ### Shapes
 
@@ -56,11 +58,11 @@ Please check the [Issue Tracker](https://github.com/compas-dev/compas_view2/issu
 | ---------- | ------------------ | ------------------ | ------------------ |
 | Box        | :heavy_check_mark: | :heavy_check_mark: | :x:                |
 | Sphere     | :heavy_check_mark: | :heavy_check_mark: | :x:                |
-| Cone       | :x:                | :x:                | :x:                |
+| Cone       | :heavy_check_mark: | :x:                | :x:                |
 | Cylinder   | :heavy_check_mark: | :x:                | :x:                |
-| Capsule    | :x:                | :x:                | :x:                |
+| Capsule    | :heavy_check_mark: | :x:                | :x:                |
 | Torus      | :heavy_check_mark: | :x:                | :x:                |
-| Polyhedron | :x:                | :x:                | :x:                |
+| Polyhedron | :heavy_check_mark: | :x:                | :x:                |
 
 ### Datastructures
 

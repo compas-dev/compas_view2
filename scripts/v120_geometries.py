@@ -1,5 +1,3 @@
-from typing import Callable
-
 from compas_view2 import app
 from compas.geometry import Circle
 from compas.geometry import Ellipse
