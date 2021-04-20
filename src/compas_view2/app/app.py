@@ -118,6 +118,10 @@ class App:
         app.references = set()
 
         self.timer = None
+        self.frame_count = 0
+        self.record = False
+        self.recorded_frames = []
+
         self.width = width
         self.height = height
         self.window = QtWidgets.QMainWindow()
@@ -288,8 +292,7 @@ class App:
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))
 
-    def on(self, interval=None, timeout=None):
-        self.frame_count = 0
+    def on(self, interval=None, timeout=None, record=False, frames=None, record_path="temp/out.gif", playback_interval=None):
 
         if (not interval and not timeout) or (interval and timeout):
             raise ValueError("Must specify either interval or timeout")
@@ -299,9 +302,23 @@ class App:
                 func(self.frame_count)
                 self.view.update()
                 self.frame_count += 1
+                if frames is not None and self.frame_count >= frames:
+                    self.timer.stop()
+                    if self.record:
+                        self.record = False
+                        self.recorded_frames[0].save(
+                            record_path, save_all=True, optimize=True,
+                            duration=playback_interval or interval,
+                            append_images=self.recorded_frames[1:],
+                            loop=100)
+                        print("Recorded to ", record_path)
 
             if interval:
                 self.timer = Timer(interval=interval, callback=render)
             if timeout:
                 self.timer = Timer(interval=timeout, callback=render, singleshot=True)
+
+            self.frame_count = 0
+            self.record = record
+
         return outer

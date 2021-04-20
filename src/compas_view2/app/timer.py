@@ -9,3 +9,6 @@ class Timer:
         self.timer.timeout.connect(callback)
         self.timer.setSingleShot(singleshot)
         self.timer.start()
+
+    def stop(self):
+        self.timer.stop()
