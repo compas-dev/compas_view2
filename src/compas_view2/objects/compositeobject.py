@@ -3,7 +3,7 @@ import numpy as np
 
 
 class CompositeObject(BufferObject):
-    """Object for displaying a composition of compas_view2 objects."""
+    """Object for displaying a composition of View2 objects."""
 
     def __init__(self, objects, **kwargs):
         self.objects = objects

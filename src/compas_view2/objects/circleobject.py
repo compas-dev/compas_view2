@@ -4,7 +4,7 @@ import math
 
 
 class CircleObject(PolylineObject):
-    """Object for displaying COMPAS Plane geometry."""
+    """Object for displaying COMPAS Circle geometry."""
 
     def __init__(self, circle, u=16, show_edges=True, **kwargs):
 

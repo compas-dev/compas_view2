@@ -4,7 +4,7 @@ import math
 
 
 class EllipseObject(PolylineObject):
-    """Object for displaying COMPAS Plane geometry."""
+    """Object for displaying COMPAS Ellipse geometry."""
 
     def __init__(self, ellipse, u=16, show_edges=True, **kwargs):
 
