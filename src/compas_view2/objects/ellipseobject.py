@@ -18,4 +18,4 @@ class EllipseObject(PolylineObject):
             for i in range(0, u)
             ]
 
-        super().__init__(ellipse, closed=True, show_edges=show_edges, **kwargs)
+        super().__init__(ellipse, close=True, show_edges=show_edges, **kwargs)

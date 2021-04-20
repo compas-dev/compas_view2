@@ -1,4 +1,5 @@
 from .bufferobject import BufferObject
+from compas.utilities import pairwise
 
 
 class PolylineObject(BufferObject):
@@ -7,11 +8,11 @@ class PolylineObject(BufferObject):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, closed=False, pointcolor=None, linecolor=None, color=None, **kwargs):
+    def __init__(self, data, close=False, pointcolor=None, linecolor=None, color=None, **kwargs):
         super().__init__(data, show_lines=True, **kwargs)
         self.pointcolor = pointcolor or color
         self.linecolor = linecolor or color
-        self.closed = closed
+        self.close = close
 
     def _points_data(self):
         polyline = self._data
@@ -27,14 +28,16 @@ class PolylineObject(BufferObject):
         positions = []
         colors = []
         elements = []
-        if self.closed:
-            indexes = range(len(polyline.points))
+        if self.close:
+            lines = pairwise(polyline.points + [polyline.points[0]])
         else:
-            indexes = range(len(polyline.points)-1)
-        for i in indexes:
-            positions.append(list(polyline.points[i]))
-            positions.append(list(polyline.points[(i+1) % len(polyline.points)]))
+            lines = pairwise(polyline.points)
+        count = 0
+        for pt1, pt2 in lines:
+            positions.append(pt1)
+            positions.append(pt2)
             colors.append(color)
             colors.append(color)
-            elements.append([i*2, i*2+1])
+            elements.append([count, count+1])
+            count += 2
         return positions, colors, elements
