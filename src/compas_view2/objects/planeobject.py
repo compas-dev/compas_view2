@@ -17,7 +17,7 @@ class PlaneObject(CompositeObject):
         line = Line(
             self.frame.to_world_coordinates([0, 0, 0]),
             self.frame.to_world_coordinates([0, 0, size])
-            )
+        )
         lineObject = LineObject(line, **kwargs)
 
         vertices = [
@@ -25,7 +25,7 @@ class PlaneObject(CompositeObject):
             self.frame.to_world_coordinates([size, -size, 0]),
             self.frame.to_world_coordinates([size, size, 0]),
             self.frame.to_world_coordinates([-size, size, 0])
-            ]
+        ]
         faces = [
             [0, 1, 2],
             [0, 2, 3]

@@ -16,6 +16,6 @@ class CircleObject(PolylineObject):
                 0
                 ])
             for i in range(u)
-            ]
+        ]
 
         super().__init__(circle, close=True, show_edges=show_edges, **kwargs)

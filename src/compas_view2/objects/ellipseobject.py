@@ -14,8 +14,8 @@ class EllipseObject(PolylineObject):
                 math.cos(i*math.pi*2/u) * ellipse.major,
                 math.sin(i*math.pi*2/u) * ellipse.minor,
                 0
-                ])
+            ])
             for i in range(0, u)
-            ]
+        ]
 
         super().__init__(ellipse, close=True, show_edges=show_edges, **kwargs)

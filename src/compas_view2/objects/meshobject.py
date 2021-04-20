@@ -85,7 +85,7 @@ class MeshObject(BufferObject):
         vertex_color = {
             vertex: self._mesh.vertex_attribute(vertex, 'color') or self.pointcolor or self.default_color_points
             for vertex in self._mesh.vertices()
-            }
+        }
         positions = []
         colors = []
         elements = []
@@ -104,7 +104,7 @@ class MeshObject(BufferObject):
         linecolor = {
             edge: self._mesh.edge_attribute(edge, 'color') or self.linecolor or self.default_color_lines
             for edge in self._mesh.edges()
-            }
+        }
         positions = []
         colors = []
         elements = []
@@ -135,7 +135,7 @@ class MeshObject(BufferObject):
         face_color = {
             face: self._mesh.face_attribute(face, 'color') or self.facecolor or self.default_color_faces
             for face in self._mesh.faces()
-            }
+        }
         positions = []
         colors = []
         elements = []
@@ -192,7 +192,7 @@ class MeshObject(BufferObject):
         face_color = {
             face: self._mesh.face_attribute(face, 'color') or self.facecolor or self.default_color_faces
             for face in self._mesh.faces()
-            }
+        }
         positions = []
         colors = []
         elements = []
