@@ -4,6 +4,8 @@
 [![GitHub - License](https://img.shields.io/github/license/compas-dev/compas_view2.svg)](https://github.com/compas-dev/compas_view2)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/compas_view2.svg)](https://pypi.python.org/project/compas_view2)
 [![PyPI - Latest Release](https://img.shields.io/pypi/v/compas_view2.svg)](https://pypi.python.org/project/compas_view2)
+[![Conda - Latest Release](https://anaconda.org/conda-forge/compas_view2/badges/version.svg)](https://anaconda.org/conda-forge/compas_view2)
+[![Conda - Platform](https://img.shields.io/conda/pn/conda-forge/compas_view2)](https://anaconda.org/conda-forge/compas_view2)
 
 Second generation viewers for the COMPAS framework
 
