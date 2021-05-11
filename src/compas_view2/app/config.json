@@ -96,7 +96,7 @@
             "text": "Networks",
             "items":
             [
-                {"type": "action", "text": "Add Network from OBJ", "action": "add_network_from_obj"}
+                {"type": "action", "text": "PLACEHOLDER", "action": "dummy"}
             ]
         },
         {
@@ -104,7 +104,7 @@
             "text": "Meshes",
             "items":
             [
-                {"type": "action", "text": "Add Mesh from File", "action": "add_mesh_from_file"}
+                {"type": "action", "text": "PLACEHOLDER", "action": "dummy"}
             ]
         },
         {
@@ -112,7 +112,7 @@
             "text": "VolMeshes",
             "items":
             [
-                {"type": "action", "text": "Add VolMesh from File", "action": "dummy"}
+                {"type": "action", "text": "PLACEHOLDER", "action": "dummy"}
             ]
         },
         {
@@ -120,7 +120,7 @@
             "text": "Robots",
             "items":
             [
-                {"type": "action", "text": "Add Robot from File", "action": "dummy"}
+                {"type": "action", "text": "PLACEHOLDER", "action": "dummy"}
             ]
         },
         {
@@ -128,7 +128,7 @@
             "text": "Assemblies",
             "items":
             [
-                {"type": "action", "text": "Add Assembly from File", "action": "dummy"}
+                {"type": "action", "text": "PLACEHOLDER", "action": "dummy"}
             ]
         }
     ],
