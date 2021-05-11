@@ -57,6 +57,15 @@
         },
         {
             "type": "menu",
+            "text": "Data",
+            "items":
+            [
+                {"type": "action", "text": "From IFC", "action": "dummy"},
+                {"type": "action", "text": "To IFC", "action": "dummy"}
+            ]
+        },
+        {
+            "type": "menu",
             "text": "Geometry",
             "items":
             [
@@ -97,6 +106,30 @@
             "items":
             [
                 {"type": "action", "text": "Add Mesh from File", "action": "add_mesh_from_file"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "VolMeshes",
+            "items":
+            [
+                {"type": "action", "text": "Add VolMesh from File", "action": "dummy"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "Robots",
+            "items":
+            [
+                {"type": "action", "text": "Add Robot from File", "action": "dummy"}
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "Assemblies",
+            "items":
+            [
+                {"type": "action", "text": "Add Assembly from File", "action": "dummy"}
             ]
         }
     ],

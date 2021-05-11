@@ -57,9 +57,13 @@ class Controller:
                 Worker.pool.start(worker)
             return wrapped
         return outer
+
     # ==============================================================================
     # App actions
     # ==============================================================================
+
+    def dummy(self):
+        pass
 
     def about(self):
         """Display the about message."""
