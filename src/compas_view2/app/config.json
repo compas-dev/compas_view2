@@ -60,8 +60,7 @@
             "text": "Data",
             "items":
             [
-                {"type": "action", "text": "From IFC", "action": "dummy"},
-                {"type": "action", "text": "To IFC", "action": "dummy"}
+                {"type": "action", "text": "PLACEHOLDER", "action": "dummy"}
             ]
         },
         {
