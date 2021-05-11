@@ -18,7 +18,7 @@ for x in range(5):
 
 
 spherecollection = Collection(spheres)
-viewer.add(spherecollection, colors=colors, u=20, v=5, linecolor=(0.2, 0, 0), show_edges=True)
+viewer.add(spherecollection, colors=colors, u=20, v=5, linecolor=(0.2, 0, 0))
 
 lines = []
 colors = []
