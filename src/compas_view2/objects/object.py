@@ -47,10 +47,11 @@ class Object(ABC):
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj
 
-    def __init__(self, data, name=None, is_selected=False):
+    def __init__(self, data, name=None, is_selected=False, visible=True):
         self._data = data
         self.name = name
         self.is_selected = is_selected
+        self.visible = visible
         self._instance_color = None
         self._translation = [0, 0, 0]
         self._rotation = [0, 0, 0]
