@@ -35,12 +35,12 @@
     <nav class="navbar navbar-expand navbar-dark col flex-column flex-md-row text-center">
       <!-- brand -->
       <a class="navbar-brand" href="https://compas.dev/compas_view2/">
-        <img src="../../_static/images/compas_icon_white.png" alt="COMPAS Viewers 2" width="48px" height="48px" />
+        <img src="../../_static/images/compas_icon_white.png" alt="COMPAS View2" width="48px" height="48px" />
       </a>
       <!-- brand -->
       <!-- primary -->
       <ul class="navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="https://compas.dev/compas_view2/">COMPAS Viewers 2</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://compas.dev/compas_view2/">COMPAS View2</a></li>
       </ul>
       <!-- primary -->
       <ul class="navbar-nav d-none d-md-flex ml-md-auto">
@@ -50,7 +50,7 @@
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            0.2.1
+            0.3.1rc0
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -93,12 +93,12 @@
 
         
         
-        <div class="detail section" id="view120">
+        <section class="detail" id="view120">
 <h1>View120</h1>
 <dl class="py class">
-<dt id="compas_view2.views.View120">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">compas_view2.views.</span></code><code class="sig-name descname"><span class="pre">View120</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/views/view120.py#L13"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.views.view.View</span></code></p>
+<dt class="sig sig-object py" id="compas_view2.views.View120">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_view2.views.</span></span><span class="sig-name descname"><span class="pre">View120</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/views/view120.py#L14"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <a class="reference internal" href="compas_view2.views.View.html#compas_view2.views.View" title="compas_view2.views.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.views.view.View</span></code></a></p>
 <p>View widget for OpenGL version 2.1 and GLSL 120 with a Compatibility Profile.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -119,11 +119,14 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.paint_plane.html#compas_view2.views.View120.paint_plane" title="compas_view2.views.View120.paint_plane"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paint_plane</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.resize.html#compas_view2.views.View120.resize" title="compas_view2.views.View120.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(self, arg__1)</p></td>
-<td><p>resize(self, w: int, h: int) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.resize.html#compas_view2.views.View120.resize" title="compas_view2.views.View120.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.sort_objects_from_viewworld.html#compas_view2.views.View120.sort_objects_from_viewworld" title="compas_view2.views.View120.sort_objects_from_viewworld"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_objects_from_viewworld</span></code></a>(viewworld)</p></td>
 <td><p>Sort objects by the distances from their bounding box centers to camera location</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.update_projection.html#compas_view2.views.View120.update_projection" title="compas_view2.views.View120.update_projection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_projection</span></code></a>([w, h])</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -179,8 +182,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.changeEvent.html#compas_view2.views.View120.changeEvent" title="compas_view2.views.View120.changeEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">changeEvent</span></code></a>(self, event)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.childAt.html#compas_view2.views.View120.childAt" title="compas_view2.views.View120.childAt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">childAt</span></code></a>(self, p)</p></td>
-<td><p>childAt(self, x: int, y: int) -&gt; PySide2.QtWidgets.QWidget</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.childAt.html#compas_view2.views.View120.childAt" title="compas_view2.views.View120.childAt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">childAt</span></code></a>(-&gt; PySide2.QtWidgets.QWidget)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.childEvent.html#compas_view2.views.View120.childEvent" title="compas_view2.views.View120.childEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">childEvent</span></code></a>(self, event)</p></td>
 <td><p></p></td>
@@ -212,8 +215,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.colorCount.html#compas_view2.views.View120.colorCount" title="compas_view2.views.View120.colorCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorCount</span></code></a>(self)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.connect.html#compas_view2.views.View120.connect" title="compas_view2.views.View120.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a>(arg__1, arg__2, arg__3, type)</p></td>
-<td><p>connect(self, arg__1: bytes, arg__2: typing.Callable, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool connect(self, arg__1: bytes, arg__2: PySide2.QtCore.QObject, arg__3: bytes, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; bool connect(self, sender: PySide2.QtCore.QObject, signal: bytes, member: bytes, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection connect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, method: PySide2.QtCore.QMetaMethod, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection connect(sender: PySide2.QtCore.QObject, signal: bytes, receiver: PySide2.QtCore.QObject, member: bytes, type: PySide2.QtCore.Qt.ConnectionType = PySide2.QtCore.Qt.ConnectionType.AutoConnection) -&gt; PySide2.QtCore.QMetaObject.Connection</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.connect.html#compas_view2.views.View120.connect" title="compas_view2.views.View120.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a>(…)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.connectNotify.html#compas_view2.views.View120.connectNotify" title="compas_view2.views.View120.connectNotify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connectNotify</span></code></a>(self, signal)</p></td>
 <td><p></p></td>
@@ -272,8 +275,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.devicePixelRatioFScale.html#compas_view2.views.View120.devicePixelRatioFScale" title="compas_view2.views.View120.devicePixelRatioFScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">devicePixelRatioFScale</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.disconnect.html#compas_view2.views.View120.disconnect" title="compas_view2.views.View120.disconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disconnect</span></code></a>(arg__1)</p></td>
-<td><p>disconnect(arg__1: PySide2.QtCore.QObject, arg__2: bytes, arg__3: typing.Callable) -&gt; bool disconnect(self, arg__1: bytes, arg__2: typing.Callable) -&gt; bool disconnect(self, receiver: PySide2.QtCore.QObject, member: typing.Union[bytes, NoneType] = None) -&gt; bool disconnect(self, signal: bytes, receiver: PySide2.QtCore.QObject, member: bytes) -&gt; bool disconnect(sender: PySide2.QtCore.QObject, signal: PySide2.QtCore.QMetaMethod, receiver: PySide2.QtCore.QObject, member: PySide2.QtCore.QMetaMethod) -&gt; bool disconnect(sender: PySide2.QtCore.QObject, signal: bytes, receiver: PySide2.QtCore.QObject, member: bytes) -&gt; bool</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.disconnect.html#compas_view2.views.View120.disconnect" title="compas_view2.views.View120.disconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disconnect</span></code></a>(…)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.disconnectNotify.html#compas_view2.views.View120.disconnectNotify" title="compas_view2.views.View120.disconnectNotify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disconnectNotify</span></code></a>(self, signal)</p></td>
 <td><p></p></td>
@@ -326,8 +329,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.findChild.html#compas_view2.views.View120.findChild" title="compas_view2.views.View120.findChild"><code class="xref py py-obj docutils literal notranslate"><span class="pre">findChild</span></code></a>(self, arg__1, arg__2)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.findChildren.html#compas_view2.views.View120.findChildren" title="compas_view2.views.View120.findChildren"><code class="xref py py-obj docutils literal notranslate"><span class="pre">findChildren</span></code></a>(self, arg__1, arg__2)</p></td>
-<td><p>findChildren(self, arg__1: type, arg__2: PySide2.QtCore.QRegularExpression) -&gt; typing.Iterable findChildren(self, arg__1: type, arg__2: str = ‘’) -&gt; typing.Iterable</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.findChildren.html#compas_view2.views.View120.findChildren" title="compas_view2.views.View120.findChildren"><code class="xref py py-obj docutils literal notranslate"><span class="pre">findChildren</span></code></a>(…)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.focusInEvent.html#compas_view2.views.View120.focusInEvent" title="compas_view2.views.View120.focusInEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusInEvent</span></code></a>(self, event)</p></td>
 <td><p></p></td>
@@ -392,8 +395,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.grabKeyboard.html#compas_view2.views.View120.grabKeyboard" title="compas_view2.views.View120.grabKeyboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabKeyboard</span></code></a>(self)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.grabMouse.html#compas_view2.views.View120.grabMouse" title="compas_view2.views.View120.grabMouse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabMouse</span></code></a>(self)</p></td>
-<td><p>grabMouse(self, arg__1: PySide2.QtGui.QCursor) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.grabMouse.html#compas_view2.views.View120.grabMouse" title="compas_view2.views.View120.grabMouse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabMouse</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.grabShortcut.html#compas_view2.views.View120.grabShortcut" title="compas_view2.views.View120.grabShortcut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabShortcut</span></code></a>(self, key, context)</p></td>
 <td><p></p></td>
@@ -623,8 +626,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.mouseReleaseEvent.html#compas_view2.views.View120.mouseReleaseEvent" title="compas_view2.views.View120.mouseReleaseEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouseReleaseEvent</span></code></a>(self, event)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.move.html#compas_view2.views.View120.move" title="compas_view2.views.View120.move"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move</span></code></a>(self, arg__1)</p></td>
-<td><p>move(self, x: int, y: int) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.move.html#compas_view2.views.View120.move" title="compas_view2.views.View120.move"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.moveEvent.html#compas_view2.views.View120.moveEvent" title="compas_view2.views.View120.moveEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveEvent</span></code></a>(self, event)</p></td>
 <td><p></p></td>
@@ -719,11 +722,13 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.removeEventFilter.html#compas_view2.views.View120.removeEventFilter" title="compas_view2.views.View120.removeEventFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeEventFilter</span></code></a>(self, obj)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.render.html#compas_view2.views.View120.render" title="compas_view2.views.View120.render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render</span></code></a>(self, painter, targetOffset, …)</p></td>
-<td><p>render(self, target: PySide2.QtGui.QPaintDevice, targetOffset: PySide2.QtCore.QPoint = Default(QPoint), sourceRegion: PySide2.QtGui.QRegion = Default(QRegion), renderFlags: PySide2.QtWidgets.QWidget.RenderFlags = Instance(QWidget.RenderFlags(QWidget.DrawWindowBackground | QWidget.DrawChildren))) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.render.html#compas_view2.views.View120.render" title="compas_view2.views.View120.render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render</span></code></a>(, renderFlags, sourceRegion, renderFlags)</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.repaint.html#compas_view2.views.View120.repaint" title="compas_view2.views.View120.repaint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repaint</span></code></a>(self)</p></td>
-<td><p>repaint(self, arg__1: PySide2.QtCore.QRect) -&gt; None repaint(self, arg__1: PySide2.QtGui.QRegion) -&gt; None repaint(self, x: int, y: int, w: int, h: int) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.repaint.html#compas_view2.views.View120.repaint" title="compas_view2.views.View120.repaint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repaint</span></code></a>(-&gt; None
+ -&gt; None
+ -&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.resizeEvent.html#compas_view2.views.View120.resizeEvent" title="compas_view2.views.View120.resizeEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resizeEvent</span></code></a>(self, e)</p></td>
 <td><p></p></td>
@@ -740,8 +745,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.screen.html#compas_view2.views.View120.screen" title="compas_view2.views.View120.screen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">screen</span></code></a>(self)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.scroll.html#compas_view2.views.View120.scroll" title="compas_view2.views.View120.scroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scroll</span></code></a>(self, dx, dy)</p></td>
-<td><p>scroll(self, dx: int, dy: int, arg__3: PySide2.QtCore.QRect) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.scroll.html#compas_view2.views.View120.scroll" title="compas_view2.views.View120.scroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scroll</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.sender.html#compas_view2.views.View120.sender" title="compas_view2.views.View120.sender"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sender</span></code></a>(self)</p></td>
 <td><p></p></td>
@@ -767,11 +772,11 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setBackgroundRole.html#compas_view2.views.View120.setBackgroundRole" title="compas_view2.views.View120.setBackgroundRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackgroundRole</span></code></a>(self, arg__1)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setBaseSize.html#compas_view2.views.View120.setBaseSize" title="compas_view2.views.View120.setBaseSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBaseSize</span></code></a>(self, arg__1)</p></td>
-<td><p>setBaseSize(self, basew: int, baseh: int) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setBaseSize.html#compas_view2.views.View120.setBaseSize" title="compas_view2.views.View120.setBaseSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBaseSize</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setContentsMargins.html#compas_view2.views.View120.setContentsMargins" title="compas_view2.views.View120.setContentsMargins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setContentsMargins</span></code></a>(self, left, top, right, …)</p></td>
-<td><p>setContentsMargins(self, margins: PySide2.QtCore.QMargins) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setContentsMargins.html#compas_view2.views.View120.setContentsMargins" title="compas_view2.views.View120.setContentsMargins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setContentsMargins</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setContextMenuPolicy.html#compas_view2.views.View120.setContextMenuPolicy" title="compas_view2.views.View120.setContextMenuPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setContextMenuPolicy</span></code></a>(self, policy)</p></td>
 <td><p></p></td>
@@ -788,14 +793,14 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setFixedHeight.html#compas_view2.views.View120.setFixedHeight" title="compas_view2.views.View120.setFixedHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFixedHeight</span></code></a>(self, h)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setFixedSize.html#compas_view2.views.View120.setFixedSize" title="compas_view2.views.View120.setFixedSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFixedSize</span></code></a>(self, arg__1)</p></td>
-<td><p>setFixedSize(self, w: int, h: int) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setFixedSize.html#compas_view2.views.View120.setFixedSize" title="compas_view2.views.View120.setFixedSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFixedSize</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setFixedWidth.html#compas_view2.views.View120.setFixedWidth" title="compas_view2.views.View120.setFixedWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFixedWidth</span></code></a>(self, w)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setFocus.html#compas_view2.views.View120.setFocus" title="compas_view2.views.View120.setFocus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFocus</span></code></a>(self)</p></td>
-<td><p>setFocus(self, reason: PySide2.QtCore.Qt.FocusReason) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setFocus.html#compas_view2.views.View120.setFocus" title="compas_view2.views.View120.setFocus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFocus</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setFocusPolicy.html#compas_view2.views.View120.setFocusPolicy" title="compas_view2.views.View120.setFocusPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFocusPolicy</span></code></a>(self, policy)</p></td>
 <td><p></p></td>
@@ -812,8 +817,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setFormat.html#compas_view2.views.View120.setFormat" title="compas_view2.views.View120.setFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFormat</span></code></a>(self, format)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setGeometry.html#compas_view2.views.View120.setGeometry" title="compas_view2.views.View120.setGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setGeometry</span></code></a>(self, arg__1)</p></td>
-<td><p>setGeometry(self, x: int, y: int, w: int, h: int) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setGeometry.html#compas_view2.views.View120.setGeometry" title="compas_view2.views.View120.setGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setGeometry</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setGraphicsEffect.html#compas_view2.views.View120.setGraphicsEffect" title="compas_view2.views.View120.setGraphicsEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setGraphicsEffect</span></code></a>(self, effect)</p></td>
 <td><p></p></td>
@@ -833,14 +838,14 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setLocale.html#compas_view2.views.View120.setLocale" title="compas_view2.views.View120.setLocale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLocale</span></code></a>(self, locale)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setMask.html#compas_view2.views.View120.setMask" title="compas_view2.views.View120.setMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMask</span></code></a>(self, arg__1)</p></td>
-<td><p>setMask(self, arg__1: PySide2.QtGui.QRegion) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setMask.html#compas_view2.views.View120.setMask" title="compas_view2.views.View120.setMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMask</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setMaximumHeight.html#compas_view2.views.View120.setMaximumHeight" title="compas_view2.views.View120.setMaximumHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaximumHeight</span></code></a>(self, maxh)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setMaximumSize.html#compas_view2.views.View120.setMaximumSize" title="compas_view2.views.View120.setMaximumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaximumSize</span></code></a>(self, arg__1)</p></td>
-<td><p>setMaximumSize(self, maxw: int, maxh: int) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setMaximumSize.html#compas_view2.views.View120.setMaximumSize" title="compas_view2.views.View120.setMaximumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaximumSize</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setMaximumWidth.html#compas_view2.views.View120.setMaximumWidth" title="compas_view2.views.View120.setMaximumWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaximumWidth</span></code></a>(self, maxw)</p></td>
 <td><p></p></td>
@@ -848,8 +853,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setMinimumHeight.html#compas_view2.views.View120.setMinimumHeight" title="compas_view2.views.View120.setMinimumHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMinimumHeight</span></code></a>(self, minh)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setMinimumSize.html#compas_view2.views.View120.setMinimumSize" title="compas_view2.views.View120.setMinimumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMinimumSize</span></code></a>(self, arg__1)</p></td>
-<td><p>setMinimumSize(self, minw: int, minh: int) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setMinimumSize.html#compas_view2.views.View120.setMinimumSize" title="compas_view2.views.View120.setMinimumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMinimumSize</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setMinimumWidth.html#compas_view2.views.View120.setMinimumWidth" title="compas_view2.views.View120.setMinimumWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMinimumWidth</span></code></a>(self, minw)</p></td>
 <td><p></p></td>
@@ -863,8 +868,9 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setPalette.html#compas_view2.views.View120.setPalette" title="compas_view2.views.View120.setPalette"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPalette</span></code></a>(self, arg__1)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setParent.html#compas_view2.views.View120.setParent" title="compas_view2.views.View120.setParent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setParent</span></code></a>(self, parent)</p></td>
-<td><p>setParent(self, parent: PySide2.QtWidgets.QWidget) -&gt; None setParent(self, parent: PySide2.QtWidgets.QWidget, f: PySide2.QtCore.Qt.WindowFlags) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setParent.html#compas_view2.views.View120.setParent" title="compas_view2.views.View120.setParent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setParent</span></code></a>(-&gt; None
+ -&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setProperty.html#compas_view2.views.View120.setProperty" title="compas_view2.views.View120.setProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setProperty</span></code></a>(self, name, value)</p></td>
 <td><p></p></td>
@@ -875,11 +881,11 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setShortcutEnabled.html#compas_view2.views.View120.setShortcutEnabled" title="compas_view2.views.View120.setShortcutEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setShortcutEnabled</span></code></a>(self, id, enable)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setSizeIncrement.html#compas_view2.views.View120.setSizeIncrement" title="compas_view2.views.View120.setSizeIncrement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSizeIncrement</span></code></a>(self, arg__1)</p></td>
-<td><p>setSizeIncrement(self, w: int, h: int) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setSizeIncrement.html#compas_view2.views.View120.setSizeIncrement" title="compas_view2.views.View120.setSizeIncrement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSizeIncrement</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setSizePolicy.html#compas_view2.views.View120.setSizePolicy" title="compas_view2.views.View120.setSizePolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSizePolicy</span></code></a>(self, arg__1)</p></td>
-<td><p>setSizePolicy(self, horizontal: PySide2.QtWidgets.QSizePolicy.Policy, vertical: PySide2.QtWidgets.QSizePolicy.Policy) -&gt; None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.setSizePolicy.html#compas_view2.views.View120.setSizePolicy" title="compas_view2.views.View120.setSizePolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSizePolicy</span></code></a>(-&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.setStatusTip.html#compas_view2.views.View120.setStatusTip" title="compas_view2.views.View120.setStatusTip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStatusTip</span></code></a>(self, arg__1)</p></td>
 <td><p></p></td>
@@ -1043,8 +1049,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.unsetLocale.html#compas_view2.views.View120.unsetLocale" title="compas_view2.views.View120.unsetLocale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unsetLocale</span></code></a>(self)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.update.html#compas_view2.views.View120.update" title="compas_view2.views.View120.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(self)</p></td>
-<td><p>update(self, arg__1: PySide2.QtCore.QRect) -&gt; None update(self, arg__1: PySide2.QtGui.QRegion) -&gt; None update(self, x: int, y: int, w: int, h: int) -&gt; None</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View120.update.html#compas_view2.views.View120.update" title="compas_view2.views.View120.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(-&gt; None
+ -&gt; None
+ -&gt; None)</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View120.updateBehavior.html#compas_view2.views.View120.updateBehavior" title="compas_view2.views.View120.updateBehavior"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateBehavior</span></code></a>(self)</p></td>
 <td><p></p></td>
@@ -1122,7 +1130,7 @@
 </table>
 </dd></dl>
 
-</div>
+</section>
 
         
       </main>
@@ -1238,7 +1246,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
   URL_ROOT          : '',
-  VERSION           : '0.2.1',
+  VERSION           : '0.3.1rc0',
   COLLAPSE_INDEX    : false,
   FILE_SUFFIX       : '.html',
   HAS_SOURCE        : 'false',
