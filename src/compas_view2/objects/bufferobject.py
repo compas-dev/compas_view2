@@ -28,8 +28,8 @@ class BufferObject(Object):
     def __init__(self, data, name=None, is_selected=False,
                  show_points=False, show_vertices=False, show_lines=False, show_edges=True, show_faces=True,
                  pointcolor=None, linecolor=None, facecolor=None,
-                 linewidth=None, pointsize=None, opacity=1):
-        super().__init__(data, name=name, is_selected=is_selected)
+                 linewidth=None, pointsize=None, opacity=1, visible=True):
+        super().__init__(data, name=name, is_selected=is_selected, visible=visible)
         self._data = data
         self.show_points = show_points or show_vertices
         self.show_lines = show_lines or show_edges
