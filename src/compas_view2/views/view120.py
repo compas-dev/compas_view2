@@ -133,7 +133,8 @@ class View120(View):
         self.shader_model.bind()
         self.shader_model.uniform4x4("viewworld", viewworld)
         for obj in self.sort_objects_from_viewworld(viewworld):
-            obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
+            if obj.visible:
+                obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
         self.shader_model.release()
 
         # draw text sprites
@@ -142,7 +143,8 @@ class View120(View):
         for guid in self.objects:
             obj = self.objects[guid]
             if isinstance(obj, TextObject):
-                obj.draw(self.shader_text)
+                if obj.visible:
+                    obj.draw(self.shader_text)
         self.shader_text.release()
 
         # draw 2D box for multi-selection
@@ -171,7 +173,8 @@ class View120(View):
         for guid in self.objects:
             obj = self.objects[guid]
             if hasattr(obj, "draw_instance"):
-                obj.draw_instance(self.shader_instance, self.mode == "wireframe")
+                if obj.visible:
+                    obj.draw_instance(self.shader_instance, self.mode == "wireframe")
         # create map
         r = self.devicePixelRatio()
         instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
