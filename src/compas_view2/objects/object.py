@@ -5,6 +5,7 @@ from compas.geometry import Rotation
 from compas.geometry import Scale
 from compas.geometry import decompose_matrix
 from compas.geometry import identity_matrix
+from ..forms import EditForm
 
 import numpy as np
 
@@ -70,8 +71,13 @@ class Object(ABC):
     def create(self):
         pass
 
-    def edit(self):
-        pass
+    @property
+    def editables(self):
+        return {}
+
+    def edit(self, on_update=None):
+        self.editform = EditForm("Edit" + self._data.__class__.__name__, self, on_update=on_update)
+        self.editform.show()
 
     @property
     def translation(self):

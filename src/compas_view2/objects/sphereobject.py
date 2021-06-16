@@ -10,3 +10,13 @@ class SphereObject(MeshObject):
         self._u = u
         self._v = v
         self._data = data
+
+    def update(self):
+        self._mesh = Mesh.from_shape(self._data, u=self._u, v=self._v)
+        super().update()
+
+    @property
+    def editables(self):
+        return {
+            "radius": {"type": "number"}
+        }

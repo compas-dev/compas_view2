@@ -8,3 +8,15 @@ class BoxObject(MeshObject):
     def __init__(self, data, **kwargs):
         super().__init__(Mesh.from_shape(data), **kwargs)
         self._data = data
+
+    def update(self):
+        self._mesh = Mesh.from_shape(self._data)
+        super().update()
+
+    @property
+    def editables(self):
+        return {
+            "xsize": {"type": "number"},
+            "ysize": {"type": "number"},
+            "zsize": {"type": "number"},
+        }

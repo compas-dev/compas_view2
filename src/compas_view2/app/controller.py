@@ -45,7 +45,7 @@ class Controller:
                         self.app.view.update()
 
                     if obj:
-                        obj.edit(on_update)
+                        obj.edit(on_update=on_update)
 
                 worker = Worker(func, self)
                 if action == "add":
