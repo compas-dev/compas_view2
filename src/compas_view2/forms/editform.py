@@ -21,14 +21,17 @@ class EditForm(Form):
         super().__init__(title)
         self.on_update = on_update
         self.map_transform(obj)
-        if obj.editables:
-            self.add_label("data")
-            for key in obj.editables:
-                if obj.editables[key]["type"] == "number":
-                    self.map_number(obj._data, key)
 
-    def add_label(self, text):
+        if obj.properties:
+            self.map_dict(obj, keys=obj.properties)
+
+        self.obj = obj
+        self.data = obj._data.data
+        self.map_data(self.data)
+
+    def add_label(self, text, margin=0):
         layout = QtWidgets.QHBoxLayout()
+        layout.setContentsMargins(margin, 0, 0, 0)
         label = QtWidgets.QLabel(text)
         layout.addWidget(label)
         self._inputs.addLayout(layout)
@@ -49,7 +52,32 @@ class EditForm(Form):
         self.map_number(obj.scale, 1, name="y")
         self.map_number(obj.scale, 2, name="z")
 
-    def map_number(self, obj, attribute, name=None):
+    def map_data(self, data, name="data", margin=0):
+        self.add_label(name, margin=margin)
+        if isinstance(data, list):
+            self.map_list(data, margin=margin+20)
+        elif isinstance(data, dict):
+            self.map_dict(data, margin=margin+20)
+
+    def map_dict(self, data, keys=None, margin=0):
+
+        if keys:
+            for key in keys:
+                self.map_number(data, key, margin=margin)
+        else:
+            for key in data:
+                if isinstance(data[key], int) or isinstance(data[key], float):
+                    self.map_number(data, key, margin=margin)
+                else:
+                    self.map_data(data[key], name=key, margin=margin)
+
+    def map_list(self, _list, name=None, margin=20):
+        if name:
+            self.add_label(name)
+        for i in range(len(_list)):
+            self.map_number(_list, i, margin=margin)
+
+    def map_number(self, obj, attribute, name=None, margin=20):
         """Map number input field to an object attribute
 
         Parameters
@@ -64,23 +92,32 @@ class EditForm(Form):
         None
         """
         layout = QtWidgets.QHBoxLayout()
-        layout.setContentsMargins(20, 0, 0, 0)
+        layout.setContentsMargins(margin, 0, 0, 0)
         label = QtWidgets.QLabel(name or str(attribute))
-        _input = QtWidgets.QDoubleSpinBox()
-        _input.setMinimum(float('-inf'))
-        _input.setMaximum(float('inf'))
-        if isinstance(obj, list):
-            _input.setValue(obj[attribute])
+        if isinstance(obj, list) or isinstance(obj, dict):
+            value = obj[attribute]
         else:
-            _input.setValue(getattr(obj, attribute))
+            value = getattr(obj, attribute)
+        if isinstance(value, float):
+            _input = QtWidgets.QDoubleSpinBox()
+            _input.setMinimum(float('-inf'))
+            _input.setMaximum(float('inf'))
+        elif isinstance(value, int):
+            _input = QtWidgets.QSpinBox()
+        else:
+            raise ValueError()
+        _input.setValue(value)
         layout.addWidget(label)
         layout.addWidget(_input)
 
         def set_number(value):
-            if isinstance(obj, list):
+            if isinstance(obj, list) or isinstance(obj, dict):
                 obj[attribute] = value
             else:
                 setattr(obj, attribute, value)
+
+            self.obj._data.data = self.data
+
             if self.on_update:
                 self.on_update()
 

@@ -12,11 +12,3 @@ class BoxObject(MeshObject):
     def update(self):
         self._mesh = Mesh.from_shape(self._data)
         super().update()
-
-    @property
-    def editables(self):
-        return {
-            "xsize": {"type": "number"},
-            "ysize": {"type": "number"},
-            "zsize": {"type": "number"},
-        }

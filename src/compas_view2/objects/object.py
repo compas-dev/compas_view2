@@ -54,9 +54,9 @@ class Object(ABC):
         self.is_selected = is_selected
         self.visible = visible
         self._instance_color = None
-        self._translation = [0, 0, 0]
-        self._rotation = [0, 0, 0]
-        self._scale = [1, 1, 1]
+        self._translation = [0., 0., 0.]
+        self._rotation = [0., 0., 0.]
+        self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
 
@@ -72,8 +72,8 @@ class Object(ABC):
         pass
 
     @property
-    def editables(self):
-        return {}
+    def properties(self):
+        return None
 
     def edit(self, on_update=None):
         self.editform = EditForm("Edit" + self._data.__class__.__name__, self, on_update=on_update)
