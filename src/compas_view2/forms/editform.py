@@ -26,12 +26,13 @@ class EditForm(Form):
             self.map_dict(obj, keys=obj.properties)
 
         self.obj = obj
-        self.data = obj._data.data
-        self.map_data(self.data)
+        if hasattr(obj._data, "data"):
+            self.data = obj._data.data
+            self.map_data(self.data)
 
-    def add_label(self, text, margin=0):
+    def add_label(self, text, indent=0):
         layout = QtWidgets.QHBoxLayout()
-        layout.setContentsMargins(margin, 0, 0, 0)
+        layout.setContentsMargins(indent*20, 0, 0, 0)
         label = QtWidgets.QLabel(text)
         layout.addWidget(label)
         self._inputs.addLayout(layout)
@@ -52,32 +53,41 @@ class EditForm(Form):
         self.map_number(obj.scale, 1, name="y")
         self.map_number(obj.scale, 2, name="z")
 
-    def map_data(self, data, name="data", margin=0):
-        self.add_label(name, margin=margin)
+    def map_data(self, data, name="data", indent=0):
+        self.add_label(name, indent=indent)
         if isinstance(data, list):
-            self.map_list(data, margin=margin+20)
+            if isinstance(data[0], float) or isinstance(data[0], int):
+                self.map_list(data, indent=indent+1)
+            else:
+                self.add_label(f"{data[0].__class__.__name__}[{len(data)}]", indent=indent+1)
         elif isinstance(data, dict):
-            self.map_dict(data, margin=margin+20)
+            if data.get("datatype") and data.get("compas"):
+                self.map_schema(data, indent+1)
+            else:
+                self.map_dict(data, indent=indent+1)
 
-    def map_dict(self, data, keys=None, margin=0):
+    def map_schema(self, data, indent=0):
+        self.add_label(data['datatype'], indent=indent)
+
+    def map_dict(self, data, keys=None, indent=0):
 
         if keys:
             for key in keys:
-                self.map_number(data, key, margin=margin)
+                self.map_number(data, key, indent=indent)
         else:
             for key in data:
                 if isinstance(data[key], int) or isinstance(data[key], float):
-                    self.map_number(data, key, margin=margin)
+                    self.map_number(data, key, indent=indent)
                 else:
-                    self.map_data(data[key], name=key, margin=margin)
+                    self.map_data(data[key], name=key, indent=indent)
 
-    def map_list(self, _list, name=None, margin=20):
+    def map_list(self, _list, name=None, indent=1):
         if name:
             self.add_label(name)
         for i in range(len(_list)):
-            self.map_number(_list, i, margin=margin)
+            self.map_number(_list, i, indent=indent)
 
-    def map_number(self, obj, attribute, name=None, margin=20):
+    def map_number(self, obj, attribute, name=None, indent=1):
         """Map number input field to an object attribute
 
         Parameters
@@ -92,7 +102,7 @@ class EditForm(Form):
         None
         """
         layout = QtWidgets.QHBoxLayout()
-        layout.setContentsMargins(margin, 0, 0, 0)
+        layout.setContentsMargins(indent*20, 0, 0, 0)
         label = QtWidgets.QLabel(name or str(attribute))
         if isinstance(obj, list) or isinstance(obj, dict):
             value = obj[attribute]
@@ -116,7 +126,8 @@ class EditForm(Form):
             else:
                 setattr(obj, attribute, value)
 
-            self.obj._data.data = self.data
+            if hasattr(self, "data"):
+                self.obj._data.data = self.data
 
             if self.on_update:
                 self.on_update()
