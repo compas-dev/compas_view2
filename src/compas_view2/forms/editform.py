@@ -30,36 +30,47 @@ class EditForm(Form):
             self.data = obj._data.data
             self.map_data(self.data)
 
-    def add_label(self, text, indent=0):
-        layout = QtWidgets.QHBoxLayout()
+    def add_label(self, text, indent=0, layout=None):
+        if not layout:
+            layout = QtWidgets.QHBoxLayout()
+            self._inputs.addLayout(layout)
         layout.setContentsMargins(indent*20, 0, 0, 0)
-        label = QtWidgets.QLabel(text)
+        label = QtWidgets.QLabel(str(text))
         layout.addWidget(label)
-        self._inputs.addLayout(layout)
 
     def map_transform(self, obj):
         self.add_label("translation")
-        self.map_number(obj.translation, 0, name="x")
-        self.map_number(obj.translation, 1, name="y")
-        self.map_number(obj.translation, 2, name="z")
+        layout = QtWidgets.QHBoxLayout()
+        self._inputs.addLayout(layout)
+        self.map_number(obj.translation, 0, name="x", layout=layout)
+        self.map_number(obj.translation, 1, name="y", layout=layout)
+        self.map_number(obj.translation, 2, name="z", layout=layout)
 
         self.add_label("rotation")
-        self.map_number(obj.rotation, 0, name="x")
-        self.map_number(obj.rotation, 1, name="y")
-        self.map_number(obj.rotation, 2, name="z")
+        layout = QtWidgets.QHBoxLayout()
+        self._inputs.addLayout(layout)
+        self.map_number(obj.rotation, 0, name="x", layout=layout)
+        self.map_number(obj.rotation, 1, name="y", layout=layout)
+        self.map_number(obj.rotation, 2, name="z", layout=layout)
 
         self.add_label("scale")
-        self.map_number(obj.scale, 0, name="x")
-        self.map_number(obj.scale, 1, name="y")
-        self.map_number(obj.scale, 2, name="z")
+        layout = QtWidgets.QHBoxLayout()
+        self._inputs.addLayout(layout)
+        self.map_number(obj.scale, 0, name="x", layout=layout)
+        self.map_number(obj.scale, 1, name="y", layout=layout)
+        self.map_number(obj.scale, 2, name="z", layout=layout)
 
     def map_data(self, data, name="data", indent=0):
         self.add_label(name, indent=indent)
         if isinstance(data, list):
             if isinstance(data[0], float) or isinstance(data[0], int):
                 self.map_list(data, indent=indent+1)
+            elif len(data) <= 10 and (isinstance(data[0][0], float) or isinstance(data[0][0], int)):
+                self.map_vector_list(data, indent=indent+1)
             else:
-                self.add_label(f"{data[0].__class__.__name__}[{len(data)}]", indent=indent+1)
+                self.add_label(
+                    f"{data[0].__class__.__name__}[{len(data)}]",
+                    indent=indent + 1)
         elif isinstance(data, dict):
             if data.get("datatype") and data.get("compas"):
                 self.map_schema(data, indent+1)
@@ -81,13 +92,19 @@ class EditForm(Form):
                 else:
                     self.map_data(data[key], name=key, indent=indent)
 
-    def map_list(self, _list, name=None, indent=1):
-        if name:
-            self.add_label(name)
-        for i in range(len(_list)):
-            self.map_number(_list, i, indent=indent)
+    def map_vector_list(self, _list, indent=1):
+        for i, vector in enumerate(_list):
+            self.map_list(vector, name=i, indent=indent)
 
-    def map_number(self, obj, attribute, name=None, indent=1):
+    def map_list(self, _list, name=None, indent=1):
+        layout = QtWidgets.QHBoxLayout()
+        self._inputs.addLayout(layout)
+        if name is not None:
+            self.add_label(str(name) + ": ", indent=indent, layout=layout)
+        for i in range(len(_list)):
+            self.map_number(_list, i, indent=indent, layout=layout)
+
+    def map_number(self, obj, attribute, name=None, indent=1, layout=None):
         """Map number input field to an object attribute
 
         Parameters
@@ -101,7 +118,10 @@ class EditForm(Form):
         -------
         None
         """
-        layout = QtWidgets.QHBoxLayout()
+        if not layout:
+            layout = QtWidgets.QHBoxLayout()
+            self._inputs.addLayout(layout)
+
         layout.setContentsMargins(indent*20, 0, 0, 0)
         label = QtWidgets.QLabel(name or str(attribute))
         if isinstance(obj, list) or isinstance(obj, dict):
@@ -133,7 +153,6 @@ class EditForm(Form):
                 self.on_update()
 
         _input.valueChanged.connect(set_number)
-        self._inputs.addLayout(layout)
 
     def map_color(self, obj, attribute):
         """Map color input field to an object attribute
