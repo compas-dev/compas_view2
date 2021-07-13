@@ -4,7 +4,6 @@ from compas.geometry import Circle
 from compas.geometry import Cylinder
 from compas.geometry import Plane
 from compas.geometry import Shape
-from compas.datastructures import Mesh
 
 
 __all__ = ['Arrow']
@@ -47,6 +46,8 @@ class Arrow(Shape):
         self.head_portion = head_portion
         self.head_width = head_width
         self.body_width = body_width
+        self.vertices = None
+        self.faces = None
 
     @property
     def data(self):
@@ -124,25 +125,26 @@ class Arrow(Shape):
         if u < 3:
             raise ValueError('The value for u should be u > 3.')
 
+        direction = self.direction * (1 - self.head_portion)
+        length = self.direction.length
         # Construct the head of arrow
-        head_position = self.position + self.direction*(1-self.head_portion)
+        head_position = self.position + direction
         plane = Plane(head_position, self.direction)
-        circle = Circle(plane, self.head_width*self.direction.length)
-        cone = Cone(circle, self.direction.length*self.head_portion)
-        v, f = cone.to_vertices_and_faces(u=u)
-        head = Mesh.from_vertices_and_faces(v, f)
-
-        # COnstruct the body of arrow
-        body_center = self.position + self.direction*(1-self.head_portion)/2
+        circle = Circle(plane, length * self.head_width)
+        cone = Cone(circle, length * self.head_portion)
+        v1, f1 = cone.to_vertices_and_faces(u=u)
+        # Construct the body of arrow
+        body_center = self.position + (direction * 0.5)
         plane = Plane(body_center, self.direction)
-        circle = Circle(plane, self.body_width*self.direction.length)
-        cylinder = Cylinder(circle, self.direction.length * (1 - self.head_portion))
-        v, f = cylinder.to_vertices_and_faces(u=u)
-        body = Mesh.from_vertices_and_faces(v, f)
-
-        body.join(head)
-
-        return body.to_vertices_and_faces()
+        circle = Circle(plane, length * self.body_width)
+        cylinder = Cylinder(circle, length * (1 - self.head_portion))
+        v2, f2 = cylinder.to_vertices_and_faces(u=u)
+        # combine
+        n = len(v1)
+        f2[:] = [[v + n for v in f] for f in f2]
+        # assign
+        self.vertices = v1 + v2
+        self.faces = f1 + f2
 
     def transform(self, transformation):
         """Transform the Arrow.
@@ -155,13 +157,3 @@ class Arrow(Shape):
         """
         self.position.transform(transformation)
         self.direction.transform(transformation)
-
-
-# ==============================================================================
-# Main
-# ==============================================================================
-
-if __name__ == "__main__":
-
-    import doctest
-    doctest.testmod()
