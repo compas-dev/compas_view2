@@ -22,40 +22,40 @@ from .selector import Selector
 from .timer import Timer
 
 HERE = os.path.dirname(__file__)
-ICONS = os.path.join(HERE, "../icons")
-CONFIG = os.path.join(HERE, "config.json")
+ICONS = os.path.join(HERE, '../icons')
+CONFIG = os.path.join(HERE, 'config.json')
 
-VERSIONS = {"120": (2, 1), "330": (3, 3)}
+VERSIONS = {'120': (2, 1), '330': (3, 3)}
 
 
 class App:
     """Viewer app.
 
-    The app has a (main) window with a central OpenGL widget (i.e. the "view"),
+    The app has a (main) window with a central OpenGL widget (i.e. the 'view'),
     and a menubar, toolbar, and statusbar.
-    The menubar provides access to all supported "actions".
-    The toolbar is meant to be a "quicknav" to a selected set of actions.
+    The menubar provides access to all supported 'actions'.
+    The toolbar is meant to be a 'quicknav' to a selected set of actions.
     The app supports rotate/pan/zoom, and object selection via picking or box selections.
 
-    Currently the app uses OpenGL 2.2 and GLSL 120 with a "compatibility" profile.
-    Support for OpenGL 3.3 and GLSL 330 with a "core" profile is under development.
+    Currently the app uses OpenGL 2.2 and GLSL 120 with a 'compatibility' profile.
+    Support for OpenGL 3.3 and GLSL 330 with a 'core' profile is under development.
 
     Parameters
     ----------
-    version: "120" | "330", optional
+    version: '120' | '330', optional
         The version of the GLSL used by the shaders.
-        Default is ``"120"`` with a compatibility profile.
-        The option ``"330"`` is not yet available.
+        Default is ``'120'`` with a compatibility profile.
+        The option ``'330'`` is not yet available.
     width: int, optional
         The width of the app window at startup.
         Default is ``800``.
     height: int, optional
         The height of the app window at startup.
         Default is ``500``.
-    viewmode: "shaded" | "ghosted" | "wireframe" | "lighted", optional
+    viewmode: 'shaded' | 'ghosted' | 'wireframe' | 'lighted', optional
         The display mode of the OpenGL view.
-        Default is ``"shaded"``.
-        In ``"ghosted"`` mode, all objects have a default opacity of ``0.7``.
+        Default is ``'shaded'``.
+        In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
     show_grid: bool, optional
         Show the XY plane.
         Default is ``True``.
@@ -81,7 +81,7 @@ class App:
 
     Notes
     -----
-    The app can currently only be used "as-is".
+    The app can currently only be used 'as-is'.
     This means that there is no formal mechanism for adding actions to the controller
     or to add functionality to the shader, other than by extending the core classes.
     In the future, such mechanism will be provided by allowing the user to overwrite
@@ -90,7 +90,7 @@ class App:
 
     Currently the app has no scene graph.
     All added COMPAS objects are wrapped in a viewer object and stored in a dictionary,
-    mapping the object"s ID (``id(object)``) to the instance.
+    mapping the object's ID (``id(object)``) to the instance.
 
     Examples
     --------
@@ -101,25 +101,25 @@ class App:
     """
 
     def __init__(self,
-                 version: Literal["120", "330"] = "120",
+                 version: Literal['120', '330'] = '120',
                  width: int = 800,
                  height: int = 500,
-                 viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = "shaded",
+                 viewmode: Literal['wireframe', 'shaded', 'ghosted', 'lighted'] = 'shaded',
                  controller_class: Optional[Controller] = None,
                  show_grid: bool = True,
                  config: Optional[dict] = None,
                  enable_sidebar: bool = False):
 
         if version not in VERSIONS:
-            raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
+            raise Exception('Only these versions are currently supported: {}'.format(VERSIONS))
 
         glFormat = QtGui.QSurfaceFormat()
         glFormat.setVersion(* VERSIONS[version])
 
-        if version == "330":
+        if version == '330':
             View = View330
             glFormat.setProfile(QtGui.QSurfaceFormat.CoreProfile)
-        elif version == "120":
+        elif version == '120':
             View = View120
             glFormat.setProfile(QtGui.QSurfaceFormat.CompatibilityProfile)
         else:
@@ -165,9 +165,9 @@ class App:
 
     def init(self):
         self._init_statusbar()
-        self._init_menubar(self.config.get("menubar"))
-        self._init_toolbar(self.config.get("toolbar"))
-        self._init_sidebar(self.config.get("sidebar"))
+        self._init_menubar(self.config.get('menubar'))
+        self._init_toolbar(self.config.get('toolbar'))
+        self._init_sidebar(self.config.get('sidebar'))
 
     def resize(self, width: int, height: int):
         """Resize the main window programmatically.
@@ -227,11 +227,11 @@ class App:
 
     def about(self):
         """Display the about message as defined in the config file."""
-        QtWidgets.QMessageBox.about(self.window, "About", self.config["messages"]["about"])
+        QtWidgets.QMessageBox.about(self.window, 'About', self.config['messages']['about'])
 
     def info(self, message: str):
         """Display info."""
-        QtWidgets.QMessageBox.information(self.window, "Info", message)
+        QtWidgets.QMessageBox.information(self.window, 'Info', message)
 
     def question(self, message: str):
         """Ask a question."""
@@ -239,11 +239,11 @@ class App:
 
     def warning(self, message: str):
         """Display a warning."""
-        QtWidgets.QMessageBox.warning(self.window, "Warning", message)
+        QtWidgets.QMessageBox.warning(self.window, 'Warning', message)
 
     def critical(self, message: str):
         """Display a critical warning."""
-        QtWidgets.QMessageBox.critical(self.window, "Critical", message)
+        QtWidgets.QMessageBox.critical(self.window, 'Critical', message)
 
     def status(self, message: str):
         """Display a message in the status bar."""
@@ -251,7 +251,7 @@ class App:
 
     def fps(self, fps: int):
         """Update fps info in the status bar."""
-        self.statusFps.setText("fps: {}".format(fps))
+        self.statusFps.setText('fps: {}'.format(fps))
 
     # ==============================================================================
     # UI
@@ -263,9 +263,9 @@ class App:
     def _init_statusbar(self):
         self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
-        self.statusText = QtWidgets.QLabel("Ready")
+        self.statusText = QtWidgets.QLabel('Ready')
         self.statusbar.addWidget(self.statusText, 1)
-        self.statusFps = QtWidgets.QLabel("fps: ")
+        self.statusFps = QtWidgets.QLabel('fps: ')
         self.statusbar.addWidget(self.statusFps)
 
     def _init_menubar(self, items: List[Dict]):
@@ -279,9 +279,9 @@ class App:
     def _init_toolbar(self, items: List[Dict]):
         if not items:
             return
-        self.toolbar = self.window.addToolBar("Tools")
+        self.toolbar = self.window.addToolBar('Tools')
         self.toolbar.setMovable(False)
-        self.toolbar.setObjectName("Tools")
+        self.toolbar.setObjectName('Tools')
         self.toolbar.setIconSize(QtCore.QSize(16, 16))
         self._add_toolbar_items(items, self.toolbar)
 
@@ -290,7 +290,7 @@ class App:
             return
         self.sidebar = QtWidgets.QToolBar(self.window)
         self.window.addToolBar(QtCore.Qt.LeftToolBarArea, self.sidebar)
-        self.sidebar.setObjectName("Sidebar")
+        self.sidebar.setObjectName('Sidebar')
         self.sidebar.setMovable(False)
         self.sidebar.setIconSize(QtCore.QSize(16, 16))
         self.sidebar.setMinimumWidth(240)
@@ -300,22 +300,22 @@ class App:
         if not items:
             return
         for item in items:
-            if item["type"] == "separator":
+            if item['type'] == 'separator':
                 parent.addSeparator()
-            elif item["type"] == "menu":
-                menu = parent.addMenu(item["text"])
-                if "items" in item:
-                    self._add_menubar_items(item["items"], menu)
-            elif item["type"] == "radio":
+            elif item['type'] == 'menu':
+                menu = parent.addMenu(item['text'])
+                if 'items' in item:
+                    self._add_menubar_items(item['items'], menu)
+            elif item['type'] == 'radio':
                 radio = QtWidgets.QActionGroup(self.window, exclusive=True)
-                for item in item["items"]:
-                    action = self._add_action(parent, text=item["text"], action=item["action"])
+                for item in item['items']:
+                    action = self._add_action(parent, text=item['text'], action=item['action'])
                     action.setCheckable(True)
-                    action.setChecked(item["checked"])
+                    action.setChecked(item['checked'])
                     radio.addAction(action)
-            elif item["type"] == "action":
-                del item["type"]
-                self._add_action(parent, text=item["text"], action=item["action"])
+            elif item['type'] == 'action':
+                del item['type']
+                self._add_action(parent, text=item['text'], action=item['action'])
             else:
                 raise NotImplementedError
 
@@ -323,10 +323,10 @@ class App:
         if not items:
             return
         for item in items:
-            if item["type"] == "separator":
+            if item['type'] == 'separator':
                 parent.addSeparator()
-            elif item["type"] == "action":
-                del item["type"]
+            elif item['type'] == 'action':
+                del item['type']
                 self._add_action(parent, **item)
             else:
                 raise NotImplementedError
@@ -335,19 +335,19 @@ class App:
         if not items:
             return
         for item in items:
-            if item["type"] == "separator":
+            if item['type'] == 'separator':
                 parent.addSeparator()
-            elif item["type"] == "radio":
-                del item["type"]
+            elif item['type'] == 'radio':
+                del item['type']
                 self.add_radio(parent, **item)
-            elif item["type"] == "checkbox":
-                del item["type"]
+            elif item['type'] == 'checkbox':
+                del item['type']
                 self.add_checkbox(parent, **item)
-            elif item["type"] == "slider":
-                del item["type"]
+            elif item['type'] == 'slider':
+                del item['type']
                 self.add_slider(parent, **item)
-            elif item["type"] == "button":
-                del item["type"]
+            elif item['type'] == 'button':
+                del item['type']
                 self.add_button(parent, **item)
             else:
                 raise NotImplementedError
@@ -396,9 +396,9 @@ class App:
         box.setLayout(layout)
         parent.addWidget(box)
         for item in items:
-            action = self._add_action(parent, text=item["text"], action=item["action"])
+            action = self._add_action(parent, text=item['text'], action=item['action'])
             action.setCheckable(True)
-            action.setChecked(item["checked"])
+            action.setChecked(item['checked'])
             radio.addAction(action)
         # radio.toggled.connect(self.view.update)
 
@@ -435,7 +435,7 @@ class App:
                    maxval: int = 100,
                    step: int = 1,
                    interval: int = 1,
-                   label: str = ""):
+                   label: str = ''):
         box = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout()
         value_label = QtWidgets.QLabel(str(value))
@@ -483,7 +483,7 @@ class App:
                minval: int = 0,
                maxval: int = 100,
                step: int = 1,
-               label: str = "") -> Callable:
+               label: str = '') -> Callable:
         def outer(func: Callable) -> Callable:
             def wrapped(*args, **kwargs):
                 func(self.app, *args, **kwargs)
@@ -503,11 +503,11 @@ class App:
            timeout: int = None,
            record: bool = False,
            frames: int = None,
-           record_path: str = "temp/out.gif",
+           record_path: str = 'temp/out.gif',
            playback_interval: int = None) -> Callable:
 
         if (not interval and not timeout) or (interval and timeout):
-            raise ValueError("Must specify either interval or timeout")
+            raise ValueError('Must specify either interval or timeout')
 
         def outer(func: Callable):
             def render():
@@ -523,7 +523,7 @@ class App:
                             duration=playback_interval or interval,
                             append_images=self.recorded_frames[1:],
                             loop=100)
-                        print("Recorded to ", record_path)
+                        print('Recorded to ', record_path)
 
             if interval:
                 self.timer = Timer(interval=interval, callback=render)
