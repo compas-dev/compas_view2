@@ -42,23 +42,23 @@ class EditForm(Form):
         self.add_label("translation")
         layout = QtWidgets.QHBoxLayout()
         self._inputs.addLayout(layout)
-        self.map_number(obj.translation, 0, name="x", layout=layout)
-        self.map_number(obj.translation, 1, name="y", layout=layout)
-        self.map_number(obj.translation, 2, name="z", layout=layout)
+        self.map_number(obj.translation, 0, name="x", layout=layout, update_data=False)
+        self.map_number(obj.translation, 1, name="y", layout=layout, update_data=False)
+        self.map_number(obj.translation, 2, name="z", layout=layout, update_data=False)
 
         self.add_label("rotation")
         layout = QtWidgets.QHBoxLayout()
         self._inputs.addLayout(layout)
-        self.map_number(obj.rotation, 0, name="x", layout=layout)
-        self.map_number(obj.rotation, 1, name="y", layout=layout)
-        self.map_number(obj.rotation, 2, name="z", layout=layout)
+        self.map_number(obj.rotation, 0, name="x", layout=layout, update_data=False)
+        self.map_number(obj.rotation, 1, name="y", layout=layout, update_data=False)
+        self.map_number(obj.rotation, 2, name="z", layout=layout, update_data=False)
 
         self.add_label("scale")
         layout = QtWidgets.QHBoxLayout()
         self._inputs.addLayout(layout)
-        self.map_number(obj.scale, 0, name="x", layout=layout)
-        self.map_number(obj.scale, 1, name="y", layout=layout)
-        self.map_number(obj.scale, 2, name="z", layout=layout)
+        self.map_number(obj.scale, 0, name="x", layout=layout, update_data=False)
+        self.map_number(obj.scale, 1, name="y", layout=layout, update_data=False)
+        self.map_number(obj.scale, 2, name="z", layout=layout, update_data=False)
 
     def map_data(self, data, name="data", indent=0):
         self.add_label(name, indent=indent)
@@ -104,12 +104,12 @@ class EditForm(Form):
         for i in range(len(_list)):
             self.map_number(_list, i, indent=indent, layout=layout)
 
-    def map_number(self, obj, attribute, name=None, indent=1, layout=None):
+    def map_number(self, obj, attribute, name=None, indent=1, layout=None, update_data=True):
         """Map number input field to an object attribute
 
         Parameters
         ----------
-        obj: compas_view2.objects.Object
+        obj: Object
             object to be edited
         attribute: string
             the name of attribute to be mapped
@@ -148,6 +148,11 @@ class EditForm(Form):
 
             if hasattr(self, "data"):
                 self.obj._data.data = self.data
+
+            if update_data:
+                self.obj.update()
+            else:
+                self.obj._update_matrix()
 
             if self.on_update:
                 self.on_update()
