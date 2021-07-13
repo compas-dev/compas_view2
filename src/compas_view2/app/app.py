@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import AnyStr, Callable, Optional, List, Dict, Any
 from typing_extensions import Literal
 
