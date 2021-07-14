@@ -1,8 +1,11 @@
+import os
 import json
-import compas
 
 from .controller import Controller  # noqa: F401
 from .app import App  # noqa: F401
 
-with open(compas.here(__file__, 'config.json')) as f:
+HERE = os.path.dirname(__file__)
+FILE = os.path.join(HERE, 'config.json')
+
+with open(FILE) as f:
     config = json.load(f)

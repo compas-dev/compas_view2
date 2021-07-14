@@ -1,5 +1,4 @@
 from .bufferobject import BufferObject
-from ..forms import PointEditForm
 
 
 class PointObject(BufferObject):
@@ -15,6 +14,10 @@ class PointObject(BufferObject):
         elements = [[0]]
         return positions, colors, elements
 
-    def edit(self, on_update=None):
-        self.editform = PointEditForm(self, on_update=on_update)
-        self.editform.show()
+    @property
+    def editables(self):
+        return {
+            "x": {"type": "number"},
+            "y": {"type": "number"},
+            "z": {"type": "number"},
+        }

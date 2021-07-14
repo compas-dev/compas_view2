@@ -1,4 +1,5 @@
 from .form import Form  # noqa: F401
+from .editform import EditForm  # noqa: F401
 from .point import PointForm  # noqa: F401
 from .line import LineForm  # noqa: F401
 from .sphere import SphereForm  # noqa: F401

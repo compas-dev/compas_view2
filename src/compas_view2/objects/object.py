@@ -5,6 +5,7 @@ from compas.geometry import Rotation
 from compas.geometry import Scale
 from compas.geometry import decompose_matrix
 from compas.geometry import identity_matrix
+from ..forms import EditForm
 
 import numpy as np
 
@@ -47,17 +48,21 @@ class Object(ABC):
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj
 
-    def __init__(self, data, name=None, is_selected=False, visible=True):
+    def __init__(self, data, name=None, is_selected=False, is_visible=True):
         self._data = data
         self.name = name
         self.is_selected = is_selected
-        self.visible = visible
+        self.is_visible = is_visible
         self._instance_color = None
-        self._translation = [0, 0, 0]
-        self._rotation = [0, 0, 0]
-        self._scale = [1, 1, 1]
+        self._translation = [0., 0., 0.]
+        self._rotation = [0., 0., 0.]
+        self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
+
+    @property
+    def otype(self):
+        return DATA_VIEW[self._data.__class__]
 
     @abc.abstractmethod
     def init(self):
@@ -70,8 +75,13 @@ class Object(ABC):
     def create(self):
         pass
 
-    def edit(self):
-        pass
+    @property
+    def properties(self):
+        return None
+
+    def edit(self, on_update=None):
+        self.editform = EditForm("Edit" + self._data.__class__.__name__, self, on_update=on_update)
+        self.editform.show()
 
     @property
     def translation(self):

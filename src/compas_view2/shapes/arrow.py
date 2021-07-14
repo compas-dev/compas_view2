@@ -62,8 +62,8 @@ class Arrow(Shape):
 
     @data.setter
     def data(self, data):
-        self.position = Vector(data['position'])
-        self.direction = Vector(data['direction'])
+        self.position = Vector(*data['position'])
+        self.direction = Vector(*data['direction'])
 
     # ==========================================================================
     # customisation
