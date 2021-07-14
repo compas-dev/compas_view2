@@ -1,4 +1,6 @@
 from compas.datastructures import Mesh
+from compas.geometry import Box
+from compas.geometry import Frame
 from .meshobject import MeshObject
 
 
@@ -12,3 +14,7 @@ class BoxObject(MeshObject):
     def update(self):
         self._mesh = Mesh.from_shape(self._data)
         super().update()
+
+    @classmethod
+    def create_default(cls) -> Box:
+        return Box(Frame.worldXY(), 1.0, 1.0, 1.0)

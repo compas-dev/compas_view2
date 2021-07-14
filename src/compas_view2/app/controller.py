@@ -16,6 +16,7 @@ from compas.datastructures import Mesh
 from ..forms import PointForm
 from ..forms import SphereForm
 from ..forms import TorusForm
+from ..forms import AddForm
 from .worker import Worker
 
 
@@ -169,6 +170,13 @@ class Controller:
     # ==============================================================================
     # Primitive actions
     # ==============================================================================
+
+    def add_object(self):
+        def on_create(data):
+            self.app.add(data)
+            self.app.view.update()
+        form = AddForm(on_create=on_create)
+        form.exec_()
 
     def add_point(self) -> Union[Point, None]:
         """Add a point at specific XYZ coordinates.

@@ -1,4 +1,6 @@
 from compas.datastructures import Mesh
+from compas.geometry import Capsule
+from compas.geometry import Line
 from .meshobject import MeshObject
 
 
@@ -19,3 +21,7 @@ class CapsuleObject(MeshObject):
     @property
     def properties(self):
         return ["u", "v"]
+
+    @classmethod
+    def create_default(cls) -> Capsule:
+        return Capsule(Line((0, 0, 0), (0, 0, 1)), 0.5)

@@ -1,4 +1,5 @@
 from .bufferobject import BufferObject
+from compas.geometry import Point
 
 
 class PointObject(BufferObject):
@@ -14,10 +15,6 @@ class PointObject(BufferObject):
         elements = [[0]]
         return positions, colors, elements
 
-    @property
-    def editables(self):
-        return {
-            "x": {"type": "number"},
-            "y": {"type": "number"},
-            "z": {"type": "number"},
-        }
+    @classmethod
+    def create_default(cls) -> Point:
+        return Point(0, 0, 0)

@@ -64,6 +64,10 @@ class Object(ABC):
     def otype(self):
         return DATA_VIEW[self._data.__class__]
 
+    @property
+    def DATA_VIEW(self):
+        return DATA_VIEW
+
     @abc.abstractmethod
     def init(self):
         pass
