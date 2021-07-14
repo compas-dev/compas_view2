@@ -214,14 +214,15 @@ class Controller:
 
     @interactive("edit")
     def edit_selected_object(self):
-        self.app.status("Select one object on screen, Click Enter to finish")
         if len(self.app.selector.selected) == 1:
             return self.app.selector.selected[0]
         else:
+            self.app.status("Select one object on screen, Click Enter to finish")
             objects = self.app.selector.start_selection(types=[Point], mode="single", returns="object")
             if len(objects) != 1:
                 self.app.status("Must select 1 object")
                 return None
+            self.app.status("")
             return objects[0]
 
     # ==============================================================================
