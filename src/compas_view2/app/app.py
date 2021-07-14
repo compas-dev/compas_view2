@@ -143,11 +143,15 @@ class App:
         self._app.references.add(self.window)
         self.selector = Selector(self)
 
-        self._init_statusbar()
-        self._init_menubar(config.get("menubar"))
-        self._init_toolbar(config.get("toolbar"))
+        self.init()
 
         self.resize(width, height)
+
+    def init(self):
+        self._init_statusbar()
+        self._init_menubar(self.config.get("menubar"))
+        self._init_toolbar(self.config.get("toolbar"))
+        self._init_sidebar(self.config.get("sidebar"))
 
     def resize(self, width, height):
         """Resize the main window programmatically.
@@ -181,6 +185,13 @@ class App:
         if self.view.isValid():
             obj.init()
         return obj
+
+    def remove(self, obj):
+        if obj in list(self.view.objects):
+            del self.view.objects[obj]
+        for key, value in list(self.selector.instances.items()):
+            if obj == value:
+                del self.selector.instances[key]
 
     def show(self):
         """Show the viewer window."""
@@ -249,6 +260,21 @@ class App:
         self.toolbar.setIconSize(QtCore.QSize(16, 16))
         self._add_toolbar_items(items, self.toolbar)
 
+    def _init_sidebar(self, items):
+        if not items:
+            return
+        self.sidebar = QtWidgets.QToolBar(self.window)
+        self.window.addToolBar(QtCore.Qt.LeftToolBarArea, self.sidebar)
+        self.sidebar.setObjectName('Sidebar')
+        self.sidebar.setMovable(False)
+        self.sidebar.setIconSize(QtCore.QSize(16, 16))
+        self.sidebar.setMinimumWidth(240)
+        palette = self.sidebar.palette()
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor(255, 0, 0))
+        self.sidebar.setPalette(palette)
+        self.sidebar.setAutoFillBackground(True)
+        self._add_menubar_items(items, self.sidebar)
+
     def _add_menubar_items(self, items, parent):
         if not items:
             return
@@ -266,6 +292,8 @@ class App:
                     action.setCheckable(True)
                     action.setChecked(item['checked'])
                     radio.addAction(action)
+            elif item['type'] == 'slider':
+                self._add_slider(item, parent)
             elif item['type'] == 'action':
                 self._add_action(item, parent)
             else:
@@ -279,12 +307,14 @@ class App:
                 parent.addSeparator()
             elif item['type'] == 'action':
                 self._add_action(item, parent)
+            elif item['type'] == 'slider':
+                self._add_slider(item, parent)
             else:
                 raise NotImplementedError
 
     def _add_action(self, item, parent):
         text = item['text']
-        action = getattr(self.controller, item['action'])
+        action = item['action'] if callable(item['action']) else getattr(self.controller, item['action'])
         args = item.get('args', None) or []
         kwargs = item.get('kwargs', None) or {}
         if 'icon' in item:
@@ -292,8 +322,32 @@ class App:
             return parent.addAction(icon, text, partial(action, *args, **kwargs))
         return parent.addAction(text, partial(action, *args, **kwargs))
 
-    def on(self, interval=None, timeout=None, record=False, frames=None, record_path="temp/out.gif", playback_interval=None):
+    def _add_slider(self, item, parent):
+        box = QtWidgets.QWidget()
+        box_layout = QtWidgets.QHBoxLayout()
+        title = QtWidgets.QLabel(item.get("title", ""))
+        value = QtWidgets.QLabel(str(item.get("value", 0)))
+        label = QtWidgets.QLabel(str(item.get("label", "")))
+        slider = QtWidgets.QSlider()
+        slider.setOrientation(QtCore.Qt.Horizontal)
+        slider.setValue(item.get("value", 0))
+        slider.setMinimum(item.get("min", 0))
+        slider.setMaximum(item.get("max", 100))
+        slider.setTickInterval(item.get("interval", 1))
+        slider.setSingleStep(item.get("step", 1))
+        box_layout.addWidget(title)
+        box_layout.addWidget(slider)
+        box_layout.addWidget(value)
+        box_layout.addWidget(label)
+        box.setLayout(box_layout)
+        parent.addWidget(box)
+        slider.valueChanged.connect(lambda v: value.setText(str(v)))
+        if "action" in item:
+            action = item['action'] if callable(item['action']) else getattr(self.controller, item['action'])
+            slider.valueChanged.connect(action)
+        slider.valueChanged.connect(self.view.update)
 
+    def on(self, interval=None, timeout=None, record=False, frames=None, record_path="temp/out.gif", playback_interval=None):
         if (not interval and not timeout) or (interval and timeout):
             raise ValueError("Must specify either interval or timeout")
 
