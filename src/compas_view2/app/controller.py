@@ -40,12 +40,8 @@ class Controller:
                         self.app.view.update()
 
                 def edit(obj):
-                    def on_update():
-                        obj.update()
-                        self.app.view.update()
-
                     if obj:
-                        obj.edit(on_update)
+                        obj.edit(on_update=self.app.view.update)
 
                 worker = Worker(func, self)
                 if action == "add":

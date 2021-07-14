@@ -5,6 +5,7 @@ from compas.geometry import Rotation
 from compas.geometry import Scale
 from compas.geometry import decompose_matrix
 from compas.geometry import identity_matrix
+from ..forms import EditForm
 
 import numpy as np
 
@@ -53,9 +54,9 @@ class Object(ABC):
         self.is_selected = is_selected
         self.is_visible = is_visible
         self._instance_color = None
-        self._translation = [0, 0, 0]
-        self._rotation = [0, 0, 0]
-        self._scale = [1, 1, 1]
+        self._translation = [0., 0., 0.]
+        self._rotation = [0., 0., 0.]
+        self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
 
@@ -74,8 +75,13 @@ class Object(ABC):
     def create(self):
         pass
 
-    def edit(self):
-        pass
+    @property
+    def properties(self):
+        return None
+
+    def edit(self, on_update=None):
+        self.editform = EditForm("Edit" + self._data.__class__.__name__, self, on_update=on_update)
+        self.editform.show()
 
     @property
     def translation(self):
