@@ -1,5 +1,7 @@
 from PySide2 import QtWidgets
-
+from compas.datastructures import Mesh
+from compas.datastructures import Network
+from compas.datastructures import VolMesh
 from .form import Form
 
 
@@ -28,7 +30,11 @@ class EditForm(Form):
         self.obj = obj
         if hasattr(obj._data, "data"):
             self.data = obj._data.data
-            self.map_data(self.data)
+            if type(obj._data) in [Mesh, Network, VolMesh]:
+                self.add_label("data")
+                self.add_label(type(obj._data).__name__, indent=1)
+            else:
+                self.map_data(self.data)
 
     def add_label(self, text, indent=0, layout=None):
         if not layout:
@@ -72,13 +78,9 @@ class EditForm(Form):
                     f"{data[0].__class__.__name__}[{len(data)}]",
                     indent=indent + 1)
         elif isinstance(data, dict):
-            if data.get("datatype") and data.get("compas"):
-                self.map_schema(data, indent+1)
-            else:
-                self.map_dict(data, indent=indent+1)
-
-    def map_schema(self, data, indent=0):
-        self.add_label(data['datatype'], indent=indent)
+            self.map_dict(data, indent=indent+1)
+        else:
+            raise TypeError("Un-supported data type")
 
     def map_dict(self, data, keys=None, indent=0):
 
