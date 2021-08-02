@@ -3,6 +3,7 @@ from compas.datastructures import Mesh
 from compas.datastructures import Network
 from compas.datastructures import VolMesh
 from .form import Form
+from .collapsiblebox import CollapsibleBox
 
 
 class EditForm(Form):
@@ -21,92 +22,122 @@ class EditForm(Form):
 
     def __init__(self, title, obj, on_update=None):
         super().__init__(title)
+        self.obj = obj
         self.on_update = on_update
         self.map_transform(obj)
 
         if obj.properties:
-            self.map_dict(obj, keys=obj.properties)
+            cb = self.add_collapsiblebox("Object")
+            v_layout = QtWidgets.QVBoxLayout()
+            self.map_dict(obj, keys=obj.properties, layout=v_layout)
+            cb.setContentLayout(v_layout)
 
-        self.obj = obj
         if hasattr(obj._data, "data"):
+            cb = self.add_collapsiblebox("Data")
+            v_layout = QtWidgets.QVBoxLayout()
             self.data = obj._data.data
             if type(obj._data) in [Mesh, Network, VolMesh]:
-                self.add_label("data")
-                self.add_label(type(obj._data).__name__, indent=1)
+                self.add_label(type(obj._data).__name__, layout=v_layout)
             else:
-                self.map_data(self.data)
+                self.map_data(self.data, layout=v_layout)
+            cb.setContentLayout(v_layout)
 
-    def add_label(self, text, indent=0, layout=None):
+        self._inputs.addStretch()
+
+    def add_label(self, text, layout=None):
         if not layout:
             layout = QtWidgets.QHBoxLayout()
             self._inputs.addLayout(layout)
-        layout.setContentsMargins(indent*20, 0, 0, 0)
+        # layout.setContentsMargins(0, 0, 0, 0)
         label = QtWidgets.QLabel(str(text))
         layout.addWidget(label)
 
+    def add_collapsiblebox(self, name, layout=None):
+        cb = CollapsibleBox(name)
+        layout = layout or self._inputs
+        layout.addWidget(cb)
+        return cb
+
     def map_transform(self, obj):
-        self.add_label("translation")
+
+        cb = self.add_collapsiblebox("Transform")
+        v_layout = QtWidgets.QVBoxLayout()
+
+        self.add_label("translation", layout=v_layout)
         layout = QtWidgets.QHBoxLayout()
-        self._inputs.addLayout(layout)
+        v_layout.addLayout(layout)
         self.map_number(obj.translation, 0, name="x", layout=layout, update_data=False)
         self.map_number(obj.translation, 1, name="y", layout=layout, update_data=False)
         self.map_number(obj.translation, 2, name="z", layout=layout, update_data=False)
 
-        self.add_label("rotation")
+        self.add_label("rotation", layout=v_layout)
         layout = QtWidgets.QHBoxLayout()
-        self._inputs.addLayout(layout)
+        v_layout.addLayout(layout)
         self.map_number(obj.rotation, 0, name="x", layout=layout, update_data=False)
         self.map_number(obj.rotation, 1, name="y", layout=layout, update_data=False)
         self.map_number(obj.rotation, 2, name="z", layout=layout, update_data=False)
 
-        self.add_label("scale")
+        self.add_label("scale", layout=v_layout)
         layout = QtWidgets.QHBoxLayout()
-        self._inputs.addLayout(layout)
+        v_layout.addLayout(layout)
         self.map_number(obj.scale, 0, name="x", layout=layout, update_data=False)
         self.map_number(obj.scale, 1, name="y", layout=layout, update_data=False)
         self.map_number(obj.scale, 2, name="z", layout=layout, update_data=False)
 
-    def map_data(self, data, name="data", indent=0):
-        self.add_label(name, indent=indent)
+        cb.setContentLayout(v_layout)
+
+    def map_data(self, data, name=None, layout=None):
+        if name:
+            self.add_label(name, layout=layout)
         if isinstance(data, list):
             if isinstance(data[0], float) or isinstance(data[0], int):
-                self.map_list(data, indent=indent+1)
+                self.map_list(data, layout=layout)
             elif len(data) <= 10 and (isinstance(data[0][0], float) or isinstance(data[0][0], int)):
-                self.map_vector_list(data, indent=indent+1)
+                self.map_vector_list(data, layout=layout)
             else:
-                self.add_label(
-                    f"{data[0].__class__.__name__}[{len(data)}]",
-                    indent=indent + 1)
+                self.add_label(f"{data[0].__class__.__name__}[{len(data)}]", layout=layout)
         elif isinstance(data, dict):
-            self.map_dict(data, indent=indent+1)
+            self.map_dict(data, layout=layout)
         else:
             raise TypeError("Un-supported data type")
 
-    def map_dict(self, data, keys=None, indent=0):
+    def map_dict(self, data, keys=None, layout=None):
 
         if keys:
             for key in keys:
-                self.map_number(data, key, indent=indent)
+                self.map_number(data, key, layout=layout)
         else:
             for key in data:
                 if isinstance(data[key], int) or isinstance(data[key], float):
-                    self.map_number(data, key, indent=indent)
+                    self.map_number(data, key, layout=layout)
                 else:
-                    self.map_data(data[key], name=key, indent=indent)
+                    # v_layout = QtWidgets.QVBoxLayout()
+                    # v_layout.setContentsMargins(20, 0, 0, 0)
+                    # layout.addLayout(v_layout)
 
-    def map_vector_list(self, _list, indent=1):
+                    cb = self.add_collapsiblebox(key)
+                    v_layout = QtWidgets.QVBoxLayout()
+                    layout.addWidget(cb)
+                    self.map_data(data[key], layout=v_layout)
+                    cb.setContentLayout(v_layout)
+
+    def map_vector_list(self, _list, layout=None):
+        v_layout = QtWidgets.QVBoxLayout()
+        v_layout.setContentsMargins(20, 0, 0, 0)
+        layout.addLayout(v_layout)
         for i, vector in enumerate(_list):
-            self.map_list(vector, name=i, indent=indent)
+            self.map_list(vector, name=i, layout=v_layout)
 
-    def map_list(self, _list, name=None, indent=1):
-        layout = QtWidgets.QHBoxLayout()
-        self._inputs.addLayout(layout)
+    def map_list(self, _list, name=None, layout=None):
+        h_layout = QtWidgets.QHBoxLayout()
+        layout = layout or self._inputs
+        layout.addLayout(h_layout)
         if name is not None:
-            self.add_label(str(name) + ": ", indent=indent, layout=layout)
+            self.add_label(str(name) + ": ", layout=h_layout)
         for i in range(len(_list)):
-            self.map_number(_list, i, indent=indent, layout=layout)
+            self.map_number(_list, i, layout=h_layout)
 
-    def map_number(self, obj, attribute, name=None, indent=1, layout=None, update_data=True):
+    def map_number(self, obj, attribute, name=None, layout=None, update_data=True):
         """Map number input field to an object attribute
 
         Parameters
@@ -124,7 +155,7 @@ class EditForm(Form):
             layout = QtWidgets.QHBoxLayout()
             self._inputs.addLayout(layout)
 
-        layout.setContentsMargins(indent*20, 0, 0, 0)
+        # layout.setContentsMargins(0, 0, 0, 0)
         label = QtWidgets.QLabel(name or str(attribute))
         if isinstance(obj, list) or isinstance(obj, dict):
             value = obj[attribute]
@@ -160,6 +191,7 @@ class EditForm(Form):
                 self.on_update()
 
         _input.valueChanged.connect(set_number)
+        return layout
 
     def map_color(self, obj, attribute):
         """Map color input field to an object attribute
