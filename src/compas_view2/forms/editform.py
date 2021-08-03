@@ -111,13 +111,9 @@ class EditForm(Form):
                 if isinstance(data[key], int) or isinstance(data[key], float):
                     self.map_number(data, key, layout=layout)
                 else:
-                    # v_layout = QtWidgets.QVBoxLayout()
-                    # v_layout.setContentsMargins(20, 0, 0, 0)
-                    # layout.addLayout(v_layout)
-
-                    cb = self.add_collapsiblebox(key)
+                    cb = self.add_collapsiblebox(key, layout=layout)
                     v_layout = QtWidgets.QVBoxLayout()
-                    layout.addWidget(cb)
+                    v_layout._collapsiblebox = cb
                     self.map_data(data[key], layout=v_layout)
                     cb.setContentLayout(v_layout)
 
