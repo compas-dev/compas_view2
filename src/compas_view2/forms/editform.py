@@ -35,6 +35,7 @@ class EditForm(Form):
         if hasattr(obj._data, "data"):
             cb = self.add_collapsiblebox("Data")
             v_layout = QtWidgets.QVBoxLayout()
+            v_layout._parent = cb
             self.data = obj._data.data
             if type(obj._data) in [Mesh, Network, VolMesh]:
                 self.add_label(type(obj._data).__name__, layout=v_layout)
@@ -53,7 +54,10 @@ class EditForm(Form):
         layout.addWidget(label)
 
     def add_collapsiblebox(self, name, layout=None):
-        cb = CollapsibleBox(name)
+        if hasattr(layout, "_parent"):
+            cb = CollapsibleBox(name, parent=layout._parent)
+        else:
+            cb = CollapsibleBox(name)
         layout = layout or self._inputs
         layout.addWidget(cb)
         return cb
@@ -113,7 +117,7 @@ class EditForm(Form):
                 else:
                     cb = self.add_collapsiblebox(key, layout=layout)
                     v_layout = QtWidgets.QVBoxLayout()
-                    v_layout._collapsiblebox = cb
+                    v_layout._parent = cb
                     self.map_data(data[key], layout=v_layout)
                     cb.setContentLayout(v_layout)
 
