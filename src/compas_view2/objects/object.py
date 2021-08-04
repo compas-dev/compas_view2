@@ -5,7 +5,6 @@ from compas.geometry import Rotation
 from compas.geometry import Scale
 from compas.geometry import decompose_matrix
 from compas.geometry import identity_matrix
-from ..forms import EditForm
 
 import numpy as np
 
