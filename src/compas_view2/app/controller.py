@@ -1,6 +1,7 @@
 from OpenGL import GL
 
 from PySide2 import QtWidgets
+from PySide2 import QtCore
 
 from typing import Union
 from pathlib import Path
@@ -17,6 +18,7 @@ from ..forms import PointForm
 from ..forms import SphereForm
 from ..forms import TorusForm
 from ..forms import AddForm
+from ..forms import EditForm
 from .worker import Worker
 
 
@@ -42,7 +44,8 @@ class Controller:
 
                 def edit(obj):
                     if obj:
-                        obj.edit(on_update=self.app.view.update)
+                        dock = EditForm("Property", obj, on_update=self.app.view.update)
+                        self.app.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
 
                 worker = Worker(func, self)
                 if action == "add":

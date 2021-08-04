@@ -2,11 +2,10 @@ from PySide2 import QtWidgets
 from compas.datastructures import Mesh
 from compas.datastructures import Network
 from compas.datastructures import VolMesh
-from .form import Form
 from .collapsiblebox import CollapsibleBox
 
 
-class EditForm(Form):
+class EditForm(QtWidgets.QDockWidget):
     """Form class for real-time editing of objects
 
     Parameters
@@ -22,8 +21,20 @@ class EditForm(Form):
 
     def __init__(self, title, obj, on_update=None):
         super().__init__(title)
+
+        scroll = QtWidgets.QScrollArea()
+        self.setWidget(scroll)
+        content = QtWidgets.QWidget()
+        scroll.setWidget(content)
+        scroll.setWidgetResizable(True)
+        vlay = QtWidgets.QVBoxLayout(content)
+
+        self._inputs = vlay
         self.obj = obj
         self.on_update = on_update
+
+        self.add_label(obj._data.__class__)
+
         self.map_transform(obj)
 
         if obj.properties:

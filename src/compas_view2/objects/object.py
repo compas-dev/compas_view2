@@ -83,10 +83,6 @@ class Object(ABC):
     def properties(self):
         return None
 
-    def edit(self, on_update=None):
-        self.editform = EditForm("Edit" + self._data.__class__.__name__, self, on_update=on_update)
-        self.editform.show()
-
     @property
     def translation(self):
         return self._translation
