@@ -14,6 +14,7 @@ class CollapsibleBox(QtWidgets.QWidget):
         self.toggle_button.setToolButtonStyle(
             QtCore.Qt.ToolButtonTextBesideIcon
         )
+        self.toggle_button.setIconSize(QtCore.QSize(8, 8))
         self.toggle_button.setArrowType(QtCore.Qt.RightArrow)
         self.toggle_button.pressed.connect(self.on_pressed)
 
