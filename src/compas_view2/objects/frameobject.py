@@ -1,4 +1,5 @@
 from .bufferobject import BufferObject
+from compas.geometry import Frame
 
 
 class FrameObject(BufferObject):
@@ -26,3 +27,7 @@ class FrameObject(BufferObject):
         colors = [(1, 0, 0), (1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 0, 1), (0, 0, 1)]
         elements = [[0, 1], [2, 3], [4, 5]]
         return positions, colors, elements
+
+    @classmethod
+    def create_default(cls) -> Frame:
+        return Frame([0, 0, 0], [1, 0, 0], [0, 1, 0])

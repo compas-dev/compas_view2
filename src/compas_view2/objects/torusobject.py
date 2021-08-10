@@ -1,4 +1,6 @@
 from compas.datastructures import Mesh
+from compas.geometry import Plane
+from compas.geometry import Torus
 from .meshobject import MeshObject
 
 
@@ -19,3 +21,7 @@ class TorusObject(MeshObject):
     @property
     def properties(self):
         return ["u", "v"]
+
+    @classmethod
+    def create_default(cls) -> Torus:
+        return Torus(Plane([0, 0, 0], [0, 0, 1]), 1, 0.5)
