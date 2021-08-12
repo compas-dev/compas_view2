@@ -1,4 +1,4 @@
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtWidgets
 
 
 class CollapsibleBox(QtWidgets.QWidget):
@@ -66,41 +66,4 @@ class CollapsibleBox(QtWidgets.QWidget):
 
 
 if __name__ == "__main__":
-    import sys
-    import random
-
-    app = QtWidgets.QApplication(sys.argv)
-
-    w = QtWidgets.QMainWindow()
-    w.setCentralWidget(QtWidgets.QWidget())
-    dock = QtWidgets.QDockWidget("Collapsible Demo")
-    w.addDockWidget(QtCore.Qt.LeftDockWidgetArea, dock)
-    scroll = QtWidgets.QScrollArea()
-    dock.setWidget(scroll)
-    content = QtWidgets.QWidget()
-    scroll.setWidget(content)
-    scroll.setWidgetResizable(True)
-    vlay = QtWidgets.QVBoxLayout(content)
-
-    def create_box(name, parent=None):
-        box = CollapsibleBox(name, parent=parent)
-        lay = QtWidgets.QVBoxLayout()
-        for j in range(8):
-            label = QtWidgets.QLabel("{}".format(j))
-            color = QtGui.QColor(*[random.randint(0, 255) for _ in range(3)])
-            label.setStyleSheet(
-                "background-color: {}; color : white;".format(color.name())
-            )
-            label.setAlignment(QtCore.Qt.AlignCenter)
-            lay.addWidget(label)
-        box.setContentLayout(lay)
-        return box
-
-    box = create_box("Outer box")
-    box._layout.addWidget(create_box("Interior box", box))
-    vlay.addWidget(box)
-
-    vlay.addStretch()
-    w.resize(640, 480)
-    w.show()
-    sys.exit(app.exec_())
+    pass
