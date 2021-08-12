@@ -11,7 +11,7 @@ import numpy as np
 
 ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
 
-DATA_VIEW = {}
+DATA_OBJECT = {}
 
 
 class Object(ABC):
@@ -36,13 +36,13 @@ class Object(ABC):
     @staticmethod
     def register(dtype, vtype):
         """Register an object class to its corrensponding data type"""
-        DATA_VIEW[dtype] = vtype
+        DATA_OBJECT[dtype] = vtype
 
     @staticmethod
     def build(data, **kwargs):
         """Build an object class according to its corrensponding data type"""
         try:
-            obj = DATA_VIEW[data.__class__](data, **kwargs)
+            obj = DATA_OBJECT[data.__class__](data, **kwargs)
         except KeyError:
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj
@@ -61,11 +61,11 @@ class Object(ABC):
 
     @property
     def otype(self):
-        return DATA_VIEW[self._data.__class__]
+        return DATA_OBJECT[self._data.__class__]
 
     @property
-    def DATA_VIEW(self):
-        return DATA_VIEW
+    def DATA_OBJECT(self):
+        return DATA_OBJECT
 
     @abc.abstractmethod
     def init(self):

@@ -1,18 +1,18 @@
 from PySide2 import QtWidgets
 
 from .form import Form
-from ..objects.object import DATA_VIEW
+from ..objects.object import DATA_OBJECT
 
 
 class AddForm(Form):
     def __init__(self, on_create=None):
         super().__init__('Add Object')
 
-        for data_cls in DATA_VIEW:
+        for data_cls in DATA_OBJECT:
             self.add_create_button(data_cls, on_create)
 
     def add_create_button(self, data_cls, on_create):
-        object_cls = DATA_VIEW[data_cls]
+        object_cls = DATA_OBJECT[data_cls]
         if hasattr(object_cls, 'create_default'):
             layout = QtWidgets.QHBoxLayout()
             self._inputs.addLayout(layout)
