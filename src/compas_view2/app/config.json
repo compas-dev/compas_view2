@@ -68,7 +68,7 @@
             "text": "Geometry",
             "items":
             [
-                {"type": "action", "text": "Add Object", "action": "add_object"},
+                {"type": "action", "text": "Add Object", "action": "add_geometry_object"},
                 {"type": "action", "text": "Edit Object", "action": "edit_selected_object"}
             ]
         },

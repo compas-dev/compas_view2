@@ -41,7 +41,7 @@ class CollapsibleBox(QtWidgets.QWidget):
         if self._expanded:
             self.expand()
         else:
-            self.contract()
+            self.collapse()
         self.update_parent()
 
     def get_content_height(self):
@@ -59,7 +59,7 @@ class CollapsibleBox(QtWidgets.QWidget):
         self.setFixedHeight(self._collapsed_height + self.get_content_height())
         self.content_area.setMaximumHeight(self.get_content_height())
 
-    def contract(self):
+    def collapse(self):
         self.toggle_button.setArrowType(QtCore.Qt.RightArrow)
         self.setFixedHeight(self._collapsed_height)
         self.content_area.setMaximumHeight(0)
