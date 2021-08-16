@@ -49,8 +49,6 @@ class CollapsibleBox(QtWidgets.QWidget):
 
     def setContentLayout(self, layout):
         self._layout = layout
-        lay = self.content_area.layout()
-        del lay
         self.content_area.setLayout(layout)
         self._collapsed_height = self.sizeHint().height()
 

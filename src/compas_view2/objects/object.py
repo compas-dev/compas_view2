@@ -34,9 +34,9 @@ class Object(ABC):
     """
 
     @staticmethod
-    def register(dtype, vtype):
+    def register(dtype, otype):
         """Register an object class to its corrensponding data type"""
-        DATA_OBJECT[dtype] = vtype
+        DATA_OBJECT[dtype] = otype
 
     @staticmethod
     def build(data, **kwargs):
