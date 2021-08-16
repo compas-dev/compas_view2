@@ -27,20 +27,30 @@ class BufferObject(Object):
 
     def __init__(self, data, name=None, is_selected=False, is_visible=True,
                  show_points=False, show_vertices=False, show_lines=False, show_edges=True, show_faces=True,
-                 pointcolor=None, linecolor=None, facecolor=None,
-                 linewidth=None, pointsize=None, opacity=1):
+                 pointcolor=None, linecolor=None, facecolor=None, color=None,
+                 facecolors={}, linecolors={}, pointcolors={},
+                 linewidth=1, pointsize=10, opacity=1):
         super().__init__(data, name=name, is_selected=is_selected, is_visible=is_visible)
         self._data = data
+
         self.show_points = show_points or show_vertices
         self.show_lines = show_lines or show_edges
         self.show_faces = show_faces
-        self.pointcolor = pointcolor
-        self.linecolor = linecolor
-        self.facecolor = facecolor
-        self.linewidth = linewidth or 1
-        self.pointsize = pointsize or 10
+
+        self.pointcolor = list(pointcolor or color or self.default_color_points)
+        self.linecolor = list(linecolor or color or self.default_color_lines)
+        self.facecolor = list(facecolor or color or self.default_color_faces)
+       
+        self.pointcolors = pointcolors
+        self.facecolors = facecolors
+        self.linecolors = linecolors
+
+        self.linewidth = linewidth
+        self.pointsize = pointsize
+
         self.opacity = opacity
         self.background = False
+
         self._bounding_box = None
         self._bounding_box_center = None
 
@@ -149,21 +159,29 @@ class BufferObject(Object):
         shader.uniform1f('object_opacity', self.opacity)
         shader.uniform1i('element_type', 2)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
+            shader.uniform3f('single_color', self.facecolor)
+            shader.uniform1i('use_single_color', not self.facecolors)
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
             shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'], background=self.background)
         if hasattr(self, "_backfaces_buffer") and self.show_faces and not wireframe:
+            shader.uniform3f('single_color', self.facecolor)
+            shader.uniform1i('use_single_color', not self.facecolors)
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'], background=self.background)
         shader.uniform1i('is_lighted', False)
         shader.uniform1i('element_type', 1)
         if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
+            shader.uniform3f('single_color', self.linecolor)
+            shader.uniform1i('use_single_color', not self.linecolors)
             shader.bind_attribute('position', self._lines_buffer['positions'])
             shader.bind_attribute('color', self._lines_buffer['colors'])
             shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'], background=self.background)
         shader.uniform1i('element_type', 0)
         if hasattr(self, "_points_buffer") and self.show_points:
+            shader.uniform3f('single_color', self.pointcolor)
+            shader.uniform1i('use_single_color', not self.pointcolors)
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)

@@ -9,11 +9,19 @@ uniform bool is_lighted;
 uniform bool is_selected;
 uniform vec3 selection_color;
 uniform int element_type;
+uniform vec3 single_color;
+uniform bool use_single_color;
+
 
 void main()
 {   
     float alpha = opacity * object_opacity;
-    vec3 color = vertex_color;
+    vec3 color;
+    if (use_single_color){
+        color = single_color;
+    }else{
+        color = vertex_color;
+    }
     if (is_selected) {
         if (element_type == 0) {color = selection_color*0.9;}
         else if (element_type == 1) {color = selection_color*0.8;}
