@@ -1,6 +1,7 @@
 from compas.geometry import Line
 from compas.geometry import Frame
 from compas.datastructures import Mesh
+from compas.geometry import Plane
 
 from .meshobject import MeshObject
 from .lineobject import LineObject
@@ -34,3 +35,7 @@ class PlaneObject(CompositeObject):
         meshObject = MeshObject(mesh, hide_coplanaredges=True, **kwargs)
 
         super().__init__([meshObject, lineObject], show_edges=True, show_faces=True, **kwargs)
+
+    @classmethod
+    def create_default(cls) -> Plane:
+        return Plane([0, 0, 0], [0, 0, 1])

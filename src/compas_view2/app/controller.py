@@ -1,21 +1,17 @@
 from OpenGL import GL
 
 from PySide2 import QtWidgets
+from PySide2 import QtCore
 
 from typing import Union
 from pathlib import Path
 
 from compas.geometry import Point
-from compas.geometry import Line
-from compas.geometry import Box
-from compas.geometry import Sphere
-from compas.geometry import Torus
 from compas.datastructures import Network
 from compas.datastructures import Mesh
 
-from ..forms import PointForm
-from ..forms import SphereForm
-from ..forms import TorusForm
+from ..forms import AddForm
+from ..forms import EditForm
 from .worker import Worker
 
 
@@ -41,7 +37,8 @@ class Controller:
 
                 def edit(obj):
                     if obj:
-                        obj.edit(on_update=self.app.view.update)
+                        dock = EditForm("Property", obj, on_update=self.app.view.update)
+                        self.app.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
 
                 worker = Worker(func, self)
                 if action == "add":
@@ -170,121 +167,25 @@ class Controller:
     # Primitive actions
     # ==============================================================================
 
-    def add_point(self) -> Union[Point, None]:
-        """Add a point at specific XYZ coordinates.
-
-        Returns
-        -------
-        :class:`Point`
-            If the operation was successful
-        None
-            Otherwise
-        """
-        form = PointForm()
-        if form.exec_():
-            x = form.x
-            y = form.y
-            z = form.z
-            point = Point(x, y, z)
-            self.app.add(point)
+    def add_geometry_object(self):
+        def on_create(data):
+            self.app.add(data)
             self.app.view.update()
-            return point
-
-    @interactive("add")
-    def add_point_on_grid(self) -> Union[Point, None]:
-        self.app.status("Select a location on grid")
-        location = self.app.selector.start_selection_on_plane(snap_to_grid=True)
-        if location:
-            self.app.status("Created a Point.")
-            return Point(*location)
-        else:
-            self.app.status("No location provided.")
-            return None
-
-    @interactive("add")
-    def add_line_from_selected_points(self):
-        self.app.status("Select points on screen, Click Enter to finish")
-        points = self.app.selector.start_selection(types=[Point])
-        if len(points) != 2:
-            self.app.status("Must select 2 points")
-            return None
-        line = Line(*points)
-        self.app.status("Line added")
-        return line
+        form = AddForm(on_create=on_create)
+        form.exec_()
 
     @interactive("edit")
     def edit_selected_object(self):
-        self.app.status("Select one object on screen, Click Enter to finish")
         if len(self.app.selector.selected) == 1:
             return self.app.selector.selected[0]
         else:
+            self.app.status("Select one object on screen, Click Enter to finish")
             objects = self.app.selector.start_selection(types=[Point], mode="single", returns="object")
             if len(objects) != 1:
                 self.app.status("Must select 1 object")
                 return None
+            self.app.status("")
             return objects[0]
-
-    # ==============================================================================
-    # Shape actions
-    # ==============================================================================
-
-    def add_box(self) -> Union[Box, None]:
-        """Add a box at the origin.
-
-        Returns
-        -------
-        :class:`Box`
-            If the operation was successful
-        None
-            Otherwise
-        """
-        r = QtWidgets.QInputDialog.getDouble(self.app.window, 'Add Box', 'size', 1)
-        if r[1] and r[0] > 0:
-            size = r[0]
-            box = Box.from_width_height_depth(size, size, size)
-            self.app.add(box)
-            self.app.view.update()
-
-    def add_sphere(self) -> Union[Sphere, None]:
-        """Add a sphere at the origin.
-
-        Returns
-        -------
-        :class:`Sphere`
-            If the operation was successful
-        None
-            Otherwise
-        """
-        form = SphereForm()
-        if form.exec_():
-            radius = form.radius
-            u = form.u
-            v = form.v
-            sphere = Sphere([0, 0, 0], radius)
-            self.app.add(sphere, u=u, v=v)
-            self.app.view.update()
-            return sphere
-
-    def add_torus(self) -> Union[Torus, None]:
-        """Add a torus at the origin.
-
-        Returns
-        -------
-        :class:`Torus`
-            If the operation was successful
-        None
-            Otherwise
-        """
-        form = TorusForm()
-        if form.exec_():
-            radius = form.radius
-            tube = form.tube
-            u = form.u
-            v = form.v
-            torus = Torus(([0, 0, 0], [0, 0, 1]), radius, tube)
-            self.app.add(torus, u=u, v=v)
-            self.app.view.update()
-            return torus
 
     # ==============================================================================
     # Network actions

@@ -46,32 +46,33 @@ Please check the [Issue Tracker](https://github.com/compas-dev/compas_view2/issu
 | -------- | ------------------ | ------------------ | ------------------ |
 | Point    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | Vector   | :heavy_check_mark: | :x:                | :x:                |
-| Line     | :heavy_check_mark: | :x:                | :heavy_check_mark: |
-| Plane    | :heavy_check_mark: | :x:                | :x:                |
-| Frame    | :heavy_check_mark: | :x:                | :x:                |
-| Circle   | :heavy_check_mark: | :x:                | :x:                |
-| Polygon  | :heavy_check_mark: | :x:                | :x:                |
-| Polyline | :heavy_check_mark: | :x:                | :x:                |
+| Line     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Plane    | :heavy_check_mark: | :heavy_check_mark: | :x:                |
+| Frame    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Circle   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Polygon  | :heavy_check_mark: | :x:                | :heavy_check_mark: |
+| Polyline | :heavy_check_mark: | :x:                | :heavy_check_mark: |
 | Text     | :heavy_check_mark: | :x:                | :x:                |
 
 ### Shapes
 
 | Object     | Script             | Form               | Interactive        |
 | ---------- | ------------------ | ------------------ | ------------------ |
-| Box        | :heavy_check_mark: | :heavy_check_mark: | :x:                |
-| Sphere     | :heavy_check_mark: | :heavy_check_mark: | :x:                |
-| Cone       | :heavy_check_mark: | :x:                | :x:                |
-| Cylinder   | :heavy_check_mark: | :x:                | :x:                |
-| Capsule    | :heavy_check_mark: | :x:                | :x:                |
-| Torus      | :heavy_check_mark: | :x:                | :x:                |
-| Polyhedron | :heavy_check_mark: | :x:                | :x:                |
+| Box        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Sphere     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Cone       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Cylinder   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Capsule    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Torus      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Polyhedron | :heavy_check_mark: | :x:                | :heavy_check_mark: |
+| Arrow      | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 
 ### Datastructures
 
 | Object   | Script             | Form               | Interactive        |
 | -------- | ------------------ | ------------------ | ------------------ |
-| Network  | :heavy_check_mark: | :x:                | :x:                |
-| Mesh     | :heavy_check_mark: | :x:                | :x:                |
-| VolMesh  | :heavy_check_mark: | :x:                | :x:                |
+| Network  | :heavy_check_mark: | :x:                | :heavy_check_mark: |
+| Mesh     | :heavy_check_mark: | :x:                | :heavy_check_mark: |
+| VolMesh  | :heavy_check_mark: | :x:                | :heavy_check_mark: |
 
 ### Robots

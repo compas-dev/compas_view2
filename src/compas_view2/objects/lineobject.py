@@ -1,4 +1,5 @@
 from .bufferobject import BufferObject
+from compas.geometry import Line
 
 
 class LineObject(BufferObject):
@@ -27,3 +28,7 @@ class LineObject(BufferObject):
         colors = [color, color]
         elements = [[0, 1]]
         return positions, colors, elements
+
+    @classmethod
+    def create_default(cls) -> Line:
+        return Line([0, 0, 0], [0, 0, 1])

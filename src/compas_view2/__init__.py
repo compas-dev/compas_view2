@@ -31,4 +31,4 @@ except Exception:
     util.find_library = new_util_find_library
 
 
-__all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_VIEW", "register"]
+__all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_OBJECT", "register"]

@@ -1,5 +1,6 @@
 from compas.datastructures import Mesh
 from .meshobject import MeshObject
+from ..shapes import Arrow
 
 
 class ArrowObject(MeshObject):
@@ -18,3 +19,7 @@ class ArrowObject(MeshObject):
     @property
     def properties(self):
         return ["u"]
+
+    @classmethod
+    def create_default(cls) -> Arrow:
+        return Arrow([0, 0, 0], [0, 0, 1])

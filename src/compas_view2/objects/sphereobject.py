@@ -1,4 +1,5 @@
 from compas.datastructures import Mesh
+from compas.geometry import Sphere
 from .meshobject import MeshObject
 
 
@@ -19,3 +20,7 @@ class SphereObject(MeshObject):
     @property
     def properties(self):
         return ["u", "v"]
+
+    @classmethod
+    def create_default(cls) -> Sphere:
+        return Sphere((0, 0, 0), 1)

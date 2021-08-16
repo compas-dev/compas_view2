@@ -8,6 +8,7 @@ import json
 from functools import partial
 
 from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtGui import QIcon
 
 from compas.data import Data
 
@@ -130,6 +131,9 @@ class App:
         if app is None:
             app = QtWidgets.QApplication(sys.argv)
         app.references = set()
+
+        appIcon = QIcon(os.path.join(ICONS, "compas_icon_white.png"))
+        app.setWindowIcon(appIcon)
 
         self.timer = None
         self.frame_count = 0

@@ -1,5 +1,7 @@
 from .polylineobject import PolylineObject
 from compas.geometry import Frame
+from compas.geometry import Plane
+from compas.geometry import Circle
 import math
 
 
@@ -30,3 +32,7 @@ class CircleObject(PolylineObject):
     @property
     def properties(self):
         return ["u"]
+
+    @classmethod
+    def create_default(cls) -> Circle:
+        return Circle(Plane([0, 0, 0], [0, 0, 1]), 1)

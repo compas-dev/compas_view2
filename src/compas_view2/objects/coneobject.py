@@ -1,4 +1,7 @@
 from compas.datastructures import Mesh
+from compas.geometry import Plane
+from compas.geometry import Circle
+from compas.geometry import Cone
 from .meshobject import MeshObject
 
 
@@ -18,3 +21,7 @@ class ConeObject(MeshObject):
     @property
     def properties(self):
         return ["u"]
+
+    @classmethod
+    def create_default(cls) -> Cone:
+        return Cone(Circle(Plane([0, 0, 0], [0, 0, 1]), 0.5), 1)
