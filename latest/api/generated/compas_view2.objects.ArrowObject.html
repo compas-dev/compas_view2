@@ -97,7 +97,7 @@
 <h1>ArrowObject</h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.objects.ArrowObject">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></span><span class="sig-name descname"><span class="pre">ArrowObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/arrowobject.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></span><span class="sig-name descname"><span class="pre">ArrowObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/arrowobject.py#L6"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <a class="reference internal" href="compas_view2.objects.MeshObject.html#compas_view2.objects.MeshObject" title="compas_view2.objects.meshobject.MeshObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.objects.meshobject.MeshObject</span></code></a></p>
 <p>Object for displaying COMPAS arrow geometry.</p>
 <p class="rubric">Methods</p>
@@ -113,14 +113,14 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.create.html#compas_view2.objects.ArrowObject.create" title="compas_view2.objects.ArrowObject.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.draw.html#compas_view2.objects.ArrowObject.draw" title="compas_view2.objects.ArrowObject.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>(shader[, wireframe, is_lighted])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.create_default.html#compas_view2.objects.ArrowObject.create_default" title="compas_view2.objects.ArrowObject.create_default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_default</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.draw.html#compas_view2.objects.ArrowObject.draw" title="compas_view2.objects.ArrowObject.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>(shader[, wireframe, is_lighted])</p></td>
 <td><p>Draw the object from its buffers</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.draw_instance.html#compas_view2.objects.ArrowObject.draw_instance" title="compas_view2.objects.ArrowObject.draw_instance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_instance</span></code></a>(shader[, wireframe])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.draw_instance.html#compas_view2.objects.ArrowObject.draw_instance" title="compas_view2.objects.ArrowObject.draw_instance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_instance</span></code></a>(shader[, wireframe])</p></td>
 <td><p>Draw the object instance for picking</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.edit.html#compas_view2.objects.ArrowObject.edit" title="compas_view2.objects.ArrowObject.edit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit</span></code></a>([on_update])</p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.init.html#compas_view2.objects.ArrowObject.init" title="compas_view2.objects.ArrowObject.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>()</p></td>
 <td><p>Initialize the object</p></td>
@@ -131,7 +131,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.make_buffers.html#compas_view2.objects.ArrowObject.make_buffers" title="compas_view2.objects.ArrowObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a>()</p></td>
 <td><p>Create all buffers from object’s data</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.register.html#compas_view2.objects.ArrowObject.register" title="compas_view2.objects.ArrowObject.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(dtype, vtype)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.register.html#compas_view2.objects.ArrowObject.register" title="compas_view2.objects.ArrowObject.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(dtype, otype)</p></td>
 <td><p>Register an object class to its corrensponding data type</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.ArrowObject.update.html#compas_view2.objects.ArrowObject.update" title="compas_view2.objects.ArrowObject.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>()</p></td>

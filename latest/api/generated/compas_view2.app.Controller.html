@@ -97,7 +97,7 @@
 <h1>Controller</h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.app.Controller">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/controller.py#L22"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/controller.py#L18"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Action controller for the default config file.</p>
 <dl class="field-list simple">
@@ -115,91 +115,76 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.about.html#compas_view2.app.Controller.about" title="compas_view2.app.Controller.about"><code class="xref py py-obj docutils literal notranslate"><span class="pre">about</span></code></a>()</p></td>
 <td><p>Display the about message.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_box.html#compas_view2.app.Controller.add_box" title="compas_view2.app.Controller.add_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_box</span></code></a>()</p></td>
-<td><p>Add a box at the origin.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_line_from_selected_points.html#compas_view2.app.Controller.add_line_from_selected_points" title="compas_view2.app.Controller.add_line_from_selected_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_line_from_selected_points</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_geometry_object.html#compas_view2.app.Controller.add_geometry_object" title="compas_view2.app.Controller.add_geometry_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_geometry_object</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_mesh_from_file.html#compas_view2.app.Controller.add_mesh_from_file" title="compas_view2.app.Controller.add_mesh_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_mesh_from_file</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_mesh_from_file.html#compas_view2.app.Controller.add_mesh_from_file" title="compas_view2.app.Controller.add_mesh_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_mesh_from_file</span></code></a>()</p></td>
 <td><p>Add a mesh from the data in an file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_network_from_obj.html#compas_view2.app.Controller.add_network_from_obj" title="compas_view2.app.Controller.add_network_from_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_network_from_obj</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_network_from_obj.html#compas_view2.app.Controller.add_network_from_obj" title="compas_view2.app.Controller.add_network_from_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_network_from_obj</span></code></a>()</p></td>
 <td><p>Add a network from the data in an OBJ file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_point.html#compas_view2.app.Controller.add_point" title="compas_view2.app.Controller.add_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_point</span></code></a>()</p></td>
-<td><p>Add a point at specific XYZ coordinates.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_point_on_grid.html#compas_view2.app.Controller.add_point_on_grid" title="compas_view2.app.Controller.add_point_on_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_point_on_grid</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_sphere.html#compas_view2.app.Controller.add_sphere" title="compas_view2.app.Controller.add_sphere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_sphere</span></code></a>()</p></td>
-<td><p>Add a sphere at the origin.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.add_torus.html#compas_view2.app.Controller.add_torus" title="compas_view2.app.Controller.add_torus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_torus</span></code></a>()</p></td>
-<td><p>Add a torus at the origin.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.clear_scene.html#compas_view2.app.Controller.clear_scene" title="compas_view2.app.Controller.clear_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_scene</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.clear_scene.html#compas_view2.app.Controller.clear_scene" title="compas_view2.app.Controller.clear_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_scene</span></code></a>()</p></td>
 <td><p>Clear all objects from the current scene.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.dummy.html#compas_view2.app.Controller.dummy" title="compas_view2.app.Controller.dummy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dummy</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.dummy.html#compas_view2.app.Controller.dummy" title="compas_view2.app.Controller.dummy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dummy</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.edit_selected_object.html#compas_view2.app.Controller.edit_selected_object" title="compas_view2.app.Controller.edit_selected_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_selected_object</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.edit_selected_object.html#compas_view2.app.Controller.edit_selected_object" title="compas_view2.app.Controller.edit_selected_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_selected_object</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.glsl_version.html#compas_view2.app.Controller.glsl_version" title="compas_view2.app.Controller.glsl_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">glsl_version</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.glsl_version.html#compas_view2.app.Controller.glsl_version" title="compas_view2.app.Controller.glsl_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">glsl_version</span></code></a>()</p></td>
 <td><p>Display the version of the shader language.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.history.html#compas_view2.app.Controller.history" title="compas_view2.app.Controller.history"><code class="xref py py-obj docutils literal notranslate"><span class="pre">history</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.history.html#compas_view2.app.Controller.history" title="compas_view2.app.Controller.history"><code class="xref py py-obj docutils literal notranslate"><span class="pre">history</span></code></a>()</p></td>
 <td><p>Display the undo history of the scene.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.interactive.html#compas_view2.app.Controller.interactive" title="compas_view2.app.Controller.interactive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interactive</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.interactive.html#compas_view2.app.Controller.interactive" title="compas_view2.app.Controller.interactive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interactive</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.load_scene.html#compas_view2.app.Controller.load_scene" title="compas_view2.app.Controller.load_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_scene</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.load_scene.html#compas_view2.app.Controller.load_scene" title="compas_view2.app.Controller.load_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_scene</span></code></a>()</p></td>
 <td><p>Load a scene from a file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.opengl_version.html#compas_view2.app.Controller.opengl_version" title="compas_view2.app.Controller.opengl_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opengl_version</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.opengl_version.html#compas_view2.app.Controller.opengl_version" title="compas_view2.app.Controller.opengl_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opengl_version</span></code></a>()</p></td>
 <td><p>Display the OpenGL version.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.redo.html#compas_view2.app.Controller.redo" title="compas_view2.app.Controller.redo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redo</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.redo.html#compas_view2.app.Controller.redo" title="compas_view2.app.Controller.redo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redo</span></code></a>()</p></td>
 <td><p>Redo the last scene modification.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.redraw_scene.html#compas_view2.app.Controller.redraw_scene" title="compas_view2.app.Controller.redraw_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redraw_scene</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.redraw_scene.html#compas_view2.app.Controller.redraw_scene" title="compas_view2.app.Controller.redraw_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redraw_scene</span></code></a>()</p></td>
 <td><p>Redraw the current scene.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.save_scene.html#compas_view2.app.Controller.save_scene" title="compas_view2.app.Controller.save_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_scene</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.save_scene.html#compas_view2.app.Controller.save_scene" title="compas_view2.app.Controller.save_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_scene</span></code></a>()</p></td>
 <td><p>Save the current scene to a file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.undo.html#compas_view2.app.Controller.undo" title="compas_view2.app.Controller.undo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undo</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.undo.html#compas_view2.app.Controller.undo" title="compas_view2.app.Controller.undo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undo</span></code></a>()</p></td>
 <td><p>Undo the last scene modification.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_capture.html#compas_view2.app.Controller.view_capture" title="compas_view2.app.Controller.view_capture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_capture</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_capture.html#compas_view2.app.Controller.view_capture" title="compas_view2.app.Controller.view_capture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_capture</span></code></a>()</p></td>
 <td><p>Capture a screenshot.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_front.html#compas_view2.app.Controller.view_front" title="compas_view2.app.Controller.view_front"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_front</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_front.html#compas_view2.app.Controller.view_front" title="compas_view2.app.Controller.view_front"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_front</span></code></a>()</p></td>
 <td><p>Swtich to a front view.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_ghosted.html#compas_view2.app.Controller.view_ghosted" title="compas_view2.app.Controller.view_ghosted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_ghosted</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_ghosted.html#compas_view2.app.Controller.view_ghosted" title="compas_view2.app.Controller.view_ghosted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_ghosted</span></code></a>()</p></td>
 <td><p>Switch the view to ghosted.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_lighted.html#compas_view2.app.Controller.view_lighted" title="compas_view2.app.Controller.view_lighted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_lighted</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_lighted.html#compas_view2.app.Controller.view_lighted" title="compas_view2.app.Controller.view_lighted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_lighted</span></code></a>()</p></td>
 <td><p>Switch the view to lighted.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_perspective.html#compas_view2.app.Controller.view_perspective" title="compas_view2.app.Controller.view_perspective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_perspective</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_perspective.html#compas_view2.app.Controller.view_perspective" title="compas_view2.app.Controller.view_perspective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_perspective</span></code></a>()</p></td>
 <td><p>Swtich to a perspective view.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_right.html#compas_view2.app.Controller.view_right" title="compas_view2.app.Controller.view_right"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_right</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_right.html#compas_view2.app.Controller.view_right" title="compas_view2.app.Controller.view_right"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_right</span></code></a>()</p></td>
 <td><p>Swtich to a right view.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_shaded.html#compas_view2.app.Controller.view_shaded" title="compas_view2.app.Controller.view_shaded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_shaded</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_shaded.html#compas_view2.app.Controller.view_shaded" title="compas_view2.app.Controller.view_shaded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_shaded</span></code></a>()</p></td>
 <td><p>Switch the view to shaded.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_top.html#compas_view2.app.Controller.view_top" title="compas_view2.app.Controller.view_top"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_top</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_top.html#compas_view2.app.Controller.view_top" title="compas_view2.app.Controller.view_top"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_top</span></code></a>()</p></td>
 <td><p>Swtich to a top view.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_wireframe.html#compas_view2.app.Controller.view_wireframe" title="compas_view2.app.Controller.view_wireframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_wireframe</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_wireframe.html#compas_view2.app.Controller.view_wireframe" title="compas_view2.app.Controller.view_wireframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_wireframe</span></code></a>()</p></td>
 <td><p>Switch the view to wireframe.</p></td>
 </tr>
 </tbody>
