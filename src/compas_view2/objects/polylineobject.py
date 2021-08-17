@@ -8,23 +8,19 @@ class PolylineObject(BufferObject):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_line = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, close=False, pointcolor=None, linecolor=None, color=None, **kwargs):
+    def __init__(self, data, close=False, **kwargs):
         super().__init__(data, show_lines=True, **kwargs)
-        self.pointcolor = pointcolor or color
-        self.linecolor = linecolor or color
         self.close = close
 
     def _points_data(self):
         polyline = self._data
-        color = self.pointcolor or self.default_color_points
         positions = [point for point in polyline.points]
-        colors = [color for i in range(len(positions))]
+        colors = [self.pointcolors.get(i, self.pointcolor) for i,_ in enumerate(polyline.points)]
         elements = [[i] for i in range(len(positions))]
         return positions, colors, elements
 
     def _lines_data(self):
         polyline = self._data
-        color = self.linecolor or self.default_color_line
         positions = []
         colors = []
         elements = []
@@ -33,9 +29,10 @@ class PolylineObject(BufferObject):
         else:
             lines = pairwise(polyline.points)
         count = 0
-        for pt1, pt2 in lines:
+        for i, (pt1, pt2) in enumerate(lines):
             positions.append(pt1)
             positions.append(pt2)
+            color = self.linecolors.get(i, self.linecolor)
             colors.append(color)
             colors.append(color)
             elements.append([count, count+1])

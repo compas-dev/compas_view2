@@ -8,13 +8,12 @@ class FrameObject(BufferObject):
     def __init__(self, data, show_point=True, show_lines=True, size=1.0, **kwargs):
         super().__init__(data, show_points=show_point, show_lines=show_lines, **kwargs)
         self.size = size
+        self.linecolors = [(1, 0, 0), (1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 0, 1), (0, 0, 1)]
 
     def _points_data(self):
         frame = self._data
-        # points
-        color = (0, 0, 0)
         positions = [frame.point]
-        colors = [color]
+        colors = [self.pointcolor]
         elements = [[0]]
         return positions, colors, elements
 
@@ -24,7 +23,7 @@ class FrameObject(BufferObject):
             frame.point, frame.point + (frame.xaxis * self.size),
             frame.point, frame.point + (frame.yaxis * self.size),
             frame.point, frame.point + (frame.zaxis * self.size)]
-        colors = [(1, 0, 0), (1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 0, 1), (0, 0, 1)]
+        colors = self.linecolors
         elements = [[0, 1], [2, 3], [4, 5]]
         return positions, colors, elements
 

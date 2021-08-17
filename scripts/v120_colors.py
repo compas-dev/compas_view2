@@ -1,3 +1,4 @@
+from os import name
 import compas
 
 from compas_view2 import app
@@ -17,12 +18,8 @@ mesh2 = mesh.transformed(Translation.from_vector([-6, 0, 0]))
 facecolors = {k: [random(), random(), random()] for k in mesh.faces()}
 linecolors = {k: [random(), random(), random()] for k in mesh.edges()}
 pointcolors = {k: [random(), random(), random()] for k in mesh.vertices()}
-pointcolors = {k: [0.5, 0, 0] for k in mesh.vertices()}
 
-# viewer.add(mesh, show_points=True, facecolors=facecolors, linecolors=linecolors, pointcolors=pointcolors)
-# viewer.add(mesh, show_points=True, facecolors=facecolors, linecolors=linecolors, pointcolors=pointcolors)
-viewer.add(mesh, show_points=True, facecolors=facecolors, linecolors=linecolors, pointcolor=[0.3, 0, 0])
-# viewer.add(mesh, hide_coplanaredges=False, facecolor=[0.99, 0.0, 0])
-# viewer.add(mesh2, hide_coplanaredges=True)
+viewer.add(mesh, name="mesh1", show_points=True, facecolors=facecolors, linecolors=linecolors, pointcolors=pointcolors)
+viewer.add(mesh2, name="mesh2", show_points=True, facecolor=[1, 0, 0], linecolor=[0, 1, 0], pointcolor=[0, 0, 1])
 
 viewer.show()

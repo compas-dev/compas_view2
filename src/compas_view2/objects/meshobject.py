@@ -84,7 +84,7 @@ class MeshObject(BufferObject):
         vertices = self.vertices or mesh.vertices()
         for vertex in vertices:
             positions.append(vertex_xyz[vertex])
-            colors.append(self.pointcolors.get(vertex, [0, 0, 0]))
+            colors.append(self.pointcolors.get(vertex, self.pointcolor))
             elements.append([i])
             i += 1
         return positions, colors, elements
@@ -98,7 +98,7 @@ class MeshObject(BufferObject):
         i = 0
         edges = self.edges or mesh.edges()
         for u, v in edges:
-            color = self.linecolors.get((u, v), [0, 0, 0])
+            color = self.linecolors.get((u, v), self.linecolor)
             if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
                 fkeys = mesh.edge_faces(u, v)
@@ -126,7 +126,7 @@ class MeshObject(BufferObject):
         faces = self.faces or mesh.faces()
         for face in faces:
             vertices = mesh.face_vertices(face)
-            color = self.facecolors.get(face, [0, 0, 0])
+            color = self.facecolors.get(face, self.facecolor)
             if len(vertices) == 3:
                 a, b, c = vertices
                 positions.append(vertex_xyz[a])
@@ -179,7 +179,7 @@ class MeshObject(BufferObject):
         faces = self.faces or mesh.faces()
         for face in faces:
             vertices = mesh.face_vertices(face)[::-1]
-            color = self.facecolors.get(face, [0, 0, 0])
+            color = self.facecolors.get(face, self.facecolor)
             if len(vertices) == 3:
                 a, b, c = vertices
                 positions.append(vertex_xyz[a])

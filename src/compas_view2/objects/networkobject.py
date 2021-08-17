@@ -25,10 +25,9 @@ class NetworkObject(BufferObject):
         positions = []
         colors = []
         elements = []
-        color = self.default_color_points
         for i, node in enumerate(data.nodes()):
             positions.append(node_xyz[node])
-            colors.append(color)
+            colors.append(self.pointcolors.get(node, self.pointcolor))
             elements.append([i])
         return positions, colors, elements
 
@@ -38,11 +37,11 @@ class NetworkObject(BufferObject):
         positions = []
         colors = []
         elements = []
-        color = self.default_color_lines
         i = 0
         for u, v in data.edges():
             positions.append(node_xyz[u])
             positions.append(node_xyz[v])
+            color = self.linecolors.get((u, v), self.linecolor)
             colors.append(color)
             colors.append(color)
             elements.append([i + 0, i + 1])

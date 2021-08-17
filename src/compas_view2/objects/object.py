@@ -49,7 +49,7 @@ class Object(ABC):
 
     def __init__(self, data, name=None, is_selected=False, is_visible=True):
         self._data = data
-        self.name = name
+        self.name = name or str(self)
         self.is_selected = is_selected
         self.is_visible = is_visible
         self._instance_color = None

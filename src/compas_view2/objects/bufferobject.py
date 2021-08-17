@@ -28,8 +28,8 @@ class BufferObject(Object):
     def __init__(self, data, name=None, is_selected=False, is_visible=True,
                  show_points=False, show_vertices=False, show_lines=False, show_edges=True, show_faces=True,
                  pointcolor=None, linecolor=None, facecolor=None, color=None,
-                 facecolors={}, linecolors={}, pointcolors={},
-                 linewidth=1, pointsize=10, opacity=1):
+                 facecolors=None, linecolors=None, pointcolors=None,
+                 linewidth=None, pointsize=None, opacity=None):
         super().__init__(data, name=name, is_selected=is_selected, is_visible=is_visible)
         self._data = data
 
@@ -37,22 +37,33 @@ class BufferObject(Object):
         self.show_lines = show_lines or show_edges
         self.show_faces = show_faces
 
-        self.pointcolor = list(pointcolor or color or self.default_color_points)
-        self.linecolor = list(linecolor or color or self.default_color_lines)
-        self.facecolor = list(facecolor or color or self.default_color_faces)
+        self.pointcolor = np.array(pointcolor or color or self.default_color_points, dtype=float)
+        self.linecolor = np.array(linecolor or color or self.default_color_lines, dtype=float)
+        self.facecolor = np.array(facecolor or color or self.default_color_faces, dtype=float)
        
-        self.pointcolors = pointcolors
-        self.facecolors = facecolors
-        self.linecolors = linecolors
+        self.pointcolors = pointcolors or {}
+        self.facecolors = facecolors or {}
+        self.linecolors = linecolors or {}
 
-        self.linewidth = linewidth
-        self.pointsize = pointsize
+        self.linewidth = linewidth or 1
+        self.pointsize = pointsize or 10
 
-        self.opacity = opacity
+        self.opacity = float(opacity or 1)
         self.background = False
 
         self._bounding_box = None
         self._bounding_box_center = None
+
+    @property
+    def visualisation(self):
+        options = ["opacity"]
+        if hasattr(self, "_points_data"):
+            options += ["pointcolor", "show_points", "pointsize"]
+        if hasattr(self, "_lines_data"):
+            options += ["linecolor", "show_lines", "linewidth"]
+        if hasattr(self, "_frontfaces_data"):
+            options += ["facecolor", "show_faces"]
+        return options
 
     @property
     def bounding_box(self):
