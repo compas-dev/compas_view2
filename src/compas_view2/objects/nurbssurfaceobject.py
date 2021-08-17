@@ -1,19 +1,22 @@
 from compas.utilities.itertools import flatten
-from .meshobject import MeshObject
+from .bufferobject import BufferObject
 
 
-class NurbsSurfaceObject(MeshObject):
+class NurbsSurfaceObject(BufferObject):
     """Object for displaying COMPAS NurbsSurface geometry."""
 
-    def __init__(self, surface, u=10, v=10, show_edges=False, **kwargs):
-        self.u = u
-        self.v = v
-        self._mesh = surface.to_mesh(u=self.u, v=self.v)
-        super().__init__(self._mesh, show_edges=show_edges, **kwargs)
+    def __init__(self, surface, u=100, v=100,
+                 color=None, facecolor=None, linecolor=None, pointcolor=None,
+                 show_edges=False, **kwargs):
+        super().__init__(surface, show_edges=show_edges, **kwargs)
         self._data = surface
+        self._triangles = surface.to_triangles(nu=u, nv=v)
+        self.facecolor = facecolor or color or self.default_color_faces
+        self.linecolor = linecolor or color or self.default_color_lines
+        self.pointcolor = pointcolor or color or self.default_color_points
 
     def update(self):
-        self._mesh = self._data.to_mesh(u=self.u, v=self.v)
+        self._triangles = self._data.to_triangles(nu=self.u, nv=self.v)
         self.init()
         super().update()
 
@@ -41,6 +44,20 @@ class NurbsSurfaceObject(MeshObject):
         for col in zip(*indexes):
             for i in range(len(col) - 1):
                 elements.append([col[i], col[i + 1]])
+        return positions, colors, elements
+
+    def _frontfaces_data(self):
+        color = self.facecolor
+        positions = self._triangles
+        colors = [color] * len(self._triangles)
+        elements = [[i * 3 + 0, i * 3 + 1, i * 3 + 2] for i in range(int(len(self._triangles) / 3))]
+        return positions, colors, elements
+
+    def _backfaces_data(self):
+        color = self.facecolor
+        positions = self._triangles[::-1]
+        colors = [color] * len(self._triangles)
+        elements = [[i * 3 + 0, i * 3 + 1, i * 3 + 2] for i in range(int(len(self._triangles) / 3))]
         return positions, colors, elements
 
     @property
