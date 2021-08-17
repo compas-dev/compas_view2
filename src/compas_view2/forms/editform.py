@@ -45,7 +45,7 @@ class EditForm(QtWidgets.QDockWidget):
         cb = self.add_collapsiblebox("Visualisation")
         v_layout = QtWidgets.QVBoxLayout()
         v_layout._parent = cb
-        
+
         cb.setContentLayout(v_layout)
         self.map_object(obj, obj.visualisation, layout=v_layout)
 
@@ -146,7 +146,7 @@ class EditForm(QtWidgets.QDockWidget):
                 cb = self.add_collapsiblebox(attr, layout=layout)
                 v_layout = QtWidgets.QVBoxLayout()
                 v_layout._parent = cb
-                is_color = isinstance(attribute, np.ndarray) and attr.endswith("color") # TODO: Use color class
+                is_color = isinstance(attribute, np.ndarray) and attr.endswith("color")  # TODO: Use color class
                 self.map_inputs(attribute, layout=v_layout, is_color=is_color, update_data=update_data)
                 cb.setContentLayout(v_layout)
 
@@ -238,7 +238,7 @@ class EditForm(QtWidgets.QDockWidget):
         for i, channel in enumerate(["r", "g", "b"]):
             self.map_number(color, i, name=channel, layout=h_layout, update_data=update_data, minimum=0, maximum=1, step=0.01)
 
-    def map_bool(self, obj, attribute, name=None,layout=None, update_data=False):
+    def map_bool(self, obj, attribute, name=None, layout=None, update_data=False):
         """Map color input field to an object attribute
         """
         if not layout:
@@ -273,7 +273,6 @@ class EditForm(QtWidgets.QDockWidget):
 
         if self.on_update:
             self.on_update()
-
 
     def inputs(self):
         """Creates layout for input fields

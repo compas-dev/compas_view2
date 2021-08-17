@@ -15,7 +15,7 @@ class PolylineObject(BufferObject):
     def _points_data(self):
         polyline = self._data
         positions = [point for point in polyline.points]
-        colors = [self.pointcolors.get(i, self.pointcolor) for i,_ in enumerate(polyline.points)]
+        colors = [self.pointcolors.get(i, self.pointcolor) for i, _ in enumerate(polyline.points)]
         elements = [[i] for i in range(len(positions))]
         return positions, colors, elements
 

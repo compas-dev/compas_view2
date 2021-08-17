@@ -40,7 +40,7 @@ class BufferObject(Object):
         self.pointcolor = np.array(pointcolor or color or self.default_color_points, dtype=float)
         self.linecolor = np.array(linecolor or color or self.default_color_lines, dtype=float)
         self.facecolor = np.array(facecolor or color or self.default_color_faces, dtype=float)
-       
+
         self.pointcolors = pointcolors or {}
         self.facecolors = facecolors or {}
         self.linecolors = linecolors or {}
