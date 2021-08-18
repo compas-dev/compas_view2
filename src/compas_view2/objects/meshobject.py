@@ -65,12 +65,13 @@ class MeshObject(BufferObject):
 
     """
 
-    def __init__(self, data, color=None,
+    def __init__(self, mesh, color=None,
                  facecolor=None, linecolor=None, pointcolor=None,
                  vertices=None, edges=None, faces=None,
+                 show_edges=True,
                  hide_coplanaredges=False, **kwargs):
-        super().__init__(data,  **kwargs)
-        self._mesh = data
+        super().__init__(mesh, show_edges=show_edges, **kwargs)
+        self._mesh = mesh
         self.facecolor = facecolor or color
         self.linecolor = linecolor or color
         self.pointcolor = pointcolor or color

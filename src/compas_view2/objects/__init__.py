@@ -78,3 +78,11 @@ except ModuleNotFoundError:
     pass
 else:
     Object.register(Block, MeshObject)
+
+try:
+    from compas_occ.geometry import NurbsSurface
+    from .nurbssurfaceobject import NurbsSurfaceObject
+except ModuleNotFoundError:
+    pass
+else:
+    Object.register(NurbsSurface, NurbsSurfaceObject)

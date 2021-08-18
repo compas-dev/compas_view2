@@ -190,10 +190,9 @@ class EditForm(QtWidgets.QDockWidget):
             else:
                 setattr(obj, attribute, value)
 
-            if hasattr(self, "data"):
-                self.obj._data.data = self.data
-
             if update_data:
+                if hasattr(self, "data"):
+                    self.obj._data.data = self.data
                 self.obj.update()
             else:
                 self.obj._update_matrix()
