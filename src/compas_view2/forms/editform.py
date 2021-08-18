@@ -120,12 +120,12 @@ class EditForm(QtWidgets.QDockWidget):
         """Map inputs of supported data type"""
         if name:
             self.add_label(name, layout=layout)
-        if isinstance(data, list) or isinstance(data, np.ndarray):
+        if isinstance(data, (list, np.ndarray)):
             if is_color:
                 self.map_color(data, layout=layout, update_data=update_data)
-            elif isinstance(data[0], float) or isinstance(data[0], int):
+            elif isinstance(data[0], (float, int)):
                 self.map_list(data, layout=layout, update_data=update_data)
-            elif len(data) <= 10 and (isinstance(data[0][0], float) or isinstance(data[0][0], int)):
+            elif len(data) <= 10 and isinstance(data[0][0], (float, int)):
                 self.map_vector_list(data, layout=layout, update_data=update_data)
             else:
                 self.add_label(f"{data[0].__class__.__name__}[{len(data)}]", layout=layout)
@@ -140,7 +140,7 @@ class EditForm(QtWidgets.QDockWidget):
             attribute = getattr(data, attr)
             if isinstance(attribute, bool):
                 self.map_bool(data, attr, layout=layout, update_data=update_data)
-            elif isinstance(attribute, int) or isinstance(attribute, float):
+            elif isinstance(attribute, (int, float)):
                 self.map_number(data, attr, layout=layout, update_data=update_data)
             else:
                 cb = self.add_collapsiblebox(attr, layout=layout)
@@ -153,7 +153,7 @@ class EditForm(QtWidgets.QDockWidget):
     def map_dict(self, data, layout=None, update_data=False):
         """Map a dictionary input"""
         for key in data:
-            if isinstance(data[key], int) or isinstance(data[key], float):
+            if isinstance(data[key], (float, int)):
                 self.map_number(data, key, layout=layout, update_data=update_data)
             else:
                 cb = self.add_collapsiblebox(key, layout=layout)
@@ -211,6 +211,12 @@ class EditForm(QtWidgets.QDockWidget):
             _input.setMaximum(maximum)
         elif isinstance(value, int):
             _input = QtWidgets.QSpinBox()
+            if minimum == float('-inf'):
+                minimum = -10**9
+            if maximum == float('inf'):
+                maximum = 10**9
+            _input.setMinimum(minimum)
+            _input.setMaximum(maximum)
         else:
             raise ValueError()
         if step:
@@ -266,7 +272,11 @@ class EditForm(QtWidgets.QDockWidget):
     def update(self, update_data):
         if update_data:
             if hasattr(self, "data"):
-                self.obj._data.data = self.data
+                try:
+                    self.obj._data.data = self.data
+                except Exception as e:
+                    print(e)
+                    print("Failed to update data of", self.obj)
             self.obj.update()
         else:
             self.obj._update_matrix()

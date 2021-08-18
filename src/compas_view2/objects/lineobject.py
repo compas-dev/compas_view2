@@ -8,8 +8,8 @@ class LineObject(BufferObject):
     default_color_points = [0.1, 0.1, 0.1]
     default_color_lines = [0.4, 0.4, 0.4]
 
-    def __init__(self, data, show_lines=True, **kwargs):
-        super().__init__(data, show_lines=show_lines, **kwargs)
+    def __init__(self, data, **kwargs):
+        super().__init__(data, show_lines=True, **kwargs)
 
     def _points_data(self):
         line = self._data

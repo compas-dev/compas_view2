@@ -1,4 +1,3 @@
-from os import name
 import compas
 
 from compas_view2 import app

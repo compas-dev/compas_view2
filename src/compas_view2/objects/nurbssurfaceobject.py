@@ -5,15 +5,12 @@ from .bufferobject import BufferObject
 class NurbsSurfaceObject(BufferObject):
     """Object for displaying COMPAS NurbsSurface geometry."""
 
-    def __init__(self, surface, u=100, v=100,
-                 color=None, facecolor=None, linecolor=None, pointcolor=None,
-                 show_edges=False, **kwargs):
+    def __init__(self, surface, u=100, v=100, show_edges=False, **kwargs):
         super().__init__(surface, show_edges=show_edges, **kwargs)
         self._data = surface
         self._triangles = surface.to_triangles(nu=u, nv=v)
-        self.facecolor = facecolor or color or self.default_color_faces
-        self.linecolor = linecolor or color or self.default_color_lines
-        self.pointcolor = pointcolor or color or self.default_color_points
+        self.u = u
+        self.v = v
 
     def update(self):
         self._triangles = self._data.to_triangles(nu=self.u, nv=self.v)
@@ -22,13 +19,13 @@ class NurbsSurfaceObject(BufferObject):
 
     def _points_data(self):
         positions = [list(pt) for pt in flatten(self._data.points)]
-        colors = [self.pointcolor or self.default_color_points for _ in positions]
+        colors = [self.pointcolor for _ in positions]
         elements = [[i] for i in range(len(positions))]
         return positions, colors, elements
 
     def _lines_data(self):
         positions = [list(pt) for pt in flatten(self._data.points)]
-        colors = [self.linecolor or self.default_color_lines for _ in positions]
+        colors = [self.linecolor for _ in positions]
         count = 0
         indexes = []
         for row in self._data.points:
@@ -47,16 +44,14 @@ class NurbsSurfaceObject(BufferObject):
         return positions, colors, elements
 
     def _frontfaces_data(self):
-        color = self.facecolor
         positions = self._triangles
-        colors = [color] * len(self._triangles)
+        colors = [self.facecolor] * len(self._triangles)
         elements = [[i * 3 + 0, i * 3 + 1, i * 3 + 2] for i in range(int(len(self._triangles) / 3))]
         return positions, colors, elements
 
     def _backfaces_data(self):
-        color = self.facecolor
         positions = self._triangles[::-1]
-        colors = [color] * len(self._triangles)
+        colors = [self.facecolor] * len(self._triangles)
         elements = [[i * 3 + 0, i * 3 + 1, i * 3 + 2] for i in range(int(len(self._triangles) / 3))]
         return positions, colors, elements
 
