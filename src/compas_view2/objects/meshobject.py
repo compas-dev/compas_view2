@@ -65,16 +65,10 @@ class MeshObject(BufferObject):
 
     """
 
-    def __init__(self, mesh, color=None,
-                 facecolor=None, linecolor=None, pointcolor=None,
-                 vertices=None, edges=None, faces=None,
-                 show_edges=True,
+    def __init__(self, data, vertices=None, edges=None, faces=None,
                  hide_coplanaredges=False, **kwargs):
-        super().__init__(mesh, show_edges=show_edges, **kwargs)
-        self._mesh = mesh
-        self.facecolor = facecolor or color
-        self.linecolor = linecolor or color
-        self.pointcolor = pointcolor or color
+        super().__init__(data,  **kwargs)
+        self._mesh = data
         self.hide_coplanaredges = hide_coplanaredges
         self.vertices = vertices
         self.edges = edges
@@ -83,10 +77,6 @@ class MeshObject(BufferObject):
     def _points_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        vertex_color = {
-            vertex: self._mesh.vertex_attribute(vertex, 'color') or self.pointcolor or self.default_color_points
-            for vertex in self._mesh.vertices()
-        }
         positions = []
         colors = []
         elements = []
@@ -94,7 +84,7 @@ class MeshObject(BufferObject):
         vertices = self.vertices or mesh.vertices()
         for vertex in vertices:
             positions.append(vertex_xyz[vertex])
-            colors.append(vertex_color[vertex])
+            colors.append(self.pointcolors.get(vertex, self.pointcolor))
             elements.append([i])
             i += 1
         return positions, colors, elements
@@ -102,17 +92,13 @@ class MeshObject(BufferObject):
     def _lines_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        linecolor = {
-            edge: self._mesh.edge_attribute(edge, 'color') or self.linecolor or self.default_color_lines
-            for edge in self._mesh.edges()
-        }
         positions = []
         colors = []
         elements = []
         i = 0
         edges = self.edges or mesh.edges()
         for u, v in edges:
-            color = linecolor[u, v]
+            color = self.linecolors.get((u, v), self.linecolor)
             if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
                 fkeys = mesh.edge_faces(u, v)
@@ -133,18 +119,14 @@ class MeshObject(BufferObject):
     def _frontfaces_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        face_color = {
-            face: self._mesh.face_attribute(face, 'color') or self.facecolor or self.default_color_faces
-            for face in self._mesh.faces()
-        }
         positions = []
         colors = []
         elements = []
         i = 0
         faces = self.faces or mesh.faces()
         for face in faces:
-            color = face_color[face]
             vertices = mesh.face_vertices(face)
+            color = self.facecolors.get(face, self.facecolor)
             if len(vertices) == 3:
                 a, b, c = vertices
                 positions.append(vertex_xyz[a])
@@ -190,18 +172,14 @@ class MeshObject(BufferObject):
     def _backfaces_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
-        face_color = {
-            face: self._mesh.face_attribute(face, 'color') or self.facecolor or self.default_color_faces
-            for face in self._mesh.faces()
-        }
         positions = []
         colors = []
         elements = []
         i = 0
         faces = self.faces or mesh.faces()
         for face in faces:
-            color = face_color[face]
             vertices = mesh.face_vertices(face)[::-1]
+            color = self.facecolors.get(face, self.facecolor)
             if len(vertices) == 3:
                 a, b, c = vertices
                 positions.append(vertex_xyz[a])

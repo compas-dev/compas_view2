@@ -26,23 +26,44 @@ class BufferObject(Object):
     default_color_faces = [0.8, 0.8, 0.8]
 
     def __init__(self, data, name=None, is_selected=False, is_visible=True,
-                 show_points=False, show_vertices=False, show_lines=False, show_edges=False, show_faces=True,
-                 pointcolor=None, linecolor=None, facecolor=None,
-                 linewidth=None, pointsize=None, opacity=1):
+                 show_points=False, show_vertices=False, show_lines=False, show_edges=True, show_faces=True,
+                 pointcolor=None, linecolor=None, facecolor=None, color=None,
+                 facecolors=None, linecolors=None, pointcolors=None,
+                 linewidth=None, pointsize=None, opacity=None):
         super().__init__(data, name=name, is_selected=is_selected, is_visible=is_visible)
         self._data = data
+
         self.show_points = show_points or show_vertices
         self.show_lines = show_lines or show_edges
         self.show_faces = show_faces
-        self.pointcolor = pointcolor
-        self.linecolor = linecolor
-        self.facecolor = facecolor
+
+        self.pointcolor = np.array(pointcolor or color or self.default_color_points, dtype=float)
+        self.linecolor = np.array(linecolor or color or self.default_color_lines, dtype=float)
+        self.facecolor = np.array(facecolor or color or self.default_color_faces, dtype=float)
+
+        self.pointcolors = pointcolors or {}
+        self.facecolors = facecolors or {}
+        self.linecolors = linecolors or {}
+
         self.linewidth = linewidth or 1
         self.pointsize = pointsize or 10
-        self.opacity = opacity
+
+        self.opacity = float(opacity or 1)
         self.background = False
+
         self._bounding_box = None
         self._bounding_box_center = None
+
+    @property
+    def visualisation(self):
+        options = ["opacity"]
+        if hasattr(self, "_points_data"):
+            options += ["pointcolor", "show_points", "pointsize"]
+        if hasattr(self, "_lines_data"):
+            options += ["linecolor", "show_lines", "linewidth"]
+        if hasattr(self, "_frontfaces_data"):
+            options += ["facecolor", "show_faces"]
+        return options
 
     @property
     def bounding_box(self):
@@ -149,21 +170,29 @@ class BufferObject(Object):
         shader.uniform1f('object_opacity', self.opacity)
         shader.uniform1i('element_type', 2)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
+            shader.uniform3f('single_color', self.facecolor)
+            shader.uniform1i('use_single_color', not self.facecolors)
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
             shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'], background=self.background)
         if hasattr(self, "_backfaces_buffer") and self.show_faces and not wireframe:
+            shader.uniform3f('single_color', self.facecolor)
+            shader.uniform1i('use_single_color', not self.facecolors)
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'], background=self.background)
         shader.uniform1i('is_lighted', False)
         shader.uniform1i('element_type', 1)
         if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
+            shader.uniform3f('single_color', self.linecolor)
+            shader.uniform1i('use_single_color', not self.linecolors)
             shader.bind_attribute('position', self._lines_buffer['positions'])
             shader.bind_attribute('color', self._lines_buffer['colors'])
             shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'], background=self.background)
         shader.uniform1i('element_type', 0)
         if hasattr(self, "_points_buffer") and self.show_points:
+            shader.uniform3f('single_color', self.pointcolor)
+            shader.uniform1i('use_single_color', not self.pointcolors)
             shader.bind_attribute('position', self._points_buffer['positions'])
             shader.bind_attribute('color', self._points_buffer['colors'])
             shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)

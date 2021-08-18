@@ -28,14 +28,15 @@ class PointcloudObject(BufferObject):
         If number of colors does not equal to number of points.
     """
 
-    def __init__(self, data, color=None, colors=None, size=10, **kwargs):
-        super().__init__(data, show_points=True, pointsize=size, **kwargs)
-        self.colors = colors or [color or self.default_color_points] * len(data)
-        if len(self.colors) != len(data):
-            raise ValueError("Number of colors must equal to number of points")
+    def __init__(self, data, colors=None, **kwargs):
+        super().__init__(data, show_points=True, **kwargs)
+        if colors:
+            if len(colors) != len(data):
+                raise ValueError("Number of colors must equal to number of points")
+            self.pointcolors = colors
 
     def _points_data(self):
         positions = self._data
-        colors = self.colors
+        colors = [self.pointcolors.get(i, self.pointcolor) for i in range(len(positions))]
         elements = [[i] for i in range(len(positions))]
         return positions, colors, elements
