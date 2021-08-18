@@ -91,7 +91,7 @@ class BufferObject(Object):
                 'positions': make_vertex_buffer(list(flatten(positions))),
                 'colors': make_vertex_buffer(list(flatten(colors))),
                 'elements': make_index_buffer(list(flatten(elements))),
-                'n': len(positions)
+                'n': len(list(flatten(elements)))
             }
 
     def update_buffer_from_data(self, data, buffer, update_positions=True, update_colors=True, update_elements=True):
@@ -117,7 +117,7 @@ class BufferObject(Object):
             update_vertex_buffer(list(flatten(colors)), buffer["colors"])
         if update_elements:
             update_index_buffer(list(flatten(elements)), buffer["elements"])
-        buffer["n"] = len(positions)
+        buffer["n"] = len(list(flatten(elements)))
 
     def make_buffers(self):
         """Create all buffers from object's data"""
