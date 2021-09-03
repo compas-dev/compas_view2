@@ -1,9 +1,9 @@
 ********************************************************************************
-Getting Started
+Installation
 ********************************************************************************
 
-Installation
-============
+Stable
+======
 
 The recommended way to install ``compas_view2`` is with ``conda``.
 
@@ -13,13 +13,7 @@ The recommended way to install ``compas_view2`` is with ``conda``.
     conda activate view2
 
 
-First Steps
-===========
-
-Have a look at the examples for basic usage scenarios.
-
-
-Dev Install
+Development
 ===========
 
 To get the latest unreleased version, you can install with ``pip`` in a ``conda`` environment

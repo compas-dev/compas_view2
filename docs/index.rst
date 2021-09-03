@@ -20,8 +20,9 @@ Table of Contents
    :titlesonly:
 
    Introduction <self>
-   gettingstarted
+   installation
    tutorial
+   examples
    api
    license
 
