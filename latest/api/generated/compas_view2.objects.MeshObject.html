@@ -50,7 +50,7 @@
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            0.4.0
+            0.4.1
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -161,7 +161,7 @@
 <td><p>Create buffers from point/line/face data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.MeshObject.make_buffers.html#compas_view2.objects.MeshObject.make_buffers" title="compas_view2.objects.MeshObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a>()</p></td>
-<td><p>Create all buffers from object’s data</p></td>
+<td><p>Create all buffers from object's data</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.MeshObject.register.html#compas_view2.objects.MeshObject.register" title="compas_view2.objects.MeshObject.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(dtype, otype)</p></td>
 <td><p>Register an object class to its corrensponding data type</p></td>
@@ -169,11 +169,11 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.MeshObject.update.html#compas_view2.objects.MeshObject.update" title="compas_view2.objects.MeshObject.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>()</p></td>
 <td><p>Update the object</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.MeshObject.update_buffer_from_data.html#compas_view2.objects.MeshObject.update_buffer_from_data" title="compas_view2.objects.MeshObject.update_buffer_from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_buffer_from_data</span></code></a>(data, buffer[, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.MeshObject.update_buffer_from_data.html#compas_view2.objects.MeshObject.update_buffer_from_data" title="compas_view2.objects.MeshObject.update_buffer_from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_buffer_from_data</span></code></a>(data, buffer[, ...])</p></td>
 <td><p>Update existing buffers from point/line/face data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.MeshObject.update_buffers.html#compas_view2.objects.MeshObject.update_buffers" title="compas_view2.objects.MeshObject.update_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_buffers</span></code></a>()</p></td>
-<td><p>Update all buffers from object’s data</p></td>
+<td><p>Update all buffers from object's data</p></td>
 </tr>
 </tbody>
 </table>
@@ -301,7 +301,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
   URL_ROOT          : '',
-  VERSION           : '0.4.0',
+  VERSION           : '0.4.1',
   COLLAPSE_INDEX    : false,
   FILE_SUFFIX       : '.html',
   HAS_SOURCE        : 'false',
@@ -332,10 +332,6 @@
     hljs.initHighlighting();
     anchors.add();
 
-    $('.nav-versions .dropdown-item').filter(function(i, ver) {
-      return window.location.href.startsWith(ver.href);
-    }).addClass("active");
-
   });
 
 
@@ -348,6 +344,13 @@
       lines.forEach(version => {
         $("#doc_version_list").append("<a class=\"dropdown-item\" href=\""+ docs_site + version + "\">" + version + "</a>");
       });
+
+      var selected_version = $('.nav-versions .dropdown-item').filter(function(i, ver) {
+        return window.location.href.startsWith(ver.href);
+      });
+      selected_version.addClass('active');
+      $("#bd-versions").text(selected_version.text());
+
     })
   }
   </script>

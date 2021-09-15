@@ -50,7 +50,7 @@
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            0.4.0
+            0.4.1
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -97,7 +97,7 @@
 <h1>App</h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.app.App">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">120</span><span class="p"><span class="pre">,</span> </span><span class="pre">330</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'120'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewmode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">wireframe</span><span class="p"><span class="pre">,</span> </span><span class="pre">shaded</span><span class="p"><span class="pre">,</span> </span><span class="pre">ghosted</span><span class="p"><span class="pre">,</span> </span><span class="pre">lighted</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_class</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="compas_view2.app.Controller.html#compas_view2.app.Controller" title="compas_view2.app.controller.Controller"><span class="pre">compas_view2.app.controller.Controller</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_sidebar</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/app.py#L30"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">'120'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'330'</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'120'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewmode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">'wireframe'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'shaded'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'ghosted'</span><span class="p"><span class="pre">,</span> </span><span class="pre">'lighted'</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_class</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="compas_view2.app.Controller.html#compas_view2.app.Controller" title="compas_view2.app.controller.Controller"><span class="pre">compas_view2.app.controller.Controller</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_sidebar</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/app.py#L30"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Viewer app.</p>
 <p>The app has a (main) window with a central OpenGL widget (i.e. the ‘view’),
@@ -187,7 +187,7 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.add_reference.html#compas_view2.app.App.add_reference" title="compas_view2.app.App.add_reference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_reference</span></code></a>(obj, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.add_slider.html#compas_view2.app.App.add_slider" title="compas_view2.app.App.add_slider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_slider</span></code></a>(parent, *, text, action[, value, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.add_slider.html#compas_view2.app.App.add_slider" title="compas_view2.app.App.add_slider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_slider</span></code></a>(parent, *, text, action[, value, ...])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.button.html#compas_view2.app.App.button" title="compas_view2.app.App.button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">button</span></code></a>(text)</p></td>
@@ -208,7 +208,7 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.init.html#compas_view2.app.App.init" title="compas_view2.app.App.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.on.html#compas_view2.app.App.on" title="compas_view2.app.App.on"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on</span></code></a>([interval, timeout, record, frames, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.on.html#compas_view2.app.App.on" title="compas_view2.app.App.on"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on</span></code></a>([interval, timeout, record, frames, ...])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.question.html#compas_view2.app.App.question" title="compas_view2.app.App.question"><code class="xref py py-obj docutils literal notranslate"><span class="pre">question</span></code></a>(message)</p></td>
@@ -226,7 +226,7 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.show.html#compas_view2.app.App.show" title="compas_view2.app.App.show"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></a>([pause])</p></td>
 <td><p>Show the viewer window.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.slider.html#compas_view2.app.App.slider" title="compas_view2.app.App.slider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slider</span></code></a>(text[, value, minval, maxval, step, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.slider.html#compas_view2.app.App.slider" title="compas_view2.app.App.slider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slider</span></code></a>(text[, value, minval, maxval, step, ...])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.status.html#compas_view2.app.App.status" title="compas_view2.app.App.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span></code></a>(message)</p></td>
@@ -353,7 +353,7 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
   URL_ROOT          : '',
-  VERSION           : '0.4.0',
+  VERSION           : '0.4.1',
   COLLAPSE_INDEX    : false,
   FILE_SUFFIX       : '.html',
   HAS_SOURCE        : 'false',
@@ -384,10 +384,6 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
     hljs.initHighlighting();
     anchors.add();
 
-    $('.nav-versions .dropdown-item').filter(function(i, ver) {
-      return window.location.href.startsWith(ver.href);
-    }).addClass("active");
-
   });
 
 
@@ -400,6 +396,13 @@ mapping the object’s ID (<code class="docutils literal notranslate"><span clas
       lines.forEach(version => {
         $("#doc_version_list").append("<a class=\"dropdown-item\" href=\""+ docs_site + version + "\">" + version + "</a>");
       });
+
+      var selected_version = $('.nav-versions .dropdown-item').filter(function(i, ver) {
+        return window.location.href.startsWith(ver.href);
+      });
+      selected_version.addClass('active');
+      $("#bd-versions").text(selected_version.text());
+
     })
   }
   </script>

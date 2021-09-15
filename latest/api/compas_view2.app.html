@@ -50,7 +50,7 @@
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            0.4.0
+            0.4.1
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -99,7 +99,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_view2.app.App.html#compas_view2.app.App" title="compas_view2.app.App"><code class="xref py py-obj docutils literal notranslate"><span class="pre">App</span></code></a>(version, ] =, width, height, viewmode, , …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_view2.app.App.html#compas_view2.app.App" title="compas_view2.app.App"><code class="xref py py-obj docutils literal notranslate"><span class="pre">App</span></code></a>([version, width, height, viewmode, ...])</p></td>
 <td><p>Viewer app.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/compas_view2.app.Controller.html#compas_view2.app.Controller" title="compas_view2.app.Controller"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Controller</span></code></a>(app)</p></td>
@@ -221,7 +221,7 @@
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
   URL_ROOT          : '',
-  VERSION           : '0.4.0',
+  VERSION           : '0.4.1',
   COLLAPSE_INDEX    : false,
   FILE_SUFFIX       : '.html',
   HAS_SOURCE        : 'false',
@@ -252,10 +252,6 @@
     hljs.initHighlighting();
     anchors.add();
 
-    $('.nav-versions .dropdown-item').filter(function(i, ver) {
-      return window.location.href.startsWith(ver.href);
-    }).addClass("active");
-
   });
 
 
@@ -268,6 +264,13 @@
       lines.forEach(version => {
         $("#doc_version_list").append("<a class=\"dropdown-item\" href=\""+ docs_site + version + "\">" + version + "</a>");
       });
+
+      var selected_version = $('.nav-versions .dropdown-item').filter(function(i, ver) {
+        return window.location.href.startsWith(ver.href);
+      });
+      selected_version.addClass('active');
+      $("#bd-versions").text(selected_version.text());
+
     })
   }
   </script>
