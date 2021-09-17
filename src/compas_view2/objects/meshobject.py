@@ -11,51 +11,58 @@ class MeshObject(BufferObject):
     ----------
     data : :class: `compas.datastructures.Mesh`
         Mesh for the viewer
-    name : string
-        name of the object
-    show_vertices : bool
-        True to show vertices
-    show_edges : bool
-        True to show edges
-    show_faces : bool
-        True to show faces
-    facecolor : list
-        Face color
-    linecolor : list
-        Line color
-    pointcolor : list
-        point color
-    linewidth : float
-        Line width
-    pointsize : float
-        Point size
-    hide_coplanaredges : bool
-        True to hide the coplanar edges
-    opacity : float
-        The opacity of mesh
     vertices : list
         Subset of vertices to be displayed
     edges : list
         Subset of edges to be displayed
     faces : list
         Subset of faces to be displayed
+    hide_coplanaredges : bool
+        True to hide the coplanar edges
+
+    Parameters[kwargs]
+    ------------------
+    name : string
+        Name of the object.
+    is_selected : bool
+        Whether the object is selected.
+    is_visible : bool
+        Whether the object is visible.
+    show_vertices : bool
+        True to show vertices/points.
+    show_points : bool
+        True to show vertices/points.
+    show_edges : bool
+        True to show edges/lines.
+    show_lines : bool
+        True to show edges/lines.
+    show_faces : bool
+        True to show faces.
+    color : list
+        Color all points lines and faces.
+    pointcolor : list
+        Color for all points.
+    linecolor : list
+        Color for all lines.
+    facecolor : list
+        Color for all faces.
+    pointcolors : list
+        List of colors for each points.
+    linecolors : list
+        List of colors for each lines.
+    facecolors : list
+        List of colors for each faces.
+    linewidth : float
+        The line width to be drawn on screen.
+    pointsize : float
+        The line width to be drawn on screen.
+    opacity : float
+        The point size to be drawn on screen.
 
     Attributes
     ----------
-    facecolor : list
-        Face color
-    linecolor : list
-        Line color
-    pointcolor : list
-        Face color
-    linewidth : float
-        Line width
-    pointsize : float
-        Point size
     hide_coplanaredges : bool
         True to hide the coplanar edges
-    opacity : float
-        The opacity of mesh
     vertices : list
         Subset of vertices to be displayed
     edges : list

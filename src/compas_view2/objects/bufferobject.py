@@ -7,18 +7,77 @@ import numpy as np
 class BufferObject(Object):
     """A shared object to handle GL buffer creation and drawings
 
+    Parameters
+    ----------
+    data : object
+        Data of the object.
+    name : string
+        Name of the object.
+    is_selected : bool
+        Whether the object is selected.
+    is_visible : bool
+        Whether the object is visible.
+    show_vertices : bool
+        True to show vertices/points.
+    show_points : bool
+        True to show vertices/points.
+    show_edges : bool
+        True to show edges/lines.
+    show_lines : bool
+        True to show edges/lines.
+    show_faces : bool
+        True to show faces.
+    color : list
+        Color all points lines and faces.
+    pointcolor : list
+        Color for all points.
+    linecolor : list
+        Color for all lines.
+    facecolor : list
+        Color for all faces.
+    pointcolors : list
+        List of colors for each points.
+    linecolors : list
+        List of colors for each lines.
+    facecolors : list
+        List of colors for each faces.
+    linewidth : float
+        The line width to be drawn on screen.
+    pointsize : float
+        The line width to be drawn on screen.
+    opacity : float
+        The point size to be drawn on screen.
+
     Attributes
     ----------
     show_points : bool
-        Whether to show points/vertices of the object
-    show_lines : bool
-        Whether to show lines/edges of the object
+        True to show vertices/points.
+    show_edges : bool
+        True to show edges/lines.
     show_faces : bool
-        Whether to show faces of the object
-    linewidth : int
-        The line width to be drawn on screen
-    pointsize : int
-        The point size to be drawn on screen
+        True to show faces.
+    color : list
+        Color all points lines and faces.
+    pointcolor : list
+        Color for all points.
+    linecolor : list
+        Color for all lines.
+    facecolor : list
+        Color for all faces.
+    pointcolors : list
+        List of colors for each points.
+    linecolors : list
+        List of colors for each lines.
+    facecolors : list
+        List of colors for each faces.
+    linewidth : float
+        The line width to be drawn on screen.
+    pointsize : float
+        The line width to be drawn on screen.
+    opacity : float
+        The point size to be drawn on screen.
+    background : bool
+        True to always render object in background.
     """
 
     default_color_points = [0.2, 0.2, 0.2]

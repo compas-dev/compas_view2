@@ -4,6 +4,15 @@ compas_view2.objects
 
 .. currentmodule:: compas_view2.objects
 
+Base
+====
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    Object
+    BufferObject
+
 Primitives
 ==========
 

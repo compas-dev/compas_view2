@@ -38,7 +38,6 @@ from .torusobject import TorusObject
 from .arrowobject import ArrowObject
 from .textobject import TextObject
 from .collectionobject import CollectionObject
-from .gridobject import GridObject  # noqa: F401
 from .cylinderobject import CylinderObject
 from .planeobject import PlaneObject
 from .circleobject import CircleObject
@@ -47,6 +46,9 @@ from .polygonobject import PolygonObject
 from .coneobject import ConeObject
 from .capsuleobject import CapsuleObject
 from .polyhedronobject import PolyhedronObject
+
+from .gridobject import GridObject  # noqa: F401
+from .bufferobject import BufferObject # noqa: F401
 
 Object.register(Point, PointObject)
 Object.register(Pointcloud, PointcloudObject)

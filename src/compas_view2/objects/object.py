@@ -17,12 +17,25 @@ DATA_OBJECT = {}
 class Object(ABC):
     """Base object for compas_view2
 
+    Parameters
+    ----------
+    data : object
+        Data of the object
+    name : string
+        Name of the object
+    is_selected : bool
+        Whether the object is selected.
+    is_visible : bool
+        Whether the object is visible.
+
     Attributes
     ----------
     name : str
         The name of the object.
     is_selected : bool
         Whether the object is selected.
+    is_visible : bool
+        Whether the object is visible.
     translation : list
         The translation vector of the object.
     rotation : list
