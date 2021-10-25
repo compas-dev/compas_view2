@@ -82,7 +82,7 @@ else:
 try:
     from compas_occ.geometry import NurbsSurface
     from .nurbssurfaceobject import NurbsSurfaceObject
-except ModuleNotFoundError:
+except ImportError:
     pass
 else:
     Object.register(NurbsSurface, NurbsSurfaceObject)
