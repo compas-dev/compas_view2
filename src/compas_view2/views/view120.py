@@ -7,6 +7,7 @@ from .view import View
 import numpy as np
 from ..objects.bufferobject import BufferObject
 from ..objects.textobject import TextObject
+from ..objects.arrow2dobject import Arrow2dObject
 
 from compas.geometry import transform_points_numpy
 
@@ -44,6 +45,14 @@ class View120(View):
         self.shader_text.uniform1f("opacity", self.opacity)
         self.shader_text.release()
 
+        self.shader_arrow = Shader(name='120/arrow')
+        self.shader_arrow.bind()
+        self.shader_arrow.uniform4x4("projection", projection)
+        self.shader_arrow.uniform4x4("viewworld", viewworld)
+        self.shader_arrow.uniform4x4("transform", transform)
+        self.shader_arrow.uniform1f("opacity", self.opacity)
+        self.shader_arrow.release()
+
         self.shader_instance = Shader(name='120/instance')
         self.shader_instance.bind()
         self.shader_instance.uniform4x4("projection", projection)
@@ -70,6 +79,10 @@ class View120(View):
         self.shader_text.bind()
         self.shader_text.uniform4x4("projection", projection)
         self.shader_text.release()
+
+        self.shader_arrow.bind()
+        self.shader_arrow.uniform4x4("projection", projection)
+        self.shader_arrow.release()
 
         self.shader_instance.bind()
         self.shader_instance.uniform4x4("projection", projection)
@@ -136,6 +149,16 @@ class View120(View):
             if obj.is_visible:
                 obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
         self.shader_model.release()
+
+        # draw arrow sprites
+        self.shader_arrow.bind()
+        self.shader_arrow.uniform4x4("viewworld", viewworld)
+        for guid in self.objects:
+            obj = self.objects[guid]
+            if isinstance(obj, Arrow2dObject):
+                if obj.is_visible:
+                    obj.draw(self.shader_arrow)
+        self.shader_arrow.release()
 
         # draw text sprites
         self.shader_text.bind()

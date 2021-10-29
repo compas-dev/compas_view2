@@ -18,6 +18,7 @@ from compas.geometry import Capsule
 from compas.geometry import Polyhedron
 
 from ..shapes import Arrow
+from ..shapes import Arrow2d
 from ..shapes import Text
 from ..collections import Collection
 
@@ -36,6 +37,7 @@ from .boxobject import BoxObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
 from .arrowobject import ArrowObject
+from .arrow2dobject import Arrow2dObject
 from .textobject import TextObject
 from .collectionobject import CollectionObject
 from .gridobject import GridObject  # noqa: F401
@@ -61,6 +63,7 @@ Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
+Object.register(Arrow2d, Arrow2dObject)
 Object.register(Collection, CollectionObject)
 Object.register(Cylinder, CylinderObject)
 Object.register(Plane, PlaneObject)

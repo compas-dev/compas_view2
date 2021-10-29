@@ -133,6 +133,18 @@ class Shader:
         GL.glDisable(GL.GL_POINT_SPRITE)
         GL.glEnable(GL.GL_POINT_SMOOTH)
 
+    def draw_arrows(self, elements=None, n=0):
+        GL.glDisable(GL.GL_POINT_SMOOTH)
+        GL.glEnable(GL.GL_POINT_SPRITE)
+        GL.glEnable(GL.GL_PROGRAM_POINT_SIZE)
+        if elements:
+            GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
+            GL.glDrawElements(GL.GL_POINTS, n, GL.GL_UNSIGNED_INT, None)
+        else:
+            GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
+        GL.glDisable(GL.GL_POINT_SPRITE)
+        GL.glEnable(GL.GL_POINT_SMOOTH)
+
     def draw_2d_box(self, box_coords, width, height):
         x1, y1, x2, y2 = box_coords
         x1 = (x1/width - 0.5)*2
