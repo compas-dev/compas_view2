@@ -3,7 +3,6 @@ import numpy as np
 import freetype as ft
 
 from .object import Object
-from compas_view2 import HOME
 
 from OpenGL import GL
 from ..buffers import make_index_buffer, make_vertex_buffer
