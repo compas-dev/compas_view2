@@ -34,7 +34,7 @@ class Arrow2d(Shape):
     # ==========================================================================
 
     def __repr__(self):
-        return 'Arrow2D[]'.format(len(self.positions))
+        return 'Arrow2D[{}]'.format(len(self.positions))
 
     # ==========================================================================
     # constructors

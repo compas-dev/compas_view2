@@ -2,6 +2,7 @@ from .object import Object
 from compas.utilities import flatten
 from ..buffers import make_index_buffer, make_vertex_buffer
 
+
 class Arrow2dObject(Object):
     """Object for displaying text sprites."""
 
