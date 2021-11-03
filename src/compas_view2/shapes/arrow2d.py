@@ -1,10 +1,5 @@
 from compas.geometry import Vector
-from compas.geometry import Cone
-from compas.geometry import Circle
-from compas.geometry import Cylinder
-from compas.geometry import Plane
 from compas.geometry import Shape
-from compas.datastructures import Mesh
 
 
 __all__ = ['Arrow2d']
@@ -12,16 +7,10 @@ __all__ = ['Arrow2d']
 
 class Arrow2d(Shape):
 
-    def __init__(
-            self, position=[0, 0, 0],
-            direction=[0, 0, 1],
-            head_portion=0.3, head_width=0.1, body_width=0.02):
+    def __init__(self, positions, directions):
         super().__init__()
-        self.position = Vector(*position)
-        self.direction = Vector(*direction)
-        self.head_portion = head_portion
-        self.head_width = head_width
-        self.body_width = body_width
+        self.positions = [Vector(*p) for p in positions]
+        self.directions = [Vector(*d) for d in directions]
 
     @property
     def data(self):
@@ -33,19 +22,19 @@ class Arrow2d(Shape):
             The arrow data.
 
         """
-        return {'position': list(self.position), 'direction': list(self.direction)}
+        return {'positions': [list(p) for p in self.positions], 'directions': [list(d) for d in self.directions]}
 
     @data.setter
     def data(self, data):
-        self.position = Vector(*data['position'])
-        self.direction = Vector(*data['direction'])
+        self.positions = [Vector(*p) for p in data['positions']]
+        self.directions = [Vector(*d) for d in data['directions']]
 
     # ==========================================================================
     # customisation
     # ==========================================================================
 
     def __repr__(self):
-        return 'Arrow2D({0}, {1})'.format(self.position, self.direction)
+        return 'Arrow2D[]'.format(len(self.positions))
 
     # ==========================================================================
     # constructors
@@ -80,45 +69,6 @@ class Arrow2d(Shape):
     # ==========================================================================
     # methods
     # ==========================================================================
-
-    def to_vertices_and_faces(self, u=4):
-        """Returns a list of vertices and faces.
-
-        Parameters
-        ----------
-        u : int, optional
-            Number of faces in the "u" direction.
-            Default is ``4``.
-
-        Returns
-        -------
-        (vertices, faces)
-            A list of vertex locations and a list of faces,
-            with each face defined as a list of indices into the list of vertices.
-        """
-        if u < 3:
-            raise ValueError('The value for u should be u > 3.')
-
-        # Construct the head of arrow
-        head_position = self.position + self.direction*(1-self.head_portion)
-        plane = Plane(head_position, self.direction)
-        circle = Circle(plane, self.head_width*self.direction.length)
-        cone = Cone(circle, self.direction.length*self.head_portion)
-        v, f = cone.to_vertices_and_faces(u=u)
-        head = Mesh.from_vertices_and_faces(v, f)
-
-        # COnstruct the body of arrow
-        body_center = self.position + self.direction*(1-self.head_portion)/2
-        plane = Plane(body_center, self.direction)
-        circle = Circle(plane, self.body_width*self.direction.length)
-        cylinder = Cylinder(circle, self.direction.length * (1 - self.head_portion))
-        v, f = cylinder.to_vertices_and_faces(u=u)
-        body = Mesh.from_vertices_and_faces(v, f)
-
-        body.join(head)
-
-        return body.to_vertices_and_faces()
-
     def transform(self, transformation):
         """Transform the Arrow.
 
@@ -128,8 +78,10 @@ class Arrow2d(Shape):
             The transformation used to transform the cone.
 
         """
-        self.position.transform(transformation)
-        self.direction.transform(transformation)
+        for p in self.positions:
+            p.transform(transformation)
+        for d in self.directions:
+            d.transform(transformation)
 
 
 # ==============================================================================

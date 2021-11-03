@@ -51,6 +51,7 @@ class View120(View):
         self.shader_arrow.uniform4x4("viewworld", viewworld)
         self.shader_arrow.uniform4x4("transform", transform)
         self.shader_arrow.uniform1f("opacity", self.opacity)
+        self.shader_arrow.uniform1f("aspect", self.app.width / self.app.height)
         self.shader_arrow.release()
 
         self.shader_instance = Shader(name='120/instance')
@@ -82,6 +83,7 @@ class View120(View):
 
         self.shader_arrow.bind()
         self.shader_arrow.uniform4x4("projection", projection)
+        self.shader_arrow.uniform1f("aspect", w / h)
         self.shader_arrow.release()
 
         self.shader_instance.bind()
