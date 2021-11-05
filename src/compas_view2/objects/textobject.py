@@ -1,25 +1,26 @@
+import os
+import numpy as np
+import freetype as ft
+
 from .object import Object
-from compas_view2 import HOME
 
 from OpenGL import GL
 from ..buffers import make_index_buffer, make_vertex_buffer
 
-import freetype as ft
-import numpy as np
-import os
+here = os.path.dirname(__file__)
+fonts = os.path.join(here, '..', 'fonts')
 
 
 class TextObject(Object):
     """Object for displaying text sprites."""
 
-    def __init__(self, data, name=None, color=None, height=10, opacity=1, font="FreeSans.ttf"):
+    def __init__(self, data, name=None, color=None, height=10, opacity=1):
         super().__init__(data, name=name)
         self.color = color or [0, 0, 0]
         self.characters = []
         self.buffers = []
         self.height = height
         self.opacity = opacity
-        self.font = font
 
     def init(self):
         self.make_buffers()
@@ -34,7 +35,7 @@ class TextObject(Object):
 
     def make_text_texture(self):
         # change the filename if necessary
-        face = ft.Face(os.path.join(HOME, "fonts", self.font))
+        face = ft.Face(os.path.join(fonts, 'FreeSans.ttf'))
 
         char_width = 48
         char_height = 80
