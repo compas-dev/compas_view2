@@ -1,5 +1,6 @@
 from compas.datastructures import Network
 from compas.datastructures import Mesh
+from compas.geometry import Vector
 from compas.geometry import Point
 from compas.geometry import Pointcloud
 from compas.geometry import Line
@@ -17,13 +18,15 @@ from compas.geometry import Cone
 from compas.geometry import Capsule
 from compas.geometry import Polyhedron
 
+from ..shapes import VectorGroup
 from ..shapes import Arrow
-from ..shapes import Arrow2d
 from ..shapes import Text
 from ..collections import Collection
 
 from .object import Object
 
+from .vectorobject import VectorObject
+from .vectorgroupobject import VectorGroupObject
 from .pointobject import PointObject
 from .pointcloudobject import PointcloudObject
 from .lineobject import LineObject
@@ -37,7 +40,6 @@ from .boxobject import BoxObject
 from .sphereobject import SphereObject
 from .torusobject import TorusObject
 from .arrowobject import ArrowObject
-from .arrow2dobject import Arrow2dObject
 from .textobject import TextObject
 from .collectionobject import CollectionObject
 from .gridobject import GridObject  # noqa: F401
@@ -50,6 +52,8 @@ from .coneobject import ConeObject
 from .capsuleobject import CapsuleObject
 from .polyhedronobject import PolyhedronObject
 
+Object.register(Vector, VectorObject)
+Object.register(VectorGroup, VectorGroupObject)
 Object.register(Point, PointObject)
 Object.register(Pointcloud, PointcloudObject)
 Object.register(Line, LineObject)
@@ -63,7 +67,6 @@ Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
 Object.register(Arrow, ArrowObject)
-Object.register(Arrow2d, Arrow2dObject)
 Object.register(Collection, CollectionObject)
 Object.register(Cylinder, CylinderObject)
 Object.register(Plane, PlaneObject)

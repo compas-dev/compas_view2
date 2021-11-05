@@ -3,6 +3,7 @@
 attribute vec3 position;
 attribute vec3 direction;
 attribute vec3 color;
+attribute float size;
 
 uniform mat4 projection;
 uniform mat4 viewworld;
@@ -23,7 +24,7 @@ void main()
     vec4 start_position = projection * viewworld * transform * vec4(position, 1.0);
     vec4 end_position = projection * viewworld * transform * vec4(position + direction, 1.0);
     direction_2d = get_xy(end_position) - get_xy(start_position);
-    gl_PointSize = 100;
+    gl_PointSize = size;
     gl_Position = start_position;
     vcolor = color;
 }

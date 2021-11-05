@@ -82,10 +82,10 @@ class Shader:
         GL.glEnableVertexAttribArray(location)
         self.locations[name] = location
 
-    def bind_attribute(self, name, value):
+    def bind_attribute(self, name, value, step=3):
         location = self.locations[name]
         GL.glBindBuffer(GL.GL_ARRAY_BUFFER, value)
-        GL.glVertexAttribPointer(location, 3, GL.GL_FLOAT, False, 0, None)
+        GL.glVertexAttribPointer(location, step, GL.GL_FLOAT, False, 0, None)
 
     def disable_attribute(self, name):
         GL.glDisableVertexAttribArray(self.locations[name])
