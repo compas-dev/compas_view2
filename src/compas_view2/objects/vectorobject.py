@@ -34,7 +34,7 @@ class VectorObject(Object):
         shader.bind_attribute('position', self._vector_buffer['positions'])
         shader.bind_attribute('direction', self._vector_buffer['directions'])
         shader.bind_attribute('color', self._vector_buffer['colors'])
-        shader.bind_attribute('size', self._vector_buffer['sizes'])
+        shader.bind_attribute('size', self._vector_buffer['sizes'], step=1)
         shader.draw_arrows(elements=self._vector_buffer['elements'], n=self._vector_buffer['n'])
         shader.disable_attribute('position')
         shader.disable_attribute('direction')
