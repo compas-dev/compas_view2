@@ -18,10 +18,10 @@ from compas.geometry import Cone
 from compas.geometry import Capsule
 from compas.geometry import Polyhedron
 
-from ..shapes import VectorGroup
-from ..shapes import Arrow
-from ..shapes import Text
-from ..collections import Collection
+from compas_view2.shapes import VectorGroup
+from compas_view2.shapes import Arrow
+from compas_view2.shapes import Text
+from compas_view2.collections import Collection
 
 from .object import Object
 
