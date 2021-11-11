@@ -15,7 +15,6 @@ class VectorGroup(Shape):
             self.positions = [Vector(*p) for p in positions]
         else:
             self.positions = [Vector(0, 0, 0) for _ in range(len(vectors))]
-        
 
     @property
     def data(self):
