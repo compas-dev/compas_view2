@@ -82,10 +82,10 @@ class Shader:
         GL.glEnableVertexAttribArray(location)
         self.locations[name] = location
 
-    def bind_attribute(self, name, value):
+    def bind_attribute(self, name, value, step=3):
         location = self.locations[name]
         GL.glBindBuffer(GL.GL_ARRAY_BUFFER, value)
-        GL.glVertexAttribPointer(location, 3, GL.GL_FLOAT, False, 0, None)
+        GL.glVertexAttribPointer(location, step, GL.GL_FLOAT, False, 0, None)
 
     def disable_attribute(self, name):
         GL.glDisableVertexAttribArray(self.locations[name])
@@ -122,6 +122,18 @@ class Shader:
             GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
 
     def draw_texts(self, elements=None, n=0):
+        GL.glDisable(GL.GL_POINT_SMOOTH)
+        GL.glEnable(GL.GL_POINT_SPRITE)
+        GL.glEnable(GL.GL_PROGRAM_POINT_SIZE)
+        if elements:
+            GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elements)
+            GL.glDrawElements(GL.GL_POINTS, n, GL.GL_UNSIGNED_INT, None)
+        else:
+            GL.glDrawArrays(GL.GL_POINTS, 0, GL.GL_BUFFER_SIZE)
+        GL.glDisable(GL.GL_POINT_SPRITE)
+        GL.glEnable(GL.GL_POINT_SMOOTH)
+
+    def draw_arrows(self, elements=None, n=0):
         GL.glDisable(GL.GL_POINT_SMOOTH)
         GL.glEnable(GL.GL_POINT_SPRITE)
         GL.glEnable(GL.GL_PROGRAM_POINT_SIZE)

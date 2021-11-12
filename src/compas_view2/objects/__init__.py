@@ -1,5 +1,6 @@
 from compas.datastructures import Network
 from compas.datastructures import Mesh
+from compas.geometry import Vector
 from compas.geometry import Point
 from compas.geometry import Pointcloud
 from compas.geometry import Line
@@ -17,12 +18,13 @@ from compas.geometry import Cone
 from compas.geometry import Capsule
 from compas.geometry import Polyhedron
 
-from ..shapes import Arrow
-from ..shapes import Text
-from ..collections import Collection
+from compas_view2.shapes import Arrow
+from compas_view2.shapes import Text
+from compas_view2.collections import Collection
 
 from .object import Object
 
+from .vectorobject import VectorObject
 from .pointobject import PointObject
 from .pointcloudobject import PointcloudObject
 from .lineobject import LineObject
@@ -48,6 +50,7 @@ from .coneobject import ConeObject
 from .capsuleobject import CapsuleObject
 from .polyhedronobject import PolyhedronObject
 
+Object.register(Vector, VectorObject)
 Object.register(Point, PointObject)
 Object.register(Pointcloud, PointcloudObject)
 Object.register(Line, LineObject)
