@@ -26,7 +26,6 @@ from compas_view2.collections import Collection
 from .object import Object
 
 from .vectorobject import VectorObject
-from .vectorgroupobject import VectorGroupObject
 from .pointobject import PointObject
 from .pointcloudobject import PointcloudObject
 from .lineobject import LineObject
@@ -53,7 +52,6 @@ from .capsuleobject import CapsuleObject
 from .polyhedronobject import PolyhedronObject
 
 Object.register(Vector, VectorObject)
-Object.register(VectorGroup, VectorGroupObject)
 Object.register(Point, PointObject)
 Object.register(Pointcloud, PointcloudObject)
 Object.register(Line, LineObject)

@@ -3,9 +3,9 @@ from ..buffers import make_index_buffer, make_vertex_buffer
 
 
 class VectorObject(Object):
-    """Object for displaying vector as arrow sprite."""
+    """Object for displaying vector as arrow."""
 
-    def __init__(self, data, color=None, position=None, size=100, **kwargs):
+    def __init__(self, data, color=None, position=None, size=1, **kwargs):
         super().__init__(data, **kwargs)
         self.color = color or [0, 0, 0]
         self.position = position or [0, 0, 0]
