@@ -122,7 +122,7 @@
     ],
     "toolbar":
     [
-        {"type": "action", "text": "Catpure", "action": "view_capture"},
+        {"type": "action", "text": "Capture", "action": "view_capture"},
         {"type": "separator"},
         {"type": "action", "text": "Front", "action": "view_front"},
         {"type": "action", "text": "Right", "action": "view_right"},
