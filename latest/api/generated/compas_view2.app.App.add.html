@@ -99,11 +99,11 @@
 <h1>App.add</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_view2.app.App.add">
-<span class="sig-prename descclassname"><span class="pre">App.</span></span><span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.data.Data.html#compas.data.Data" title="(in COMPAS v1.7)"><span class="pre">compas.data.data.Data</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">compas_view2.objects.object.Object</span></span></span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/app.py#L189"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<span class="sig-prename descclassname"><span class="pre">App.</span></span><span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.data.Data.html#compas.data.Data" title="(in COMPAS v1.12)"><span class="pre">compas.data.data.Data</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">compas_view2.objects.object.Object</span></span></span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/app.py#L189"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Add a COMPAS object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.geometry.Primitive.html#compas.geometry.Primitive" title="(in COMPAS v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.geometry.Primitive</span></code></a> | <a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.geometry.Shape.html#compas.geometry.Shape" title="(in COMPAS v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.geometry.Shape</span></code></a> | <code class="xref py py-class docutils literal notranslate"><span class="pre">compas.geometry.Datastructure</span></code>)</p>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.geometry.Primitive.html#compas.geometry.Primitive" title="(in COMPAS v1.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.geometry.Primitive</span></code></a> | <a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.geometry.Shape.html#compas.geometry.Shape" title="(in COMPAS v1.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.geometry.Shape</span></code></a> | <code class="xref py py-class docutils literal notranslate"><span class="pre">compas.geometry.Datastructure</span></code>)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.objects.Object</span></code></p>
@@ -265,6 +265,8 @@
   if (url) {
     $.get(url, res=>{
       var lines = res.match(/[^\r\n]+/g);
+      lines.sort( (a, b) => a.localeCompare(b, undefined, { numeric:true }) );
+      lines.reverse();
       lines.forEach(version => {
         $("#doc_version_list").append("<a class=\"dropdown-item\" href=\""+ docs_site + version + "\">" + version + "</a>");
       });
