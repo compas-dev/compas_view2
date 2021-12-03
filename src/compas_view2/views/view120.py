@@ -8,6 +8,7 @@ import numpy as np
 from ..objects.bufferobject import BufferObject
 from ..objects.textobject import TextObject
 from ..objects.vectorobject import VectorObject
+from ..objects.vectorcollectionobject import VectorCollectionObject
 
 from compas.geometry import transform_points_numpy
 
@@ -157,7 +158,7 @@ class View120(View):
         self.shader_arrow.uniform4x4("viewworld", viewworld)
         for guid in self.objects:
             obj = self.objects[guid]
-            if isinstance(obj, VectorObject):
+            if isinstance(obj, (VectorObject, VectorCollectionObject)):
                 if obj.is_visible:
                     obj.draw(self.shader_arrow)
         self.shader_arrow.release()

@@ -1,3 +1,4 @@
+from .vectorcollectionobject import VectorCollectionObject
 from .object import Object
 from .bufferobject import BufferObject
 import numpy as np
@@ -6,6 +7,13 @@ from inspect import getargspec
 
 class CollectionObject(BufferObject):
     """Object for displaying COMPAS collection."""
+
+    def __new__(cls, collection, **kwargs):
+        if collection.is_vector:
+            kwargs.update(collection.kwargs)
+            return VectorCollectionObject(collection, **kwargs)
+        else:
+            return super().__new__(cls)
 
     def __init__(self, collection, color=None, colors=None, **kwargs):
 
