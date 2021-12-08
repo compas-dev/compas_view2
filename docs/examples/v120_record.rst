@@ -8,7 +8,3 @@ v120_record
 
 .. literalinclude:: ../../scripts/v120_record.py
     :language: python
-
-.. code-block:: text
-
-    True

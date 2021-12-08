@@ -8,7 +8,3 @@ v120_transform
 
 .. literalinclude:: ../../scripts/v120_transform.py
     :language: python
-
-.. code-block:: text
-
-    True

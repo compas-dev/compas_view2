@@ -9,6 +9,3 @@ v120_dynamic_mesh
 .. literalinclude:: ../../scripts/v120_dynamic_mesh.py
     :language: python
 
-.. code-block:: text
-
-    True

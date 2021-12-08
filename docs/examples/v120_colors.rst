@@ -9,6 +9,3 @@ v120_colors
 .. literalinclude:: ../../scripts/v120_colors.py
     :language: python
 
-.. code-block:: text
-
-    True

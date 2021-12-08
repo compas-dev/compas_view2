@@ -9,6 +9,3 @@ v120_ui_elements
 .. literalinclude:: ../../scripts/v120_ui_elements.py
     :language: python
 
-.. code-block:: text
-
-    True

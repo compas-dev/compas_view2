@@ -8,7 +8,3 @@ v120_lines
 
 .. literalinclude:: ../../scripts/v120_lines.py
     :language: python
-
-.. code-block:: text
-
-    True

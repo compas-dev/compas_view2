@@ -8,7 +8,3 @@ v120_nurbs
 
 .. literalinclude:: ../../scripts/v120_nurbs.py
     :language: python
-
-.. code-block:: text
-
-    True

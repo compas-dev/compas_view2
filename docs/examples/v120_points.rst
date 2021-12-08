@@ -8,7 +8,3 @@ v120_points
 
 .. literalinclude:: ../../scripts/v120_points.py
     :language: python
-
-.. code-block:: text
-
-    True

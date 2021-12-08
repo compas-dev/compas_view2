@@ -8,7 +8,3 @@ v120_vector
 
 .. literalinclude:: ../../scripts/v120_vector.py
     :language: python
-
-.. code-block:: text
-
-    True

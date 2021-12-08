@@ -9,6 +9,3 @@ v120_arrows
 .. literalinclude:: ../../scripts/v120_arrows.py
     :language: python
 
-.. code-block:: text
-
-    True

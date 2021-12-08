@@ -8,7 +8,3 @@ v120_mesh_display
 
 .. literalinclude:: ../../scripts/v120_mesh_display.py
     :language: python
-
-.. code-block:: text
-
-    True

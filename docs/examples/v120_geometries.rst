@@ -8,7 +8,3 @@ v120_geometries
 
 .. literalinclude:: ../../scripts/v120_geometries.py
     :language: python
-
-.. code-block:: text
-
-    True

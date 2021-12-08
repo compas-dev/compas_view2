@@ -9,6 +9,3 @@ v120_frames
 .. literalinclude:: ../../scripts/v120_frames.py
     :language: python
 
-.. code-block:: text
-
-    True

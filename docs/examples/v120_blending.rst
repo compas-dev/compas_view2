@@ -9,6 +9,3 @@ v120_blending
 .. literalinclude:: ../../scripts/v120_blending.py
     :language: python
 
-.. code-block:: text
-
-    True

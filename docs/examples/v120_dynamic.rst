@@ -9,6 +9,3 @@ v120_dynamic
 .. literalinclude:: ../../scripts/v120_dynamic.py
     :language: python
 
-.. code-block:: text
-
-    True

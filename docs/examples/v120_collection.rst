@@ -9,6 +9,3 @@ v120_collection
 .. literalinclude:: ../../scripts/v120_collection.py
     :language: python
 
-.. code-block:: text
-
-    True

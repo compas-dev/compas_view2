@@ -8,7 +8,3 @@ v120_polyline
 
 .. literalinclude:: ../../scripts/v120_polyline.py
     :language: python
-
-.. code-block:: text
-
-    True
