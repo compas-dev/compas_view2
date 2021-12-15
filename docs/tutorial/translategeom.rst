@@ -3,6 +3,11 @@ Step-by-Step
 
 The following tutorial shows the process of creating an object and animating it along a path using the compas_view2 library.
 
+.. figure:: /_images/tutorial_stepbystep.png
+    :figclass: figure
+    :class: figure-img img-fluid
+
+
 The initial step is to import the relevant libraries.
 
 .. code-block:: python
@@ -82,6 +87,7 @@ In order to have an animation, a move function must be defined. First, we write 
 
 
 .. code-block:: python
+
     @viewer.on(interval=100, frames=len(frames))
     def move(f):
 
@@ -94,3 +100,4 @@ In order to have an animation, a move function must be defined. First, we write 
     viewer.show()
 
 
+At the end the viewer plays our animation, translating the box along our original curve and visualizing the corresponding frames which make up the translation.
