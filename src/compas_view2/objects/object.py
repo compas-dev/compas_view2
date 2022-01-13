@@ -143,3 +143,12 @@ class Object(ABC):
         self.rotation = rotation
         self.scale = scale
         self._update_matrix()
+
+    def on_mousedown(self, event):
+        pass
+    
+    def on_mousedrag(self, event):
+        pass
+    
+    def on_mouserelease(self, event):
+        pass

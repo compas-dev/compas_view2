@@ -227,6 +227,9 @@ class View(QtWidgets.QOpenGLWidget):
             # record mouse position
             self.mouse.last_pos = event.pos()
 
+        if self.mouse.pressed_on:
+            self.mouse.pressed_on.on_mousedrag(event)
+
         self.update()
 
     def mousePressEvent(self, event):
@@ -263,6 +266,9 @@ class View(QtWidgets.QOpenGLWidget):
         # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
+        if self.mouse.pressed_on:
+            self.mouse.pressed_on.on_mouserelease(event)
+            self.mouse.pressed_on = None
         self.update()
 
     def wheelEvent(self, event):

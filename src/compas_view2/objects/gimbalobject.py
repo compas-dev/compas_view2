@@ -23,9 +23,22 @@ class GimbalObject(Object):
         self._attached_to = None
 
     def init(self):
+
+        def on_mousedown(event):
+            print("Pressed")
+        
+        def on_mouserelease(event):
+            print("Released")
+
+        def on_mousedrag(event):
+            print("Dragging")
+
         for component in self.components:
             component.background = True
             component.init()
+            component.on_mousedown = on_mousedown
+            component.on_mousedrag = on_mousedrag
+            component.on_mouserelease = on_mouserelease
     
     def draw(self, shader):
         for component in self.components:

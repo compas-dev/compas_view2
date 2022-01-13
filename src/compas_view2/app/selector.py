@@ -47,6 +47,7 @@ class Selector:
     def __init__(self, app):
         self.app = app
         self.gimbal = app.view.gimbal
+        self.mouse = app.view.mouse
 
         # Selector options
         self.mode = "single"
@@ -205,7 +206,13 @@ class Selector:
         y = min(max(y, 0), instance_map.shape[0] - 1)
         rgb_key = tuple(instance_map[y][x])
         for key, obj in self.instances.items():
-            obj._is_highlighted = key == rgb_key
+            if key == rgb_key:
+                obj._is_highlighted = True
+                if self.mouse.is_pressed() and obj != self.mouse.pressed_on:
+                    self.mouse.pressed_on = obj
+                    obj.on_mousedown(self.mouse)
+            else:
+                obj._is_highlighted = False
 
     def select_all_from_instance_map(self, instance_map):
         """Select all the objects that appear in the instance map
