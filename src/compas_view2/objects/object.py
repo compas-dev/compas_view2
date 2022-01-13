@@ -23,6 +23,8 @@ class Object(ABC):
         The name of the object.
     is_selected : bool
         Whether the object is selected.
+    is_selectable : bool
+        Whether the object can be selected
     translation : list
         The translation vector of the object.
     rotation : list
@@ -47,11 +49,14 @@ class Object(ABC):
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj
 
-    def __init__(self, data, name=None, is_selected=False, is_visible=True):
+    def __init__(self, data, name=None, is_selected=False, is_selectable=True, is_visible=True):
         self._data = data
         self.name = name or str(self)
         self.is_selected = is_selected
+        self.is_selectable = is_selectable
         self.is_visible = is_visible
+
+        self._is_highlighted = False
         self._instance_color = None
         self._translation = [0., 0., 0.]
         self._rotation = [0., 0., 0.]

@@ -46,6 +46,7 @@ class Selector:
 
     def __init__(self, app):
         self.app = app
+        self.gimbal = app.view.gimbal
 
         # Selector options
         self.mode = "single"
@@ -63,6 +64,10 @@ class Selector:
         self.instance_map = None
         self.box_select_coords = np.zeros((4,), np.int)
         self.location_on_plane = None
+
+        if self.gimbal:
+            for component in self.gimbal.components:
+                self.add(component)
 
         self.start_monitor_instance_map()
 
@@ -92,18 +97,24 @@ class Selector:
             while not self.stop_monitor_instance_map:
                 time.sleep(0.02)
                 if self.instance_map is not None:
-                    instance_map = self.instance_map
-                    if self.select_from == "pixel":
-                        # Pick an object from mouse pixel
-                        x = self.app.view.mouse.last_pos.x()
-                        y = self.app.view.mouse.last_pos.y()
-                        self.select_one_from_instance_map(x, y, instance_map)
-                    if self.select_from == "box":
-                        # Pick objects from box selection
-                        self.select_all_from_instance_map(instance_map)
-                        self.select_from = "pixel"
-                    self.app.view.update()
-                    self.instance_map = None
+                    if self.enabled:
+                        if self.select_from == "pixel":
+                            # Pick an object from mouse pixel
+                            x = self.app.view.mouse.last_pos.x()
+                            y = self.app.view.mouse.last_pos.y()
+                            self.select_one_from_instance_map(x, y, self.instance_map)
+                        if self.select_from == "box":
+                            # Pick objects from box selection
+                            self.select_all_from_instance_map(self.instance_map)
+                            self.select_from = "pixel"
+                        self.app.view.update()
+                        self.enabled = False
+
+                    if self.gimbal.enabled:
+                        x = self.app.view.mouse.pos.x()
+                        y = self.app.view.mouse.pos.y()
+                        self.highlight_one_from_instance_map(x, y, self.instance_map)
+                
 
         # Stop the monitor loop when the app is being closed
         def stop():
@@ -166,11 +177,35 @@ class Selector:
         -------
         None
         """
+        x = min(max(x, 0), instance_map.shape[1] - 1)
+        y = min(max(y, 0), instance_map.shape[0] - 1)
         rgb_key = tuple(instance_map[y][x])
         obj = None
         if rgb_key in self.instances:
             obj = self.instances[rgb_key]
         self.select(obj)
+    
+    def highlight_one_from_instance_map(self, x, y, instance_map):
+        """Highlight one object at given pixel location of the instance map
+
+        Parameters
+        ----------
+        x : int
+            x coordinate of the pixel
+        y : int
+            y coordinate of the pixel
+        instance_map: np.array
+            instance map of the current camera view
+
+        Returns
+        -------
+        None
+        """
+        x = min(max(x, 0), instance_map.shape[1] - 1)
+        y = min(max(y, 0), instance_map.shape[0] - 1)
+        rgb_key = tuple(instance_map[y][x])
+        for key, obj in self.instances.items():
+            obj._is_highlighted = key == rgb_key
 
     def select_all_from_instance_map(self, instance_map):
         """Select all the objects that appear in the instance map
@@ -214,16 +249,18 @@ class Selector:
         if mode == 'single':
             if obj:
                 self.deselect()
-                obj.is_selected = True
+                obj.is_selected = obj.is_selectable
+                if obj.is_selected and self.gimbal.enabled:
+                    self.gimbal.attach(obj)
         elif mode == 'multi':
             if not obj:
                 return
             if types:
                 for _type in types:
                     if isinstance(obj._data, _type):
-                        obj.is_selected = True
+                        obj.is_selected = obj.is_selectable
             else:
-                obj.is_selected = True
+                obj.is_selected = obj.is_selectable
         elif mode == 'deselect':
             self.deselect(obj)
         else:

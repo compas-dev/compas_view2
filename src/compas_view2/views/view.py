@@ -5,6 +5,7 @@ from PySide2 import QtCore, QtWidgets
 from ..camera import Camera
 from ..mouse import Mouse
 from ..objects import GridObject
+from ..objects import GimbalObject
 import time
 
 
@@ -42,6 +43,7 @@ class View(QtWidgets.QOpenGLWidget):
                  show_grid=True):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setMouseTracking(True)
         self._opacity = 1.0
         self._current = View.PERSPECTIVE
         self.shader_model = None
@@ -53,6 +55,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.camera = Camera(self)
         self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
+        self.gimbal = GimbalObject()
         self.objects = {}
         self.keys = {"shift": False, "control": False}
         self._frames = 0
@@ -213,7 +216,7 @@ class View(QtWidgets.QOpenGLWidget):
                 self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
             # record mouse position
             self.mouse.last_pos = event.pos()
-            self.update()
+
         # change the view
         # if right bottom
         elif event.buttons() & QtCore.Qt.RightButton:
@@ -223,7 +226,8 @@ class View(QtWidgets.QOpenGLWidget):
                 self.camera.rotate(dx, dy)
             # record mouse position
             self.mouse.last_pos = event.pos()
-            self.update()
+
+        self.update()
 
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
@@ -234,7 +238,7 @@ class View(QtWidgets.QOpenGLWidget):
             self.mouse.buttons['left'] = True
             if self.keys["shift"] or self.keys["control"]:
                 self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
-        # do nothing
+
         # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons['right'] = True

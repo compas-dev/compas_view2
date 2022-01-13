@@ -22,6 +22,7 @@ from compas_view2.shapes import Arrow
 from compas_view2.shapes import Text
 from compas_view2.collections import Collection
 
+
 from .object import Object
 
 from .vectorobject import VectorObject
@@ -40,7 +41,6 @@ from .torusobject import TorusObject
 from .arrowobject import ArrowObject
 from .textobject import TextObject
 from .collectionobject import CollectionObject
-from .gridobject import GridObject  # noqa: F401
 from .cylinderobject import CylinderObject
 from .planeobject import PlaneObject
 from .circleobject import CircleObject
@@ -49,6 +49,10 @@ from .polygonobject import PolygonObject
 from .coneobject import ConeObject
 from .capsuleobject import CapsuleObject
 from .polyhedronobject import PolyhedronObject
+
+
+from .gridobject import GridObject  # noqa: F401
+from .gimbalobject import GimbalObject # noqa: F401
 
 Object.register(Vector, VectorObject)
 Object.register(Point, PointObject)
