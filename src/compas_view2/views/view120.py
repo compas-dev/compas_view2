@@ -132,7 +132,7 @@ class View120(View):
                 self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
             self.app.selector.enabled = False
             self.clear()
-            self.shader_model.release()
+            self.shader_instance.release()
 
         # Draw grid
         self.shader_grid.bind()
