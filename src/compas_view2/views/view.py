@@ -289,6 +289,13 @@ class View(QtWidgets.QOpenGLWidget):
         if key == QtCore.Qt.Key_Control:
             self.app.selector.mode = "deselect"
             self.keys["control"] = True
+        if key == QtCore.Qt.Key_W:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.mode = 'translate'
+        if key == QtCore.Qt.Key_E:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.mode = 'rotate'
+        self.update()
 
     def keyReleaseEvent(self, event):
         key = event.key()
