@@ -123,16 +123,15 @@ class View120(View):
             self.update_projection()
 
         # Draw instance maps
-        if self.app.selector.enabled or self.gimbal.enabled:
-            self.shader_instance.bind()
-            # set projection matrix
-            self.shader_instance.uniform4x4("viewworld", viewworld)
-            if self.app.selector.select_from == "pixel":
-                self.app.selector.instance_map = self.paint_instances()
-            if self.app.selector.select_from == "box":
-                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
-            self.clear()
-            self.shader_instance.release()
+        self.shader_instance.bind()
+        # set projection matrix
+        self.shader_instance.uniform4x4("viewworld", viewworld)
+        if self.app.selector.select_from == "pixel":
+            self.app.selector.instance_map = self.paint_instances()
+        if self.app.selector.select_from == "box":
+            self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
+        self.clear()
+        self.shader_instance.release()
 
         # Draw grid
         self.shader_grid.bind()

@@ -55,7 +55,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.camera = Camera(self)
         self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
-        self.gimbal = GimbalObject()
+        self.gimbal = GimbalObject(self.app)
         self.objects = {}
         self.keys = {"shift": False, "control": False}
         self._frames = 0
@@ -228,7 +228,7 @@ class View(QtWidgets.QOpenGLWidget):
             self.mouse.last_pos = event.pos()
 
         if self.mouse.pressed_on:
-            self.mouse.pressed_on.on_mousedrag(event)
+            self.mouse.pressed_on.dispatch_event("mousedrag", {'x': self.mouse.pos.x(), 'y': self.mouse.pos.y(), 'dx': dx, 'dy': dy})
 
         self.update()
 
@@ -267,7 +267,7 @@ class View(QtWidgets.QOpenGLWidget):
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
         if self.mouse.pressed_on:
-            self.mouse.pressed_on.on_mouserelease(event)
+            self.mouse.pressed_on.dispatch_event("mouserelease", {'x': event.pos().x(), 'y': event.pos().y()})
             self.mouse.pressed_on = None
         self.update()
 

@@ -111,10 +111,9 @@ class Selector:
                         self.app.view.update()
                         self.enabled = False
 
-                    if self.gimbal.enabled:
-                        x = self.app.view.mouse.pos.x()
-                        y = self.app.view.mouse.pos.y()
-                        self.highlight_one_from_instance_map(x, y, self.instance_map)
+                    x = self.app.view.mouse.pos.x()
+                    y = self.app.view.mouse.pos.y()
+                    self.highlight_one_from_instance_map(x, y, self.instance_map)
                 
 
         # Stop the monitor loop when the app is being closed
@@ -202,15 +201,18 @@ class Selector:
         -------
         None
         """
+        if self.mouse.pressed_on:
+            return
+
         x = min(max(x, 0), instance_map.shape[1] - 1)
         y = min(max(y, 0), instance_map.shape[0] - 1)
         rgb_key = tuple(instance_map[y][x])
         for key, obj in self.instances.items():
             if key == rgb_key:
                 obj._is_highlighted = True
-                if self.mouse.is_pressed() and obj != self.mouse.pressed_on:
+                if self.mouse.is_pressed():
                     self.mouse.pressed_on = obj
-                    obj.on_mousedown(self.mouse)
+                    obj.dispatch_event("mousedown", {'x': x, 'y': y})
             else:
                 obj._is_highlighted = False
 
@@ -257,8 +259,6 @@ class Selector:
             if obj:
                 self.deselect()
                 obj.is_selected = obj.is_selectable
-                if obj.is_selected and self.gimbal.enabled:
-                    self.gimbal.attach(obj)
         elif mode == 'multi':
             if not obj:
                 return

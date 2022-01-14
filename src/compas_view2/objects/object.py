@@ -63,6 +63,7 @@ class Object(ABC):
         self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
+        self._event_listeners = {}
 
     @property
     def otype(self):
@@ -97,6 +98,11 @@ class Object(ABC):
         self._translation[1] = vector[1]
         self._translation[2] = vector[2]
 
+    def translate(self, vector):
+        self._translation[0] += vector[0]
+        self._translation[1] += vector[1]
+        self._translation[2] += vector[2]
+
     @property
     def rotation(self):
         return self._rotation
@@ -106,6 +112,11 @@ class Object(ABC):
         self._rotation[0] = angles[0]
         self._rotation[1] = angles[1]
         self._rotation[2] = angles[2]
+
+    def rotate(self, angles):
+        self._rotation[0] += angles[0]
+        self._rotation[1] += angles[1]
+        self._rotation[2] += angles[2]
 
     @property
     def scale(self):
@@ -144,11 +155,20 @@ class Object(ABC):
         self.scale = scale
         self._update_matrix()
 
-    def on_mousedown(self, event):
-        pass
+    def add_event_listener(self, event_name, func):
+        """Add a callback function to be called when an event occurs"""
+        if event_name not in self._event_listeners:
+            self._event_listeners[event_name] = []
+        self._event_listeners[event_name].append(func)
+
+    def remove_event_listener(self, func):
+        """Remove a callback function from being called when an event occurs"""
+        for listeners in self._event_listeners.values():
+            if func in listeners:
+                listeners.remove(func)
     
-    def on_mousedrag(self, event):
-        pass
-    
-    def on_mouserelease(self, event):
-        pass
+    def dispatch_event(self, event_name, event):
+        """Call all the callback functions registered for an event"""
+        if event_name in self._event_listeners:
+            for func in self._event_listeners[event_name]:
+                func(self, event)
