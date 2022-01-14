@@ -166,7 +166,7 @@ class Object(ABC):
         for listeners in self._event_listeners.values():
             if func in listeners:
                 listeners.remove(func)
-    
+
     def dispatch_event(self, event_name, event):
         """Call all the callback functions registered for an event"""
         if event_name in self._event_listeners:

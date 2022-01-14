@@ -207,7 +207,7 @@ class App:
             if self.view.gimbal.enabled:
                 self.view.gimbal.attach(_self)
         obj.add_event_listener('mousedown', attach_gimbal)
-    
+
         return obj
 
     def add_reference(self, obj: Object, **kwargs) -> Object:

@@ -52,7 +52,7 @@ from .polyhedronobject import PolyhedronObject
 
 
 from .gridobject import GridObject  # noqa: F401
-from .gimbalobject import GimbalObject # noqa: F401
+from .gimbalobject import GimbalObject  # noqa: F401
 
 Object.register(Vector, VectorObject)
 Object.register(Point, PointObject)

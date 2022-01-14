@@ -3,6 +3,7 @@ from .arrowobject import ArrowObject
 from .object import Object
 import numpy as np
 
+
 class GimbalObject(Object):
     """Object for displaying the gimbal controller."""
 
@@ -14,7 +15,7 @@ class GimbalObject(Object):
         self.components = [self.x_axis, self.y_axis, self.z_axis]
         self.enabled = False
         self._attached_to = None
-    
+
     def toggle(self):
         self.enabled = not self.enabled
         if self.enabled:
@@ -33,11 +34,11 @@ class GimbalObject(Object):
         for component in self.components:
             component.translate(vector)
             component._update_matrix()
-        
+
         if self._attached_to:
             self._attached_to.translate(vector)
             self._attached_to._update_matrix()
-    
+
     def detach(self):
         self._attached_to = None
         for component in self.components:

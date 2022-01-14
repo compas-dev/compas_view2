@@ -114,7 +114,6 @@ class Selector:
                     x = self.app.view.mouse.pos.x()
                     y = self.app.view.mouse.pos.y()
                     self.highlight_one_from_instance_map(x, y, self.instance_map)
-                
 
         # Stop the monitor loop when the app is being closed
         def stop():
@@ -184,7 +183,7 @@ class Selector:
         if rgb_key in self.instances:
             obj = self.instances[rgb_key]
         self.select(obj)
-    
+
     def highlight_one_from_instance_map(self, x, y, instance_map):
         """Highlight one object at given pixel location of the instance map
 
