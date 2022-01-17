@@ -1,5 +1,5 @@
 from compas.geometry import Point
-from compas_occ.geometry import NurbsSurface
+from compas_occ.geometry import OCCNurbsSurface as NurbsSurface
 from compas_view2.app import App
 
 points = [

@@ -21,6 +21,7 @@ class CollectionObject(BufferObject):
         self.show_points = self.show_points or self._objects[0].show_points
         self.show_lines = self.show_lines or self._objects[0].show_lines
         self.show_faces = self.show_faces or self._objects[0].show_faces
+        self._is_collection = True
 
     def _points_data(self):
         positions = []
