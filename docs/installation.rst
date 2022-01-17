@@ -9,8 +9,7 @@ The recommended way to install ``compas_view2`` is with ``conda``.
 
 .. code-block:: bash
 
-    conda create -n view2 -c conda-forge compas compas_view2 --yes
-    conda activate view2
+    conda create -n view2 -c conda-forge compas compas_view2
 
 
 Development
@@ -24,7 +23,7 @@ Windows
 
 .. code-block:: bash
 
-    conda create -n view2 python=3.8 git cython freeglut --yes
+    conda create -n view2 python=3.8 git cython freeglut
     conda activate view2
     pip install git+https://github.com/compas-dev/compas_view2.git#egg=compas_view2
 
@@ -33,7 +32,7 @@ Mac
 
 .. code-block:: bash
 
-    conda create -n view2 python=3.8 cython python.app --yes
+    conda create -n view2 python=3.8 cython python.app
     conda activate view2
     pip install git+https://github.com/compas-dev/compas_view2.git#egg=compas_view2
 
@@ -58,6 +57,6 @@ Linux
 
 .. code-block:: bash
 
-    conda create -n view2 python=3.8 cython freetype-py --yes
+    conda create -n view2 python=3.8 cython freetype-py
     conda activate view2
     pip install git+https://github.com/compas-dev/compas_view2.git#egg=compas_view2
