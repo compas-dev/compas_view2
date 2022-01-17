@@ -9,24 +9,26 @@ scroll-margin-top: calc(74px + 3rem);
 h1 {
 font-weight: 500;
 margin-top: 0;
-margin-bottom: 2rem;
+margin-bottom: 1rem;
+padding-bottom: 1rem;
+border-bottom: 4px solid #eee;
 }
 
 h2 {
-margin-top: 4rem;
-margin-bottom: 2rem;
+margin-top: 3rem;
+margin-bottom: 1rem;
 font-weight: 500;
 }
 
 h3 {
-margin-top: 3rem;
-margin-bottom: 2rem;
+margin-top: 2rem;
+margin-bottom: 1rem;
 font-weight: 500;
 }
 
 h4 {
-margin-top: 2rem;
-margin-bottom: 2rem;
+margin-top: 1rem;
+margin-bottom: 1rem;
 font-weight: 500;
 }
 
@@ -62,11 +64,19 @@ margin-bottom: 1rem;
 } */
 
 table {
-margin: 2rem 0;
+margin: 0;
+margin-top: 2rem !important;
+margin-bottom: 2rem !important;
+
 }
 
 p {
-  margin: 2rem 0;
+  margin: 1rem 0;
+}
+
+caption {
+  text-align: left !important;
+  caption-side: top !important;
 }
 
 .compas-header {
@@ -308,7 +318,7 @@ padding: 0;
 }
 
 .lead {
-margin-bottom: 3rem;
+margin-bottom: 2rem;
 }
 
 .compas-content .figure {
@@ -316,9 +326,13 @@ margin: 0;
 padding: 0;
 }
 
+.highlighted {
+background-color: #ffffaa;
+}
+
 .highlight {
-margin-top: 2rem;
-margin-bottom: 2rem;
+margin-top: 1rem;
+margin-bottom: 1rem;
 }
 
 .hljs {
@@ -328,6 +342,17 @@ padding: 2rem;
 .nohighlight pre {
 padding: 2rem;
 background-color: #f0f0f0;
+}
+
+.copy {
+  display: block;
+  float: right;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  top: 0px;
+  right: 40px;
+  margin-right: -40px;
 }
 
 .compas-content .anchorjs-link {

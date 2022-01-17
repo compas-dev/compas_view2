@@ -98,7 +98,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.views.View120">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.views.</span></span><span class="sig-name descname"><span class="pre">View120</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">0.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/views/view120.py#L15"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Bases: <a class="reference internal" href="compas_view2.views.View.html#compas_view2.views.View" title="compas_view2.views.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.views.view.View</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="compas_view2.views.View.html#compas_view2.views.View" title="compas_view2.views.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
 <p>View widget for OpenGL version 2.1 and GLSL 120 with a Compatibility Profile.</p>
 </dd></dl>
 
@@ -232,7 +232,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 
   <script src="../../_static/underscore.js"></script>
   <script src="../../_static/doctools.js"></script>
@@ -251,6 +251,11 @@
       hljs.initHighlighting();
       anchors.add();
 
+      new ClipboardJS('.btn', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
     });
 
 

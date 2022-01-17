@@ -94,8 +94,7 @@
 <section id="stable">
 <h2>Stable</h2>
 <p>The recommended way to install <code class="docutils literal notranslate"><span class="pre">compas_view2</span></code> is with <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n view2 -c conda-forge compas compas_view2 --yes
-conda activate view2
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 -c conda-forge compas compas_view2
 </code></pre></div>
 </div>
 </section>
@@ -105,7 +104,7 @@ conda activate view2
 directly from the github repo.</p>
 <section id="windows">
 <h3>Windows</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 git cython freeglut --yes
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 git cython freeglut
 conda activate view2
 pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
@@ -113,7 +112,7 @@ pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o
 </section>
 <section id="mac">
 <h3>Mac</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython python.app --yes
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython python.app
 conda activate view2
 pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
@@ -122,7 +121,7 @@ pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o
 This ensures that all components work as expected.</p>
 <p>To configure VS Code to use <code class="docutils literal notranslate"><span class="pre">pythonw</span></code>, change the python path in the settings of the workspace.
 In <code class="docutils literal notranslate"><span class="pre">.vscode/settings.json</span></code></p>
-<div class="language-json notranslate"><div class="highlight"><pre><code><span></span>{
+<div class="language-json notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>{
     ...
 
     &quot;python.pythonPath&quot;: &quot;/Users/xxx/anaconda3/envs/view2/bin/pythonw&quot;
@@ -134,7 +133,7 @@ In <code class="docutils literal notranslate"><span class="pre">.vscode/settings
 </section>
 <section id="linux">
 <h3>Linux</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython freetype-py --yes
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython freetype-py
 conda activate view2
 pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
@@ -268,7 +267,7 @@ pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 
   <script src="_static/underscore.js"></script>
   <script src="_static/doctools.js"></script>
@@ -287,6 +286,11 @@ pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o
       hljs.initHighlighting();
       anchors.add();
 
+      new ClipboardJS('.btn', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
     });
 
 

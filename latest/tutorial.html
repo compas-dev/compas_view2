@@ -91,41 +91,61 @@
         
         <section id="tutorial">
 <h1>Tutorial</h1>
+<p class="lead">This tutorial covers basic usage of the viewer through scripting.
+Other usage modes are possible and will be described in a separate tutorial.</p>
 <section id="basic-usage">
-<h2>Basic usage</h2>
-<p>Add COMPAS objects in a script and visualize the result.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas.geometry</span>
+<h2>Basic Usage</h2>
+<p>The process of visualizing COMPAS objects with <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code> consists out of three steps:</p>
+<ol class="arabic simple">
+<li><p>Create an instance of a viewer.</p></li>
+<li><p>Do stuff (like adding objects).</p></li>
+<li><p>Launch the viewer.</p></li>
+</ol>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+
+<span class="c1"># add objects</span>
+
+<span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</section>
+<section id="add-objects">
+<h2>Add Objects</h2>
+<p>Most COMPAS geometry objects and data structures can simply be “added” to a visualization using <a class="reference internal" href="api/generated/compas_view2.app.App.add.html#compas_view2.app.App.add" title="compas_view2.app.App.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compas_view2.app.App.add()</span></code></a>.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span>
 <span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
 
 
-<span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
 </code></pre></div>
 </div>
+<p>The “add” method (<a class="reference internal" href="api/generated/compas_view2.app.App.add.html#compas_view2.app.App.add" title="compas_view2.app.App.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compas_view2.app.App.add()</span></code></a>) returns an instance</p>
 </section>
-<section id="scripting">
-<h2>Scripting</h2>
-<p>To add COMPAS objects through scripting, before launching the viewer window,
-simply add the objects to the scene.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Box</span><span class="p">,</span> <span class="n">Frame</span>
-
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-
-<span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="n">Frame</span><span class="o">.</span><span class="n">worldXY</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
-</div>
+<section id="object-appearance">
+<h2>Object Appearance</h2>
 </section>
-<section id="selecting">
-<h2>Selecting</h2>
-<p><em>More info coming soon</em>…</p>
+<section id="object-collections">
+<h2>Object Collections</h2>
 </section>
-<section id="modifying">
-<h2>Modifying</h2>
-<p><em>More info coming soon</em>…</p>
+<section id="zoom-pan-rotate">
+<h2>Zoom, Pan, Rotate</h2>
+</section>
+<section id="dynamic-visualization">
+<h2>Dynamic Visualization</h2>
+</section>
+<section id="capturing">
+<h2>Capturing</h2>
+</section>
+<section id="interactive-mode">
+<h2>Interactive Mode</h2>
+</section>
+<section id="viewer-configuration">
+<h2>Viewer Configuration</h2>
+</section>
+<section id="custom-ui-elements">
+<h2>Custom UI Elements</h2>
 </section>
 </section>
 
@@ -163,10 +183,16 @@ simply add the objects to the scene.</p>
         
         <ul class="nav flex-column" id="compas-toc">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Tutorial</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#basic-usage">Basic usage</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#scripting">Scripting</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#selecting">Selecting</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#modifying">Modifying</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#add-objects">Add Objects</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#object-appearance">Object Appearance</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#object-collections">Object Collections</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#zoom-pan-rotate">Zoom, Pan, Rotate</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#dynamic-visualization">Dynamic Visualization</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#capturing">Capturing</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#interactive-mode">Interactive Mode</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#viewer-configuration">Viewer Configuration</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#custom-ui-elements">Custom UI Elements</a></li>
 </ul>
 </li>
 </ul>
@@ -251,7 +277,7 @@ simply add the objects to the scene.</p>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 
   <script src="_static/underscore.js"></script>
   <script src="_static/doctools.js"></script>
@@ -270,6 +296,11 @@ simply add the objects to the scene.</p>
       hljs.initHighlighting();
       anchors.add();
 
+      new ClipboardJS('.btn', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
     });
 
 

@@ -89,7 +89,7 @@
         
         <section id="license">
 <h1>License</h1>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">MIT</span> <span class="n">License</span>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="n">MIT</span> <span class="n">License</span>
 
 <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">2021</span> <span class="n">Block</span> <span class="n">Research</span> <span class="n">Group</span> <span class="o">-</span> <span class="n">ETH</span> <span class="n">Zurich</span>
 
@@ -222,7 +222,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 
   <script src="_static/underscore.js"></script>
   <script src="_static/doctools.js"></script>
@@ -241,6 +241,11 @@
       hljs.initHighlighting();
       anchors.add();
 
+      new ClipboardJS('.btn', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
     });
 
 

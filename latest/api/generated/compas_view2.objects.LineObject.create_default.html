@@ -99,7 +99,7 @@
 <h1>LineObject.create_default</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_view2.objects.LineObject.create_default">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">LineObject.</span></span><span class="sig-name descname"><span class="pre">create_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.geometry.Line.html#compas.geometry.Line" title="(in COMPAS v1.13)"><span class="pre">compas.geometry.primitives.line.Line</span></a></span></span></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">LineObject.</span></span><span class="sig-name descname"><span class="pre">create_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
 <dd></dd></dl>
 
 </section>
@@ -239,7 +239,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.1/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 
   <script src="../../_static/underscore.js"></script>
   <script src="../../_static/doctools.js"></script>
@@ -258,6 +258,11 @@
       hljs.initHighlighting();
       anchors.add();
 
+      new ClipboardJS('.btn', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
     });
 
 
