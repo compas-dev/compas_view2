@@ -95,57 +95,179 @@
 Other usage modes are possible and will be described in a separate tutorial.</p>
 <section id="basic-usage">
 <h2>Basic Usage</h2>
-<p>The process of visualizing COMPAS objects with <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code> consists out of three steps:</p>
+<p>The basic process of visualizing COMPAS objects with <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code> consists out of three steps:</p>
 <ol class="arabic simple">
 <li><p>Create an instance of a viewer.</p></li>
-<li><p>Do stuff (like adding objects).</p></li>
+<li><p>Add objects.</p></li>
 <li><p>Launch the viewer.</p></li>
 </ol>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-
-<span class="c1"># add objects</span>
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </section>
 <section id="add-objects">
 <h2>Add Objects</h2>
-<p>Most COMPAS geometry objects and data structures can simply be “added” to a visualization using <a class="reference internal" href="api/generated/compas_view2.app.App.add.html#compas_view2.app.App.add" title="compas_view2.app.App.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compas_view2.app.App.add()</span></code></a>.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span>
-<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
 </code></pre></div>
 </div>
-<p>The “add” method (<a class="reference internal" href="api/generated/compas_view2.app.App.add.html#compas_view2.app.App.add" title="compas_view2.app.App.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compas_view2.app.App.add()</span></code></a>) returns an instance</p>
+<p>When a COMPAS object is added, the viewer looks for a corresponding view object in a registry.
+If a registered view object is found, the add method wraps the COMPAS object in it and returns a view object instance.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="go">&lt;class &#39;compas_view2.objects.sphereobject.SphereObject&#39;&gt;</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">_data</span>
+<span class="go">Sphere(Point(0.000, 0.000, 0.000), 1.0)</span>
+</code></pre></div>
+</div>
 </section>
 <section id="object-appearance">
 <h2>Object Appearance</h2>
+<p>The appearance of an object can be changed through various visualization options
+which can be passed as keyword arguments to the add function,
+or by changing the corresponding attributes of the view object.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">u</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">v</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">show_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">show_lines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">show_faces</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">pointcolor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">linecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">pointsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">is_selected</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">is_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">show_points</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre></div>
+</div>
 </section>
 <section id="object-collections">
 <h2>Object Collections</h2>
+<p>Drawing many different objects can slow down the viewer considerably.
+To avoid this, you can group same tpye objects in collections.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span><span class="p">,</span> <span class="n">Pointcloud</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Collection</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cloud</span> <span class="o">=</span> <span class="n">Pointcloud</span><span class="o">.</span><span class="n">from_bounds</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spheres</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">cloud</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">spheres</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Sphere</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">spheres</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p>The objects in a collection can only be styled uniformly with the same keyword arguments
+used to style the individual objects.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">spheres</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">linecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>Individual object styling will be available for collections soon!</p>
 </section>
-<section id="zoom-pan-rotate">
-<h2>Zoom, Pan, Rotate</h2>
+<section id="object-transformations">
+<h2>Object Transformations</h2>
+<p>Every view object has an associated transformation matrix in world coordinates,
+which is multiplied with the coordinates of the data object to determine
+the final location and orientation of the object in the scene.</p>
+<p>The default transformation matrix of a view object is the identity matrix,
+which has no effect on the placement and/or orientation of the object in the scene.</p>
+<p>To move an object through the scene, or to change its orientation,
+assign a transformation matrix to the <cite>matrix</cite> attribute of the view object.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">Translation</span><span class="o">.</span><span class="n">from_vector</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">matrix</span>
+</code></pre></div>
+</div>
+<p>For convenience, the translation, rotation, and scale can be modified separately.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">translation</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+</div>
 </section>
 <section id="dynamic-visualization">
 <h2>Dynamic Visualization</h2>
+<p>To visualize a dynamic process, for example the process of moving a box along a curve,
+use the “on” decorator (<a class="reference internal" href="api/generated/compas_view2.app.App.on.html#compas_view2.app.App.on" title="compas_view2.app.App.on"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compas_view2.app.App.on()</span></code></a>) on a callback function.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="mf">1.0</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@viewer</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">translation</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</section>
+<section id="zoom-pan-rotate">
+<h2>Zoom, Pan, Rotate</h2>
+<p>After launching the viewer, the view can be transformed by zooming, panning, and rotating.
+To zoom, use the mousewheel or “pinch” the trackpad of your laptop.
+To rotate the view, move the mouse while holding down the right mouse button (<code class="docutils literal notranslate"><span class="pre">right</span> <span class="pre">click</span></code>).
+To pan, move the mouse while holding <code class="docutils literal notranslate"><span class="pre">SHIFT</span> <span class="pre">+</span> <span class="pre">right</span> <span class="pre">click</span></code>.</p>
+</section>
+<section id="view-configuration">
+<h2>View Configuration</h2>
+<p>To transform the view programmatically, you can modify the relevant attributes of the camera directly.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">rz</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">rx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">60</span>
+</code></pre></div>
+</div>
+<p>More convenient configuration methods using camera position and camera target are under construction and will be available soon.</p>
+</section>
+<section id="selections">
+<h2>Selections</h2>
+<p>To create a selection programmatically, set the attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">compas_view2.objects.Object.is_selected</span></code> of the objects in the selection to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">is_selected</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+</div>
+<p>To select an object interactively, click on the object with the left mouse button.
+To select multiple objects hold down <code class="docutils literal notranslate"><span class="pre">SHIFT</span></code> while selecting objects individually or collectively using a selection window.</p>
+<p>To unselect objects, hold down <code class="docutils literal notranslate"><span class="pre">COMMAND</span></code> on Mac or <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> on Windows while clicking in an empty area of the view.</p>
 </section>
 <section id="capturing">
 <h2>Capturing</h2>
-</section>
-<section id="interactive-mode">
-<h2>Interactive Mode</h2>
-</section>
-<section id="viewer-configuration">
-<h2>Viewer Configuration</h2>
+<p>To grab a screenshot of the view, select “Capture” from the “View” menu (<code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">&gt;</span> <span class="pre">Capture</span></code>) and select a location for saving the image.
+To record the frames of a dynamic visualization into an animated GIF, use the relevant options of the “on” decorator.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@viewer</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">record_path</span><span class="o">=</span><span class="s1">&#39;animated.gif&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">translation</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
 </section>
 <section id="custom-ui-elements">
 <h2>Custom UI Elements</h2>
+<p>coming soon…</p>
 </section>
 </section>
 
@@ -187,11 +309,12 @@ Other usage modes are possible and will be described in a separate tutorial.</p>
 <li class="nav-item"><a class="nav-link reference internal" href="#add-objects">Add Objects</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#object-appearance">Object Appearance</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#object-collections">Object Collections</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#zoom-pan-rotate">Zoom, Pan, Rotate</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#object-transformations">Object Transformations</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#dynamic-visualization">Dynamic Visualization</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#zoom-pan-rotate">Zoom, Pan, Rotate</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#view-configuration">View Configuration</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#selections">Selections</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#capturing">Capturing</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#interactive-mode">Interactive Mode</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#viewer-configuration">Viewer Configuration</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#custom-ui-elements">Custom UI Elements</a></li>
 </ul>
 </li>
