@@ -13,4 +13,5 @@ API Reference
    api/compas_view2.scene
    api/compas_view2.shaders
    api/compas_view2.shapes
+   api/compas_view2.ui
    api/compas_view2.views
