@@ -1,8 +1,8 @@
 *******************************************************************************
-compas_view2.forms
+compas_view2.shapes
 *******************************************************************************
 
-.. currentmodule:: compas_view2.forms
+.. currentmodule:: compas_view2.shapes
 
 Classes
 =======
@@ -11,11 +11,6 @@ Classes
     :toctree: generated/
     :nosignatures:
 
-    Form
-    EditForm
-    AddForm
-    PointForm
-    LineForm
-    SphereForm
-    TorusForm
-    PointEditForm
+    Arrow
+    Text
+    VectorGroup

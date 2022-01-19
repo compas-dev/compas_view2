@@ -1,8 +1,8 @@
 *******************************************************************************
-compas_view2.forms
+compas_view2.scene
 *******************************************************************************
 
-.. currentmodule:: compas_view2.forms
+.. currentmodule:: compas_view2.scene
 
 Classes
 =======
@@ -11,11 +11,17 @@ Classes
     :toctree: generated/
     :nosignatures:
 
-    Form
-    EditForm
-    AddForm
-    PointForm
-    LineForm
-    SphereForm
-    TorusForm
-    PointEditForm
+    Camera
+    Mouse
+
+
+Functions
+=========
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    ortho
+    perspective
+    lookat

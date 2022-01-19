@@ -1,21 +1,17 @@
 *******************************************************************************
-compas_view2.forms
+compas_view2.gl
 *******************************************************************************
 
-.. currentmodule:: compas_view2.forms
+.. currentmodule:: compas_view2.gl
 
-Classes
-=======
+Functions
+=========
 
 .. autosummary::
     :toctree: generated/
     :nosignatures:
 
-    Form
-    EditForm
-    AddForm
-    PointForm
-    LineForm
-    SphereForm
-    TorusForm
-    PointEditForm
+    make_index_buffer
+    make_vertex_buffer
+    update_index_buffer
+    update_vertex_buffer
