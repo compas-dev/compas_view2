@@ -1,12 +1,11 @@
 from OpenGL import GL
-from PIL import Image
+# from PIL import Image
 
 import os
 import numpy as np
 
 from compas.geometry import transform_points_numpy
 
-import compas_view2
 from compas_view2.objects import BufferObject
 from compas_view2.objects import TextObject
 from compas_view2.objects import VectorObject

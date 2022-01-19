@@ -356,7 +356,7 @@ class App:
         None
 
         """
-        flags = QtWidgets.QMessageBox.StandardButton.Yes 
+        flags = QtWidgets.QMessageBox.StandardButton.Yes
         flags |= QtWidgets.QMessageBox.StandardButton.No
         response = QtWidgets.QMessageBox.question(self.window, 'Question', message, flags)
         if response == QtWidgets.QMessageBox.Yes:
@@ -364,7 +364,28 @@ class App:
         return False
 
     def confirm(self, message: str):
-        flags = QtWidgets.QMessageBox.StandardButton.Ok 
+        """Confirm the execution of an action.
+
+        Parameters
+        ----------
+        message : str
+            Message to inform the user.
+
+        Returns
+        -------
+        bool
+            True if the user confirms.
+            False otherwise.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            if viewer.confirm("Should i continue?"):
+                continue
+
+        """
+        flags = QtWidgets.QMessageBox.StandardButton.Ok
         flags |= QtWidgets.QMessageBox.StandardButton.Cancel
         response = QtWidgets.QMessageBox.warning(self.window, 'Confirmation', message, flags)
         if response == QtWidgets.QMessageBox.StandardButton.Ok:
@@ -518,37 +539,6 @@ class App:
             action = parent.addAction(text, partial(action, *args, **kwargs))
         return action
 
-    def add_button(self,
-                   parent: QtWidgets.QWidget,
-                   *,
-                   text: str,
-                   action: Callable):
-        """Add a button to the sidebar.
-
-        Parameters
-        ----------
-        parent : QtWidgets.QWidget
-            The parent widget for the button.
-        text : str
-            The text label of the button.
-        action : callable
-            The action associated with the button.
-
-        Returns
-        -------
-        None
-
-        """
-        box = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout()
-        button = QtWidgets.QPushButton(text)
-        layout.addWidget(button)
-        box.setLayout(layout)
-        parent.addWidget(box)
-        action = action if callable(action) else getattr(self.controller, action)
-        button.clicked.connect(action)
-        # button.clicked.connect(self.view.update)
-
     def add_radio(self,
                   parent: QtWidgets.QWidget,
                   *,
@@ -687,10 +677,14 @@ class App:
 
         """
         def outer(func: Callable) -> Callable:
-            def wrapped(*args, **kwargs):
-                func(self.app, *args, **kwargs)
-            button = Button(self, self.sidebar, text=text, action=func)
-            return wrapped
+            button = Button(self,
+                            self.sidebar,
+                            text=text,
+                            action=func)
+            # def wrapped(*args, **kwargs):
+            #     func(self.app, *args, **kwargs)
+            # return wrapped
+            return button
         return outer
 
     def checkbox(self, text: str, checked: bool = True) -> Callable:
@@ -794,7 +788,7 @@ class App:
            frames: int = None,
            record: bool = False,
            record_path: str = 'temp/out.gif',
-           record_fps : int = None,
+           record_fps: int = None,
            playback_interval: int = None) -> Callable:
         """Decorator for callbacks of a dynamic drawing process.
 

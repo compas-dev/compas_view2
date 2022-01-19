@@ -1,6 +1,6 @@
-from .matrices import ortho
-from .matrices import perspective
-from .matrices import lookat
+from .matrices import ortho  # noqa : F401
+from .matrices import perspective  # noqa : F401
+from .matrices import lookat  # noqa : F401
 
-from .camera import Camera
-from .mouse import Mouse
+from .camera import Camera  # noqa : F401
+from .mouse import Mouse  # noqa : F401

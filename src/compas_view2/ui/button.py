@@ -36,3 +36,8 @@ class Button:
         # connect
         button.clicked.connect(action)
         button.clicked.connect(app.view.update)
+        self.action = action
+        self.button = button
+
+    def __call__(self, *args, **kwargs):
+        return self.action(*args, **kwargs)
