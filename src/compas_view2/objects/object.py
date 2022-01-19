@@ -14,6 +14,7 @@ ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
 
 DATA_OBJECT = {}
 
+
 def _get_object_cls(data):
     dtype = type(data)
     cls = None

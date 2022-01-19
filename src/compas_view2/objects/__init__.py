@@ -54,7 +54,7 @@ from .polyhedronobject import PolyhedronObject
 
 from .nurbssurfaceobject import NurbsSurfaceObject
 
-from .object import DATA_OBJECT
+from .object import DATA_OBJECT  # noqa : F401
 
 Object.register(Point, PointObject)
 Object.register(Vector, VectorObject)

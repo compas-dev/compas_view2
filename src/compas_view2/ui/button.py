@@ -25,7 +25,7 @@ class Button:
                  *,
                  text,
                  action):
-        # HBox with 
+        # HBox with
         box = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout()
         button = QtWidgets.QPushButton(text)
