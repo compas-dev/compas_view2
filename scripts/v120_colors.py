@@ -1,11 +1,13 @@
-import compas
-
-from compas_view2 import app
-from compas.datastructures import Mesh
-from compas.geometry import Translation, Scale
 from random import random
 
-viewer = app.App(width=800, height=500)
+import compas
+
+from compas.datastructures import Mesh
+from compas.geometry import Translation, Scale
+
+from compas_view2.app import App
+
+viewer = App(width=800, height=500)
 
 mesh = Mesh.from_obj(compas.get('faces.obj'))
 T = Translation.from_vector([0, 0, 1])

@@ -1,7 +1,7 @@
 from compas.geometry import Box
-from compas_view2 import app
+from compas_view2.app import App
 
-viewer = app.App()
+viewer = App()
 
 
 box = Box(((0, 0, 0), [1, 0, 0], [0, 1, 0]), 1, 1, 1)

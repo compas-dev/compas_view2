@@ -1,10 +1,12 @@
-from compas_view2 import app
-from compas.geometry import Sphere
-from compas.geometry import Polyline
-from compas_view2.collections import Collection
 from random import random
 
-viewer = app.App()
+from compas.geometry import Sphere
+from compas.geometry import Polyline
+
+from compas_view2.app import App
+from compas_view2.collections import Collection
+
+viewer = App()
 
 spheres = []
 colors = []

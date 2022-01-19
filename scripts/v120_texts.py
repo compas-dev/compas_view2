@@ -1,9 +1,7 @@
 from compas_view2.shapes import Text
-from compas_view2 import app
+from compas_view2.app import App
 
-
-viewer = app.App()
-
+viewer = App()
 
 t = Text("a", [0, 0, 0], height=50)
 viewer.add(t)

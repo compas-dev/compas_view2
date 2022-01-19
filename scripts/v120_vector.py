@@ -1,10 +1,12 @@
-from compas_view2 import app
-from compas.geometry import Vector
-from compas_view2.shapes import VectorGroup
 from random import random
-from math import radians, sin, cos
+from math import radians
+from math import sin
+from math import cos
+from compas.geometry import Vector
+from compas_view2.app import App
+from compas_view2.shapes import VectorGroup
 
-viewer = app.App()
+viewer = App()
 
 for i in range(0, 360, 20):
     for j in range(0, 180, 10):

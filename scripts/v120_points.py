@@ -1,9 +1,9 @@
-from compas_view2 import app
+from random import random
 from compas.geometry import Point
 from compas.geometry import Pointcloud
-from random import random
+from compas_view2.app import App
 
-viewer = app.App()
+viewer = App()
 for i in range(10):
     point = Point(random()*10, random()*10, random()*10)
     viewer.add(point, color=(random(), random(), random()), size=30)

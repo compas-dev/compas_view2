@@ -1,8 +1,8 @@
-from compas_view2 import app
 from compas.geometry import Box
 from compas.geometry import Scale
+from compas_view2.app import App
 
-viewer = app.App()
+viewer = App()
 
 box1 = Box(([0, 0, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
 box2 = Box(([0, 0, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
