@@ -10,8 +10,9 @@ from compas.geometry import Point
 from compas.datastructures import Network
 from compas.datastructures import Mesh
 
-from ..forms import AddForm
-from ..forms import EditForm
+from compas_view2.forms import AddForm
+from compas_view2.forms import EditForm
+
 from .worker import Worker
 
 
@@ -22,12 +23,25 @@ class Controller:
     ----------
     app: :class:`compas_view2.app.App`
         The parent application.
+
     """
 
     def __init__(self, app):
         self.app = app
 
     def interactive(action="add"):
+        """Decorator for transforming functions into "data add" or "object edit" actions.
+
+        Parameters
+        ----------
+        action : {'add', 'edit'}, optional
+            The type of action.
+
+        Returns
+        -------
+        callable
+
+        """
         def outer(func):
             def wrapped(self):
                 def add(data):
@@ -56,19 +70,44 @@ class Controller:
     # ==============================================================================
 
     def dummy(self):
+        """Dummy action for UI element stubs.
+
+        Returns
+        -------
+        None
+
+        """
         pass
 
     def about(self):
-        """Display the about message."""
+        """Display the about message.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.about()
 
     def opengl_version(self):
-        """Display the OpenGL version."""
+        """Display the OpenGL version.
+
+        Returns
+        -------
+        None
+
+        """
         value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
         self.app.info(value)
 
     def glsl_version(self):
-        """Display the version of the shader language."""
+        """Display the version of the shader language.
+
+        Returns
+        -------
+        None
+
+        """
         value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
         self.app.info(value)
 
@@ -77,56 +116,120 @@ class Controller:
     # ==============================================================================
 
     def view_shaded(self):
-        """Switch the view to shaded."""
+        """Switch the view to shaded.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.mode = 'shaded'
         self.app.view.update()
 
     def view_ghosted(self):
-        """Switch the view to ghosted."""
+        """Switch the view to ghosted.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.mode = 'ghosted'
         self.app.view.update()
 
     def view_wireframe(self):
-        """Switch the view to wireframe."""
+        """Switch the view to wireframe.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.mode = 'wireframe'
         self.app.view.update()
 
     def view_lighted(self):
-        """Switch the view to lighted."""
+        """Switch the view to lighted.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.mode = 'lighted'
         self.app.view.update()
 
-    def view_capture(self):
-        """Capture a screenshot."""
-        result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
-        if not result:
-            return
-        filepath = Path(result[0])
+    def view_capture(self, filepath=None):
+        """Capture a screenshot.
+
+        Parameters
+        ----------
+        filepath : str, optional
+            The destination path for saving the screenshot.
+            If no path is provided, a file dialog will be be opened automatically.
+
+        Returns
+        -------
+        None
+
+        """
+        if filepath:
+            result = filepath
+        else:
+            result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
+            if not result:
+                return
+            result = result[0]
+        filepath = Path(result)
         if not filepath.suffix:
             return
         qimage = self.app.view.grabFramebuffer()
         qimage.save(str(filepath), filepath.suffix[1:])
 
     def view_front(self):
-        """Swtich to a front view."""
+        """Swtich to a front view.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.current = self.app.view.FRONT
         self.app.view.update_projection()
         self.app.view.update()
 
     def view_right(self):
-        """Swtich to a right view."""
+        """Swtich to a right view.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.current = self.app.view.RIGHT
         self.app.view.update_projection()
         self.app.view.update()
 
     def view_top(self):
-        """Swtich to a top view."""
+        """Swtich to a top view.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.current = self.app.view.TOP
         self.app.view.update_projection()
         self.app.view.update()
 
     def view_perspective(self):
-        """Swtich to a perspective view."""
+        """Swtich to a perspective view.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.current = self.app.view.PERSPECTIVE
         self.app.view.update_projection()
         self.app.view.update()
@@ -144,7 +247,13 @@ class Controller:
         self.app.info('Not available yet...')
 
     def redraw_scene(self):
-        """Redraw the current scene."""
+        """Redraw the current scene.
+
+        Returns
+        -------
+        None
+
+        """
         self.app.view.update()
 
     def clear_scene(self):
@@ -196,10 +305,11 @@ class Controller:
 
         Returns
         -------
-        :class:`Network`
-            If the operation was successful
-        None
-            Otherwise
+        :class:`compas.datastructures.Network` or None
+            A network data structure,
+            if the operation was successful,
+            or None otherwise.
+
         """
         filename, _ = QtWidgets.QFileDialog.getOpenFileName(parent=self.app.window,
                                                             caption="Select File",
@@ -218,6 +328,15 @@ class Controller:
     def add_mesh_from_file(self) -> Union[Mesh, None]:
         """Add a mesh from the data in an file.
 
+        Returns
+        -------
+        :class:`compas.datastructures.Mesh` or None
+            A mesh data structure,
+            if the operation was successful,
+            or None otherwise.
+
+        Notes
+        -----
         The following file formats are supported
 
         * OBJ
@@ -225,12 +344,6 @@ class Controller:
         * PLY
         * STL
 
-        Returns
-        -------
-        :class:`Mesh`
-            If the operation was successful
-        None
-            Otherwise
         """
         filepath, selectedfilter = QtWidgets.QFileDialog.getOpenFileName(
             parent=self.app.window,

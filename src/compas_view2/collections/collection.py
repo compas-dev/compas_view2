@@ -1,10 +1,5 @@
-
-
-__all__ = ['Collection']
-
-
-class Collection(object):
-    """A collection of COMPAS items like meshes or shapes
+class Collection:
+    """A collection of COMPAS items like meshes or shapes.
     """
 
     def __init__(self, items=None):
