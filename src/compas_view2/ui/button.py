@@ -2,10 +2,12 @@ from PySide2 import QtWidgets
 
 
 class Button:
-    """Add a button to the sidebar.
+    """Class representing a button wrapped in a horizontal box layout.
 
     Parameters
     ----------
+    app : :class:`compas_view2.app.App`
+        The app containing the widget.
     parent : QtWidgets.QWidget
         The parent widget for the button.
     text : str
@@ -13,9 +15,12 @@ class Button:
     action : callable
         The action associated with the button.
 
-    Returns
-    -------
-    None
+    Attributes
+    ----------
+    action : callable
+        Action associated with the button click event.
+    button : QtWidgets.QPushButton
+        The actual button widget.
 
     """
 
@@ -25,19 +30,25 @@ class Button:
                  *,
                  text,
                  action):
-        # HBox with
         box = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout()
+        box.setLayout(layout)
         button = QtWidgets.QPushButton(text)
         layout.addWidget(button)
-        box.setLayout(layout)
-        # add widget
         parent.addWidget(box)
         # connect
         button.clicked.connect(action)
         button.clicked.connect(app.view.update)
+        # attributes
         self.action = action
         self.button = button
 
     def __call__(self, *args, **kwargs):
-        return self.action(*args, **kwargs)
+        """Wrapper for the action associated with the checkbox.
+
+        Returns
+        -------
+        None
+
+        """
+        return self.action()
