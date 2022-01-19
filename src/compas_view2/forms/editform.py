@@ -1,9 +1,11 @@
+import numpy as np
 from PySide2 import QtWidgets
+
 from compas.datastructures import Mesh
 from compas.datastructures import Network
 from compas.datastructures import VolMesh
+
 from .collapsiblebox import CollapsibleBox
-import numpy as np
 
 
 class EditForm(QtWidgets.QDockWidget):

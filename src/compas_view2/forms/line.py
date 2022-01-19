@@ -1,4 +1,5 @@
-from PySide2 import QtWidgets, QtCore
+from PySide2 import QtWidgets
+from PySide2 import QtCore
 
 from .form import Form
 

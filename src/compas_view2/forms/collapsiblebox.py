@@ -1,4 +1,5 @@
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore
+from PySide2 import QtWidgets
 
 
 class CollapsibleBox(QtWidgets.QWidget):
