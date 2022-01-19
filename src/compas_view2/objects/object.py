@@ -1,4 +1,7 @@
 import abc
+import numpy as np
+import inspect
+
 from compas.geometry import Transformation
 from compas.geometry import Translation
 from compas.geometry import Rotation
@@ -6,12 +9,24 @@ from compas.geometry import Scale
 from compas.geometry import decompose_matrix
 from compas.geometry import identity_matrix
 
-import numpy as np
-
 
 ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
 
 DATA_OBJECT = {}
+
+def _get_object_cls(data):
+    dtype = type(data)
+    cls = None
+
+    for type_ in inspect.getmro(dtype):
+        cls = DATA_OBJECT.get(type_, None)
+        if cls is not None:
+            break
+
+    if cls is None:
+        raise Exception('No object is registered for this data type: {}'.format(dtype))
+
+    return cls
 
 
 class Object(ABC):
@@ -42,7 +57,7 @@ class Object(ABC):
     def build(data, **kwargs):
         """Build an object class according to its corrensponding data type"""
         try:
-            obj = DATA_OBJECT[data.__class__](data, **kwargs)
+            obj = _get_object_cls(data)(data, **kwargs)
         except KeyError:
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj

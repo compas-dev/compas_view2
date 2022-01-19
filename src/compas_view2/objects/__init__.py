@@ -17,12 +17,14 @@ from compas.geometry import Polygon
 from compas.geometry import Cone
 from compas.geometry import Capsule
 from compas.geometry import Polyhedron
+from compas.geometry import NurbsSurface
 
 from compas_view2.shapes import Arrow
 from compas_view2.shapes import Text
 from compas_view2.collections import Collection
 
 from .object import Object
+from .bufferobject import BufferObject  # noqa : F401
 
 from .vectorobject import VectorObject
 from .pointobject import PointObject
@@ -40,7 +42,7 @@ from .torusobject import TorusObject
 from .arrowobject import ArrowObject
 from .textobject import TextObject
 from .collectionobject import CollectionObject
-from .gridobject import GridObject  # noqa: F401
+from .gridobject import GridObject  # noqa : F401
 from .cylinderobject import CylinderObject
 from .planeobject import PlaneObject
 from .circleobject import CircleObject
@@ -50,42 +52,38 @@ from .coneobject import ConeObject
 from .capsuleobject import CapsuleObject
 from .polyhedronobject import PolyhedronObject
 
-Object.register(Vector, VectorObject)
+from .nurbssurfaceobject import NurbsSurfaceObject
+
+from .object import DATA_OBJECT
+
 Object.register(Point, PointObject)
-Object.register(Pointcloud, PointcloudObject)
-Object.register(Line, LineObject)
-Object.register(Polyline, PolylineObject)
+Object.register(Vector, VectorObject)
+Object.register(Plane, PlaneObject)
 Object.register(Frame, FrameObject)
 
-Object.register(Network, NetworkObject)
-Object.register(Mesh, MeshObject)
+Object.register(Pointcloud, PointcloudObject)
+
+Object.register(Line, LineObject)
+Object.register(Polyline, PolylineObject)
+
+Object.register(Circle, CircleObject)
+Object.register(Ellipse, EllipseObject)
+Object.register(Polygon, PolygonObject)
 
 Object.register(Box, BoxObject)
 Object.register(Sphere, SphereObject)
 Object.register(Torus, TorusObject)
-Object.register(Arrow, ArrowObject)
-Object.register(Collection, CollectionObject)
 Object.register(Cylinder, CylinderObject)
-Object.register(Plane, PlaneObject)
-Object.register(Circle, CircleObject)
-Object.register(Ellipse, EllipseObject)
-Object.register(Polygon, PolygonObject)
 Object.register(Cone, ConeObject)
 Object.register(Capsule, CapsuleObject)
 Object.register(Polyhedron, PolyhedronObject)
+
+Object.register(Arrow, ArrowObject)
 Object.register(Text, TextObject)
 
-try:
-    from compas_assembly.datastructures import Block
-except ModuleNotFoundError:
-    pass
-else:
-    Object.register(Block, MeshObject)
+Object.register(NurbsSurface, NurbsSurfaceObject)
 
-try:
-    from compas_occ.geometry import OCCNurbsSurface
-    from .nurbssurfaceobject import NurbsSurfaceObject
-except ImportError:
-    pass
-else:
-    Object.register(OCCNurbsSurface, NurbsSurfaceObject)
+Object.register(Network, NetworkObject)
+Object.register(Mesh, MeshObject)
+
+Object.register(Collection, CollectionObject)
