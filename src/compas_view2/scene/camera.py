@@ -1,6 +1,11 @@
-from math import sin, cos, radians
 import numpy as np
-from compas.geometry import Translation, Rotation
+
+from math import sin
+from math import cos
+from math import radians
+
+from compas.geometry import Translation
+from compas.geometry import Rotation
 
 from .matrices import perspective, ortho
 
@@ -14,19 +19,53 @@ class Camera:
         The parent view of the camera.
     fov: float, optional
         The field-of-view of the camera in degrees.
-        Default is ``45`` degrees.
     near: float, optional
         Distance to the near clipping plane.
-        Default is ``0.1``.
     far: float, optional
         Distance to the far clipping plane.
-        Default is ``1000``.
     target: list[float], optional
         The target location the camera is aimed at.
-        Default is ``[0, 0, 0]``, the origin of the world coordinate system.
+        Default is None, in which case the origin of the world coordinate system is used.
     distance: float, optional
         The distance from the camera standpoint to the target.
-        Default is ``10``.
+
+    Attributes
+    ----------
+    fov : float
+        The field of view as an angler in degrees.
+    near : float
+        The location of the "near" clipping plane.
+    far : float
+        The locaiton of the "far" clipping plane.
+    distance : float
+        Distance between the camera position and the viewing target.
+    target : :class:`compas.geometry.Point`
+        The viewing target.
+        Default is the origin of the world coordinate system.
+    rx : float
+        Rotation of the world around the X axis.
+        Default is -60 degrees.
+        See Notes for more information.
+    rz : float
+        Rotation of the world around the Z axis.
+        Default is -30 degrees.
+        See Notes for more information.
+    tx : float
+        Translation of the world in the X direction.
+    ty : float
+        Translation of the world in the Y direction.
+    tz : float
+        Translation of the world in the Z direction.
+    zoom_delta : float
+        Size of one zoom increment.
+    rotation_delta : float
+        Size of one rotation increment.
+    pan_delta : float
+        Size of one pan increment.
+
+    Notes
+    -----
+    Under construction...
 
     """
 
@@ -49,12 +88,21 @@ class Camera:
     def rotate(self, dx, dy):
         """Rotate the camera based on current mouse movement.
 
-        Camera rotations are only available if the current view is a perspective view.
-
         Parameters
         ----------
-        dx: float
+        dx : float
+            Number of rotation increments around the Z axis, with each increment the size of :attr:`Camera.rotation_delta`.
         dy: float
+            Number of rotation increments around the X axis, with each increment the size of :attr:`Camera.rotation_delta`.
+
+        Returns
+        -------
+        None
+
+        Notes
+        -----
+        Camera rotations are only available if the current view is a perspective view (``camera.view.current == camera.view.PERSPECTIVE``).
+
         """
         if self.view.current == self.view.PERSPECTIVE:
             self.rx += self.rotation_delta * dy
@@ -65,8 +113,15 @@ class Camera:
 
         Parameters
         ----------
-        dx: float
-        dy: float
+        dx : float
+            Number of "pan" increments in the "X" direction of the current view, with each increment the size of :attr:`Camera.pan_delta`.
+        dy : float
+            Number of "pan" increments in the "Y" direction of the current view, with each increment the size of :attr:`Camera.pan_delta`.
+
+        Returns
+        -------
+        None
+
         """
         if self.view.current == self.view.PERSPECTIVE:
             sinrz = sin(radians(self.rz))
@@ -110,28 +165,35 @@ class Camera:
 
         Parameters
         ----------
-        steps: int
-            The number of steps to zoom.
+        steps : int
+            The number of zoom increments, with each increment the zsize of :attr:`Camera.zoom_delta`.
+
+        Returns
+        -------
+        None
+
         """
         self.distance -= steps * self.zoom_delta * self.distance
 
     def projection(self, width, height):
         """Compute the projection matrix corresponding to the current camera settings.
 
-        The projection matrix transforms the scene from
-        camera coordinates to screen coordinates.
-
         Parameters
         ----------
-        width: float
+        width : float
             Width of the viewer.
-        height: float
+        height : float
             Height of the viewer.
 
         Returns
         -------
-        4x4 array
-            The transformation matrix in column-major order.
+        4x4 np.array
+            The transformation matrix as a `numpy` array in column-major order.
+
+        Notes
+        -----
+        The projection matrix transforms the scene from camera coordinates to screen coordinates.
+
         """
         aspect = width / height
         if self.view.current == self.view.PERSPECTIVE:
@@ -147,13 +209,15 @@ class Camera:
     def viewworld(self):
         """Compute the view-world matrix corresponding to the current camera settings.
 
-        The view-world matrix transforms the scene from
-        world coordinates to camera coordinates.
-
         Returns
         -------
-        4x4 array
+        4x4 np.array
             The transformation matrix in column-major order.
+
+        Notes
+        -----
+        The view-world matrix transforms the scene from world coordinates to camera coordinates.
+
         """
         T2 = Translation.from_vector([self.tx, self.ty, -self.distance])
         T1 = Translation.from_vector(self.target)
