@@ -92,7 +92,7 @@ class GimbalObject(Object):
                 pt = np.matmul(transform, pt)
             pt = np.matmul(viewworld, pt)
             pt = np.matmul(projection, pt)
-            pt = pt[:2] / pt[3]
+            pt = pt / pt[3]
             pt[0] *= self.app.width / 2
             pt[1] *= - self.app.height / 2
             return pt
@@ -107,7 +107,7 @@ class GimbalObject(Object):
             else:
                 raise Exception("Unknown coordinate system")
 
-            direction_2d = project(direction)
+            direction_2d = project(direction)[:2]
             direction_2d /= np.linalg.norm(direction_2d)
             dis = np.dot([event['dx'], event['dy']], direction_2d)
             self.translate(direction * dis * 0.01)
@@ -119,12 +119,12 @@ class GimbalObject(Object):
             component.add_event_listener('mousedrag', mousedrag)
 
         def mousedrag(_self, event):
-            rotation_center = project([0, 0, 0], _self.matrix)
+            projected_center = project([0, 0, 0], _self.matrix)
             current_pos = np.array([event['x'] - self.app.width/2, event['y'] - self.app.height/2])
             last_pos = np.array([current_pos[0] - event['dx'], current_pos[1] - event['dy']])
 
-            v1 = current_pos - rotation_center
-            v2 = last_pos - rotation_center
+            v1 = current_pos - projected_center[:2]
+            v2 = last_pos - projected_center[:2]
             v1 /= np.linalg.norm(v1)
             v2 /= np.linalg.norm(v2)
             angle = np.math.atan2(np.linalg.det([v1, v2]), np.dot(v1, v2))
@@ -136,6 +136,10 @@ class GimbalObject(Object):
                 normal = Vector(*_self._data.plane.normal).transformed(R)
             else:
                 raise Exception("Unknown coordinate system")
+
+            projected_normal = project(normal, _self.matrix)
+            if projected_normal[2] > projected_center[2]:
+                angle *= -1
 
             Rd = Rotation.from_axis_and_angle(normal, angle)
             T1 = Translation.from_vector(self.translation)
