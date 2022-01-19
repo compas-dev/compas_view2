@@ -1,6 +1,10 @@
 from ..shapes import Arrow
 from compas.geometry import Circle
 from compas.geometry import Plane
+from compas.geometry import Translation
+from compas.geometry import Rotation
+from compas.geometry import Scale
+from compas.geometry import Vector
 from .arrowobject import ArrowObject
 from .circleobject import CircleObject
 from .object import Object
@@ -27,6 +31,7 @@ class GimbalObject(Object):
         self.enabled = False
         self._attached_to = None
         self.mode = 'translate'
+        self.coordinate_system = 'local'
 
     def toggle(self):
         self.enabled = not self.enabled
@@ -42,8 +47,15 @@ class GimbalObject(Object):
 
     def _update_matrix(self):
         super()._update_matrix()
-        for component in self.components:
-            component.matrix = self.matrix
+
+        if self.coordinate_system == 'world':
+            for component in self.components:
+                component.translation = self.translation
+                component._update_matrix()
+        elif self.coordinate_system == 'local':
+            for component in self.components:
+                component.matrix = self.matrix
+
         if self._attached_to:
             self._attached_to.matrix = self.matrix
 
@@ -52,6 +64,22 @@ class GimbalObject(Object):
         self.translation = [0, 0, 0]
         self.rotation = [0, 0, 0]
         self.scale = [1, 1, 1]
+        self._update_matrix()
+
+    def switch_coordinate_system(self):
+        if self.coordinate_system == 'world':
+            self.coordinate_system = 'local'
+            if self._attached_to:
+                self.matrix = self._attached_to.matrix
+
+        else:
+            self.coordinate_system = 'world'
+            for component in self.components:
+                component.rotation = [0, 0, 0]
+                component.scale = [1, 1, 1]
+                component._update_matrix()
+
+        print("Switched to {} coordinate system".format(self.coordinate_system))
         self._update_matrix()
 
     def init(self):
@@ -70,10 +98,19 @@ class GimbalObject(Object):
             return pt
 
         def mousedrag(_self, event):
-            direction_2d = project(_self._data.direction)
+
+            if self.coordinate_system == 'world':
+                direction = _self._data.direction
+            elif self.coordinate_system == 'local':
+                R = Rotation.from_euler_angles(self.rotation)
+                direction = Vector(*_self._data.direction).transformed(R)
+            else:
+                raise Exception("Unknown coordinate system")
+
+            direction_2d = project(direction)
             direction_2d /= np.linalg.norm(direction_2d)
             dis = np.dot([event['dx'], event['dy']], direction_2d)
-            self.translate(_self._data.direction * dis * 0.01)
+            self.translate(direction * dis * 0.01)
             self._update_matrix()
 
         for component in self.axises:
@@ -92,13 +129,20 @@ class GimbalObject(Object):
             v2 /= np.linalg.norm(v2)
             angle = np.math.atan2(np.linalg.det([v1, v2]), np.dot(v1, v2))
 
-            normal_2d = project(_self._data.normal)
-            if normal_2d.dot(v1) > 0:
-                angle = -angle
+            if self.coordinate_system == 'world':
+                normal = _self._data.plane.normal
+            elif self.coordinate_system == 'local':
+                R = Rotation.from_euler_angles(self.rotation)
+                normal = Vector(*_self._data.plane.normal).transformed(R)
+            else:
+                raise Exception("Unknown coordinate system")
 
-            self.rotate(_self._data.plane.normal * angle)
-            print(self.rotation)
-            self._update_matrix()
+            Rd = Rotation.from_axis_and_angle(normal, angle)
+            T1 = Translation.from_vector(self.translation)
+            R1 = Rotation.from_euler_angles(self.rotation)
+            S1 = Scale.from_factors(self.scale)
+            M = T1 * Rd * R1 * S1
+            self.matrix = M.matrix
 
         for component in self.rotations:
             component.background = True

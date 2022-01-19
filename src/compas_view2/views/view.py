@@ -289,6 +289,9 @@ class View(QtWidgets.QOpenGLWidget):
         if key == QtCore.Qt.Key_Control:
             self.app.selector.mode = "deselect"
             self.keys["control"] = True
+        if key == QtCore.Qt.Key_Q:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.switch_coordinate_system()
         if key == QtCore.Qt.Key_W:
             if self.app.view.gimbal.enabled:
                 self.app.view.gimbal.mode = 'translate'
