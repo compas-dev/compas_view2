@@ -1,11 +1,12 @@
+import time
 from OpenGL import GL
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore
+from PySide2 import QtWidgets
 
-from ..camera import Camera
-from ..mouse import Mouse
-from ..objects import GridObject
-import time
+from compas_view2.scene import Camera
+from compas_view2.scene import Mouse
+from compas_view2.objects import GridObject
 
 
 class View(QtWidgets.QOpenGLWidget):
@@ -123,6 +124,7 @@ class View(QtWidgets.QOpenGLWidget):
         GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA)
         GL.glEnable(GL.GL_POINT_SMOOTH)
         GL.glEnable(GL.GL_LINE_SMOOTH)
+        GL.glEnable(GL.GL_FRAMEBUFFER_SRGB)
         self.init()
 
     def init(self):
