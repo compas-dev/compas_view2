@@ -29,6 +29,8 @@ from compas_view2.objects import Object
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
+from compas_view2.ui import Radio
+from compas_view2.ui import Checkbox
 
 from .timer import Timer
 from .selector import Selector
@@ -508,16 +510,16 @@ class App:
                 parent.addSeparator()
             elif item['type'] == 'radio':
                 del item['type']
-                self.add_radio(parent, **item)
+                Radio(self, self.sidebar, **item)
             elif item['type'] == 'checkbox':
                 del item['type']
-                self.add_checkbox(parent, **item)
+                Checkbox(self, self.sidebar, **item)
             elif item['type'] == 'slider':
                 del item['type']
-                self.add_slider(parent, **item)
+                Slider(self, self.sidebar, **item)
             elif item['type'] == 'button':
                 del item['type']
-                self.add_button(parent, **item)
+                Button(self, self.sidebar, **item)
             else:
                 raise NotImplementedError
 
@@ -539,116 +541,38 @@ class App:
             action = parent.addAction(text, partial(action, *args, **kwargs))
         return action
 
-    def add_radio(self,
-                  parent: QtWidgets.QWidget,
-                  *,
-                  items: List[Dict]):
-        """Add a radio button group.
-
-        Parameters
-        ----------
-        parent : QtWidgets.QWidget
-            The parent widget for the button.
-        items : list[dict[str, Any]]
-            A list of radio items, with each item defined as a dict with a particular structure.
-            See Notes for more info.
-
-        Returns
-        -------
-        None
-
-        Notes
-        -----
-        Every `item` dict should have the following structure.
-
-        .. code-block:: python
-
-            item['text']     # str : The text label of the item.
-            item['action']   # callable : The action associated with the item.
-            item['checked']  # bool : If True, the item should be marked as checked.
-
-        """
-        box = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout()
-        radio = QtWidgets.QActionGroup(self.window, exclusive=True)
-        layout.addWidget(radio)
-        box.setLayout(layout)
-        parent.addWidget(box)
-        for item in items:
-            action = self._add_action(parent, text=item['text'], action=item['action'])
-            action.setCheckable(True)
-            action.setChecked(item['checked'])
-            radio.addAction(action)
-        # radio.toggled.connect(self.view.update)
-
-    def add_checkbox(self,
-                     parent: QtWidgets.QWidget,
-                     *,
-                     text: str,
-                     action: Callable,
-                     checked: bool = False):
-        """Add a checkbox.
-
-        Parameters
-        ----------
-        parent : QtWidgets.QWidget
-            The parent widget for the checkbox.
-        text : str
-            The text label of the checkbox.
-        action : callable
-            The action associated with the checkox.
-        checked : bool, optional
-            If True, the checkbox will be displayed as checked.
-
-        Returns
-        -------
-        None
-
-        """
-        box = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout()
-        checkbox = QtWidgets.QCheckBox(text)
-        checkbox.setCheckState(QtCore.Qt.CheckState.Checked if checked else QtCore.Qt.CheckState.Unchecked)
-        layout.addWidget(checkbox)
-        box.setLayout(layout)
-        parent.addWidget(box)
-        action = action if callable(action) else getattr(self.controller, action)
-        checkbox.toggled.connect(action)
-        checkbox.toggled.connect(self.view.update)
-
-    def add_input(self, parent: QtWidgets.QWidget):
-        """Add an input field.
-
-        Parameters
-        ----------
-        parent : QtWidgets.QWidget
-            The parent widget for the field.
-
-        Returns
-        -------
-        None
-
-        """
-        pass
-
-    def add_colorpicker(self, parent: QtWidgets.QWidget):
-        """Add a color picker.
-
-        Parameters
-        ----------
-        parent : QtWidgets.QWidget
-            The parent widget for the field.
-
-        Returns
-        -------
-        None
-
-        """
-        pass
-
     # ==============================================================================
     # Decorators
     # ==============================================================================
+
+    def radio(self,
+              items: list[dict[str, Any]],
+              title='') -> Callable:
+        """Decorator for radio actions.
+
+        Parameters
+        ----------
+        items
+
+        Returns
+        -------
+        callable
+
+        Notes
+        -----
+
+        Examples
+        --------
+
+        """
+        def outer(func: Callable) -> Callable:
+            radio = Radio(self,
+                          self.sidebar,
+                          title=title,
+                          items=items,
+                          action=func)
+            return radio
+        return outer
 
     def button(self, text: str) -> Callable:
         """Decorator for button actions.
@@ -681,9 +605,6 @@ class App:
                             self.sidebar,
                             text=text,
                             action=func)
-            # def wrapped(*args, **kwargs):
-            #     func(self.app, *args, **kwargs)
-            # return wrapped
             return button
         return outer
 
@@ -716,10 +637,12 @@ class App:
 
         """
         def outer(func: Callable) -> Callable:
-            def wrapped(*args, **kwargs):
-                func(self.app, *args, **kwargs)
-            self.add_checkbox(self.sidebar, text=text, action=func, checked=checked)
-            return wrapped
+            checkbox = Checkbox(self,
+                                self.sidebar,
+                                text=text,
+                                action=func,
+                                checked=checked)
+            return checkbox
         return outer
 
     def slider(self,
@@ -776,9 +699,6 @@ class App:
                             title=title,
                             annotation=annotation,
                             bgcolor=bgcolor)
-            # def wrapped(*args, **kwargs):
-            #     func(*args, **kwargs)
-            # return wrapped
             return slider
         return outer
 
