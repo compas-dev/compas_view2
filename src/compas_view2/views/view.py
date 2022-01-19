@@ -298,6 +298,9 @@ class View(QtWidgets.QOpenGLWidget):
         if key == QtCore.Qt.Key_E:
             if self.app.view.gimbal.enabled:
                 self.app.view.gimbal.mode = 'rotate'
+        if key == QtCore.Qt.Key_R:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.mode = 'scale'
         self.update()
 
     def keyReleaseEvent(self, event):
