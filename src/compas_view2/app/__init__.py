@@ -1,11 +1,6 @@
-import os
-import json
+from .worker import Worker
+from .timer import Timer
+from .selector import Selector
 
-from .controller import Controller  # noqa: F401
-from .app import App  # noqa: F401
-
-HERE = os.path.dirname(__file__)
-FILE = os.path.join(HERE, 'config.json')
-
-with open(FILE) as f:
-    config = json.load(f)
+from .controller import Controller
+from .app import App
