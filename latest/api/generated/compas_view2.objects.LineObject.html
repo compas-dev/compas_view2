@@ -24,7 +24,7 @@
   
 
   
-  <link rel="prev" title="PointObject.update_buffers" href="compas_view2.objects.PointObject.update_buffers.html" />
+  <link rel="prev" title="FrameObject.update_buffers" href="compas_view2.objects.FrameObject.update_buffers.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -98,7 +98,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.objects.LineObject">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></span><span class="sig-name descname"><span class="pre">LineObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/lineobject.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BufferObject</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="compas_view2.objects.BufferObject.html#compas_view2.objects.BufferObject" title="compas_view2.objects.bufferobject.BufferObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">BufferObject</span></code></a></p>
 <p>Object for displaying COMPAS line geometry.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -182,20 +182,38 @@
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column active">
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_view2.app.html">compas_view2.app</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_view2.forms.html">compas_view2.forms</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_view2.gl.html">compas_view2.gl</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_view2.objects.html">compas_view2.objects</a><ul class="nav flex-column active">
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.Object.html">Object</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.BufferObject.html">BufferObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PointObject.html">PointObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.VectorObject.html">VectorObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PlaneObject.html">PlaneObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.FrameObject.html">FrameObject</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">LineObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolylineObject.html">PolylineObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CircleObject.html">CircleObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.EllipseObject.html">EllipseObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolygonObject.html">PolygonObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NurbsSurfaceObject.html">NurbsSurfaceObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.BoxObject.html">BoxObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.SphereObject.html">SphereObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.TorusObject.html">TorusObject</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ArrowObject.html">ArrowObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CylinderObject.html">CylinderObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ConeObject.html">ConeObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CapsuleObject.html">CapsuleObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolyhedronObject.html">PolyhedronObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PointcloudObject.html">PointcloudObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NetworkObject.html">NetworkObject</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.MeshObject.html">MeshObject</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.GridObject.html">GridObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CollectionObject.html">CollectionObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ArrowObject.html">ArrowObject</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_view2.objects.TextObject.html">TextObject</a></li>
 </ul>
 </li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_view2.scene.html">compas_view2.scene</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_view2.shaders.html">compas_view2.shaders</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_view2.shapes.html">compas_view2.shapes</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_view2.views.html">compas_view2.views</a></li>
 </ul>
 </li>
@@ -224,11 +242,11 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-      <a href="compas_view2.objects.PointObject.update_buffers.html" title="PointObject.update_buffers" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+      <a href="compas_view2.objects.FrameObject.update_buffers.html" title="FrameObject.update_buffers" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
         <div class="nav-title flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Previous</div>
-          PointObject.update_buffers
+          FrameObject.update_buffers
         </div>
       </a>
       
