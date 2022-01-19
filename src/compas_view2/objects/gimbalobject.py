@@ -173,7 +173,6 @@ class GimbalObject(Object):
             else:
                 raise Exception("Unknown coordinate system")
 
-
         for component in self.translations:
             component.background = True
             component.init()
