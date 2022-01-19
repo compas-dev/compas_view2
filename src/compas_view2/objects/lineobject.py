@@ -1,5 +1,5 @@
-from .bufferobject import BufferObject
 from compas.geometry import Line
+from .bufferobject import BufferObject
 
 
 class LineObject(BufferObject):

@@ -1,5 +1,5 @@
-from .bufferobject import BufferObject
 from compas.utilities import pairwise
+from .bufferobject import BufferObject
 
 
 class PolylineObject(BufferObject):

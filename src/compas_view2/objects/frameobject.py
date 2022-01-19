@@ -1,5 +1,6 @@
-from .bufferobject import BufferObject
 from compas.geometry import Frame
+
+from .bufferobject import BufferObject
 
 
 class FrameObject(BufferObject):

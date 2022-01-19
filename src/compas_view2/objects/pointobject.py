@@ -1,5 +1,6 @@
-from .bufferobject import BufferObject
 from compas.geometry import Point
+
+from .bufferobject import BufferObject
 
 
 class PointObject(BufferObject):

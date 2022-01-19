@@ -2,6 +2,7 @@ from compas.datastructures import Mesh
 from compas.geometry import Plane
 from compas.geometry import Circle
 from compas.geometry import Cone
+
 from .meshobject import MeshObject
 
 

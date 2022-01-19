@@ -1,6 +1,8 @@
-from .polylineobject import PolylineObject
-from compas.geometry import Frame
 import math
+
+from compas.geometry import Frame
+
+from .polylineobject import PolylineObject
 
 
 class EllipseObject(PolylineObject):

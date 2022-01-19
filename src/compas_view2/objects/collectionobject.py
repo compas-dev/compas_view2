@@ -1,7 +1,8 @@
-from .object import Object
-from .bufferobject import BufferObject
 import numpy as np
 from inspect import getargspec
+
+from .object import Object
+from .bufferobject import BufferObject
 
 
 class CollectionObject(BufferObject):

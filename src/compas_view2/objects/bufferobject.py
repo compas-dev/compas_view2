@@ -1,7 +1,13 @@
-from compas.utilities import flatten
-from ..buffers import make_index_buffer, make_vertex_buffer, update_vertex_buffer, update_index_buffer
-from .object import Object
 import numpy as np
+
+from compas.utilities import flatten
+
+from compas_view2.gl import make_index_buffer
+from compas_view2.gl import make_vertex_buffer
+from compas_view2.gl import update_vertex_buffer
+from compas_view2.gl import update_index_buffer
+
+from .object import Object
 
 
 class BufferObject(Object):

@@ -1,8 +1,10 @@
-from .polylineobject import PolylineObject
+import math
+
 from compas.geometry import Frame
 from compas.geometry import Plane
 from compas.geometry import Circle
-import math
+
+from .polylineobject import PolylineObject
 
 
 class CircleObject(PolylineObject):
