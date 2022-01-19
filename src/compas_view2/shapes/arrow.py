@@ -7,9 +7,6 @@ from compas.geometry import Shape
 from compas.datastructures import Mesh
 
 
-__all__ = ['Arrow']
-
-
 class Arrow(Shape):
     """A Arrow is defined by its location and direction vector.
 
