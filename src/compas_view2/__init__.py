@@ -16,6 +16,7 @@ TEMP = os.path.abspath(os.path.join(HOME, "temp"))
 
 
 os.environ['QT_MAC_WANTS_LAYER'] = '1'
+os.environ['QT_API'] = 'pyside2'
 
 
 try:

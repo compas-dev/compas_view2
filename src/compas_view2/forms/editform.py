@@ -1,5 +1,5 @@
 import numpy as np
-from PySide2 import QtWidgets
+from qtpy import QtWidgets
 
 from compas.datastructures import Mesh
 from compas.datastructures import Network

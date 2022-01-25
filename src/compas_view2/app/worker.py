@@ -1,10 +1,10 @@
 import sys
 import traceback
-from PySide2.QtCore import QObject
-from PySide2.QtCore import QRunnable
-from PySide2.QtCore import QThreadPool
-from PySide2.QtCore import Slot
-from PySide2.QtCore import Signal
+from qtpy.QtCore import QObject
+from qtpy.QtCore import QRunnable
+from qtpy.QtCore import QThreadPool
+from qtpy.QtCore import Slot
+from qtpy.QtCore import Signal
 
 
 class WorkerSignals(QObject):

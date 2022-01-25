@@ -1,8 +1,8 @@
 import time
 from OpenGL import GL
 
-from PySide2 import QtCore
-from PySide2 import QtWidgets
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 from compas_view2.scene import Camera
 from compas_view2.scene import Mouse

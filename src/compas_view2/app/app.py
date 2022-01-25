@@ -14,10 +14,10 @@ import shutil
 
 from functools import partial
 
-from PySide2 import QtCore
-from PySide2 import QtGui
-from PySide2 import QtWidgets
-from PySide2.QtGui import QIcon
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
+from qtpy.QtGui import QIcon
 
 from compas.data import Data
 from compas.colors import Color

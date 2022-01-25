@@ -1,7 +1,7 @@
 from OpenGL import GL
 
-from PySide2 import QtWidgets
-from PySide2 import QtCore
+from qtpy import QtWidgets
+from qtpy import QtCore
 
 from typing import Union
 from pathlib import Path

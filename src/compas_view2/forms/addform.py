@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from qtpy import QtWidgets
 
 from compas_view2.objects import DATA_OBJECT
 
