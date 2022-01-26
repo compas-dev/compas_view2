@@ -1,14 +1,8 @@
 import numpy as np
 
-from math import sin
-from math import cos
-from math import radians
-
 from compas.geometry import Translation
 from compas.geometry import Rotation
 from compas.geometry import decompose_matrix
-from compas.geometry import rotate_points
-from compas.geometry import Transformation
 
 
 from .matrices import perspective, ortho
@@ -114,7 +108,6 @@ class Camera:
         if self.view.current == self.view.RIGHT:
             self.position = np.array([10, 0, 0], dtype=float)
             self.rotation = np.array([np.pi/2, 0, np.pi/2], dtype=float)
-
 
     def rotate(self, dx, dy):
         """Rotate the camera based on current mouse movement.
