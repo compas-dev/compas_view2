@@ -6,6 +6,10 @@ from math import radians
 
 from compas.geometry import Translation
 from compas.geometry import Rotation
+from compas.geometry import decompose_matrix
+from compas.geometry import rotate_points
+from compas.geometry import Transformation
+
 
 from .matrices import perspective, ortho
 
@@ -69,21 +73,48 @@ class Camera:
 
     """
 
-    def __init__(self, view, fov=45, near=0.1, far=1000, target=None, distance=10):
+    def __init__(self, view, fov=45, near=0.1, far=1000, position=None, target=None):
         self.view = view
         self.fov = fov
         self.near = near
         self.far = far
-        self.distance = distance
-        self.target = target or [0, 0, 0]
-        self.rx = -60
-        self.rz = -30
-        self.tx = 0
-        self.ty = 0
-        self.tz = 0
+        self.position = np.array(position or [0, 0, 10], dtype=float)
+        self.target = np.array(target or [0, 0, 0], dtype=float)
+        self.rotation = np.array([0, 0, 0], dtype=float)
         self.zoom_delta = 0.05
-        self.rotation_delta = 1
+        self.rotation_delta = 0.01
         self.pan_delta = 0.05
+        self.reset_position()
+
+    def _update_position(self):
+        R = Rotation.from_euler_angles(self.rotation)
+        T = Translation.from_vector([0, 0, self.distance])
+        _, _, _, translation, _ = decompose_matrix((R * T).matrix)
+        self.position = translation + self.target
+
+    @property
+    def distance(self):
+        return np.linalg.norm(self.position - self.target)
+
+    @distance.setter
+    def distance(self, distacne):
+        direction = (self.position - self.target) / self.distance
+        self.position = direction * distacne + self.target
+
+    def reset_position(self):
+        if self.view.current == self.view.PERSPECTIVE:
+            self.position = np.array([-10, -10, 10], dtype=float)
+            self.rotation = np.array([np.pi/4, 0, -np.pi/4], dtype=float)
+        if self.view.current == self.view.TOP:
+            self.position = np.array([0, 0, 10], dtype=float)
+            self.rotation = np.array([0, 0, 0], dtype=float)
+        if self.view.current == self.view.FRONT:
+            self.position = np.array([0, -10, 0], dtype=float)
+            self.rotation = np.array([np.pi/2, 0, 0], dtype=float)
+        if self.view.current == self.view.RIGHT:
+            self.position = np.array([10, 0, 0], dtype=float)
+            self.rotation = np.array([np.pi/2, 0, np.pi/2], dtype=float)
+
 
     def rotate(self, dx, dy):
         """Rotate the camera based on current mouse movement.
@@ -105,8 +136,8 @@ class Camera:
 
         """
         if self.view.current == self.view.PERSPECTIVE:
-            self.rx += self.rotation_delta * dy
-            self.rz += self.rotation_delta * dx
+            self.rotation[0] += self.rotation_delta * dy
+            self.rotation[2] += self.rotation_delta * dx
 
     def pan(self, dx, dy):
         """Pan the camera based on current mouse movement.
@@ -123,42 +154,10 @@ class Camera:
         None
 
         """
-        if self.view.current == self.view.PERSPECTIVE:
-            sinrz = sin(radians(self.rz))
-            cosrz = cos(radians(self.rz))
-            sinrx = sin(radians(self.rx))
-            cosrx = cos(radians(self.rx))
-            _dx = dx * cosrz - dy * sinrz * cosrx
-            _dy = dy * cosrz * cosrx + dx * sinrz
-            _dz = dy * sinrx * self.pan_delta
-            _dx *= 0.1 * self.distance
-            _dy *= 0.1 * self.distance
-            _dz *= 0.1 * self.distance
-            self.tx += self.pan_delta * _dx
-            self.ty -= self.pan_delta * _dy
-            self.target[0] = -self.tx
-            self.target[1] = -self.ty
-            self.target[2] -= _dz
-            self.distance -= _dz
-
-        elif self.view.current == self.view.FRONT:
-            _dx = dx * 0.1 * self.distance
-            _dz = dy * 0.1 * self.distance
-            self.tx += self.pan_delta * _dx
-            self.target[2] += 0.01 * _dz
-
-        elif self.view.current == self.view.RIGHT:
-            _dx = dx * 0.1 * self.distance
-            _dz = dy * 0.1 * self.distance
-            self.tx += self.pan_delta * _dx
-            self.target[2] += 0.01 * _dz
-
-        elif self.view.current == self.view.TOP:
-            self.tx += dx * self.pan_delta * 0.1 * self.distance
-            self.ty -= dy * self.pan_delta * 0.1 * self.distance
-
-        else:
-            raise NotImplementedError
+        R = Rotation.from_euler_angles(self.rotation)
+        T = Translation.from_vector([-dx * self.pan_delta, dy * self.pan_delta, 0])
+        _, _, _, translation, _ = decompose_matrix((R * T).matrix)
+        self.target += translation
 
     def zoom(self, steps=1):
         """Zoom in or out.
@@ -219,22 +218,8 @@ class Camera:
         The view-world matrix transforms the scene from world coordinates to camera coordinates.
 
         """
-        T2 = Translation.from_vector([self.tx, self.ty, -self.distance])
-        T1 = Translation.from_vector(self.target)
-        if self.view.current == self.view.PERSPECTIVE:
-            Rx = Rotation.from_axis_and_angle([1, 0, 0], radians(self.rx))
-            Rz = Rotation.from_axis_and_angle([0, 0, 1], radians(self.rz))
-            R = Rx * Rz
-        elif self.view.current == self.view.FRONT:
-            R = Rotation.from_axis_and_angle([1, 0, 0], radians(-90))
-        elif self.view.current == self.view.RIGHT:
-            Rx = Rotation.from_axis_and_angle([1, 0, 0], radians(-90))
-            Rz = Rotation.from_axis_and_angle([0, 0, 1], radians(+90))
-            R = Rx * Rz
-        elif self.view.current == self.view.TOP:
-            R = Rotation()
-        else:
-            raise NotImplementedError
-        T0 = Translation.from_vector([-self.target[0], -self.target[1], -self.target[2]])
-        W = T2 * T1 * R * T0
-        return np.asfortranarray(W, dtype=np.float32)
+        self._update_position()
+        T = Translation.from_vector(self.position)
+        R = Rotation.from_euler_angles(self.rotation)
+        W = T * R
+        return np.asfortranarray(W.inverted(), dtype=np.float32)

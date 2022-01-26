@@ -546,7 +546,7 @@ class App:
     # ==============================================================================
 
     def radio(self,
-              items: list[dict[str, Any]],
+              items: List[Dict[str, Any]],
               title='') -> Callable:
         """Decorator for radio actions.
 
