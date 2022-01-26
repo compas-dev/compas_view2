@@ -67,12 +67,12 @@ class Camera:
 
     """
 
-    def __init__(self, view, fov=45, near=0.1, far=1000, position=None, target=None):
+    def __init__(self, view, fov=45, near=0.1, far=1000, distance=10, target=None):
         self.view = view
         self.fov = fov
         self.near = near
         self.far = far
-        self.position = np.array(position or [0, 0, 10], dtype=float)
+        self.distance = distance
         self.target = np.array(target or [0, 0, 0], dtype=float)
         self.rotation = np.array([0, 0, 0], dtype=float)
         self.zoom_delta = 0.05
@@ -80,34 +80,52 @@ class Camera:
         self.pan_delta = 0.05
         self.reset_position()
 
-    def _update_position(self):
+    @property
+    def position(self):
         R = Rotation.from_euler_angles(self.rotation)
         T = Translation.from_vector([0, 0, self.distance])
         _, _, _, translation, _ = decompose_matrix((R * T).matrix)
-        self.position = translation + self.target
+        return self.target + translation
 
-    @property
-    def distance(self):
-        return np.linalg.norm(self.position - self.target)
+    @position.setter
+    def position(self, new_position):
+        old_direction = self.position - self.target
+        new_direction = new_position - self.target
+        old_distance = np.linalg.norm(old_direction)
+        new_distance = np.linalg.norm(new_direction)
+        self.distance *= new_distance / old_distance
 
-    @distance.setter
-    def distance(self, distacne):
-        direction = (self.position - self.target) / self.distance
-        self.position = direction * distacne + self.target
+        old_direction_xy = old_direction[:2]
+        new_direction_xy = new_direction[:2]
+        old_direction_xy_distance = np.linalg.norm(old_direction_xy)
+        new_direction_xy_distance = np.linalg.norm(new_direction_xy)
+
+        old_direction_pitch = np.array([old_direction_xy_distance, old_direction[2]])
+        new_direction_pitch = np.array([new_direction_xy_distance, new_direction[2]])
+        old_direction_pitch_distance = np.linalg.norm(old_direction_pitch)
+        new_direction_pitch_distance = np.linalg.norm(new_direction_pitch)
+
+        old_direction_xy /= old_direction_xy_distance
+        new_direction_xy /= new_direction_xy_distance
+        old_direction_pitch /= old_direction_pitch_distance
+        new_direction_pitch /= new_direction_pitch_distance
+
+        angle_z = np.math.atan2(np.linalg.det([old_direction_xy, new_direction_xy]), np.dot(old_direction_xy, new_direction_xy))
+        angle_x = -np.math.atan2(np.linalg.det([old_direction_pitch, new_direction_pitch]), np.dot(old_direction_pitch, new_direction_pitch))
+
+        self.rotation[0] += angle_x
+        self.rotation[2] += angle_z
 
     def reset_position(self):
         if self.view.current == self.view.PERSPECTIVE:
-            self.position = np.array([-10, -10, 10], dtype=float)
             self.rotation = np.array([np.pi/4, 0, -np.pi/4], dtype=float)
         if self.view.current == self.view.TOP:
-            self.position = np.array([0, 0, 10], dtype=float)
             self.rotation = np.array([0, 0, 0], dtype=float)
         if self.view.current == self.view.FRONT:
-            self.position = np.array([0, -10, 0], dtype=float)
             self.rotation = np.array([np.pi/2, 0, 0], dtype=float)
         if self.view.current == self.view.RIGHT:
-            self.position = np.array([10, 0, 0], dtype=float)
             self.rotation = np.array([np.pi/2, 0, np.pi/2], dtype=float)
+        self.target = np.array([0, 0, 0], dtype=float)
 
     def rotate(self, dx, dy):
         """Rotate the camera based on current mouse movement.
@@ -211,7 +229,6 @@ class Camera:
         The view-world matrix transforms the scene from world coordinates to camera coordinates.
 
         """
-        self._update_position()
         T = Translation.from_vector(self.position)
         R = Rotation.from_euler_angles(self.rotation)
         W = T * R
