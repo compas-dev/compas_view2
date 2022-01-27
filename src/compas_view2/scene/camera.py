@@ -1,13 +1,68 @@
-import numpy as np
-
-from math import sin
-from math import cos
-from math import radians
-
 from compas.geometry import Translation
 from compas.geometry import Rotation
+from compas.geometry import Vector
+from numpy.linalg import norm
+from numpy.linalg import det
+from math import atan2
+from numpy import pi
+from numpy import array
+from numpy import asfortranarray
+from numpy import dot
+from numpy import float32
+
 
 from .matrices import perspective, ortho
+
+
+class Position(Vector):
+
+    def __init__(self, vector, on_update=None):
+        super().__init__(*vector)
+        self.pause_update = False
+        if on_update:
+            self.on_update = on_update
+
+    def set(self, x, y, z, pause_update=False):
+        pause_update = pause_update or self.pause_update
+        if hasattr(self, 'on_update') and not pause_update:
+            self.on_update([x, y, z])
+        self._x = x
+        self._y = y
+        self._z = z
+
+    @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self, x):
+        if hasattr(self, 'on_update') and not self.pause_update:
+            self.on_update([x, self.y, self.z])
+        self._x = float(x)
+
+    @property
+    def y(self):
+        return self._y
+
+    @y.setter
+    def y(self, y):
+        if hasattr(self, 'on_update') and not self.pause_update:
+            self.on_update([self.x, y, self.z])
+        self._y = float(y)
+
+    @property
+    def z(self):
+        return self._z
+
+    @z.setter
+    def z(self, z):
+        if hasattr(self, 'on_update') and not self.pause_update:
+            self.on_update([self.x, self.y, z])
+        self._z = float(z)
+
+
+class RotationEuler(Position):
+    pass
 
 
 class Camera:
@@ -23,11 +78,11 @@ class Camera:
         Distance to the near clipping plane.
     far: float, optional
         Distance to the far clipping plane.
+    position: list[float], optional
+        The location the camera.
     target: list[float], optional
         The target location the camera is aimed at.
         Default is None, in which case the origin of the world coordinate system is used.
-    distance: float, optional
-        The distance from the camera standpoint to the target.
 
     Attributes
     ----------
@@ -37,25 +92,15 @@ class Camera:
         The location of the "near" clipping plane.
     far : float
         The locaiton of the "far" clipping plane.
-    distance : float
-        Distance between the camera position and the viewing target.
-    target : :class:`compas.geometry.Point`
+    position : :class:`compas_view2.scene.camera.Position`
+        The location the camera.
+    rotation : :class:`compas_view2.scene.camera.RotationEuler`
+        The euler rotation of camera.
+    target : :class:`compas_view2.scene.camera.Position`
         The viewing target.
         Default is the origin of the world coordinate system.
-    rx : float
-        Rotation of the world around the X axis.
-        Default is -60 degrees.
-        See Notes for more information.
-    rz : float
-        Rotation of the world around the Z axis.
-        Default is -30 degrees.
-        See Notes for more information.
-    tx : float
-        Translation of the world in the X direction.
-    ty : float
-        Translation of the world in the Y direction.
-    tz : float
-        Translation of the world in the Z direction.
+    distance : float
+        The distance from the camera standpoint to the target.
     zoom_delta : float
         Size of one zoom increment.
     rotation_delta : float
@@ -69,21 +114,120 @@ class Camera:
 
     """
 
-    def __init__(self, view, fov=45, near=0.1, far=1000, target=None, distance=10):
+    def __init__(self, view, fov=45, near=0.1, far=1000, position=None, target=None):
         self.view = view
         self.fov = fov
         self.near = near
         self.far = far
-        self.distance = distance
-        self.target = target or [0, 0, 0]
-        self.rx = -60
-        self.rz = -30
-        self.tx = 0
-        self.ty = 0
-        self.tz = 0
+        self._position = Position([0, 0, 10], on_update=self._on_position_update)
+        self._rotation = RotationEuler([0, 0, 0], on_update=self._on_rotation_update)
+        self._target = Position([0, 0, 0], on_update=self._on_target_update)
         self.zoom_delta = 0.05
-        self.rotation_delta = 1
+        self.rotation_delta = 0.01
         self.pan_delta = 0.05
+        self.reset_position()
+        if target:
+            self.target = target
+        if position:
+            self.position = position
+
+    @property
+    def position(self):
+        return self._position
+
+    @position.setter
+    def position(self, position):
+        self._position.set(*position)
+
+    @property
+    def rotation(self):
+        return self._rotation
+
+    @rotation.setter
+    def rotation(self, rotation):
+        self._rotation.set(*rotation)
+
+    @property
+    def target(self):
+        return self._target
+
+    @target.setter
+    def target(self, target):
+        self._target.set(*target)
+
+    @property
+    def distance(self):
+        return (self.position - self.target).length
+
+    @distance.setter
+    def distance(self, distance):
+        """Update the position based on the distance."""
+        direction = self.position - self.target
+        direction.unitize()
+        new_position = self.target + direction * distance
+        self.position.set(*new_position, pause_update=True)
+
+    def _on_position_update(self, new_position):
+        """Update camera rotation to keep pointing the target."""
+        old_direction = array(self.position - self.target)
+        new_direction = array(Vector(*new_position) - self.target)
+        old_distance = norm(old_direction)
+        new_distance = norm(new_direction)
+        self.distance *= new_distance / old_distance
+
+        old_direction_xy = old_direction[:2]
+        new_direction_xy = new_direction[:2]
+        old_direction_xy_distance = norm(old_direction_xy)
+        new_direction_xy_distance = norm(new_direction_xy)
+
+        old_direction_pitch = array([old_direction_xy_distance, old_direction[2]])
+        new_direction_pitch = array([new_direction_xy_distance, new_direction[2]])
+        old_direction_pitch_distance = norm(old_direction_pitch)
+        new_direction_pitch_distance = norm(new_direction_pitch)
+
+        old_direction_xy /= old_direction_xy_distance
+        new_direction_xy /= new_direction_xy_distance
+        old_direction_pitch /= old_direction_pitch_distance
+        new_direction_pitch /= new_direction_pitch_distance
+
+        angle_z = atan2(det([old_direction_xy, new_direction_xy]), dot(old_direction_xy, new_direction_xy))
+        angle_x = -atan2(det([old_direction_pitch, new_direction_pitch]), dot(old_direction_pitch, new_direction_pitch))
+
+        new_rotation = self.rotation + [angle_x or 0, 0, angle_z or 0]
+        self.rotation.set(*new_rotation, pause_update=True)
+
+    def _on_rotation_update(self, rotation):
+        """Update camera position when rotation around target."""
+        R = Rotation.from_euler_angles(rotation)
+        T = Translation.from_vector([0, 0, self.distance])
+        M = (R * T).matrix
+        vector = [M[i][3] for i in range(3)]
+        position = self.target + vector
+
+        self.position.set(*position, pause_update=True)
+
+    def _on_target_update(self, target):
+        """Update camera position when target changes."""
+        R = Rotation.from_euler_angles(self.rotation)
+        T = Translation.from_vector([0, 0, self.distance])
+        M = (R * T).matrix
+        vector = [M[i][3] for i in range(3)]
+        position = Vector(*target) + Vector(*vector)
+
+        self.target.set(*target, pause_update=True)
+        self.position.set(*position, pause_update=True)
+
+    def reset_position(self):
+        """Reset the position of the camera based current view type."""
+        self.target.set(0, 0, 0)
+        if self.view.current == self.view.PERSPECTIVE:
+            self.rotation.set(pi/4, 0, -pi/4)
+        if self.view.current == self.view.TOP:
+            self.rotation.set(0, 0, 0)
+        if self.view.current == self.view.FRONT:
+            self.rotation.set(pi/2, 0, 0)
+        if self.view.current == self.view.RIGHT:
+            self.rotation.set(pi/2, 0, pi/2)
 
     def rotate(self, dx, dy):
         """Rotate the camera based on current mouse movement.
@@ -105,8 +249,7 @@ class Camera:
 
         """
         if self.view.current == self.view.PERSPECTIVE:
-            self.rx += self.rotation_delta * dy
-            self.rz += self.rotation_delta * dx
+            self.rotation += [self.rotation_delta * dy, 0, self.rotation_delta * dx]
 
     def pan(self, dx, dy):
         """Pan the camera based on current mouse movement.
@@ -123,42 +266,11 @@ class Camera:
         None
 
         """
-        if self.view.current == self.view.PERSPECTIVE:
-            sinrz = sin(radians(self.rz))
-            cosrz = cos(radians(self.rz))
-            sinrx = sin(radians(self.rx))
-            cosrx = cos(radians(self.rx))
-            _dx = dx * cosrz - dy * sinrz * cosrx
-            _dy = dy * cosrz * cosrx + dx * sinrz
-            _dz = dy * sinrx * self.pan_delta
-            _dx *= 0.1 * self.distance
-            _dy *= 0.1 * self.distance
-            _dz *= 0.1 * self.distance
-            self.tx += self.pan_delta * _dx
-            self.ty -= self.pan_delta * _dy
-            self.target[0] = -self.tx
-            self.target[1] = -self.ty
-            self.target[2] -= _dz
-            self.distance -= _dz
-
-        elif self.view.current == self.view.FRONT:
-            _dx = dx * 0.1 * self.distance
-            _dz = dy * 0.1 * self.distance
-            self.tx += self.pan_delta * _dx
-            self.target[2] += 0.01 * _dz
-
-        elif self.view.current == self.view.RIGHT:
-            _dx = dx * 0.1 * self.distance
-            _dz = dy * 0.1 * self.distance
-            self.tx += self.pan_delta * _dx
-            self.target[2] += 0.01 * _dz
-
-        elif self.view.current == self.view.TOP:
-            self.tx += dx * self.pan_delta * 0.1 * self.distance
-            self.ty -= dy * self.pan_delta * 0.1 * self.distance
-
-        else:
-            raise NotImplementedError
+        R = Rotation.from_euler_angles(self.rotation)
+        T = Translation.from_vector([-dx * self.pan_delta, dy * self.pan_delta, 0])
+        M = (R * T).matrix
+        vector = [M[i][3] for i in range(3)]
+        self.target += vector
 
     def zoom(self, steps=1):
         """Zoom in or out.
@@ -204,7 +316,7 @@ class Camera:
             bottom = -self.distance / aspect
             top = self.distance / aspect
             P = ortho(left, right, bottom, top, self.near, self.far)
-        return np.asfortranarray(P, dtype=np.float32)
+        return asfortranarray(P, dtype=float32)
 
     def viewworld(self):
         """Compute the view-world matrix corresponding to the current camera settings.
@@ -219,22 +331,7 @@ class Camera:
         The view-world matrix transforms the scene from world coordinates to camera coordinates.
 
         """
-        T2 = Translation.from_vector([self.tx, self.ty, -self.distance])
-        T1 = Translation.from_vector(self.target)
-        if self.view.current == self.view.PERSPECTIVE:
-            Rx = Rotation.from_axis_and_angle([1, 0, 0], radians(self.rx))
-            Rz = Rotation.from_axis_and_angle([0, 0, 1], radians(self.rz))
-            R = Rx * Rz
-        elif self.view.current == self.view.FRONT:
-            R = Rotation.from_axis_and_angle([1, 0, 0], radians(-90))
-        elif self.view.current == self.view.RIGHT:
-            Rx = Rotation.from_axis_and_angle([1, 0, 0], radians(-90))
-            Rz = Rotation.from_axis_and_angle([0, 0, 1], radians(+90))
-            R = Rx * Rz
-        elif self.view.current == self.view.TOP:
-            R = Rotation()
-        else:
-            raise NotImplementedError
-        T0 = Translation.from_vector([-self.target[0], -self.target[1], -self.target[2]])
-        W = T2 * T1 * R * T0
-        return np.asfortranarray(W, dtype=np.float32)
+        T = Translation.from_vector(self.position)
+        R = Rotation.from_euler_angles(self.rotation)
+        W = T * R
+        return asfortranarray(W.inverted(), dtype=float32)
