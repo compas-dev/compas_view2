@@ -1,6 +1,5 @@
 from compas.geometry import Translation
 from compas.geometry import Rotation
-from compas.geometry import decompose_matrix
 from numpy.linalg import norm
 from numpy.linalg import det
 from math import atan2
