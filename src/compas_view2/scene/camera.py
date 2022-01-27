@@ -8,6 +8,7 @@ from numpy import pi
 from numpy import array
 from numpy import asfortranarray
 from numpy import dot
+from numpy import float32
 
 
 from .matrices import perspective, ortho
@@ -315,7 +316,7 @@ class Camera:
             bottom = -self.distance / aspect
             top = self.distance / aspect
             P = ortho(left, right, bottom, top, self.near, self.far)
-        return asfortranarray(P)
+        return asfortranarray(P, dtype=float32)
 
     def viewworld(self):
         """Compute the view-world matrix corresponding to the current camera settings.
@@ -333,4 +334,4 @@ class Camera:
         T = Translation.from_vector(self.position)
         R = Rotation.from_euler_angles(self.rotation)
         W = T * R
-        return asfortranarray(W.inverted())
+        return asfortranarray(W.inverted(), dtype=float32)
