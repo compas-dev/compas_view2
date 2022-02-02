@@ -42,9 +42,19 @@ def click():
     {'text': 'Lighted', 'value': 'lighted', 'checked': viewer.view.mode == 'lighted'},
     {'text': 'Wireframe', 'value': 'wireframe', 'checked': viewer.view.mode == 'wireframe'}
 ])
-def select(value):
+def select1(value):
     viewer.view.mode = value
     viewer.view.update()
+
+
+@viewer.select(items=[
+    {'text': 'Item 1'},
+    {'text': 'Item 2'},
+    {'text': 'Item 3'},
+    {'text': 'Item 4'}
+])
+def select2(index, text):
+    viewer.info(f"You selected item '{index}' with text '{text}'")
 
 
 viewer.run()
