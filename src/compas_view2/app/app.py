@@ -32,6 +32,8 @@ from compas_view2.ui import Slider
 from compas_view2.ui import Radio
 from compas_view2.ui import Checkbox
 
+from compas_view2.flow import Flow
+
 from .timer import Timer
 from .selector import Selector
 from .controller import Controller
@@ -118,7 +120,9 @@ class App:
                  controller_class: Optional[Controller] = None,
                  show_grid: bool = True,
                  config: Optional[dict] = None,
-                 enable_sidebar: bool = False):
+                 enable_sidebar: bool = False,
+                 show_flow: bool = False
+                 ):
 
         if version not in VERSIONS:
             raise Exception('Only these versions are currently supported: {}'.format(VERSIONS))
@@ -171,6 +175,9 @@ class App:
         self._app = app
         self._app.references.add(self.window)
         self.selector = Selector(self)
+
+        self.show_flow = show_flow
+        self.flow = Flow(self)
 
         self.enable_sidebar = enable_sidebar
         self.init()
@@ -282,7 +289,10 @@ class App:
         None
 
         """
+        self.flow.init()
         self.window.show()
+        if self.show_flow:
+            self.flow.show()
         self._app.exec_()
 
     run = show
