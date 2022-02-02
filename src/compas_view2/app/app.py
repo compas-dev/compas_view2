@@ -31,6 +31,7 @@ from compas_view2.ui import Button
 from compas_view2.ui import Slider
 from compas_view2.ui import Radio
 from compas_view2.ui import Checkbox
+from compas_view2.ui import Select
 
 from .timer import Timer
 from .selector import Selector
@@ -545,6 +546,27 @@ class App:
     # Decorators
     # ==============================================================================
 
+    def select(self,
+               items: List[Dict[str, Any]]) -> Callable:
+        """Decorator for combo boxes.
+
+        Parameters
+        ----------
+        items
+
+        Returns
+        -------
+        callable
+
+        """
+        def outer(func: Callable) -> Callable:
+            select = Select(self,
+                            self.sidebar,
+                            items=items,
+                            action=func)
+            return select
+        return outer
+
     def radio(self,
               items: List[Dict[str, Any]],
               title='') -> Callable:
@@ -557,12 +579,6 @@ class App:
         Returns
         -------
         callable
-
-        Notes
-        -----
-
-        Examples
-        --------
 
         """
         def outer(func: Callable) -> Callable:
