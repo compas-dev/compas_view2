@@ -15,3 +15,4 @@ Classes
     Checkbox
     Radio
     Slider
+    Select
