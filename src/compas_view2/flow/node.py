@@ -30,9 +30,9 @@ def Node(app):
 
             def update_event(self, inp=-1):
                 try:
-                    print("Updating", self.title)
+                    # print("Updating", self.title)
                     _inputs = [self.input(i) for i in range(len(self.init_inputs))]
-                    print("Inputs:", _inputs)
+                    # print("Inputs:", _inputs)
 
                     try:
                         _output = func(*_inputs)
@@ -40,7 +40,7 @@ def Node(app):
                         print("Function failed:", e)
                         _output = None
 
-                    print("Output:", _output)
+                    # print("Output:", _output)
 
                     if self._object:
                         app.remove(self._object)
