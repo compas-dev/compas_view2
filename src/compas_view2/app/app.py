@@ -289,7 +289,6 @@ class App:
         None
 
         """
-        self.flow.init()
         self.window.show()
         if self.show_flow:
             self.flow.show()

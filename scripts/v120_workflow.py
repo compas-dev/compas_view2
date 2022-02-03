@@ -16,14 +16,15 @@ def load_bunny() -> Mesh:
 
 @Node(viewer)
 def move_bunny(mesh: Mesh) -> Mesh:
-    T = Translation.from_vector([10, 0, 0])
+    T = Translation.from_vector([1, 0, 0])
     R = Rotation.from_axis_and_angle([1, 0, 0], math.radians(90))
-    S = Scale.from_factors([100, 100, 100])
+    S = Scale.from_factors([10, 10, 10])
     return mesh.transformed(T * R * S)
 
 
-# # Define the flow graph (Not working yet)
-# bunny = load_bunny()
-# moved_buuny = move_bunny(bunny)
-# save_bunny(moved_buuny)
+# Create the flow graph
+node1 = viewer.flow.add_node(load_bunny, location=(300, 150))
+node2 = viewer.flow.add_node(move_bunny, location=(500, 350))
+viewer.flow.add_connection(node1.outputs[0], node2.inputs[0])
+
 viewer.run()

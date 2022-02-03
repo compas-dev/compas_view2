@@ -53,7 +53,6 @@ def Node(app):
                 except Exception as e:
                     print(e)
 
-        app.flow.nodes.append(_Node)
-
-        return func
+        app.flow.session.register_node(_Node)
+        return _Node
     return decorator
