@@ -4,6 +4,7 @@ from compas.datastructures import Graph
 
 class Flow(Graph):
     """"A Ryven Flow wrapper."""
+
     def __init__(self, app):
         super().__init__()
         self.app = app
@@ -24,7 +25,7 @@ class Flow(Graph):
         self.flow_view.node_items[ryven_node].setX(x)
         self.flow_view.node_items[ryven_node].setY(y)
         data = ryven_node.complete_data(ryven_node.data())
-        
+
         # Add node in compas graph
         super().add_node(ryven_node.GLOBAL_ID, data)
         return ryven_node
