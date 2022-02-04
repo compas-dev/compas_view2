@@ -1,11 +1,11 @@
 import compas
 import math
-from compas_view2.flow import Node
+from compas_view2.flow import Node, Float
 from compas_view2.app import App
 from compas.datastructures import Mesh
 from compas.geometry import Scale, Rotation, Translation
 
-viewer = App(viewmode="shaded", show_flow=True, width=1500, height=1000)
+viewer = App(viewmode="shaded", width=1500, height=1000, show_flow=True, flow_auto_update=False)
 
 
 # Wrapping the function to ryven nodes
@@ -15,10 +15,10 @@ def load_bunny() -> Mesh:
 
 
 @Node(viewer)
-def move_bunny(mesh: Mesh) -> Mesh:
+def move_bunny(mesh: Mesh, distance: float = 1) -> Mesh:
     if not mesh:
         return
-    T = Translation.from_vector([1, 0, 0])
+    T = Translation.from_vector([distance, 0, 0])
     R = Rotation.from_axis_and_angle([1, 0, 0], math.radians(90))
     S = Scale.from_factors([10, 10, 10])
     return mesh.transformed(T * R * S)
@@ -26,21 +26,10 @@ def move_bunny(mesh: Mesh) -> Mesh:
 
 # Create the flow graph
 node1 = viewer.flow.add_node(load_bunny, location=(300, 150))
-node2 = viewer.flow.add_node(move_bunny, location=(500, 350))
+node2 = viewer.flow.add_node(move_bunny, location=(700, 350))
+node3 = viewer.flow.add_node(Float, location=(300, 500))
 viewer.flow.add_connection(node1.outputs[0], node2.inputs[0])
-
-
-# Show the graph data
-print("Flow graph:", viewer.flow)
-print("\n Nodes:")
-for key, attr in viewer.flow.node.items():
-    print('    key:', key)
-    print('    attr:', attr)
-
-print("\n Edges:")
-for key in viewer.flow.edges():
-    print('    key:', key)
-    print('    attr:', viewer.flow.edge_attributes(key))
+viewer.flow.add_connection(node3.outputs[0], node2.inputs[1])
 
 
 viewer.run()
