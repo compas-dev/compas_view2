@@ -1,6 +1,8 @@
 from typing import AnyStr
 from typing import Callable
 from typing import Optional
+from typing import Union
+from typing import Tuple
 from typing import List
 from typing import Dict
 from typing import Any
@@ -32,6 +34,8 @@ from compas_view2.ui import Slider
 from compas_view2.ui import Radio
 from compas_view2.ui import Checkbox
 from compas_view2.ui import Select
+
+from compas_view2.flow import Flow
 
 from .timer import Timer
 from .selector import Selector
@@ -119,7 +123,10 @@ class App:
                  controller_class: Optional[Controller] = None,
                  show_grid: bool = True,
                  config: Optional[dict] = None,
-                 enable_sidebar: bool = False):
+                 enable_sidebar: bool = False,
+                 show_flow: bool = False,
+                 flow_view_size: Union[Tuple[int], List[int]] = None,
+                 ):
 
         if version not in VERSIONS:
             raise Exception('Only these versions are currently supported: {}'.format(VERSIONS))
@@ -172,6 +179,9 @@ class App:
         self._app = app
         self._app.references.add(self.window)
         self.selector = Selector(self)
+
+        self.show_flow = show_flow
+        self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height))
 
         self.enable_sidebar = enable_sidebar
         self.init()
@@ -284,6 +294,8 @@ class App:
 
         """
         self.window.show()
+        if self.show_flow:
+            self.flow.show()
         self._app.exec_()
 
     run = show
