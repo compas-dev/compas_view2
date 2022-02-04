@@ -1,60 +1,46 @@
-import random
+import compas
+import math
+from compas_view2.flow import Node
 from compas_view2.app import App
-import ryvencore_qt as rc
+from compas.datastructures import Mesh
+from compas.geometry import Scale, Rotation, Translation
+
+viewer = App(viewmode="shaded", show_flow=True, width=1500, height=1000)
 
 
-class PrintNode(rc.Node):
-    """Prints your data"""
-
-    title = 'Print'
-    init_inputs = [
-        rc.NodeInputBP(),
-    ]
-    init_outputs = []
-    color = '#A9D5EF'
-
-    # we could also skip the constructor here
-    def __init__(self, params):
-        super().__init__(params)
-
-    def update_event(self, inp=-1):
-        print(
-            self.input(0)  # get data from the first input
-        )
+# Wrapping the function to ryven nodes
+@Node(viewer)
+def load_bunny() -> Mesh:
+    return Mesh.from_ply(compas.get('bunny.ply'))
 
 
-class RandNode(rc.Node):
-    """Generates scaled random float values"""
-
-    title = 'Rand'
-    init_inputs = [
-        rc.NodeInputBP(dtype=rc.dtypes.Data(default=1)),
-    ]
-    init_outputs = [
-        rc.NodeOutputBP(),
-    ]
-    color = '#fcba03'
-
-    def update_event(self, inp=-1):
-        # random float between 0 and value at input
-        val = random() * self.input(0)
-
-        # setting the value of the first output
-        self.set_output_val(0, val)
+@Node(viewer)
+def move_bunny(mesh: Mesh) -> Mesh:
+    if not mesh:
+        return
+    T = Translation.from_vector([1, 0, 0])
+    R = Rotation.from_axis_and_angle([1, 0, 0], math.radians(90))
+    S = Scale.from_factors([10, 10, 10])
+    return mesh.transformed(T * R * S)
 
 
-viewer = App(viewmode="shaded", enable_sidebar=True, width=800, height=500)
-viewer.flow = None
+# Create the flow graph
+node1 = viewer.flow.add_node(load_bunny, location=(300, 150))
+node2 = viewer.flow.add_node(move_bunny, location=(500, 350))
+viewer.flow.add_connection(node1.outputs[0], node2.inputs[0])
 
 
-@viewer.button(text="Flow Dialog")
-def show_flow_dialog():
-    session = rc.Session()
-    session.design.set_flow_theme(name='pure dark')
-    session.register_nodes([PrintNode, RandNode])
-    script = session.create_script('test', flow_view_size=(800, 500))
-    viewer.flow = session.flow_views[script]
-    viewer.flow.show()
+# Show the graph data
+print("Flow graph:", viewer.flow)
+print("\n Nodes:")
+for key, attr in viewer.flow.node.items():
+    print('    key:', key)
+    print('    attr:', attr)
+
+print("\n Edges:")
+for key in viewer.flow.edges():
+    print('    key:', key)
+    print('    attr:', viewer.flow.edge_attributes(key))
 
 
 viewer.run()

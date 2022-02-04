@@ -1,6 +1,8 @@
 from typing import AnyStr
 from typing import Callable
 from typing import Optional
+from typing import Union
+from typing import Tuple
 from typing import List
 from typing import Dict
 from typing import Any
@@ -121,7 +123,8 @@ class App:
                  show_grid: bool = True,
                  config: Optional[dict] = None,
                  enable_sidebar: bool = False,
-                 show_flow: bool = False
+                 show_flow: bool = False,
+                 flow_view_size: Union[Tuple[int], List[int]] = None,
                  ):
 
         if version not in VERSIONS:
@@ -177,7 +180,7 @@ class App:
         self.selector = Selector(self)
 
         self.show_flow = show_flow
-        self.flow = Flow(self)
+        self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height))
 
         self.enable_sidebar = enable_sidebar
         self.init()

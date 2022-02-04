@@ -118,6 +118,14 @@
             [
                 {"type": "action", "text": "PLACEHOLDER", "action": "dummy"}
             ]
+        },
+        {
+            "type": "menu",
+            "text": "Flow",
+            "items":
+            [
+                {"type": "action", "text": "Show Flow", "action": "show_flow"}
+            ]
         }
     ],
     "toolbar":
