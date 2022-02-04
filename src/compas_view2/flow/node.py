@@ -2,6 +2,8 @@ import ryvencore_qt as rc
 import inspect
 from compas_view2.objects import DATA_OBJECT
 
+from .widgets import ExecutionControl
+
 
 def Node(app, color='#0092D2', auto_update=None):
     """
@@ -20,10 +22,13 @@ def Node(app, color='#0092D2', auto_update=None):
             _auto_update = auto_update
 
         class _Node(rc.Node):
+
             title = func.__name__
             init_inputs = [rc.NodeInputBP(label=name) for name in signature.parameters.keys() if name != 'self']
             init_outputs = [rc.NodeOutputBP(signature.return_annotation.__name__)]
             color = node_color
+            main_widget_class = ExecutionControl
+            main_widget_pos = 'below ports'  # or 'between ports'
 
             def __init__(self, params):
                 super().__init__(params)
@@ -41,6 +46,9 @@ def Node(app, color='#0092D2', auto_update=None):
                 self.block_updates = True
 
             def place_event(self):
+                # This is to suppress a ryven exception to parse and empty dict when initiating the main widget
+                self.init_data = None
+
                 self.update()
 
             def remove_event(self):
