@@ -126,6 +126,7 @@ class App:
                  enable_sidebar: bool = False,
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
+                 flow_auto_update: bool = True,
                  ):
 
         if version not in VERSIONS:
@@ -181,7 +182,7 @@ class App:
         self.selector = Selector(self)
 
         self.show_flow = show_flow
-        self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height))
+        self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
 
         self.enable_sidebar = enable_sidebar
         self.init()
