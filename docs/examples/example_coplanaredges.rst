@@ -2,7 +2,7 @@
 Coplanar Edges
 *******************************************************************************
 
-.. figure:: /_images/example_coplanaredges.png
+.. figure:: /docs/_images/example_coplanaredges.png
     :figclass: figure
     :class: figure-img img-fluid
 
