@@ -249,7 +249,7 @@ class Camera:
 
         """
         if self.view.current == self.view.PERSPECTIVE:
-            self.rotation += [self.rotation_delta * dy, 0, self.rotation_delta * dx]
+            self.rotation += [self.rotation_delta * dy, 0, -self.rotation_delta * dx]
 
     def pan(self, dx, dy):
         """Pan the camera based on current mouse movement.
