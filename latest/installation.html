@@ -104,37 +104,27 @@
 directly from the github repo.</p>
 <section id="windows">
 <h3>Windows</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 git cython freeglut
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 git cython freeglut freetype-py textdistance
 conda activate view2
+pip install pyside2 pyopengl qtpy ryvencore_qt
 pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
 </section>
 <section id="mac">
 <h3>Mac</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython python.app
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython python.app freetype-py textdistance
 conda activate view2
+pip install pyside2 pyopengl qtpy ryvencore_qt
 pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
-</code></pre></div>
-</div>
-<p>By installing <code class="docutils literal notranslate"><span class="pre">python.app</span></code> you can use <code class="docutils literal notranslate"><span class="pre">pythonw</span></code> to run the viewers instead of <code class="docutils literal notranslate"><span class="pre">python</span></code>.
-This ensures that all components work as expected.</p>
-<p>To configure VS Code to use <code class="docutils literal notranslate"><span class="pre">pythonw</span></code>, change the python path in the settings of the workspace.
-In <code class="docutils literal notranslate"><span class="pre">.vscode/settings.json</span></code></p>
-<div class="language-json notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>{
-    ...
-
-    &quot;python.pythonPath&quot;: &quot;/Users/xxx/anaconda3/envs/view2/bin/pythonw&quot;
-
-    ...
-}
 </code></pre></div>
 </div>
 </section>
 <section id="linux">
 <h3>Linux</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython freetype-py
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython freetype-py textdistance
 conda activate view2
+pip install pyside2 pyopengl qtpy ryvencore_qt
 pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
