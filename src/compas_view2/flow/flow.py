@@ -1,6 +1,5 @@
 import ryvencore_qt as rc
 from compas.datastructures import Graph
-from .values import Integer, Float, Value
 
 
 class Flow(Graph):
@@ -11,7 +10,6 @@ class Flow(Graph):
         self.app = app
         self.flow_auto_update = flow_auto_update
         self.session = rc.Session()
-        self.session.register_nodes([Integer, Float, Value])
         self.session.design.set_flow_theme(name='pure dark')
         self.script = self.session.create_script(flow_view_size=flow_view_size)
         self.flow_view = self.session.flow_views[self.script]
@@ -19,7 +17,7 @@ class Flow(Graph):
     def show(self):
         self.flow_view.show()
 
-    def add_node(self, node_class, key=None, location=(0, 0), **kwargs):
+    def add_node(self, node_class, location=(0, 0), **kwargs):
         # Add ryven node
         ryven_node = self.script.flow.create_node(node_class, data=kwargs)
         x, y = location

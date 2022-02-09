@@ -124,7 +124,10 @@
             "text": "Flow",
             "items":
             [
-                {"type": "action", "text": "Show Flow", "action": "show_flow"}
+                {"type": "action", "text": "Show Flow", "action": "show_flow"},
+                {"type": "action", "text": "Run All", "action": "run_all"},
+                {"type": "action", "text": "Enable Auto Update", "action": "enable_auto_update"},
+                {"type": "action", "text": "Disable Auto Update", "action": "disable_auto_update"}
             ]
         }
     ],

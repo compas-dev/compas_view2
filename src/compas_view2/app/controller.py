@@ -378,6 +378,34 @@ class Controller:
     def show_flow(self) -> None:
         self.app.flow.show()
 
+    def run_all(self) -> None:
+        print("running all nodes")
+        executed = set()
+
+        def execute_upwards(node):
+            if node in executed:
+                return
+            for port in node.inputs:
+                for connection in port.connections:
+                    execute_upwards(connection.out.node)
+            print("executing", node)
+            node.update_event()
+            executed.add(node)
+
+        for node in self.app.flow.flow_view.node_items:
+            execute_upwards(node)
+
+        print("All nodes executed")
+
+    def enable_auto_update(self) -> None:
+        self.run_all()
+        for node in self.app.flow.flow_view.node_items:
+            node.auto_update = True
+
+    def disable_auto_update(self) -> None:
+        for node in self.app.flow.flow_view.node_items:
+            node.auto_update = False
+
     # ==============================================================================
     # Robot actions
     # ==============================================================================

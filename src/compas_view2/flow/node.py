@@ -1,7 +1,7 @@
 import ryvencore_qt as rc
 import inspect
 from compas_view2.objects import DATA_OBJECT
-
+from qtpy.QtGui import QColor
 from .widgets import ExecutionControl
 
 
@@ -21,7 +21,7 @@ def Node(app, color='#0092D2', auto_update=None):
         else:
             _auto_update = auto_update
 
-        class _Node(rc.Node):
+        class CustomNode(rc.Node):
 
             title = func.__name__
             init_inputs = [rc.NodeInputBP(label=name) for name in signature.parameters.keys() if name != 'self']
@@ -35,20 +35,22 @@ def Node(app, color='#0092D2', auto_update=None):
                 self._object = None
                 self.block_updates = not _auto_update
                 self.actions['execute'] = {'method': self.update_event}
-                self.actions['enable auto update'] = {'method': self.enable_auto_update}
-                self.actions['disable auto update'] = {'method': self.disable_auto_update}
 
-            def enable_auto_update(self):
-                self.block_updates = False
-                self.update_event()
+            def __repr__(self) -> str:
+                return f'<{self.__class__.__name__}({self.title})>'
 
-            def disable_auto_update(self):
-                self.block_updates = True
+            @property
+            def auto_update(self):
+                return not self.block_updates
+
+            @auto_update.setter
+            def auto_update(self, value):
+                self.block_updates = not value
+                self.item.main_widget.set_auto_update(None, value=value, update_node=False)
 
             def place_event(self):
                 # This is to suppress a ryven exception to parse and empty dict when initiating the main widget
                 self.init_data = None
-
                 self.update()
 
             def remove_event(self):
@@ -61,8 +63,11 @@ def Node(app, color='#0092D2', auto_update=None):
                     _inputs = [self.input(i) for i in range(len(self.init_inputs)) if self.input(i) is not None]
                     try:
                         _output = func(*_inputs)
+                        self.change_color()
                     except Exception as e:
-                        print("Function failed:", e)
+                        print("Function failed at", self)
+                        print(e)
+                        self.change_color('#FF0000')
                         _output = None
 
                     if self._object:
@@ -76,6 +81,12 @@ def Node(app, color='#0092D2', auto_update=None):
                 except Exception as e:
                     print(e)
 
-        app.flow.session.register_node(_Node)
-        return _Node
+            def change_color(self, color=None):
+                color = color or self.color
+                self.item.animator.stop()  # The animator must be stopped before changing the color
+                self.item.color = QColor(color)
+                self.item.update_design()
+
+        app.flow.session.register_node(CustomNode)
+        return CustomNode
     return decorator
