@@ -1,4 +1,4 @@
-from qtpy.QtWidgets import QWidget, QHBoxLayout, QPushButton, QCheckBox
+from qtpy.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QCheckBox, QLabel
 
 
 class ExecutionControl(QWidget):
@@ -6,17 +6,24 @@ class ExecutionControl(QWidget):
         self.node, self.node_item = params
         QWidget.__init__(self)
 
-        layout = QHBoxLayout()
+        layout = QVBoxLayout()
         self.setStyleSheet("background: transparent; color: white;")
         self.setLayout(layout)
 
+        h_layout = QHBoxLayout()
+        layout.addLayout(h_layout)
+
         self.checkbox = QCheckBox('Auto Update')
         self.checkbox.setStyleSheet("color: white;")
-        self.layout().addWidget(self.checkbox)
+        h_layout.addWidget(self.checkbox)
 
         self.button = QPushButton('Run')
         self.button.setStyleSheet("background-color: #0092D2;")
-        self.layout().addWidget(self.button)
+        h_layout.addWidget(self.button)
+
+        self.message = QLabel()
+        layout.addWidget(self.message)
+        self.set_message()
 
         self.pause_event = False
 
@@ -29,6 +36,13 @@ class ExecutionControl(QWidget):
 
         self.button.clicked.connect(self.update_node)
         self.checkbox.stateChanged.connect(self.set_auto_update)
+
+    def set_message(self, message=None):
+        if message:
+            self.message.setText(message)
+            self.message.setVisible(True)
+        else:
+            self.message.setVisible(False)
 
     def set_auto_update(self, _, value=None, update_node=True):
 

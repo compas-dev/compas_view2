@@ -1,7 +1,9 @@
 import ryvencore_qt as rc
+from typing import List, Tuple, Union
+from compas.geometry import Vector as Vector
 
 
-class Value(rc.Node):
+class ValueNode(rc.Node):
 
     title = 'Value'
     color = '#0092D2'
@@ -24,13 +26,14 @@ class Value(rc.Node):
         self.set_output_val(0, self.input(0))
 
 
-def Integer(default: int = 1, bounds: tuple = None):
+def IntegerNode(title: str = 'Integer', default: int = 1, bounds: Tuple[float, float] = None) -> ValueNode:
 
+    _title = title
     bounds = bounds or (-10**9, 10**9)
 
-    class IntegerNode(Value):
+    class IntegerNode(ValueNode):
 
-        title = 'Integer'
+        title = _title
 
         init_inputs = [
             rc.NodeInputBP(
@@ -42,13 +45,14 @@ def Integer(default: int = 1, bounds: tuple = None):
     return IntegerNode
 
 
-def Float(default: float = 0.0, bounds: tuple = None):
+def FloatNode(title: str = 'Float', default: float = 0.0, bounds: tuple = None) -> ValueNode:
 
+    _title = title
     bounds = bounds or (0, 1)
 
-    class FloatNode(Value):
+    class FloatNode(ValueNode):
 
-        title = 'Float'
+        title = _title
 
         init_inputs = [
             rc.NodeInputBP(
@@ -60,11 +64,14 @@ def Float(default: float = 0.0, bounds: tuple = None):
     return FloatNode
 
 
-def Choice(items: list, default=None):
+def ChoiceNode(title: str = 'Choice', items: List = None, default=None) -> ValueNode:
 
-    class ChoiceNode(Value):
+    _title = title
+    items = items or []
 
-        title = 'Choice'
+    class ChoiceNode(ValueNode):
+
+        title = _title
 
         init_inputs = [
             rc.NodeInputBP(
@@ -76,11 +83,13 @@ def Choice(items: list, default=None):
     return ChoiceNode
 
 
-def String(default=None):
+def StringNode(title: str = 'String', default: str = None) -> ValueNode:
 
-    class StringNode(Value):
+    _title = title
 
-        title = 'String'
+    class StringNode(ValueNode):
+
+        title = _title
 
         init_inputs = [
             rc.NodeInputBP(
@@ -90,3 +99,33 @@ def String(default=None):
         ]
 
     return StringNode
+
+
+def VectorNode(title: str = 'String', default: Union[List[float], Tuple[float, float, float], Vector] = None) -> ValueNode:
+
+    _title = title
+    default = default or [0, 0, 0]
+
+    class VectorNode(ValueNode):
+
+        title = _title
+
+        init_inputs = [
+            rc.NodeInputBP(
+                dtype=rc.dtypes.Float(default=default[0]),
+                label='x'
+            ),
+            rc.NodeInputBP(
+                dtype=rc.dtypes.Float(default=default[1]),
+                label='y'
+            ),
+            rc.NodeInputBP(
+                dtype=rc.dtypes.Float(default=default[2]),
+                label='z'
+            ),
+        ]
+
+        def update_event(self, inp=-1):
+            self.set_output_val(0, Vector(self.input(0), self.input(1), self.input(2)))
+
+    return VectorNode

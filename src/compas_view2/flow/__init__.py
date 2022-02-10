@@ -1,7 +1,8 @@
 from .flow import Flow  # noqa: F401
 from .node import Node  # noqa: F401
-from .values import Value  # noqa: F401
-from .values import Integer  # noqa: F401
-from .values import Float  # noqa: F401
-from .values import Choice  # noqa: F401
-from .values import String  # noqa: F401
+from .values import ValueNode  # noqa: F401
+from .values import IntegerNode  # noqa: F401
+from .values import FloatNode  # noqa: F401
+from .values import ChoiceNode  # noqa: F401
+from .values import StringNode  # noqa: F401
+from .values import VectorNode  # noqa: F401

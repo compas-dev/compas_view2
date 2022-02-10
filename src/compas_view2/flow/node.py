@@ -3,6 +3,7 @@ import inspect
 from compas_view2.objects import DATA_OBJECT
 from qtpy.QtGui import QColor
 from .widgets import ExecutionControl
+import traceback
 
 
 def Node(app, color='#0092D2', auto_update=None):
@@ -64,9 +65,11 @@ def Node(app, color='#0092D2', auto_update=None):
                     try:
                         _output = func(*_inputs)
                         self.change_color()
+                        self.item.main_widget.set_message()
                     except Exception as e:
                         print("Function failed at", self)
-                        print(e)
+                        print(traceback.format_exc())
+                        self.item.main_widget.set_message(str(e))
                         self.change_color('#FF0000')
                         _output = None
 
@@ -89,4 +92,5 @@ def Node(app, color='#0092D2', auto_update=None):
 
         app.flow.session.register_node(CustomNode)
         return CustomNode
+
     return decorator
