@@ -2,6 +2,8 @@ from qtpy.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QChec
 
 
 class ExecutionControl(QWidget):
+    """Main widget to control and monitor the execution of node."""
+
     def __init__(self, params):
         self.node, self.node_item = params
         QWidget.__init__(self)

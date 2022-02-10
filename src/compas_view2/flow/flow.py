@@ -1,11 +1,26 @@
 import ryvencore_qt as rc
+import ryvencore
 from compas.datastructures import Graph
+from typing import Union, Tuple
 
 
 class Flow(Graph):
-    """"A Ryven Flow wrapper."""
+    """"A Class that represents maps a Ryven Flow graph.
 
-    def __init__(self, app, flow_auto_update=True, flow_view_size=(800, 500)):
+    Parameters
+    ----------
+    app : :class:`compas_view2.app.App`
+        compas_view app instance.
+    flow_auto_update : bool
+        Whether to auto update the nodes in graph.
+        Defaults to True.
+    flow_view_size : Tuple[int, int]
+        Window size of the flow view.
+        Defaults to (800, 500).
+
+    """
+
+    def __init__(self, app, flow_auto_update: bool = True, flow_view_size: Tuple[int, int] = (800, 500)):
         super().__init__()
         self.app = app
         self.flow_auto_update = flow_auto_update
@@ -15,22 +30,53 @@ class Flow(Graph):
         self.flow_view = self.session.flow_views[self.script]
 
     def show(self):
+        """Shows the flow view."""
         self.flow_view.show()
 
-    def add_node(self, node_class, location=(0, 0), **kwargs):
-        # Add ryven node
+    def add_node(self, node_class: rc.Node, location: Tuple[int, int] = (0, 0), **kwargs) -> rc.Node:
+        """Adds a node to the flow view.
+
+        Parameters
+        ----------
+        node_class : :class:`ryvencore_qt.Node`
+            A ryven node class to be added.
+        location : Tuple[int, int]
+            The location of the node in the flow view.
+            Defaults to (0, 0).
+        **kwargs : dict, optional
+            Additional keyword arguments to be passed to the node class.
+
+        Returns
+        -------
+        :class:`ryvencore_qt.Node`
+            The created ryven node instance.
+
+        """
         ryven_node = self.script.flow.create_node(node_class, data=kwargs)
         x, y = location
         self.flow_view.node_items[ryven_node].setX(x)
         self.flow_view.node_items[ryven_node].setY(y)
         data = ryven_node.complete_data(ryven_node.data())
 
-        # Add node in compas graph
         super().add_node(key=ryven_node.GLOBAL_ID, attr_dict={'ryven_data': data})
         return ryven_node
 
-    def add_connection(self, port1, port2):
-        # Add ryven connection
+    def add_connection(self, port1: ryvencore.NodePort.NodeOutput, port2: ryvencore.NodePort.NodeInput) -> ryvencore.Connection.DataConnection:
+        """Adds a connection between two ryven nodes.
+
+        Parameters
+        ----------
+        port1 : :class:`ryvencore.NodePort.NodeOutput`
+            The first port for the connection.
+        port2 : :class:`ryvencore.NodePort.NodeInput`
+            The second port for the connection.
+
+        Returns
+        -------
+        :class:`ryvencore.Connection.DataConnection`
+            The created ryven connection instance.
+
+        """
         ryven_connection = self.script.flow.connect_nodes(port1, port2)
         if not ryven_connection:
             return
@@ -47,7 +93,20 @@ class Flow(Graph):
 
         return ryven_connection
 
-    def get_port_info(self, port):
+    def get_port_info(self, port: Union[ryvencore.NodePort.NodeOutput, ryvencore.NodePort.NodeInput]) -> dict:
+        """Gets the port information.
+
+        Parameters
+        ----------
+        port : Union[:class:`ryvencore.NodePort.NodeOutput`, :class:`ryvencore.NodePort.NodeInput`]
+            The port to get the information from.
+
+        Returns
+        -------
+        dict
+            The port information.
+
+        """
         node = port.node
         data = {}
         if port in node.inputs:
