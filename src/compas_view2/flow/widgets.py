@@ -24,6 +24,7 @@ class ExecutionControl(QWidget):
         h_layout.addWidget(self.button)
 
         self.message = QLabel()
+        self.message.setMaximumWidth(200)
         layout.addWidget(self.message)
         self.set_message()
 

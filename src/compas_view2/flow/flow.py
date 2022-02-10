@@ -3,6 +3,8 @@ import ryvencore
 from compas.datastructures import Graph
 from typing import Union, Tuple
 
+from sympy import false
+
 
 class Flow(Graph):
     """"A Class that represents maps a Ryven Flow graph.
@@ -28,9 +30,41 @@ class Flow(Graph):
         self.session.design.set_flow_theme(name='pure dark')
         self.script = self.session.create_script(flow_view_size=flow_view_size)
         self.flow_view = self.session.flow_views[self.script]
+        self.script.flow.set_algorithm_mode('data opt')
+        self.init_run = False
+    
+    def run_all(self):
+        """Execute all the ryven nodes in the order of data flow."""
+        # print("running all nodes")
+        executed = set()
+        node_update_states = {node: node.block_updates for node in self.flow_view.node_items}
+
+        def traverse_upwards(node):
+            # Traverse upwards to the top of data flow graph
+            if node in executed:
+                return
+            for port in node.inputs:
+                for connection in port.connections:
+                    traverse_upwards(connection.out.node)
+            # print("executing", node)
+            node.update_event()
+            executed.add(node)
+        
+        for node in self.flow_view.node_items:
+            node.block_updates = True
+
+        for node in self.flow_view.node_items:
+            traverse_upwards(node)
+
+        for node in self.flow_view.node_items:
+            node.block_updates = node_update_states[node]
+        # print("All nodes executed")
 
     def show(self):
         """Shows the flow view."""
+        if not self.init_run and self.flow_auto_update:
+            self.run_all()
+            self.init_run = True
         self.flow_view.show()
 
     def add_node(self, node_class: rc.Node, location: Tuple[int, int] = (0, 0), **kwargs) -> rc.Node:
