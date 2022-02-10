@@ -3,8 +3,6 @@ import ryvencore
 from compas.datastructures import Graph
 from typing import Union, Tuple
 
-from sympy import false
-
 
 class Flow(Graph):
     """"A Class that represents maps a Ryven Flow graph.
@@ -32,7 +30,7 @@ class Flow(Graph):
         self.flow_view = self.session.flow_views[self.script]
         self.script.flow.set_algorithm_mode('data opt')
         self.init_run = False
-    
+
     def run_all(self):
         """Execute all the ryven nodes in the order of data flow."""
         # print("running all nodes")
@@ -49,7 +47,7 @@ class Flow(Graph):
             # print("executing", node)
             node.update_event()
             executed.add(node)
-        
+
         for node in self.flow_view.node_items:
             node.block_updates = True
 
