@@ -376,7 +376,41 @@ class Controller:
     # ==============================================================================
 
     def show_flow(self) -> None:
+        """Display the ryven flow window."""
         self.app.flow.show()
+
+    def run_all(self) -> None:
+        """Execute all the ryven nodes in the order of data flow."""
+
+        print("running all nodes")
+        executed = set()
+
+        def traverse_upwards(node):
+            # Traverse upwards to the top of data flow graph
+            if node in executed:
+                return
+            for port in node.inputs:
+                for connection in port.connections:
+                    traverse_upwards(connection.out.node)
+            print("executing", node)
+            node.update_event()
+            executed.add(node)
+
+        for node in self.app.flow.flow_view.node_items:
+            traverse_upwards(node)
+
+        print("All nodes executed")
+
+    def enable_auto_update(self) -> None:
+        """Enable auto update of all the ryven nodes."""
+        self.run_all()
+        for node in self.app.flow.flow_view.node_items:
+            node.auto_update = True
+
+    def disable_auto_update(self) -> None:
+        """Disable auto update of all the ryven nodes."""
+        for node in self.app.flow.flow_view.node_items:
+            node.auto_update = False
 
     # ==============================================================================
     # Robot actions

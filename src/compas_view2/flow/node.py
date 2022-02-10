@@ -1,16 +1,42 @@
 import ryvencore_qt as rc
 import inspect
 from compas_view2.objects import DATA_OBJECT
-
+from qtpy.QtGui import QColor
 from .widgets import ExecutionControl
+from compas.colors import Color
+from typing import Union
+import traceback
 
 
-def Node(app, color='#0092D2', auto_update=None):
+def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bool = None):
+    """Decorator for creating a custom ryven node in compas_view2 flow.
+
+        Parameters
+        ----------
+        color : Union[Color, str, list, tuple]
+            The color theme of the ndoe.
+            Defaults to '#0092D2'.
+        auto_update : bool
+            Whether to auto update the node.
+            Defaults to the global flow setting.
+
+        Returns
+        -------
+        callable
+            A CustomNode class that wraps the decorated function.
+
     """
-    Decorator for creating a node in a flow.
-    """
 
-    node_color = color
+    if Color.is_hex(color):
+        color = Color.from_hex(color)
+    elif Color.is_rgb255(color):
+        color = Color.from_rgb255(*color)
+    elif Color.is_rgb1(color):
+        color = Color(*color)
+    else:
+        raise ValueError('Invalid color: {}'.format(color))
+
+    node_color = color.hex
 
     def decorator(func):
 
@@ -21,7 +47,8 @@ def Node(app, color='#0092D2', auto_update=None):
         else:
             _auto_update = auto_update
 
-        class _Node(rc.Node):
+        class CustomNode(rc.Node):
+            """Class that wraps the decorated function."""
 
             title = func.__name__
             init_inputs = [rc.NodeInputBP(label=name) for name in signature.parameters.keys() if name != 'self']
@@ -35,36 +62,50 @@ def Node(app, color='#0092D2', auto_update=None):
                 self._object = None
                 self.block_updates = not _auto_update
                 self.actions['execute'] = {'method': self.update_event}
-                self.actions['enable auto update'] = {'method': self.enable_auto_update}
-                self.actions['disable auto update'] = {'method': self.disable_auto_update}
 
-            def enable_auto_update(self):
-                self.block_updates = False
-                self.update_event()
+            def __repr__(self) -> str:
+                return f'<{self.__class__.__name__}({self.title})>'
 
-            def disable_auto_update(self):
-                self.block_updates = True
+            @property
+            def auto_update(self):
+                return not self.block_updates
+
+            @auto_update.setter
+            def auto_update(self, value):
+                """Two direction binding to the checkbox widget."""
+                self.block_updates = not value
+                self.item.main_widget.set_auto_update(None, value=value, update_node=False)
 
             def place_event(self):
+                """Called upon node placement."""
                 # This is to suppress a ryven exception to parse and empty dict when initiating the main widget
                 self.init_data = None
-
                 self.update()
 
             def remove_event(self):
+                """Called upon node removal."""
                 if self._object:
                     app.remove(self._object)
                     app.view.update()
 
             def update_event(self, inp=-1):
+                """execute wrapped function."""
+                _inputs = [self.input(i) for i in range(len(self.init_inputs)) if self.input(i) is not None]
                 try:
-                    _inputs = [self.input(i) for i in range(len(self.init_inputs)) if self.input(i) is not None]
-                    try:
-                        _output = func(*_inputs)
-                    except Exception as e:
-                        print("Function failed:", e)
-                        _output = None
+                    _output = func(*_inputs)
+                    # Restore to default color if the function succeeded
+                    self.item.main_widget.set_message()
+                    self.change_color()
 
+                except Exception as e:
+                    _output = None
+                    # Change node color and display error message
+                    print("Function failed at", self)
+                    print(traceback.format_exc())
+                    self.item.main_widget.set_message(str(e))
+                    self.change_color('#FF0000')
+
+                finally:
                     if self._object:
                         app.remove(self._object)
 
@@ -73,9 +114,15 @@ def Node(app, color='#0092D2', auto_update=None):
 
                     app.view.update()
                     self.set_output_val(0, _output)
-                except Exception as e:
-                    print(e)
 
-        app.flow.session.register_node(_Node)
-        return _Node
+            def change_color(self, color=None):
+                """Change the theme color of the node."""
+                color = color or self.color
+                self.item.animator.stop()  # The animator must be stopped before changing the color
+                self.item.color = QColor(color)
+                self.item.update_design()
+
+        app.flow.session.register_node(CustomNode)
+        return CustomNode
+
     return decorator
