@@ -8,7 +8,7 @@ from typing import Union
 import traceback
 
 
-def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bool = None, hide_output: bool = False):
+def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bool = None, **kwargs):
     """Decorator for creating a custom ryven node in compas_view2 flow.
 
         Parameters
@@ -21,6 +21,8 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
         auto_update : bool
             Whether to auto update the node.
             Defaults to the global flow setting.
+        **kwargs : dict
+            Additional keyword arguments for the node output visualisation.
 
         Returns
         -------
@@ -61,11 +63,16 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
 
             def __init__(self, params):
                 super().__init__(params)
-                self._object = None
                 self.block_updates = not _auto_update
                 self.actions['execute'] = {'method': self.update_event}
-                self.hide_output = hide_output
+                self.actions['show_object'] = {'method': self.show_object}
+                self.actions['hide_object'] = {'method': self.hide_object}
+                self.actions['select_object'] = {'method': self.select_object}
+                self.object = None
                 self.app = app
+                self.object_properties = kwargs
+                if not self.object_properties.get('facecolor'):
+                    self.object_properties['facecolor'] = color
 
             def __repr__(self) -> str:
                 return f'<{self.__class__.__name__}({self.title})>'
@@ -80,6 +87,25 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
                 self.block_updates = not value
                 self.item.main_widget.set_auto_update(None, value=value, update_node=False)
 
+            def select_object(self):
+                """Select the object in the scene."""
+                if self.object:
+                    self.app.selector.select(self.object)
+                    self.app.view.update()
+
+            def show_object(self):
+                """Show the object in the scene."""
+                if self.object:
+                    self.object_properties['is_visible'] = self.object.is_visible = True
+                    self.object.is_visible = True
+                    self.app.view.update()
+
+            def hide_object(self):
+                """Hide the object in the scene."""
+                if self.object:
+                    self.object_properties['is_visible'] = self.object.is_visible = False
+                    self.app.view.update()
+
             def place_event(self):
                 """Called upon node placement."""
                 # This is to suppress a ryven exception to parse and empty dict when initiating the main widget
@@ -87,8 +113,8 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
 
             def remove_event(self):
                 """Called upon node removal."""
-                if self._object:
-                    app.remove(self._object)
+                if self.object:
+                    app.remove(self.object)
                     app.view.update()
 
             def update_event(self, inp=-1):
@@ -113,11 +139,11 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
                     self.change_color('#FF0000')
 
                 finally:
-                    if self._object:
-                        app.remove(self._object)
+                    if self.object:
+                        app.remove(self.object)
 
-                    if _output and _output.__class__ in DATA_OBJECT and not self.hide_output:
-                        self._object = app.add(_output)
+                    if _output and _output.__class__ in DATA_OBJECT:
+                        self.object = app.add(_output, **self.object_properties)
 
                     app.view.update()
                     self.set_output_val(0, _output)

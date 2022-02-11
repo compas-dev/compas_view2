@@ -17,30 +17,30 @@ XY = Plane(P, Z)
 viewer = App(viewmode='lighted', width=1500, height=1000, show_flow=True, flow_auto_update=True)
 
 
-@Node(viewer, hide_output=True)
+@Node(viewer, is_visible=False)
 def create_box(size: float) -> Box:
     return Box.from_width_height_depth(size, size, size)
 
 
-@Node(viewer, hide_output=True)
+@Node(viewer, show_edges=False, opacity=0.2)
 def create_cylinder_x(radius: float, height: float) -> Box:
     YZ = Plane(P, X)
     return Cylinder((YZ, radius), height)
 
 
-@Node(viewer, hide_output=True)
+@Node(viewer, show_edges=False, opacity=0.2)
 def create_cylinder_y(radius: float, height: float) -> Box:
     XZ = Plane(P, Y)
     return Cylinder((XZ, radius), height)
 
 
-@Node(viewer, hide_output=True)
+@Node(viewer, show_edges=False, opacity=0.2)
 def create_cylinder_z(radius: float, height: float) -> Box:
     XY = Plane(P, Z)
     return Cylinder((XY, radius), height)
 
 
-@Node(viewer)
+@Node(viewer, show_edges=False)
 def create_csg_geometry(A: Box, B1: Cylinder, B2: Cylinder, B3: Cylinder) -> Mesh:
     A = BRep.from_box(A)
     B1 = BRep.from_cylinder(B1)
