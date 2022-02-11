@@ -8,11 +8,13 @@ from typing import Union
 import traceback
 
 
-def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bool = None):
+def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bool = None, hide_output: bool = False):
     """Decorator for creating a custom ryven node in compas_view2 flow.
 
         Parameters
         ----------
+        app: :class:`compas_view2.app.App`
+            The compas_view2 app instance.
         color : Union[Color, str, list, tuple]
             The color theme of the ndoe.
             Defaults to '#0092D2'.
@@ -62,6 +64,8 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
                 self._object = None
                 self.block_updates = not _auto_update
                 self.actions['execute'] = {'method': self.update_event}
+                self.hide_output = hide_output
+                self.app = app
 
             def __repr__(self) -> str:
                 return f'<{self.__class__.__name__}({self.title})>'
@@ -80,7 +84,6 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
                 """Called upon node placement."""
                 # This is to suppress a ryven exception to parse and empty dict when initiating the main widget
                 self.init_data = None
-                self.update()
 
             def remove_event(self):
                 """Called upon node removal."""
@@ -90,7 +93,11 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
 
             def update_event(self, inp=-1):
                 """execute wrapped function."""
-                _inputs = [self.input(i) for i in range(len(self.init_inputs)) if self.input(i) is not None]
+
+                if not self.app.started:
+                    return
+
+                _inputs = [self.input(i) for i in range(len(self.init_inputs))]
                 try:
                     _output = func(*_inputs)
                     # Restore to default color if the function succeeded
@@ -109,7 +116,7 @@ def Node(app, color: Union[Color, str, list, tuple] = '#0092D2', auto_update: bo
                     if self._object:
                         app.remove(self._object)
 
-                    if _output and _output.__class__ in DATA_OBJECT:
+                    if _output and _output.__class__ in DATA_OBJECT and not self.hide_output:
                         self._object = app.add(_output)
 
                     app.view.update()

@@ -381,25 +381,7 @@ class Controller:
 
     def run_all(self) -> None:
         """Execute all the ryven nodes in the order of data flow."""
-
-        print("running all nodes")
-        executed = set()
-
-        def traverse_upwards(node):
-            # Traverse upwards to the top of data flow graph
-            if node in executed:
-                return
-            for port in node.inputs:
-                for connection in port.connections:
-                    traverse_upwards(connection.out.node)
-            print("executing", node)
-            node.update_event()
-            executed.add(node)
-
-        for node in self.app.flow.flow_view.node_items:
-            traverse_upwards(node)
-
-        print("All nodes executed")
+        self.app.flow.run_all()
 
     def enable_auto_update(self) -> None:
         """Enable auto update of all the ryven nodes."""

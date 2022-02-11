@@ -187,6 +187,7 @@ class App:
         self.enable_sidebar = enable_sidebar
         self.init()
         self.resize(width, height)
+        self.started = False
 
     def init(self):
         """Initialize the components of the user interface.
@@ -294,6 +295,7 @@ class App:
         None
 
         """
+        self.started = True
         self.window.show()
         if self.show_flow:
             self.flow.show()
