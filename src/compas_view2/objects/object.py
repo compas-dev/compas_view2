@@ -11,6 +11,8 @@ from compas.geometry import identity_matrix
 from compas.colors import Color
 from compas.data import Data
 
+from typing import Dict, Union
+
 
 ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
 
@@ -63,13 +65,13 @@ class Object(ABC):
         facecolor : :class:`compas.color.Color`, optional
             The color of the faces.
             Default to `compas_view2.objects.Object.default_color_faces`.
-        pointcolors : dict, optional
+        pointcolors : Dict[Union[str, int], Color], optional
             The color dict of individual points.
             Default to None.
-        linecolors : dict, optional
+        linecolors : Dict[Union[str, int], Color], optional
             The color dict of individual lines.
             Default to None.
-        facecolors : dict, optional
+        facecolors : Dict[Union[str, int], Color], optional
             The color dict of individual faces.
             Default to None.
         linewidth : int, optional
@@ -102,11 +104,11 @@ class Object(ABC):
             The color of the lines.
         facecolor : :class:`compas.color.Color`
             The color of the faces.
-        pointcolors : dict
+        pointcolors : Dict[Union[str, int], Color]
             The color dict of individual points.
-        linecolors : dict, optional
+        linecolors : Dict[Union[str, int], Color]
             The color dict of individual lines.
-        facecolors : dict
+        facecolors : Dict[Union[str, int], Color]
             The color dict of individual faces.
         linewidth : int
             The line width to be drawn on screen.
@@ -173,12 +175,12 @@ class Object(ABC):
                  pointcolor: Color = None,
                  linecolor: Color = None,
                  facecolor: Color = None,
-                 facecolors: dict = None,
-                 linecolors: dict = None,
-                 pointcolors: dict = None,
+                 facecolors: Dict[Union[str, int], Color] = None,
+                 linecolors: Dict[Union[str, int], Color] = None,
+                 pointcolors: Dict[Union[str, int], Color] = None,
                  linewidth: int = 1,
                  pointsize: int = 10,
-                 opacity: int = 1.0):
+                 opacity: float = 1.0):
 
         self._data = data
         self.name = name or str(self)
