@@ -8,10 +8,10 @@ from .polylineobject import PolylineObject
 class EllipseObject(PolylineObject):
     """Object for displaying COMPAS Ellipse geometry."""
 
-    def __init__(self, ellipse, u=16, show_edges=True, **kwargs):
+    def __init__(self, ellipse, u=16, **kwargs):
         self.u = u
         self.calculate_ellipse_points(ellipse)
-        super().__init__(ellipse, close=True, show_edges=show_edges, **kwargs)
+        super().__init__(ellipse, close=True, **kwargs)
 
     def calculate_ellipse_points(self, ellipse):
         frame = Frame.from_plane(ellipse.plane)

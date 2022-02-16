@@ -15,13 +15,12 @@ fonts = os.path.join(here, '..', 'fonts')
 class TextObject(Object):
     """Object for displaying text sprites."""
 
-    def __init__(self, data, name=None, color=None, height=10, opacity=1):
-        super().__init__(data, name=name)
+    def __init__(self, data, color=None, height=10, **kwargs):
+        super().__init__(data, **kwargs)
         self.color = color or [0, 0, 0]
         self.characters = []
         self.buffers = []
         self.height = height
-        self.opacity = opacity
 
     def init(self):
         self.make_buffers()

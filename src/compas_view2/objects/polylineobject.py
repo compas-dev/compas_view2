@@ -5,12 +5,10 @@ from .bufferobject import BufferObject
 class PolylineObject(BufferObject):
     """Object for displaying COMPAS Polyline geometry."""
 
-    default_color_points = [0.1, 0.1, 0.1]
-    default_color_line = [0.4, 0.4, 0.4]
-
     def __init__(self, data, close=False, **kwargs):
-        super().__init__(data, show_lines=True, **kwargs)
+        super().__init__(data, **kwargs)
         self.close = close
+        self.show_lines = True
 
     def _points_data(self):
         polyline = self._data

@@ -1,6 +1,7 @@
 import numpy as np
 from inspect import getargspec
 
+from compas_view2.collections import Collection
 from .object import Object
 from .bufferobject import BufferObject
 
@@ -8,15 +9,15 @@ from .bufferobject import BufferObject
 class CollectionObject(BufferObject):
     """Object for displaying COMPAS collection."""
 
-    def __init__(self, collection, color=None, colors=None, **kwargs):
+    def __init__(self, collection: Collection, **kwargs):
 
-        argspec = getargspec(BufferObject.__init__)
-        BufferObject_keywords = argspec.args[-len(argspec.defaults):]
-        BufferObject_kwargs = {key: kwargs[key] for key in kwargs if key in BufferObject_keywords}
-        super().__init__(collection, **BufferObject_kwargs)
+        super().__init__(collection, **kwargs)
 
-        colors = colors or [color or [0.5, 0.5, 0.5]] * len(self._data.items)
-        self._objects = [Object.build(item, color=color, **kwargs) for item, color in zip(self._data.items, colors)]
+        self._objects = []
+        for item, item_property in zip(collection.items, collection.item_properties):
+            _kwargs = dict(kwargs)
+            _kwargs.update(item_property)
+            self._objects.append(Object.build(item, **_kwargs))
 
         # if not given explicitly, use child object default settings
         self.show_points = self.show_points or self._objects[0].show_points

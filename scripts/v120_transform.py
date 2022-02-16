@@ -7,9 +7,9 @@ viewer = App()
 box1 = Box(([0, 0, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
 box2 = Box(([0, 0, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
 box3 = Box(([0, 0, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
-obj1 = viewer.add(box1, color=(1, 0, 0))
-obj2 = viewer.add(box2, color=(0, 1, 0))
-obj3 = viewer.add(box3, color=(0, 0, 1))
+obj1 = viewer.add(box1, facecolor=(1, 0, 0))
+obj2 = viewer.add(box2, facecolor=(0, 1, 0))
+obj3 = viewer.add(box3, facecolor=(0, 0, 1))
 
 s = 1
 

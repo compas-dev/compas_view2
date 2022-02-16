@@ -11,6 +11,6 @@ points = [
 
 surface = NurbsSurface.from_points(points=points)
 
-view = App()
+view = App(viewmode='lighted')
 view.add(surface, show_points=True, show_lines=True, pointcolor=(1, 0, 0), linecolor=(0, 0, 1))
 view.run()
