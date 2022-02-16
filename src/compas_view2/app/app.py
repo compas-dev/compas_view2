@@ -224,22 +224,86 @@ class App:
         y = 0.5 * (rect.height() - height)
         self.window.setGeometry(x, y, width, height)
 
-    def add(self, data: Data, **kwargs) -> Object:
+    def add(self, data: Data,
+            name: str = None,
+            is_selected: bool = False,
+            is_visible: bool = True,
+            show_points: bool = False,
+            show_lines: bool = True,
+            show_faces: bool = True,
+            pointcolor: Color = None,
+            linecolor: Color = None,
+            facecolor: Color = None,
+            facecolors: dict = None,
+            linecolors: dict = None,
+            pointcolors: dict = None,
+            linewidth: int = 1,
+            pointsize: int = 10,
+            opacity: int = 1.0,
+            **kwargs) -> Object:
         """Add a COMPAS object.
 
         Parameters
         ----------
-        data: :class:`compas.geometry.Primitive` | :class:`compas.geometry.Shape` | :class:`compas.datastructures.Datastructure`
+        data: :class:`compas.data.Dadta`
             A COMPAS data object.
+        is_selected : bool, optional
+            Whether the object is selected.
+            Default to False.
+        is_visible : bool, optional
+            Whether to show object.
+            Default to True.
+        show_points : bool, optional
+            Whether to show points/vertices of the object.
+            Default to False.
+        show_lines : bool, optional
+            Whether to show lines/edges of the object.
+            Default to True.
+        show_faces : bool, optional
+            Whether to show faces of the object.
+            Default to True.
+        pointcolor : :class:`compas.color.Color`, optional
+            The color of the points.
+            Default to `compas_view2.objects.Object.default_color_points`.
+        linecolor : :class:`compas.color.Color`, optional
+            The color of the lines.
+            Default to `compas_view2.objects.Object.default_color_lines`.
+        facecolor : :class:`compas.color.Color`, optional
+            The color of the faces.
+            Default to `compas_view2.objects.Object.default_color_faces`.
+        pointcolors : dict, optional
+            The color dict of individual points.
+            Default to None.
+        linecolors : dict, optional
+            The color dict of individual lines.
+            Default to None.
+        facecolors : dict, optional
+            The color dict of individual faces.
+            Default to None.
+        linewidth : int, optional
+            The line width to be drawn on screen
+            Default to 1.
+        pointsize : int, optional
+            The point size to be drawn on screen
+            Default to 10.
+        opacity : float, optional
+            The opacity of the object.
+            Default to 1.0.
         **kwargs : dict, optional
-            Additional visualization options.
+            Additional visualization options for specific objects.
 
         Returns
         -------
         :class:`compas_view2.objects.Object`
+            The added object.
 
         """
-        obj = Object.build(data, **kwargs)
+        obj = Object.build(data, name=name, is_selected=is_selected, is_visible=is_visible,
+                           show_points=show_points, show_lines=show_lines, show_faces=show_faces,
+                           pointcolor=pointcolor, linecolor=linecolor, facecolor=facecolor,
+                           facecolors=facecolors, linecolors=linecolors, pointcolors=pointcolors,
+                           linewidth=linewidth, pointsize=pointsize, opacity=opacity, **kwargs)
+
         self.view.objects[obj] = obj
         self.selector.add(obj)
         if self.view.isValid():

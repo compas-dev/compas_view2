@@ -8,6 +8,8 @@ from compas.geometry import Rotation
 from compas.geometry import Scale
 from compas.geometry import decompose_matrix
 from compas.geometry import identity_matrix
+from compas.colors import Color
+from compas.data import Data
 
 
 ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
@@ -33,21 +35,118 @@ def _get_object_cls(data):
 class Object(ABC):
     """Base object for compas_view2
 
+    Parameters
+        ----------
+        data: :class:`compas.data.Dadta`
+            A COMPAS data object.
+        is_selected : bool, optional
+            Whether the object is selected.
+            Default to False.
+        is_visible : bool, optional
+            Whether to show object.
+            Default to True.
+        show_points : bool, optional
+            Whether to show points/vertices of the object.
+            Default to False.
+        show_lines : bool, optional
+            Whether to show lines/edges of the object.
+            Default to True.
+        show_faces : bool, optional
+            Whether to show faces of the object.
+            Default to True.
+        pointcolor : :class:`compas.color.Color`, optional
+            The color of the points.
+            Default to `compas_view2.objects.Object.default_color_points`.
+        linecolor : :class:`compas.color.Color`, optional
+            The color of the lines.
+            Default to `compas_view2.objects.Object.default_color_lines`.
+        facecolor : :class:`compas.color.Color`, optional
+            The color of the faces.
+            Default to `compas_view2.objects.Object.default_color_faces`.
+        pointcolors : dict, optional
+            The color dict of individual points.
+            Default to None.
+        linecolors : dict, optional
+            The color dict of individual lines.
+            Default to None.
+        facecolors : dict, optional
+            The color dict of individual faces.
+            Default to None.
+        linewidth : int, optional
+            The line width to be drawn on screen
+            Default to 1.
+        pointsize : int, optional
+            The point size to be drawn on screen
+            Default to 10.
+        opacity : float, optional
+            The opacity of the object.
+            Default to 1.0.
+        **kwargs : dict, optional
+            Additional visualization options for specific objects.
+
     Attributes
     ----------
-    name : str
-        The name of the object.
-    is_selected : bool
-        Whether the object is selected.
-    translation : list
-        The translation vector of the object.
-    rotation : list
-        The Euler rotation of the object in XYZ order.
-    scale : list
-        The scale factor of the object.
-    matrix: list
-        The 4x4 transformation matrix that is composed from translation, rotation and scale.
+        is_selected : bool
+            Whether the object is selected.
+        is_visible : bool
+            Whether to show object.
+        show_points : bool
+            Whether to show points/vertices of the object.
+        show_lines : bool
+            Whether to show lines/edges of the object.
+        show_faces : bool
+            Whether to show faces of the object.
+        pointcolor : :class:`compas.color.Color`
+            The color of the points.
+        linecolor : :class:`compas.color.Color`
+            The color of the lines.
+        facecolor : :class:`compas.color.Color`
+            The color of the faces.
+        pointcolors : dict
+            The color dict of individual points.
+        linecolors : dict, optional
+            The color dict of individual lines.
+        facecolors : dict
+            The color dict of individual faces.
+        linewidth : int
+            The line width to be drawn on screen.
+        pointsize : int
+            The point size to be drawn on screen.
+        opacity : float
+            The opacity of the object.
+        background : bool
+            Whether the object is drawn on the backgound with depth test disabled.
+        bounding_box : :class:`numpy.array`, read-only
+            The min and max corners of object bounding box, as a numpy array of shape (2, 3).
+        bounding_box_center : :class:`numpy.array`, read-only
+            The center of object bounding box, as a numpy array of shape (3,).
+        matrix : :class:`numpy.array`
+            The transformation matrix of the object.
+        translation : :class:`numpy.array`
+            The translation vector of the object.
+        rotation : :class:`numpy.array`
+            The euler rotation vector of the object.
+        scale : :class:`numpy.array`
+            The scale vector of the object.
+        properties : list, read-only
+            The list of object-specific properties.
+        otype : class
+            The data class of the object.
+
+    Class Attributes
+    ----------------
+    default_color_points : :class:`compas.color.Color`
+        The default color of the points with value rgb(0.2, 0.2, 0.2).
+    default_color_lines : :class:`compas.color.Color`
+        The default color of the lines with value rgb(0.4, 0.4, 0.4).
+    default_color_faces : :class:`compas.color.Color`
+        The default color of the faces with value rgb(0.8, 0.8, 0.8).
+
     """
+
+    default_color_points = Color(0.2, 0.2, 0.2)
+    default_color_lines = Color(0.4, 0.4, 0.4)
+    default_color_faces = Color(0.8, 0.8, 0.8)
 
     @staticmethod
     def register(dtype, otype):
@@ -63,17 +162,64 @@ class Object(ABC):
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj
 
-    def __init__(self, data, name=None, is_selected=False, is_visible=True):
+    def __init__(self,
+                 data: Data,
+                 name: str = None,
+                 is_selected: bool = False,
+                 is_visible: bool = True,
+                 show_points: bool = False,
+                 show_lines: bool = True,
+                 show_faces: bool = True,
+                 pointcolor: Color = None,
+                 linecolor: Color = None,
+                 facecolor: Color = None,
+                 facecolors: dict = None,
+                 linecolors: dict = None,
+                 pointcolors: dict = None,
+                 linewidth: int = 1,
+                 pointsize: int = 10,
+                 opacity: int = 1.0):
+
         self._data = data
         self.name = name or str(self)
         self.is_selected = is_selected
         self.is_visible = is_visible
+
+        self.show_points = show_points
+        self.show_lines = show_lines
+        self.show_faces = show_faces
+
+        self.pointcolor = Color(*(pointcolor or self.default_color_points))
+        self.linecolor = Color(*(linecolor or self.default_color_lines))
+        self.facecolor = Color(*(facecolor or self.default_color_faces))
+
+        self.pointcolors = pointcolors or {}
+        self.facecolors = facecolors or {}
+        self.linecolors = linecolors or {}
+
+        self.linewidth = linewidth
+        self.pointsize = pointsize
+        self.opacity = opacity
+        self.background = False
+
         self._instance_color = None
         self._translation = [0., 0., 0.]
         self._rotation = [0., 0., 0.]
         self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
+
+        self._bounding_box = None
+        self._bounding_box_center = None
+        self._is_collection = False
+
+    @property
+    def bounding_box(self):
+        return self._bounding_box
+
+    @property
+    def bounding_box_center(self):
+        return self._bounding_box_center
 
     @property
     def otype(self):
