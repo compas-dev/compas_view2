@@ -245,7 +245,7 @@ class App:
 
         Parameters
         ----------
-        data: :class:`compas.data.Dadta`
+        data: :class:`compas.data.Data`
             A COMPAS data object.
         is_selected : bool, optional
             Whether the object is selected.

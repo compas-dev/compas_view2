@@ -1,5 +1,4 @@
 import numpy as np
-from inspect import getargspec
 
 from compas_view2.collections import Collection
 from .object import Object
