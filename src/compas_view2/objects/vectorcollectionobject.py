@@ -1,24 +1,31 @@
+from compas_view2.collections import Collection
 from .object import Object
-from ..buffers import make_index_buffer, make_vertex_buffer
+from compas_view2.gl import make_index_buffer, make_vertex_buffer, update_index_buffer, update_vertex_buffer
 from compas.utilities import flatten
 
 
 class VectorCollectionObject(Object):
     """Object for displaying vector as arrow."""
 
-    def __init__(self, collection, colors=None, positions=None, sizes=None, **kwargs):
+    def __init__(self, collection: Collection, **kwargs):
         super().__init__(collection, **kwargs)
-        self.colors = colors or [[0, 0, 0]] * len(collection.items)
-        self.positions = positions or [[0, 0, 0]] * len(collection.items)
-        self.sizes = sizes or [1] * len(collection.items)
 
-        print(kwargs)
+    @property
+    def collection(self):
+        return self._data
 
     def init(self):
         self.make_buffers()
         self._update_matrix()
 
+    def update(self):
+        self.update_buffers()
+        self._update_matrix()
+
     def make_buffers(self):
+        self.positions = [self.collection.item_properties[i].get('position', [0, 0, 0]) for i in range(len(self.collection.item_properties))]
+        self.colors = [self.collection.item_properties[i].get('color', [0, 0, 0]) for i in range(len(self.collection.item_properties))]
+        self.sizes = [self.collection.item_properties[i].get('size', 1) for i in range(len(self.collection.item_properties))]
         self._vector_buffer = {
             'positions': make_vertex_buffer(list(flatten(self.positions))),
             'directions': make_vertex_buffer(list(flatten(self._data.items))),
@@ -27,6 +34,16 @@ class VectorCollectionObject(Object):
             'elements': make_index_buffer([i for i in range(len(self._data.items))]),
             'n': len(self._data.items)
         }
+
+    def update_buffers(self):
+        self.positions = [self.collection.item_properties[i].get('position', [0, 0, 0]) for i in range(len(self.collection.item_properties))]
+        self.colors = [self.collection.item_properties[i].get('color', [0, 0, 0]) for i in range(len(self.collection.item_properties))]
+        self.sizes = [self.collection.item_properties[i].get('size', 1) for i in range(len(self.collection.item_properties))]
+        update_vertex_buffer(list(flatten(self.positions)), self._vector_buffer['positions'])
+        update_vertex_buffer(list(flatten(self._data.items)), self._vector_buffer['directions'])
+        update_vertex_buffer(list(flatten(self.colors)), self._vector_buffer['colors'])
+        update_vertex_buffer(self.sizes, self._vector_buffer['sizes'])
+        update_index_buffer([i for i in range(len(self._data.items))], self._vector_buffer['elements'])
 
     def draw(self, shader):
         shader.enable_attribute('position')

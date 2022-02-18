@@ -1,6 +1,4 @@
-from compas_view2.gl import make_index_buffer
-from compas_view2.gl import make_vertex_buffer
-
+from compas_view2.gl import make_index_buffer, make_vertex_buffer, update_vertex_buffer
 from .object import Object
 
 
@@ -17,6 +15,10 @@ class VectorObject(Object):
         self.make_buffers()
         self._update_matrix()
 
+    def update(self):
+        self.update_buffers()
+        self._update_matrix()
+
     def make_buffers(self):
         self._vector_buffer = {
             'positions': make_vertex_buffer(list(self.position)),
@@ -26,6 +28,12 @@ class VectorObject(Object):
             'elements': make_index_buffer([0]),
             'n': 1
         }
+
+    def update_buffers(self):
+        update_vertex_buffer(list(self.position), self._vector_buffer['positions'])
+        update_vertex_buffer(list(self._data), self._vector_buffer['directions'])
+        update_vertex_buffer(self.color, self._vector_buffer['colors'])
+        update_vertex_buffer([self.size], self._vector_buffer['sizes'])
 
     def draw(self, shader):
         shader.enable_attribute('position')

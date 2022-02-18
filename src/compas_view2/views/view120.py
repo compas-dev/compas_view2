@@ -3,17 +3,15 @@ from OpenGL import GL
 
 import os
 import numpy as np
-from ..objects.bufferobject import BufferObject
-from ..objects.textobject import TextObject
-from ..objects.vectorobject import VectorObject
-from ..objects.vectorcollectionobject import VectorCollectionObject
 
 from compas.geometry import transform_points_numpy
 
 from compas_view2.objects import BufferObject
 from compas_view2.objects import TextObject
 from compas_view2.objects import VectorObject
+from compas_view2.objects import VectorCollectionObject
 from compas_view2.shaders import Shader
+
 
 from .view import View
 

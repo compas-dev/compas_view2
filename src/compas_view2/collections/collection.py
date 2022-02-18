@@ -22,7 +22,3 @@ class Collection:
             self.item_properties = item_properties
 
         assert len(self.items) == len(self.item_properties)
-
-    @property    
-    def is_vector(self):
-        return isinstance(self.items[0], Vector)

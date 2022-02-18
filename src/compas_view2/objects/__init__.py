@@ -42,6 +42,7 @@ from .torusobject import TorusObject
 from .arrowobject import ArrowObject
 from .textobject import TextObject
 from .collectionobject import CollectionObject
+from .vectorcollectionobject import VectorCollectionObject  # noqa : F401
 from .gridobject import GridObject  # noqa : F401
 from .cylinderobject import CylinderObject
 from .planeobject import PlaneObject

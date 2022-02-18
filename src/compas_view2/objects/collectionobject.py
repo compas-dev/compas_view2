@@ -1,6 +1,7 @@
 import numpy as np
 
 from compas_view2.collections import Collection
+from compas.geometry import Vector
 from .vectorcollectionobject import VectorCollectionObject
 from .object import Object
 from .bufferobject import BufferObject
@@ -10,8 +11,7 @@ class CollectionObject(BufferObject):
     """Object for displaying COMPAS collection."""
 
     def __new__(cls, collection, **kwargs):
-        if collection.is_vector:
-            kwargs.update(collection.kwargs)
+        if isinstance(collection.items[0], Vector):
             return VectorCollectionObject(collection, **kwargs)
         else:
             return super().__new__(cls)
