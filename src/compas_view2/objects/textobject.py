@@ -1,11 +1,12 @@
 import os
 import numpy as np
 import freetype as ft
+from OpenGL import GL
+
+from compas_view2.gl import make_index_buffer
+from compas_view2.gl import make_vertex_buffer
 
 from .object import Object
-
-from OpenGL import GL
-from ..buffers import make_index_buffer, make_vertex_buffer
 
 here = os.path.dirname(__file__)
 fonts = os.path.join(here, '..', 'fonts')
@@ -14,13 +15,12 @@ fonts = os.path.join(here, '..', 'fonts')
 class TextObject(Object):
     """Object for displaying text sprites."""
 
-    def __init__(self, data, name=None, color=None, height=10, opacity=1):
-        super().__init__(data, name=name)
+    def __init__(self, data, color=None, height=10, **kwargs):
+        super().__init__(data, **kwargs)
         self.color = color or [0, 0, 0]
         self.characters = []
         self.buffers = []
         self.height = height
-        self.opacity = opacity
 
     def init(self):
         self.make_buffers()

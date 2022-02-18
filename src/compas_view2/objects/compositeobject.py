@@ -1,5 +1,6 @@
-from .bufferobject import BufferObject
 import numpy as np
+
+from .bufferobject import BufferObject
 
 
 class CompositeObject(BufferObject):

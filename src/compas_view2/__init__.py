@@ -1,7 +1,5 @@
 import os
 
-os.environ['QT_MAC_WANTS_LAYER'] = '1'
-
 __author__ = ["tom van mele"]
 __copyright__ = "Block Research Group - ETH Zurich"
 __license__ = "MIT License"
@@ -15,6 +13,10 @@ HOME = os.path.abspath(os.path.join(HERE, "../../"))
 DATA = os.path.abspath(os.path.join(HOME, "data"))
 DOCS = os.path.abspath(os.path.join(HOME, "docs"))
 TEMP = os.path.abspath(os.path.join(HOME, "temp"))
+
+
+os.environ['QT_MAC_WANTS_LAYER'] = '1'
+os.environ['QT_API'] = 'pyside2'
 
 
 try:

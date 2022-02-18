@@ -6,11 +6,13 @@ from compas.datastructures import Network
 from compas.datastructures import Mesh
 from compas.geometry import Pointcloud, Box
 from compas.geometry import Scale, Rotation, Translation
-from compas.utilities import i_to_rgb
+from compas.colors import ColorMap
 
-from compas_view2 import app
+from compas_view2.app import App
 
-viewer = app.App()
+viewer = App()
+
+cmap = ColorMap.from_rgb()
 
 mesh = Mesh.from_off(compas.get('tubemesh.off'))
 viewer.add(mesh)
@@ -31,7 +33,6 @@ R1 = Rotation.from_axis_and_angle([0, 0, 1], math.radians(180))
 for point in cloud.transformed(R1):
     size = random.random()
     box = Box((point, [1, 0, 0], [0, 1, 0]), size, size, size)
-    color = i_to_rgb(random.random(), normalize=True)
-    viewer.add(box, color=color, opacity=random.random())
+    viewer.add(box, facecolor=cmap(random.random()), opacity=random.random())
 
 viewer.show()

@@ -1,6 +1,6 @@
 from compas.datastructures import Mesh
+from compas_view2.shapes import Arrow
 from .meshobject import MeshObject
-from ..shapes import Arrow
 
 
 class ArrowObject(MeshObject):

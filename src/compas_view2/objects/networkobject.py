@@ -4,11 +4,10 @@ from .bufferobject import BufferObject
 class NetworkObject(BufferObject):
     """Object for displaying COMPAS network data structures."""
 
-    default_color_points = [0.1, 0.1, 0.1]
-    default_color_lines = [0.4, 0.4, 0.4]
-
-    def __init__(self, data, show_points=True, show_lines=True, **kwargs):
-        super().__init__(data, show_points=show_points, show_lines=show_lines, **kwargs)
+    def __init__(self, data, **kwargs):
+        super().__init__(data, **kwargs)
+        self.show_points = True
+        self.show_lines = True
 
     @property
     def nodes(self):

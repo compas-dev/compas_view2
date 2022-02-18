@@ -1,5 +1,5 @@
-from .bufferobject import BufferObject
 from compas.geometry import Line
+from .bufferobject import BufferObject
 
 
 class LineObject(BufferObject):
@@ -9,7 +9,8 @@ class LineObject(BufferObject):
     default_color_lines = [0.4, 0.4, 0.4]
 
     def __init__(self, data, **kwargs):
-        super().__init__(data, show_lines=True, **kwargs)
+        super().__init__(data, **kwargs)
+        self.show_lines = True
 
     def _points_data(self):
         line = self._data

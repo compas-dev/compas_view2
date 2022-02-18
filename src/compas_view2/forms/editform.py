@@ -1,9 +1,11 @@
-from PySide2 import QtWidgets
+import numpy as np
+from qtpy import QtWidgets
+
 from compas.datastructures import Mesh
 from compas.datastructures import Network
 from compas.datastructures import VolMesh
+from compas.colors import Color
 from .collapsiblebox import CollapsibleBox
-import numpy as np
 
 
 class EditForm(QtWidgets.QDockWidget):
@@ -116,19 +118,19 @@ class EditForm(QtWidgets.QDockWidget):
 
         cb.setContentLayout(v_layout)
 
-    def map_inputs(self, data, name=None, layout=None, is_color=False, update_data=False):
+    def map_inputs(self, data, name=None, layout=None, update_data=False):
         """Map inputs of supported data type"""
         if name:
             self.add_label(name, layout=layout)
         if isinstance(data, (list, np.ndarray)):
-            if is_color:
-                self.map_color(data, layout=layout, update_data=update_data)
-            elif isinstance(data[0], (float, int)):
+            if isinstance(data[0], (float, int)):
                 self.map_list(data, layout=layout, update_data=update_data)
             elif len(data) <= 10 and isinstance(data[0][0], (float, int)):
                 self.map_vector_list(data, layout=layout, update_data=update_data)
             else:
                 self.add_label(f"{data[0].__class__.__name__}[{len(data)}]", layout=layout)
+        elif isinstance(data, Color):
+            self.map_color(data, layout=layout, update_data=update_data)
         elif isinstance(data, dict):
             self.map_dict(data, layout=layout, update_data=update_data)
         else:
@@ -146,8 +148,7 @@ class EditForm(QtWidgets.QDockWidget):
                 cb = self.add_collapsiblebox(attr, layout=layout)
                 v_layout = QtWidgets.QVBoxLayout()
                 v_layout._parent = cb
-                is_color = isinstance(attribute, np.ndarray) and attr.endswith("color")  # TODO: Use color class
-                self.map_inputs(attribute, layout=v_layout, is_color=is_color, update_data=update_data)
+                self.map_inputs(attribute, layout=v_layout, update_data=update_data)
                 cb.setContentLayout(v_layout)
 
     def map_dict(self, data, layout=None, update_data=False):
@@ -241,8 +242,8 @@ class EditForm(QtWidgets.QDockWidget):
         h_layout = QtWidgets.QHBoxLayout()
         layout = layout or self._inputs
         layout.addLayout(h_layout)
-        for i, channel in enumerate(["r", "g", "b"]):
-            self.map_number(color, i, name=channel, layout=h_layout, update_data=update_data, minimum=0, maximum=1, step=0.01)
+        for channel in ["r", "g", "b"]:
+            self.map_number(color, channel, layout=h_layout, update_data=update_data, minimum=0, maximum=1, step=0.01)
 
     def map_bool(self, obj, attribute, name=None, layout=None, update_data=False):
         """Map color input field to an object attribute

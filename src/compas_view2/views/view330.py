@@ -1,4 +1,4 @@
-from ..shaders import Shader
+from compas_view2.shaders import Shader
 from .view import View
 
 

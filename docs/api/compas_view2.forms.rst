@@ -1,15 +1,21 @@
-********************************************************************************
+*******************************************************************************
 compas_view2.forms
-********************************************************************************
+*******************************************************************************
 
 .. currentmodule:: compas_view2.forms
 
+Classes
+=======
 
 .. autosummary::
     :toctree: generated/
     :nosignatures:
-    :template: autosummary/class_separate_inherited.rst
 
+    Form
+    EditForm
+    AddForm
     PointForm
+    LineForm
     SphereForm
     TorusForm
+    PointEditForm

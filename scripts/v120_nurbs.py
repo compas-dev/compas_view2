@@ -1,5 +1,5 @@
 from compas.geometry import Point
-from compas_occ.geometry import NurbsSurface
+from compas.geometry import NurbsSurface
 from compas_view2.app import App
 
 points = [
@@ -11,6 +11,6 @@ points = [
 
 surface = NurbsSurface.from_points(points=points)
 
-view = App()
+view = App(viewmode='lighted')
 view.add(surface, show_points=True, show_lines=True, pointcolor=(1, 0, 0), linecolor=(0, 0, 1))
 view.run()

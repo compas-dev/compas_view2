@@ -1,24 +1,45 @@
-from typing import AnyStr, Callable, Optional, List, Dict, Any
+from typing import AnyStr
+from typing import Callable
+from typing import Optional
+from typing import Union
+from typing import Tuple
+from typing import List
+from typing import Dict
+from typing import Any
 from typing_extensions import Literal
 
 import sys
 import os
 import json
+import tempfile
+import shutil
 
 from functools import partial
 
-from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtGui import QIcon
+from qtpy import QtCore
+from qtpy import QtGui
+from qtpy import QtWidgets
+from qtpy.QtGui import QIcon
 
 from compas.data import Data
+from compas.colors import Color
+from compas.utilities import gif_from_images
 
-from ..views import View120
-from ..views import View330
-from ..objects import Object
+from compas_view2.views import View120
+from compas_view2.views import View330
+from compas_view2.objects import Object
 
-from .controller import Controller
-from .selector import Selector
+from compas_view2.ui import Button
+from compas_view2.ui import Slider
+from compas_view2.ui import Radio
+from compas_view2.ui import Checkbox
+from compas_view2.ui import Select
+
+from compas_view2.flow import Flow
+
 from .timer import Timer
+from .selector import Selector
+from .controller import Controller
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -30,41 +51,27 @@ VERSIONS = {'120': (2, 1), '330': (3, 3)}
 class App:
     """Viewer app.
 
-    The app has a (main) window with a central OpenGL widget (i.e. the 'view'),
-    and a menubar, toolbar, and statusbar.
-    The menubar provides access to all supported 'actions'.
-    The toolbar is meant to be a 'quicknav' to a selected set of actions.
-    The app supports rotate/pan/zoom, and object selection via picking or box selections.
-
-    Currently the app uses OpenGL 2.2 and GLSL 120 with a 'compatibility' profile.
-    Support for OpenGL 3.3 and GLSL 330 with a 'core' profile is under development.
-
     Parameters
     ----------
-    version: '120' | '330', optional
+    version: {'120', '330'}, optional
         The version of the GLSL used by the shaders.
         Default is ``'120'`` with a compatibility profile.
         The option ``'330'`` is not yet available.
     width: int, optional
         The width of the app window at startup.
-        Default is ``800``.
     height: int, optional
         The height of the app window at startup.
-        Default is ``500``.
-    viewmode: 'shaded' | 'ghosted' | 'wireframe' | 'lighted', optional
+    viewmode: {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
         The display mode of the OpenGL view.
-        Default is ``'shaded'``.
-        In ``'ghosted'`` mode, all objects have a default opacity of ``0.7``.
+        In `ghosted` mode, all objects have a default opacity of 0.7.
     show_grid: bool, optional
         Show the XY plane.
-        Default is ``True``.
     controller_class: :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
-        Default is ``None``, in which case the default controller is used,
-        matching the default config file.
+        Default is None, in which case the default controller is used, matching the default config file.
     config: dict | filepath, optional
         A configuration dict for the UI, or a path to a JSON file containing such a dict.
-        Default is ``None``, in which case the default configuration is used.
+        Default is None, in which case the default configuration is used.
 
     Attributes
     ----------
@@ -80,6 +87,15 @@ class App:
 
     Notes
     -----
+    The app has a (main) window with a central OpenGL widget (i.e. the 'view'),
+    and a menubar, toolbar, and statusbar.
+    The menubar provides access to all supported 'actions'.
+    The toolbar is meant to be a 'quicknav' to a selected set of actions.
+    The app supports rotate/pan/zoom, and object selection via picking or box selections.
+
+    Currently the app uses OpenGL 2.2 and GLSL 120 with a 'compatibility' profile.
+    Support for OpenGL 3.3 and GLSL 330 with a 'core' profile is under development.
+
     The app can currently only be used 'as-is'.
     This means that there is no formal mechanism for adding actions to the controller
     or to add functionality to the shader, other than by extending the core classes.
@@ -107,7 +123,11 @@ class App:
                  controller_class: Optional[Controller] = None,
                  show_grid: bool = True,
                  config: Optional[dict] = None,
-                 enable_sidebar: bool = False):
+                 enable_sidebar: bool = False,
+                 show_flow: bool = False,
+                 flow_view_size: Union[Tuple[int], List[int]] = None,
+                 flow_auto_update: bool = True,
+                 ):
 
         if version not in VERSIONS:
             raise Exception('Only these versions are currently supported: {}'.format(VERSIONS))
@@ -161,11 +181,22 @@ class App:
         self._app.references.add(self.window)
         self.selector = Selector(self)
 
+        self.show_flow = show_flow
+        self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
+
         self.enable_sidebar = enable_sidebar
         self.init()
         self.resize(width, height)
+        self.started = False
 
     def init(self):
+        """Initialize the components of the user interface.
+
+        Returns
+        -------
+        None
+
+        """
         self._init_statusbar()
         self._init_menubar(self.config.get('menubar'))
         self._init_toolbar(self.config.get('toolbar'))
@@ -177,7 +208,14 @@ class App:
         Parameters
         ----------
         width: int
+            Width of the viewer window.
         height: int
+            Height of the viewer window.
+
+        Returns
+        -------
+        None
+
         """
         self.window.resize(width, height)
         desktop = self._app.desktop()
@@ -186,18 +224,86 @@ class App:
         y = 0.5 * (rect.height() - height)
         self.window.setGeometry(x, y, width, height)
 
-    def add(self, data: Data, **kwargs) -> Object:
+    def add(self, data: Data,
+            name: str = None,
+            is_selected: bool = False,
+            is_visible: bool = True,
+            show_points: bool = False,
+            show_lines: bool = True,
+            show_faces: bool = True,
+            pointcolor: Color = None,
+            linecolor: Color = None,
+            facecolor: Color = None,
+            facecolors: dict = None,
+            linecolors: dict = None,
+            pointcolors: dict = None,
+            linewidth: int = 1,
+            pointsize: int = 10,
+            opacity: int = 1.0,
+            **kwargs) -> Object:
         """Add a COMPAS object.
 
         Parameters
         ----------
-        data: :class:`compas.geometry.Primitive` | :class:`compas.geometry.Shape` | :class:`compas.geometry.Datastructure`
+        data: :class:`compas.data.Data`
+            A COMPAS data object.
+        is_selected : bool, optional
+            Whether the object is selected.
+            Default to False.
+        is_visible : bool, optional
+            Whether to show object.
+            Default to True.
+        show_points : bool, optional
+            Whether to show points/vertices of the object.
+            Default to False.
+        show_lines : bool, optional
+            Whether to show lines/edges of the object.
+            Default to True.
+        show_faces : bool, optional
+            Whether to show faces of the object.
+            Default to True.
+        pointcolor : :class:`compas.color.Color`, optional
+            The color of the points.
+            Default to `compas_view2.objects.Object.default_color_points`.
+        linecolor : :class:`compas.color.Color`, optional
+            The color of the lines.
+            Default to `compas_view2.objects.Object.default_color_lines`.
+        facecolor : :class:`compas.color.Color`, optional
+            The color of the faces.
+            Default to `compas_view2.objects.Object.default_color_faces`.
+        pointcolors : dict, optional
+            The color dict of individual points.
+            Default to None.
+        linecolors : dict, optional
+            The color dict of individual lines.
+            Default to None.
+        facecolors : dict, optional
+            The color dict of individual faces.
+            Default to None.
+        linewidth : int, optional
+            The line width to be drawn on screen
+            Default to 1.
+        pointsize : int, optional
+            The point size to be drawn on screen
+            Default to 10.
+        opacity : float, optional
+            The opacity of the object.
+            Default to 1.0.
+        **kwargs : dict, optional
+            Additional visualization options for specific objects.
 
         Returns
         -------
         :class:`compas_view2.objects.Object`
+            The added object.
+
         """
-        obj = Object.build(data, **kwargs)
+        obj = Object.build(data, name=name, is_selected=is_selected, is_visible=is_visible,
+                           show_points=show_points, show_lines=show_lines, show_faces=show_faces,
+                           pointcolor=pointcolor, linecolor=linecolor, facecolor=facecolor,
+                           facecolors=facecolors, linecolors=linecolors, pointcolors=pointcolors,
+                           linewidth=linewidth, pointsize=pointsize, opacity=opacity, **kwargs)
+
         self.view.objects[obj] = obj
         self.selector.add(obj)
         if self.view.isValid():
@@ -205,7 +311,20 @@ class App:
         return obj
 
     def add_reference(self, obj: Object, **kwargs) -> Object:
-        """"""
+        """Add an object as a reference to another object.
+
+        Parameters
+        ----------
+        obj : :class:`compas_view2.objects.Object`
+            A view object.
+        **kwargs : dict, optional
+            Additional visualization options.
+
+        Returns
+        -------
+        :class:`compas_view2.objects.Object`
+
+        """
         ref = obj.otype.from_other(obj, **kwargs)
         self.view.objects[ref] = ref
         self.selector.add(ref)
@@ -213,46 +332,176 @@ class App:
             ref.init()
         return ref
 
-    def remove(self, obj: Object):
+    def remove(self, obj: Object) -> None:
+        """Remove an object from the view.
+
+        Parameters
+        ----------
+        obj : :class:`compas_view2.objects.Object`
+            A view object.
+
+        Returns
+        -------
+        None
+
+        """
         if obj in list(self.view.objects):
             del self.view.objects[obj]
         for key, value in list(self.selector.instances.items()):
             if obj == value:
                 del self.selector.instances[key]
 
-    def show(self, pause=None):
-        """Show the viewer window."""
+    def show(self) -> None:
+        """Show the viewer window.
+
+        Returns
+        -------
+        None
+
+        """
+        self.started = True
         self.window.show()
+        if self.show_flow:
+            self.flow.show()
         self._app.exec_()
 
     run = show
 
-    def about(self):
-        """Display the about message as defined in the config file."""
+    def about(self) -> None:
+        """Display the about message as defined in the config file.
+
+        Returns
+        -------
+        None
+
+        """
         QtWidgets.QMessageBox.about(self.window, 'About', self.config['messages']['about'])
 
-    def info(self, message: str):
-        """Display info."""
-        QtWidgets.QMessageBox.information(self.window, 'Info', message)
+    def info(self, message: str) -> None:
+        """Display info.
 
-    def question(self, message: str):
-        """Ask a question."""
-        pass
+        Parameters
+        ----------
+        message : str
+            An info message.
 
-    def warning(self, message: str):
-        """Display a warning."""
-        QtWidgets.QMessageBox.warning(self.window, 'Warning', message)
+        Returns
+        -------
+        None
 
-    def critical(self, message: str):
-        """Display a critical warning."""
-        QtWidgets.QMessageBox.critical(self.window, 'Critical', message)
+        """
+        result = QtWidgets.QMessageBox.information(self.window, 'Info', message)
+        print(result)
 
-    def status(self, message: str):
-        """Display a message in the status bar."""
+    def warning(self, message: str) -> None:
+        """Display a warning.
+
+        Parameters
+        ----------
+        message : str
+            A warning message.
+
+        Returns
+        -------
+        None
+
+        """
+        result = QtWidgets.QMessageBox.warning(self.window, 'Warning', message)
+        print(result)
+
+    def critical(self, message: str) -> None:
+        """Display a critical warning.
+
+        Parameters
+        ----------
+        message : str
+            A critical warning message.
+
+        Returns
+        -------
+        None
+
+        """
+        result = QtWidgets.QMessageBox.critical(self.window, 'Critical', message)
+        print(result)
+
+    def question(self, message: str) -> None:
+        """Ask a question.
+
+        Parameters
+        ----------
+        message : str
+            A question.
+
+        Returns
+        -------
+        None
+
+        """
+        flags = QtWidgets.QMessageBox.StandardButton.Yes
+        flags |= QtWidgets.QMessageBox.StandardButton.No
+        response = QtWidgets.QMessageBox.question(self.window, 'Question', message, flags)
+        if response == QtWidgets.QMessageBox.Yes:
+            return True
+        return False
+
+    def confirm(self, message: str):
+        """Confirm the execution of an action.
+
+        Parameters
+        ----------
+        message : str
+            Message to inform the user.
+
+        Returns
+        -------
+        bool
+            True if the user confirms.
+            False otherwise.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            if viewer.confirm("Should i continue?"):
+                continue
+
+        """
+        flags = QtWidgets.QMessageBox.StandardButton.Ok
+        flags |= QtWidgets.QMessageBox.StandardButton.Cancel
+        response = QtWidgets.QMessageBox.warning(self.window, 'Confirmation', message, flags)
+        if response == QtWidgets.QMessageBox.StandardButton.Ok:
+            return True
+        return False
+
+    def status(self, message: str) -> None:
+        """Display a message in the status bar.
+
+        Parameters
+        ----------
+        message : str
+            A status message.
+
+        Returns
+        -------
+        None
+
+        """
         self.statusText.setText(message)
 
-    def fps(self, fps: int):
-        """Update fps info in the status bar."""
+    def fps(self, fps: int) -> None:
+        """Update fps info in the status bar.
+
+        Parameters
+        ----------
+        fps : int
+            The number of frames per second.
+
+        Returns
+        -------
+        None
+
+        """
         self.statusFps.setText('fps: {}'.format(fps))
 
     # ==============================================================================
@@ -341,16 +590,16 @@ class App:
                 parent.addSeparator()
             elif item['type'] == 'radio':
                 del item['type']
-                self.add_radio(parent, **item)
+                Radio(self, self.sidebar, **item)
             elif item['type'] == 'checkbox':
                 del item['type']
-                self.add_checkbox(parent, **item)
+                Checkbox(self, self.sidebar, **item)
             elif item['type'] == 'slider':
                 del item['type']
-                self.add_slider(parent, **item)
+                Slider(self, self.sidebar, **item)
             elif item['type'] == 'button':
                 del item['type']
-                self.add_button(parent, **item)
+                Button(self, self.sidebar, **item)
             else:
                 raise NotImplementedError
 
@@ -372,144 +621,238 @@ class App:
             action = parent.addAction(text, partial(action, *args, **kwargs))
         return action
 
-    def add_button(self,
-                   parent: QtWidgets.QWidget,
-                   *,
-                   text: str,
-                   action: Callable):
-        box = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout()
-        button = QtWidgets.QPushButton(text)
-        layout.addWidget(button)
-        box.setLayout(layout)
-        parent.addWidget(box)
-        action = action if callable(action) else getattr(self.controller, action)
-        button.clicked.connect(action)
-        # button.clicked.connect(self.view.update)
-
-    def add_radio(self,
-                  parent: QtWidgets.QWidget,
-                  *,
-                  items: List[Dict]):
-        box = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout()
-        radio = QtWidgets.QActionGroup(self.window, exclusive=True)
-        layout.addWidget(radio)
-        box.setLayout(layout)
-        parent.addWidget(box)
-        for item in items:
-            action = self._add_action(parent, text=item['text'], action=item['action'])
-            action.setCheckable(True)
-            action.setChecked(item['checked'])
-            radio.addAction(action)
-        # radio.toggled.connect(self.view.update)
-
-    def add_checkbox(self,
-                     parent: QtWidgets.QWidget,
-                     *,
-                     text: str,
-                     action: Callable,
-                     checked: bool = False):
-        box = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout()
-        checkbox = QtWidgets.QCheckBox(text)
-        checkbox.setCheckState(QtCore.Qt.CheckState.Checked if checked else QtCore.Qt.CheckState.Unchecked)
-        layout.addWidget(checkbox)
-        box.setLayout(layout)
-        parent.addWidget(box)
-        action = action if callable(action) else getattr(self.controller, action)
-        checkbox.toggled.connect(action)
-        checkbox.toggled.connect(self.view.update)
-
-    def add_input(self, parent: QtWidgets.QWidget):
-        pass
-
-    def add_colorpicker(self, parent: QtWidgets.QWidget):
-        pass
-
-    def add_slider(self,
-                   parent: QtWidgets.QWidget,
-                   *,
-                   text: str,
-                   action: Callable,
-                   value: int = 0,
-                   minval: int = 0,
-                   maxval: int = 100,
-                   step: int = 1,
-                   interval: int = 1,
-                   label: str = ''):
-        box = QtWidgets.QWidget()
-        layout = QtWidgets.QHBoxLayout()
-        value_label = QtWidgets.QLabel(str(value))
-        slider = QtWidgets.QSlider()
-        slider.setOrientation(QtCore.Qt.Horizontal)
-        slider.setValue(value)
-        slider.setMinimum(minval)
-        slider.setMaximum(maxval)
-        slider.setTickInterval(interval)
-        slider.setSingleStep(step)
-        layout.addWidget(QtWidgets.QLabel(text))
-        layout.addWidget(slider)
-        layout.addWidget(value_label)
-        layout.addWidget(QtWidgets.QLabel(str(label)))
-        box.setLayout(layout)
-        parent.addWidget(box)
-        slider.valueChanged.connect(lambda v: value_label.setText(str(v)))
-        action = action if callable(action) else getattr(self.controller, action)
-        slider.valueChanged.connect(action)
-        slider.valueChanged.connect(self.view.update)
-
     # ==============================================================================
     # Decorators
     # ==============================================================================
 
-    def button(self, text: str) -> Callable:
+    def select(self,
+               items: List[Dict[str, Any]]) -> Callable:
+        """Decorator for combo boxes.
+
+        Parameters
+        ----------
+        items
+
+        Returns
+        -------
+        callable
+
+        """
         def outer(func: Callable) -> Callable:
-            def wrapped(*args, **kwargs):
-                func(self.app, *args, **kwargs)
-            self.add_button(self.sidebar, text=text, action=func)
-            return wrapped
+            select = Select(self,
+                            self.sidebar,
+                            items=items,
+                            action=func)
+            return select
+        return outer
+
+    def radio(self,
+              items: List[Dict[str, Any]],
+              title='') -> Callable:
+        """Decorator for radio actions.
+
+        Parameters
+        ----------
+        items
+
+        Returns
+        -------
+        callable
+
+        """
+        def outer(func: Callable) -> Callable:
+            radio = Radio(self,
+                          self.sidebar,
+                          title=title,
+                          items=items,
+                          action=func)
+            return radio
+        return outer
+
+    def button(self, text: str) -> Callable:
+        """Decorator for button actions.
+
+        Parameters
+        ----------
+        text : str
+            The button text label.
+
+        Returns
+        -------
+        callable
+
+        Notes
+        -----
+        Use this method to convert a function into the callback action of a button,
+        and automatically add the button to the sidebar.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            @viewer.button('Click me!')
+            def click(app):
+                app.info('Thanks for clicking...')
+
+        """
+        def outer(func: Callable) -> Callable:
+            button = Button(self,
+                            self.sidebar,
+                            text=text,
+                            action=func)
+            return button
         return outer
 
     def checkbox(self, text: str, checked: bool = True) -> Callable:
+        """Decorator for checkbox actions.
+
+        Parameters
+        ----------
+        text : str
+            The text label of the checkbox.
+        checked : bool, optional
+            If True, the checkbox will be displayed as checked.
+
+        Returns
+        -------
+        callable
+
+        Notes
+        -----
+        Use this method to convert a function into the callback action of a checkbox,
+        and automatically add the checkbox to the sidebar.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            @viewer.checkbox('Check me!')
+            def check(app):
+                app.info('Thanks for checking...')
+
+        """
         def outer(func: Callable) -> Callable:
-            def wrapped(*args, **kwargs):
-                func(self.app, *args, **kwargs)
-            self.add_checkbox(self.sidebar, text=text, action=func, checked=checked)
-            return wrapped
+            checkbox = Checkbox(self,
+                                self.sidebar,
+                                text=text,
+                                action=func,
+                                checked=checked)
+            return checkbox
         return outer
 
     def slider(self,
-               text: str,
+               title: str,
                value: int = 0,
                minval: int = 0,
                maxval: int = 100,
                step: int = 1,
-               label: str = '') -> Callable:
+               annotation: str = '',
+               bgcolor: Color = None) -> Callable:
+        """Decorator for slider actions.
+
+        Parameters
+        ----------
+        title : str
+            The text label of the slider.
+        value : int, optional
+            Initial value of the slider.
+        minval : int, optional
+            Minimum value of the sliding range.
+        maxval : int, optional
+            Maximum value of the sliding range.
+        step : int, optional
+            Size of the sliding step.
+        annotation : str, optional
+            Value annotation.
+
+        Returns
+        -------
+        callable
+
+        Notes
+        -----
+        Use this method to convert a function into the callback action of a slider,
+        and automatically add the slider to the sidebar.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            @viewer.slider(title='Slide me!')
+            def slide(app):
+                app.info('Thanks for sliding...')
+
+        """
         def outer(func: Callable) -> Callable:
-            def wrapped(*args, **kwargs):
-                func(self.app, *args, **kwargs)
-            self.add_slider(self.sidebar,
-                            text=text,
+            slider = Slider(self,
+                            self.sidebar,
+                            func,
                             value=value,
                             minval=minval,
                             maxval=maxval,
                             step=step,
-                            label=label,
-                            action=func)
-            return wrapped
+                            title=title,
+                            annotation=annotation,
+                            bgcolor=bgcolor)
+            return slider
         return outer
 
     def on(self,
            interval: int = None,
            timeout: int = None,
-           record: bool = False,
            frames: int = None,
+           record: bool = False,
            record_path: str = 'temp/out.gif',
+           record_fps: int = None,
            playback_interval: int = None) -> Callable:
+        """Decorator for callbacks of a dynamic drawing process.
 
+        Parameters
+        ----------
+        interval : int, optional
+            Interval between subsequent calls to this function, in milliseconds.
+        timeout : int, optional
+            Timeout between subsequent calls to this function, in milliseconds.
+        frames : int, optional
+            The number of frames of the process.
+            If no frame number is provided, the process continues until the viewer is closed.
+        record : bool, optional
+            If True, record a screenshot of every frame.
+        record_path : str, optional
+            The path where the recording should be saved.
+        playback_interval : int, optional
+            Interval between frames in the recording, in milliseconds.
+
+        Returns
+        -------
+        callable
+
+        Notes
+        -----
+        The difference between `interval` and `timeout` is that the former indicates
+        the time between subsequent calls to the callback, without taking into account the duration of the execution of the call,
+        whereas the latter indicates a pause after the completed execution of the previous call, before starting the next one.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            angle = math.radians(5)
+
+            @viewer.on(interval=1000)
+            def rotate(frame):
+                obj.rotation = [0, 0, frame * angle]
+                obj.update()
+
+        """
         if (not interval and not timeout) or (interval and timeout):
             raise ValueError('Must specify either interval or timeout')
+
+        if record:
+            # check if record_path is writable
+            # create temp dir for frames
+            self.tempdir = tempfile.mkdtemp()
+            record_fps = record_fps or 1000/interval
 
         def outer(func: Callable):
             def render():
@@ -520,11 +863,14 @@ class App:
                     self.timer.stop()
                     if self.record:
                         self.record = False
-                        self.recorded_frames[0].save(
-                            record_path, save_all=True, optimize=True,
-                            duration=playback_interval or interval,
-                            append_images=self.recorded_frames[1:],
-                            loop=100)
+                        # self.recorded_frames[0].save(
+                        #     record_path, save_all=True, optimize=False,
+                        #     duration=playback_interval or interval,
+                        #     append_images=self.recorded_frames[1:],
+                        #     loop=100)
+                        files = [os.path.join(self.tempdir, f"{i}.png") for i in range(frames)]
+                        gif_from_images(files=files, gif_path=record_path, fps=record_fps, delete_files=True)
+                        shutil.rmtree(self.tempdir)
                         print('Recorded to ', record_path)
 
             if interval:

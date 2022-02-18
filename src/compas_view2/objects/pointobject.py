@@ -1,12 +1,14 @@
-from .bufferobject import BufferObject
 from compas.geometry import Point
+
+from .bufferobject import BufferObject
 
 
 class PointObject(BufferObject):
     """Object for displaying COMPAS point geometry."""
 
-    def __init__(self, data, size=None, **kwargs):
-        super().__init__(data, show_points=True, pointsize=size, **kwargs)
+    def __init__(self, data, **kwargs):
+        super().__init__(data, **kwargs)
+        self.show_points = True
 
     def _points_data(self):
         positions = [self._data]

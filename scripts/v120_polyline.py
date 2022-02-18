@@ -1,10 +1,9 @@
 import random
-
 from compas.geometry import Polyline
 
-from compas_view2 import app
+from compas_view2.app import App
 
-viewer = app.App()
+viewer = App()
 
 pts = []
 for i in range(10):

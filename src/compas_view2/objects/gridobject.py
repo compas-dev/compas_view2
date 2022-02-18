@@ -1,6 +1,7 @@
 from compas.utilities import flatten
 
-from ..buffers import make_index_buffer, make_vertex_buffer
+from compas_view2.gl import make_index_buffer
+from compas_view2.gl import make_vertex_buffer
 
 from .bufferobject import BufferObject
 

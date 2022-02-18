@@ -2,9 +2,6 @@ from compas.geometry import Vector
 from compas.geometry import Shape
 
 
-__all__ = ['Text']
-
-
 class Text(Shape):
     """
     """

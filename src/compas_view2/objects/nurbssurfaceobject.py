@@ -1,19 +1,19 @@
-from compas.utilities.itertools import flatten
+from compas.utilities import flatten
 from .bufferobject import BufferObject
 
 
 class NurbsSurfaceObject(BufferObject):
     """Object for displaying COMPAS NurbsSurface geometry."""
 
-    def __init__(self, surface, u=100, v=100, show_edges=False, **kwargs):
-        super().__init__(surface, show_edges=show_edges, **kwargs)
+    def __init__(self, surface, u=100, v=100, **kwargs):
+        super().__init__(surface, **kwargs)
         self._data = surface
-        self._triangles = surface.to_triangles(nu=u, nv=v)
+        self._triangles = [list(point) for triangle in surface.to_triangles(nu=u, nv=v) for point in triangle]
         self.u = u
         self.v = v
 
     def update(self):
-        self._triangles = self._data.to_triangles(nu=self.u, nv=self.v)
+        self._triangles = [list(point) for triangle in self._data.to_triangles(nu=self.u, nv=self.v) for point in triangle]
         self.init()
         super().update()
 

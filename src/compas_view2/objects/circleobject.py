@@ -1,17 +1,19 @@
-from .polylineobject import PolylineObject
+import math
+
 from compas.geometry import Frame
 from compas.geometry import Plane
 from compas.geometry import Circle
-import math
+
+from .polylineobject import PolylineObject
 
 
 class CircleObject(PolylineObject):
     """Object for displaying COMPAS Circle geometry."""
 
-    def __init__(self, circle, u=16, show_edges=True, **kwargs):
+    def __init__(self, circle, u=16, **kwargs):
         self.u = u
         self.calculate_circle_points(circle)
-        super().__init__(circle, close=True, show_edges=show_edges, **kwargs)
+        super().__init__(circle, close=True, **kwargs)
 
     def calculate_circle_points(self, circle):
         frame = Frame.from_plane(circle.plane)

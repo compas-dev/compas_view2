@@ -1,9 +1,9 @@
-from compas.datastructures import Mesh
-from compas_view2 import app
 from random import random
 import compas
+from compas.datastructures import Mesh
+from compas_view2.app import App
 
-viewer = app.App()
+viewer = App()
 
 mesh = Mesh.from_off(compas.get('tubemesh.off'))
 obj = viewer.add(mesh)
