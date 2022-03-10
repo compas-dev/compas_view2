@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added Ryven flow integration.
+* Added Vector object.
 * Separate shaders for background, model, and overlay objects.
 * Collection object for large numbers of individual objects.
 
@@ -16,5 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Changed blending of opacity to be based on camera distance.
 * Updated workflow to latest.
+* Reconstructed Camera class.
 
 ### Removed
