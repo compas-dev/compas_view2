@@ -3,7 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - python=3.8
-  - freeglut
+  - cython
   - freetype-py
   - textdistance
   - compas
