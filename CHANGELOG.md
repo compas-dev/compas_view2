@@ -19,5 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Changed blending of opacity to be based on camera distance.
 * Updated workflow to latest.
 * Reconstructed Camera class.
+* Switch build workflow to run with conda.
 
 ### Removed
