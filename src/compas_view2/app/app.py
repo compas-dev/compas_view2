@@ -35,7 +35,10 @@ from compas_view2.ui import Radio
 from compas_view2.ui import Checkbox
 from compas_view2.ui import Select
 
-from compas_view2.flow import Flow
+try:
+    from compas_view2.flow import Flow
+except ImportError:
+    Flow = None
 
 from .timer import Timer
 from .selector import Selector
@@ -182,7 +185,8 @@ class App:
         self.selector = Selector(self)
 
         self.show_flow = show_flow
-        self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
+        if Flow:
+            self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
 
         self.enable_sidebar = enable_sidebar
         self.init()
@@ -297,7 +301,7 @@ class App:
         """
         self.started = True
         self.window.show()
-        if self.show_flow:
+        if Flow and self.show_flow:
             self.flow.show()
         self._app.exec_()
 
