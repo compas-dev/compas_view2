@@ -13,6 +13,7 @@ class WorkerSignals(QObject):
     finished = Signal()
     error = Signal(tuple)
     result = Signal(object)
+    progress = Signal(object)
 
 
 class Worker(QRunnable):
@@ -21,9 +22,11 @@ class Worker(QRunnable):
 
     pool = QThreadPool()
 
-    def __init__(self, fn, *args, **kwargs):
+    def __init__(self, fn, args=[], kwargs={}, include_self=False):
         super(Worker, self).__init__()
         self.fn = fn
+        if include_self:
+            args = [self] + args
         self.args = args
         self.kwargs = kwargs
         self.signals = WorkerSignals()

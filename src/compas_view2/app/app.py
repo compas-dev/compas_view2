@@ -43,6 +43,7 @@ except ImportError:
 from .timer import Timer
 from .selector import Selector
 from .controller import Controller
+from .worker import Worker
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -443,6 +444,38 @@ class App:
 
         """
         self.statusFps.setText('fps: {}'.format(fps))
+
+    def threading(self, func: Callable, args: list = [], kwargs: dict = {},
+                  on_progress: Callable = None, on_result: Callable = None,
+                  include_self: bool = False) -> None:
+        """Execute a multi-threaded function.
+
+        Parameters
+        ----------
+        func : function
+            The function to be executed.
+        args : list, optional
+            The arguments to be passed to the function.
+        kwargs : dict, optional
+            The keyword arguments to be passed to the function.
+        on_progress : function, optional
+            A function to be called on progress event.
+        on_result : function, optional
+            A function to be called on result event.
+        include_self : bool, optional
+            Include the thread worker instance in the arguments, for sending out progress singals.
+
+        Returns
+        -------
+        None
+
+        """
+        worker = Worker(func, args=args, kwargs=kwargs, include_self=include_self)
+        if on_progress:
+            worker.signals.progress.connect(on_progress)
+        if on_result:
+            worker.signals.result.connect(on_result)
+        Worker.pool.start(worker)
 
     # ==============================================================================
     # UI
