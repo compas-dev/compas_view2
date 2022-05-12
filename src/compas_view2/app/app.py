@@ -444,7 +444,7 @@ class App:
 
         """
         self.statusFps.setText('fps: {}'.format(fps))
-    
+
     def sidedock(self, title: str):
         """Create a side dock widget.
         """
@@ -698,7 +698,7 @@ class App:
                step: int = 1,
                annotation: str = '',
                bgcolor: Color = None,
-               parent = None) -> Callable:
+               parent=None) -> Callable:
         """Decorator for slider actions.
 
         Parameters

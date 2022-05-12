@@ -1,5 +1,6 @@
 from qtpy import QtWidgets
 
+
 class DockForm(QtWidgets.QDockWidget):
     """
     """
