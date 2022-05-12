@@ -28,6 +28,7 @@ from compas.utilities import gif_from_images
 from compas_view2.views import View120
 from compas_view2.views import View330
 from compas_view2.objects import Object
+from compas_view2.forms.dockform import DockForm
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
@@ -443,6 +444,13 @@ class App:
 
         """
         self.statusFps.setText('fps: {}'.format(fps))
+    
+    def sidedock(self, title: str):
+        """Create a side dock widget.
+        """
+        dock = DockForm(title)
+        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
+        return dock
 
     # ==============================================================================
     # UI
@@ -566,7 +574,8 @@ class App:
     # ==============================================================================
 
     def select(self,
-               items: List[Dict[str, Any]]) -> Callable:
+               items: List[Dict[str, Any]],
+               parent=None) -> Callable:
         """Decorator for combo boxes.
 
         Parameters
@@ -580,7 +589,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             select = Select(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             items=items,
                             action=func)
             return select
@@ -588,7 +597,8 @@ class App:
 
     def radio(self,
               items: List[Dict[str, Any]],
-              title='') -> Callable:
+              title='',
+              parent=None) -> Callable:
         """Decorator for radio actions.
 
         Parameters
@@ -602,14 +612,14 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             radio = Radio(self,
-                          self.sidebar,
+                          parent or self.sidebar,
                           title=title,
                           items=items,
                           action=func)
             return radio
         return outer
 
-    def button(self, text: str) -> Callable:
+    def button(self, text: str, parent=None) -> Callable:
         """Decorator for button actions.
 
         Parameters
@@ -637,13 +647,13 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             button = Button(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             text=text,
                             action=func)
             return button
         return outer
 
-    def checkbox(self, text: str, checked: bool = True) -> Callable:
+    def checkbox(self, text: str, checked: bool = True, parent=None) -> Callable:
         """Decorator for checkbox actions.
 
         Parameters
@@ -673,7 +683,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             checkbox = Checkbox(self,
-                                self.sidebar,
+                                parent or self.sidebar,
                                 text=text,
                                 action=func,
                                 checked=checked)
@@ -687,7 +697,8 @@ class App:
                maxval: int = 100,
                step: int = 1,
                annotation: str = '',
-               bgcolor: Color = None) -> Callable:
+               bgcolor: Color = None,
+               parent = None) -> Callable:
         """Decorator for slider actions.
 
         Parameters
@@ -725,7 +736,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             slider = Slider(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             func,
                             value=value,
                             minval=minval,
