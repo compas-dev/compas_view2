@@ -54,7 +54,7 @@ class Controller:
                         dock = EditForm("Property", obj, on_update=self.app.view.update)
                         self.app.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
 
-                worker = Worker(func, self)
+                worker = Worker(func, [self])
                 if action == "add":
                     worker.signals.result.connect(add)
                 elif action == "edit":
