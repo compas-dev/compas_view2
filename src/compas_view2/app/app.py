@@ -446,14 +446,21 @@ class App:
         """
         self.statusFps.setText('fps: {}'.format(fps))
 
-    def sidedock(self, title: str = "", slot: str = None):
+    def sidedock(self, title: str = "", slot: str = None, location: str = "right"):
         """Create a side dock widget.
         """
         if slot and slot in self.dock_slots:
             self.dock_slots[slot].close()
 
+        locations = {
+            "left": QtCore.Qt.LeftDockWidgetArea,
+            "right": QtCore.Qt.RightDockWidgetArea,
+            "top": QtCore.Qt.TopDockWidgetArea,
+            "bottom": QtCore.Qt.BottomDockWidgetArea,
+        }
+
         dock = DockForm(title)
-        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
+        self.window.addDockWidget(locations[location], dock)
 
         if slot:
             self.dock_slots[slot] = dock

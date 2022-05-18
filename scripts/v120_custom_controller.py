@@ -65,8 +65,8 @@ config = {
         {"type": "action", "text": "Right", "action": "view_right"},
         {"type": "action", "text": "Top", "action": "view_top"},
         {"type": "action", "text": "Perspective", "action": "view_perspective"},
-        {"type": "action", "text": "Open side dock 1", "action": "open_dock1"},
-        {"type": "action", "text": "Open side dock 2", "action": "open_dock2"},
+        {"type": "separator"},
+        {"type": "action", "text": "Open side dock 3", "action": "open_dock3"},
     ]
 }
 
@@ -75,7 +75,7 @@ class CustomController(Controller):
 
     def open_dock1(self):
         viewer = self.app
-        dock = viewer.sidedock(title='Menu 1', slot='right')
+        dock = viewer.sidedock(title='Menu 1', slot='A', location="right")
 
         @viewer.checkbox(text="Show Point", checked=True, parent=dock._layout)
         def check(checked):
@@ -87,7 +87,7 @@ class CustomController(Controller):
     def open_dock2(self):
 
         viewer = self.app
-        dock = viewer.sidedock(title='Menu 2', slot='right')
+        dock = viewer.sidedock(title='Menu 2', slot='A', location="right")
 
         @viewer.slider(title="Slide Point", maxval=100, step=1, bgcolor=Color.white(), parent=dock._layout)
         def slide(value):
@@ -104,6 +104,16 @@ class CustomController(Controller):
                 slide.value = 0
                 viewer.view.update()
 
+        dock._layout.addStretch()
+    
+    def open_dock3(self):
+        viewer = self.app
+        dock = viewer.sidedock(title='Menu 1', location="left")
+
+        @viewer.checkbox(text="Do nothing", checked=True, parent=dock._layout)
+        def check(checked):
+            pass
+        
         dock._layout.addStretch()
 
 
