@@ -193,6 +193,7 @@ class App:
         self.init()
         self.resize(width, height)
         self.started = False
+        self.dock_slots = {}
 
     def init(self):
         """Initialize the components of the user interface.
@@ -445,11 +446,18 @@ class App:
         """
         self.statusFps.setText('fps: {}'.format(fps))
 
-    def sidedock(self, title: str):
+    def sidedock(self, title: str = "", slot: str = None):
         """Create a side dock widget.
         """
+        if slot and slot in self.dock_slots:
+            self.dock_slots[slot].close()
+
         dock = DockForm(title)
         self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
+
+        if slot:
+            self.dock_slots[slot] = dock
+
         return dock
 
     # ==============================================================================
