@@ -128,6 +128,8 @@ class App:
                  show_grid: bool = True,
                  config: Optional[dict] = None,
                  enable_sidebar: bool = False,
+                 enable_sidedock1: bool = False,
+                 enable_sidedock2: bool = False,
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
                  flow_auto_update: bool = True,
@@ -190,10 +192,13 @@ class App:
             self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
 
         self.enable_sidebar = enable_sidebar
+        self.enable_sidedock1 = enable_sidedock1
+        self.enable_sidedock2 = enable_sidedock2
+        self.dock_slots = {}
+
         self.init()
         self.resize(width, height)
         self.started = False
-        self.dock_slots = {}
 
     def init(self):
         """Initialize the components of the user interface.
@@ -207,6 +212,7 @@ class App:
         self._init_menubar(self.config.get('menubar'))
         self._init_toolbar(self.config.get('toolbar'))
         self._init_sidebar(self.config.get('sidebar'))
+        self._init_sidedocks()
 
     def resize(self, width: int, height: int):
         """Resize the main window programmatically.
@@ -467,6 +473,13 @@ class App:
 
         return dock
 
+    def popup(self, title: str = "", slot: str = None):
+        """Create a side dock widget.
+        """
+        popup = self.sidedock(title, slot)
+        popup.setFloating(True)
+        return popup
+
     # ==============================================================================
     # UI
     # ==============================================================================
@@ -509,6 +522,14 @@ class App:
         self.sidebar.setIconSize(QtCore.QSize(16, 16))
         self.sidebar.setMinimumWidth(240)
         self._add_sidebar_items(items, self.sidebar)
+
+    def _init_sidedocks(self):
+        if self.enable_sidedock1:
+            self.sidedock1 = self.sidedock(slot="sidedock1")
+            self.sidedock1.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
+        if self.enable_sidedock2:
+            self.sidedock2 = self.sidedock(slot="sidedock2")
+            self.sidedock2.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
 
     def _add_menubar_items(self, items: List[Dict], parent: QtWidgets.QWidget):
         if not items:
