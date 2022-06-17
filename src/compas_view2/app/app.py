@@ -28,6 +28,7 @@ from compas.utilities import gif_from_images
 from compas_view2.views import View120
 from compas_view2.views import View330
 from compas_view2.objects import Object
+from compas_view2.forms.dockform import DockForm
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
@@ -128,6 +129,8 @@ class App:
                  show_grid: bool = True,
                  config: Optional[dict] = None,
                  enable_sidebar: bool = False,
+                 enable_sidedock1: bool = False,
+                 enable_sidedock2: bool = False,
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
                  flow_auto_update: bool = True,
@@ -190,6 +193,10 @@ class App:
             self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
 
         self.enable_sidebar = enable_sidebar
+        self.enable_sidedock1 = enable_sidedock1
+        self.enable_sidedock2 = enable_sidedock2
+        self.dock_slots = {}
+
         self.init()
         self.resize(width, height)
         self.started = False
@@ -206,6 +213,7 @@ class App:
         self._init_menubar(self.config.get('menubar'))
         self._init_toolbar(self.config.get('toolbar'))
         self._init_sidebar(self.config.get('sidebar'))
+        self._init_sidedocks()
 
     def resize(self, width: int, height: int):
         """Resize the main window programmatically.
@@ -445,6 +453,34 @@ class App:
         """
         self.statusFps.setText('fps: {}'.format(fps))
 
+    def sidedock(self, title: str = "", slot: str = None, location: str = "right"):
+        """Create a side dock widget.
+        """
+        if slot and slot in self.dock_slots:
+            self.dock_slots[slot].close()
+
+        locations = {
+            "left": QtCore.Qt.LeftDockWidgetArea,
+            "right": QtCore.Qt.RightDockWidgetArea,
+            "top": QtCore.Qt.TopDockWidgetArea,
+            "bottom": QtCore.Qt.BottomDockWidgetArea,
+        }
+
+        dock = DockForm(title)
+        self.window.addDockWidget(locations[location], dock)
+
+        if slot:
+            self.dock_slots[slot] = dock
+
+        return dock
+
+    def popup(self, title: str = "", slot: str = None):
+        """Create a side dock widget.
+        """
+        popup = self.sidedock(title, slot)
+        popup.setFloating(True)
+        return popup
+
     def threading(self, func: Callable, args: list = [], kwargs: dict = {},
                   on_progress: Callable = None, on_result: Callable = None,
                   include_self: bool = False) -> None:
@@ -519,6 +555,14 @@ class App:
         self.sidebar.setIconSize(QtCore.QSize(16, 16))
         self.sidebar.setMinimumWidth(240)
         self._add_sidebar_items(items, self.sidebar)
+
+    def _init_sidedocks(self):
+        if self.enable_sidedock1:
+            self.sidedock1 = self.sidedock(slot="sidedock1")
+            self.sidedock1.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
+        if self.enable_sidedock2:
+            self.sidedock2 = self.sidedock(slot="sidedock2")
+            self.sidedock2.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
 
     def _add_menubar_items(self, items: List[Dict], parent: QtWidgets.QWidget):
         if not items:
@@ -599,7 +643,8 @@ class App:
     # ==============================================================================
 
     def select(self,
-               items: List[Dict[str, Any]]) -> Callable:
+               items: List[Dict[str, Any]],
+               parent=None) -> Callable:
         """Decorator for combo boxes.
 
         Parameters
@@ -613,7 +658,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             select = Select(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             items=items,
                             action=func)
             return select
@@ -621,7 +666,8 @@ class App:
 
     def radio(self,
               items: List[Dict[str, Any]],
-              title='') -> Callable:
+              title='',
+              parent=None) -> Callable:
         """Decorator for radio actions.
 
         Parameters
@@ -635,14 +681,14 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             radio = Radio(self,
-                          self.sidebar,
+                          parent or self.sidebar,
                           title=title,
                           items=items,
                           action=func)
             return radio
         return outer
 
-    def button(self, text: str) -> Callable:
+    def button(self, text: str, parent=None) -> Callable:
         """Decorator for button actions.
 
         Parameters
@@ -670,13 +716,13 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             button = Button(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             text=text,
                             action=func)
             return button
         return outer
 
-    def checkbox(self, text: str, checked: bool = True) -> Callable:
+    def checkbox(self, text: str, checked: bool = True, parent=None) -> Callable:
         """Decorator for checkbox actions.
 
         Parameters
@@ -706,7 +752,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             checkbox = Checkbox(self,
-                                self.sidebar,
+                                parent or self.sidebar,
                                 text=text,
                                 action=func,
                                 checked=checked)
@@ -720,7 +766,8 @@ class App:
                maxval: int = 100,
                step: int = 1,
                annotation: str = '',
-               bgcolor: Color = None) -> Callable:
+               bgcolor: Color = None,
+               parent=None) -> Callable:
         """Decorator for slider actions.
 
         Parameters
@@ -758,7 +805,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             slider = Slider(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             func,
                             value=value,
                             minval=minval,
