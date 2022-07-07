@@ -58,6 +58,8 @@ class App:
 
     Parameters
     ----------
+    title : str, optional
+        The title of the viewer window.
     version: {'120', '330'}, optional
         The version of the GLSL used by the shaders.
         Default is ``'120'`` with a compatibility profile.
@@ -121,6 +123,7 @@ class App:
     """
 
     def __init__(self,
+                 title: str = 'COMPAS View2',
                  version: Literal['120', '330'] = '120',
                  width: int = 800,
                  height: int = 500,
@@ -161,6 +164,7 @@ class App:
 
         appIcon = QIcon(os.path.join(ICONS, "compas_icon_white.png"))
         app.setWindowIcon(appIcon)
+        app.setApplicationName(title)
 
         self.timer = None
         self.frame_count = 0
