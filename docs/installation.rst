@@ -28,6 +28,13 @@ Windows
     pip install pyside2 pyopengl qtpy ryvencore_qt
     pip install git+https://github.com/compas-dev/compas_view2.git#egg=compas_view2
 
+to update your environment from local source.
+
+.. code-block:: bash
+    
+    cd path/to/compas_view2
+    pip install .
+
 Mac
 ---
 
