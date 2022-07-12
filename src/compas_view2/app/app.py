@@ -30,6 +30,7 @@ from compas_view2.views import View330
 from compas_view2.objects import Object
 from compas_view2.forms.dockform import DockForm
 from compas_view2.forms.treeform import TreeForm
+from compas_view2.forms.propertyform import PropertyForm
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
@@ -136,6 +137,7 @@ class App:
                  enable_sidedock1: bool = False,
                  enable_sidedock2: bool = False,
                  enable_treeform: bool = False,
+                 enable_propertyform: bool = False,
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
                  flow_auto_update: bool = True,
@@ -202,6 +204,7 @@ class App:
         self.enable_sidedock1 = enable_sidedock1
         self.enable_sidedock2 = enable_sidedock2
         self.enable_treeform = enable_treeform
+        self.enable_propertyform = enable_propertyform
         self.dock_slots = {}
 
         self.init()
@@ -487,11 +490,23 @@ class App:
         if "treeform" in self.dock_slots:
             self.dock_slots["treeform"].close()
 
-        tree = TreeForm()
-        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, tree)
-        self.dock_slots["treeform"] = tree
+        treeform = TreeForm(self)
+        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, treeform)
+        self.dock_slots["treeform"] = treeform
 
-        return tree
+        return treeform
+
+    def propertyform(self):
+        """Create a side object tree form widget.
+        """
+        if "propertyform" in self.dock_slots:
+            self.dock_slots["propertyform"].close()
+
+        propertyform = PropertyForm(self)
+        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, propertyform)
+        self.dock_slots["propertyform"] = propertyform
+
+        return propertyform
 
 
     def popup(self, title: str = "", slot: str = None):
@@ -585,6 +600,8 @@ class App:
             self.sidedock2.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
         if self.enable_treeform:
             self.treeform()
+        if self.enable_propertyform:
+            self.propertyform()
 
     def _add_menubar_items(self, items: List[Dict], parent: QtWidgets.QWidget):
         if not items:

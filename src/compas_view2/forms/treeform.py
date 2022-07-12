@@ -3,12 +3,13 @@ from qtpy import QtWidgets
 
 
 class TreeForm(DockForm):
-    def __init__(self, title="objects"):
+    def __init__(self, app, title="objects"):
         super().__init__(title)
 
+        self.app = app
         self.tree = QtWidgets.QTreeWidget()
-        self.tree.setColumnCount(2)
-        self.tree.setHeaderLabels(["Name", "Type"])
+        self.tree.setColumnCount(1)
+        self.tree.setHeaderHidden(True)
 
         objects = [
             {"name": "A", "children": []},
@@ -26,8 +27,8 @@ class TreeForm(DockForm):
         ]
 
         self.map_objects(objects)
-
-        self.content_layout.addWidget(self.tree)
+        self.setWidget(self.tree)
+        self.tree.itemPressed.connect(lambda item: self.show_properties(item.obj))
 
     def map_objects(self, objects, parent=None):
 
@@ -38,13 +39,13 @@ class TreeForm(DockForm):
             else:
                 self.tree.addTopLevelItem(item)
 
-            button = Button("Inspect", obj)
-            self.tree.setItemWidget(item, 1, button)
+            item.obj = obj
 
             if "children" in obj:
                 self.map_objects(obj["children"], item)
 
-class Button(QtWidgets.QPushButton):
-    def __init__(self, text, obj):
-        super().__init__(text)
-        self.clicked.connect(lambda: print(obj))
+    def show_properties(self, obj):
+        propertyform = self.app.dock_slots.get("propertyform")
+        if propertyform:
+            propertyform.tree.clear()
+            propertyform.map_properties(obj)

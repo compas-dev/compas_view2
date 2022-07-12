@@ -3,7 +3,7 @@ from random import random
 from compas_view2.app import App
 from compas_view2.shapes import Arrow
 
-viewer = App(enable_treeform=True)
+viewer = App(enable_treeform=True, enable_propertyform=True)
 
 for x in range(5):
     for y in range(5):
