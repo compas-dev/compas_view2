@@ -5,9 +5,14 @@ from compas_view2.shapes import Arrow
 
 viewer = App(enable_treeform=True, enable_propertyform=True)
 
-for x in range(5):
-    for y in range(5):
-        arrow = Arrow([x, y, 0], [0, 0, 1], head_portion=0.2, head_width=0.07, body_width=0.02)
-        viewer.add(arrow, u=16, show_edges=False, color=(random(), random(), random()))
+arrow1 = Arrow([0, 0, 0], [0, 0, 1], head_portion=0.2, head_width=0.07, body_width=0.02)
+arrow1_obj = viewer.add(arrow1, u=16, show_edges=False, color=(random(), random(), random()))
+arrow1_obj.translation = [0, 1, 0]
+
+arrow2 = Arrow([0, 0, 0], [0, 0, 1], head_portion=0.2, head_width=0.07, body_width=0.02)
+arrow2_obj = arrow1_obj.add(arrow2, u=16, show_edges=False, color=(random(), random(), random()))
+arrow2_obj.translation = [1, 0, 0]
+
+arrow1_obj.add(arrow2_obj)
 
 viewer.show()

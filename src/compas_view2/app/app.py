@@ -265,6 +265,7 @@ class App:
         obj = Object.build(data, **kwargs)
         self.view.objects[obj] = obj
         self.selector.add(obj)
+        obj._app = self
         if self.view.isValid():
             obj.init()
         return obj
