@@ -29,6 +29,7 @@ from compas_view2.views import View120
 from compas_view2.views import View330
 from compas_view2.objects import Object
 from compas_view2.forms.dockform import DockForm
+from compas_view2.forms.treeform import TreeForm
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
@@ -134,6 +135,7 @@ class App:
                  enable_sidebar: bool = False,
                  enable_sidedock1: bool = False,
                  enable_sidedock2: bool = False,
+                 enable_treeform: bool = False,
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
                  flow_auto_update: bool = True,
@@ -199,6 +201,7 @@ class App:
         self.enable_sidebar = enable_sidebar
         self.enable_sidedock1 = enable_sidedock1
         self.enable_sidedock2 = enable_sidedock2
+        self.enable_treeform = enable_treeform
         self.dock_slots = {}
 
         self.init()
@@ -478,6 +481,19 @@ class App:
 
         return dock
 
+    def treeform(self):
+        """Create a side object tree form widget.
+        """
+        if "treeform" in self.dock_slots:
+            self.dock_slots["treeform"].close()
+
+        tree = TreeForm()
+        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, tree)
+        self.dock_slots["treeform"] = tree
+
+        return tree
+
+
     def popup(self, title: str = "", slot: str = None):
         """Create a side dock widget.
         """
@@ -567,6 +583,8 @@ class App:
         if self.enable_sidedock2:
             self.sidedock2 = self.sidedock(slot="sidedock2")
             self.sidedock2.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
+        if self.enable_treeform:
+            self.treeform()
 
     def _add_menubar_items(self, items: List[Dict], parent: QtWidgets.QWidget):
         if not items:
