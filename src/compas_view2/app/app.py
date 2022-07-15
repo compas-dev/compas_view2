@@ -29,8 +29,9 @@ from compas_view2.views import View120
 from compas_view2.views import View330
 from compas_view2.objects import Object
 from compas_view2.forms.dockform import DockForm
-from compas_view2.forms.treeform import TreeForm
+from compas_view2.forms.sceneform import SceneForm
 from compas_view2.forms.propertyform import PropertyForm
+from compas_view2.forms.treeform import TreeForm
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
@@ -136,7 +137,7 @@ class App:
                  enable_sidebar: bool = False,
                  enable_sidedock1: bool = False,
                  enable_sidedock2: bool = False,
-                 enable_treeform: bool = False,
+                 enable_sceneform: bool = False,
                  enable_propertyform: bool = False,
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
@@ -203,9 +204,12 @@ class App:
         self.enable_sidebar = enable_sidebar
         self.enable_sidedock1 = enable_sidedock1
         self.enable_sidedock2 = enable_sidedock2
-        self.enable_treeform = enable_treeform
+        self.enable_sceneform = enable_sceneform
         self.enable_propertyform = enable_propertyform
-        self.dock_slots = {}
+        self.dock_slots = {
+            "sceneform": None,
+            "propertyform": None,
+        }
 
         self.init()
         self.resize(width, height)
@@ -268,6 +272,8 @@ class App:
         obj._app = self
         if self.view.isValid():
             obj.init()
+            if self.dock_slots['sceneform']:
+                self.dock_slots['sceneform'].update()
         return obj
 
     def add_reference(self, obj: Object, **kwargs) -> Object:
@@ -323,6 +329,10 @@ class App:
         self.window.show()
         if Flow and self.show_flow:
             self.flow.show()
+
+        if self.dock_slots['sceneform']:
+            self.dock_slots['sceneform'].update()
+
         self._app.exec_()
 
     run = show
@@ -485,30 +495,50 @@ class App:
 
         return dock
 
-    def treeform(self):
+    def sceneform(self):
         """Create a side object tree form widget.
         """
-        if "treeform" in self.dock_slots:
-            self.dock_slots["treeform"].close()
+        if self.dock_slots["sceneform"]:
+            self.dock_slots["sceneform"].show()
+            return self.dock_slots["sceneform"]
 
-        treeform = TreeForm(self)
-        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, treeform)
-        self.dock_slots["treeform"] = treeform
+        sceneform = SceneForm(self)
+        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, sceneform)
+        self.dock_slots["sceneform"] = sceneform
 
-        return treeform
+        return sceneform
 
     def propertyform(self):
         """Create a side object tree form widget.
         """
-        if "propertyform" in self.dock_slots:
-            self.dock_slots["propertyform"].close()
+        if  self.dock_slots["propertyform"]:
+            self.dock_slots["propertyform"].show()
+            return self.dock_slots["propertyform"]
 
-        propertyform = PropertyForm(self)
+        propertyform = PropertyForm("Properties", on_update=self.view.update)
         self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, propertyform)
         self.dock_slots["propertyform"] = propertyform
 
         return propertyform
+    
+    def treeform(self, title="tree", slot: str = None, location: str = "left"):
+        """Create a side object tree form widget.
+        """
+        if slot and slot in self.dock_slots:
+            self.dock_slots[slot].close()
 
+        locations = {
+            "left": QtCore.Qt.LeftDockWidgetArea,
+            "right": QtCore.Qt.RightDockWidgetArea,
+            "top": QtCore.Qt.TopDockWidgetArea,
+            "bottom": QtCore.Qt.BottomDockWidgetArea,
+        }
+
+        treeform = TreeForm(title)
+        self.window.addDockWidget(locations[location], treeform)
+        self.dock_slots[slot] = treeform
+
+        return treeform
 
     def popup(self, title: str = "", slot: str = None):
         """Create a side dock widget.
@@ -599,8 +629,8 @@ class App:
         if self.enable_sidedock2:
             self.sidedock2 = self.sidedock(slot="sidedock2")
             self.sidedock2.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
-        if self.enable_treeform:
-            self.treeform()
+        if self.enable_sceneform:
+            self.sceneform()
         if self.enable_propertyform:
             self.propertyform()
 

@@ -69,7 +69,7 @@ class Object(ABC):
         self.is_selected = is_selected
         self.is_visible = is_visible
         self.parent = None
-        self._children = []
+        self._children = set()
         self._instance_color = None
         self._translation = [0., 0., 0.]
         self._rotation = [0., 0., 0.]
@@ -110,8 +110,11 @@ class Object(ABC):
             obj = data
         else:
             obj = self._app.add(data, **kwargs)
-        self._children.append(obj)
+        self._children.add(obj)
         obj.parent = self
+
+        if self._app.dock_slots['sceneform'] and self._app.view.isValid():
+            self._app.dock_slots['sceneform'].update()
         return obj
 
     def remove(self, obj):

@@ -3,49 +3,30 @@ from qtpy import QtWidgets
 
 
 class TreeForm(DockForm):
-    def __init__(self, app, title="objects"):
+    def __init__(self, app, title="Tree"):
         super().__init__(title)
 
         self.app = app
         self.tree = QtWidgets.QTreeWidget()
-        self.tree.setColumnCount(1)
-        self.tree.setHeaderHidden(True)
-
-        objects = [
-            {"name": "A", "children": []},
-            {"name": "B", "children": [
-                {"name": "B1", "children": []},
-                {"name": "B2", "children": []},
-            ]},
-            {"name": "C", "children": [
-                {"name": "C1", "children": [
-                    {"name": "C1.1", "children": []},
-                    {"name": "C1.2", "children": []},
-                ]},
-                {"name": "C2", "children": []},
-            ]},
-        ]
-
-        self.map_objects(objects)
+        self.tree.setColumnCount(2)
+        self.tree.setHeaderLabels(["Key", "Value"])
         self.setWidget(self.tree)
-        self.tree.itemPressed.connect(lambda item: self.show_properties(item.obj))
+    
+    def update(self, entries):
+        self.tree.clear()
+        self.map_entries(entries)
 
-    def map_objects(self, objects, parent=None):
+    def map_entries(self, entries, parent=None):
 
-        for obj in objects:
-            item = QtWidgets.QTreeWidgetItem([obj["name"]])
+        for entry in entries:
+            children = entry.get("children", [])
+            if children:
+                item = QtWidgets.QTreeWidgetItem(entry["key"])
+                self.map_entries(children, item)
+            else:
+                item = QtWidgets.QTreeWidgetItem([entry["key"], str(entry["value"])])
+
             if parent is not None:
                 parent.addChild(item)
             else:
                 self.tree.addTopLevelItem(item)
-
-            item.obj = obj
-
-            if "children" in obj:
-                self.map_objects(obj["children"], item)
-
-    def show_properties(self, obj):
-        propertyform = self.app.dock_slots.get("propertyform")
-        if propertyform:
-            propertyform.tree.clear()
-            propertyform.map_properties(obj)
