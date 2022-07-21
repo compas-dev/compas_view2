@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added dedicated Scene objects form.
+* Added dedicated object property form.
+* Added custom tree form.
 * Added option to run multi-threading function.
 * Added sidedock options.
 * Added option to change App title.
