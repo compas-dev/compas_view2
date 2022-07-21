@@ -8,7 +8,7 @@ from compas.datastructures import VolMesh
 from .collapsiblebox import CollapsibleBox
 
 
-class EditForm(QtWidgets.QDockWidget):
+class PropertyForm(QtWidgets.QDockWidget):
     """Form class for real-time editing of objects
 
     Parameters
@@ -22,19 +22,24 @@ class EditForm(QtWidgets.QDockWidget):
         the function to be called when object attributes are updated from the form
     """
 
-    def __init__(self, title, obj, on_update=None):
+    def __init__(self, title, obj=None, on_update=None):
         super().__init__(title)
 
+        if obj:
+            self.set_object(obj, on_update)
+        elif on_update:
+            self.on_update = on_update
+
+    def set_object(self, obj, on_update=None):
         scroll = QtWidgets.QScrollArea()
         self.setWidget(scroll)
         content = QtWidgets.QWidget()
         scroll.setWidget(content)
         scroll.setWidgetResizable(True)
-        vlay = QtWidgets.QVBoxLayout(content)
-
-        self._inputs = vlay
+        self._inputs = QtWidgets.QVBoxLayout(content)
         self.obj = obj
-        self.on_update = on_update
+        if on_update:
+            self.on_update = on_update
 
         # Show object class
         self.add_label(obj.name)
