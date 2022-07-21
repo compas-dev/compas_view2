@@ -485,9 +485,9 @@ class App:
         popup = self.sidedock(title, slot)
         popup.setFloating(True)
         return popup
-    
+
     def plot(self, title: str = "", location: str = "bottom", floating: bool = False, min_height: int = 200, min_width: int = 200):
-        """Create a side dock widget.
+        """Create a matplotlib canvas as dock widget.
         """
         dock = self.sidedock(title, location=location)
         dock.setFloating(floating)

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added option to run multi-threading function.
 * Added sidedock options.
 * Added option to change App title.
+* Added matplotlib integration.
 
 ### Changed
 

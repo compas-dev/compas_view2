@@ -13,6 +13,7 @@ curveobj = viewer.add(Polyline(curve.locus()), linewidth=2)
 
 figure = viewer.plot("My Plot", location="bottom", min_height=300)
 
+
 def update_plot(shift=0):
     n = 256
     x = np.linspace(-3., 3., n)
@@ -21,8 +22,8 @@ def update_plot(shift=0):
     Z = X * np.sinc(X ** 2 + Y ** 2 + shift)
     if figure:
         figure.clf()
-        figure.subplots(1,2)
-        
+        figure.subplots(1, 2)
+
         a0 = figure.axes[0].imshow(Z, cmap=cm.gray, interpolation='bilinear', origin='lower')
         figure.colorbar(a0, ax=figure.axes[0], extend='both')
 
@@ -30,6 +31,7 @@ def update_plot(shift=0):
         figure.colorbar(a1, ax=figure.axes[1], extend='both')
 
         figure.update()
+
 
 update_plot()
 
