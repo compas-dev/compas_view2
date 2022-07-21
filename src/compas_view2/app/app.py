@@ -45,6 +45,7 @@ from .timer import Timer
 from .selector import Selector
 from .controller import Controller
 from .worker import Worker
+from .plot import MplCanvas
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -484,6 +485,17 @@ class App:
         popup = self.sidedock(title, slot)
         popup.setFloating(True)
         return popup
+
+    def plot(self, title: str = "", location: str = "bottom", floating: bool = False, min_height: int = 200, min_width: int = 200):
+        """Create a matplotlib canvas as dock widget.
+        """
+        dock = self.sidedock(title, location=location)
+        dock.setFloating(floating)
+        dock.setMinimumHeight(min_height)
+        dock.setMinimumWidth(min_width)
+        sc = MplCanvas()
+        dock.content_layout.addWidget(sc)
+        return sc.figure
 
     def threading(self, func: Callable, args: list = [], kwargs: dict = {},
                   on_progress: Callable = None, on_result: Callable = None,
