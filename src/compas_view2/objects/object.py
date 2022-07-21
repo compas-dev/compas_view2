@@ -163,7 +163,7 @@ class Object(ABC):
             M = T1 * R1 * S1
             self._transformation.matrix = M.matrix
             self._matrix_buffer = np.array(self.matrix_world).flatten()
-        
+
         if self.children:
             for child in self.children:
                 child._update_matrix()

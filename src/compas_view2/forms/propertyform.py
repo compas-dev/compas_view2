@@ -24,7 +24,7 @@ class PropertyForm(QtWidgets.QDockWidget):
 
     def __init__(self, title, obj=None, on_update=None):
         super().__init__(title)
-        
+
         if obj:
             self.set_object(obj, on_update)
         elif on_update:

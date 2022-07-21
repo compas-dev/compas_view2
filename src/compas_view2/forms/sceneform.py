@@ -42,7 +42,6 @@ class SceneForm(DockForm):
     def select(self, objs):
         all_items = self.tree.findItems("", QtCore.Qt.MatchContains | QtCore.Qt.MatchRecursive)
         for item in all_items:
-            
             if item.obj in objs:
                 item.setSelected(True)
             else:

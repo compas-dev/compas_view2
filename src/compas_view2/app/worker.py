@@ -54,6 +54,7 @@ class Worker(QRunnable):
             finally:
                 self.signals.finished.emit()  # Done
 
+
 class Ticker(QRunnable):
 
     pool = QThreadPool()
@@ -71,6 +72,6 @@ class Ticker(QRunnable):
         while self.running:
             self.signals.tick.emit()
             time.sleep(self.interval)
-    
+
     def stop(self):
         self.running = False

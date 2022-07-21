@@ -511,7 +511,7 @@ class App:
     def propertyform(self):
         """Create a side object tree form widget.
         """
-        if  self.dock_slots["propertyform"]:
+        if self.dock_slots["propertyform"]:
             self.dock_slots["propertyform"].show()
             return self.dock_slots["propertyform"]
 
@@ -520,7 +520,7 @@ class App:
         self.dock_slots["propertyform"] = propertyform
 
         return propertyform
-    
+
     def treeform(self, title="tree", slot: str = None, location: str = "left"):
         """Create a side object tree form widget.
         """
