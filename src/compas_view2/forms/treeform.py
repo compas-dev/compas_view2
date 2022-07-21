@@ -4,10 +4,9 @@ from qtpy import QtGui
 
 
 class TreeForm(DockForm):
-    def __init__(self, app, title="Tree"):
+    def __init__(self, title="Tree"):
         super().__init__(title)
 
-        self.app = app
         self.tree = QtWidgets.QTreeWidget()
         self.tree.setColumnCount(2)
         self.tree.setHeaderLabels(["Key", "Value"])

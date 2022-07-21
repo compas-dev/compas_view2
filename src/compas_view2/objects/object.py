@@ -105,11 +105,11 @@ class Object(ABC):
     def children(self):
         return self._children
 
-    def add(self, data, **kwargs):
-        if isinstance(data, Object):
-            obj = data
+    def add(self, item, **kwargs):
+        if isinstance(item, Object):
+            obj = item
         else:
-            obj = self._app.add(data, **kwargs)
+            obj = self._app.add(item, **kwargs)
         self._children.add(obj)
         obj.parent = self
 
