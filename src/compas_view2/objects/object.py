@@ -169,17 +169,26 @@ class Object(ABC):
                 child._update_matrix()
 
     @property
+    def transformation(self):
+        return self._transformation
+    
+    @property
+    def transformation_world(self):
+        """Get the updated matrix from object's translation, rotation and scale"""
+        if self.parent:
+            return self.parent.transformation_world * self.transformation
+        else:
+            return self.transformation
+
+    @property
     def matrix(self):
         """Get the updated matrix from object's translation, rotation and scale"""
-        return self._transformation.matrix
+        return self.transformation.matrix
 
     @property
     def matrix_world(self):
         """Get the updated matrix from object's translation, rotation and scale"""
-        if self.parent:
-            return (self.parent._transformation * self._transformation).matrix
-        else:
-            return self.matrix
+        return self.transformation_world.matrix
 
     @matrix.setter
     def matrix(self, matrix):
