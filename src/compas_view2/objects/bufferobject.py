@@ -35,8 +35,8 @@ class BufferObject(Object):
                  show_points=False, show_vertices=False, show_lines=False, show_edges=True, show_faces=True,
                  pointcolor=None, linecolor=None, facecolor=None, color=None,
                  facecolors=None, linecolors=None, pointcolors=None,
-                 linewidth=None, pointsize=None, opacity=None):
-        super().__init__(data, name=name, is_selected=is_selected, is_visible=is_visible)
+                 linewidth=None, pointsize=None, opacity=None, app=None):
+        super().__init__(data, name=name, is_selected=is_selected, is_visible=is_visible, app=app)
         self._data = data
 
         self.show_points = show_points or show_vertices

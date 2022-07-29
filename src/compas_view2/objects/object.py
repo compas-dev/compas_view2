@@ -63,8 +63,9 @@ class Object(ABC):
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj
 
-    def __init__(self, data, name=None, is_selected=False, is_visible=True):
+    def __init__(self, data, app=None, name=None, is_selected=False, is_visible=True):
         self._data = data
+        self._app = app
         self.name = name or str(self)
         self.is_selected = is_selected
         self.is_visible = is_visible
@@ -76,7 +77,6 @@ class Object(ABC):
         self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
-        self._app = None
 
     @property
     def otype(self):
