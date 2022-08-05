@@ -171,7 +171,7 @@ class Object(ABC):
     @property
     def transformation(self):
         return self._transformation
-    
+
     @property
     def transformation_world(self):
         """Get the updated matrix from object's translation, rotation and scale"""

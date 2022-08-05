@@ -1,5 +1,4 @@
 from compas_view2.collections import Collection
-from compas_view2.shapes import Arrow
 
 from .collectionobject import CollectionObject
 
