@@ -1,5 +1,0 @@
-compas
-# pyside2
-# pyopengl
-# pyopengl-accelerate
-# freetype-py

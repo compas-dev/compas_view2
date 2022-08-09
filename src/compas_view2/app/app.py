@@ -28,6 +28,10 @@ from compas.utilities import gif_from_images
 from compas_view2.views import View120
 from compas_view2.views import View330
 from compas_view2.objects import Object
+from compas_view2.forms.dockform import DockForm
+from compas_view2.forms.sceneform import SceneForm
+from compas_view2.forms.propertyform import PropertyForm
+from compas_view2.forms.treeform import TreeForm
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
@@ -35,11 +39,16 @@ from compas_view2.ui import Radio
 from compas_view2.ui import Checkbox
 from compas_view2.ui import Select
 
-from compas_view2.flow import Flow
+try:
+    from compas_view2.flow import Flow
+except ImportError:
+    Flow = None
 
 from .timer import Timer
 from .selector import Selector
 from .controller import Controller
+from .worker import Worker
+from .plot import MplCanvas
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -53,6 +62,8 @@ class App:
 
     Parameters
     ----------
+    title : str, optional
+        The title of the viewer window.
     version: {'120', '330'}, optional
         The version of the GLSL used by the shaders.
         Default is ``'120'`` with a compatibility profile.
@@ -116,6 +127,7 @@ class App:
     """
 
     def __init__(self,
+                 title: str = 'COMPAS View2',
                  version: Literal['120', '330'] = '120',
                  width: int = 800,
                  height: int = 500,
@@ -124,6 +136,10 @@ class App:
                  show_grid: bool = True,
                  config: Optional[dict] = None,
                  enable_sidebar: bool = False,
+                 enable_sidedock1: bool = False,
+                 enable_sidedock2: bool = False,
+                 enable_sceneform: bool = False,
+                 enable_propertyform: bool = False,
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
                  flow_auto_update: bool = True,
@@ -154,6 +170,7 @@ class App:
 
         appIcon = QIcon(os.path.join(ICONS, "compas_icon_white.png"))
         app.setWindowIcon(appIcon)
+        app.setApplicationName(title)
 
         self.timer = None
         self.frame_count = 0
@@ -182,9 +199,19 @@ class App:
         self.selector = Selector(self)
 
         self.show_flow = show_flow
-        self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
+        if Flow:
+            self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
 
         self.enable_sidebar = enable_sidebar
+        self.enable_sidedock1 = enable_sidedock1
+        self.enable_sidedock2 = enable_sidedock2
+        self.enable_sceneform = enable_sceneform
+        self.enable_propertyform = enable_propertyform
+        self.dock_slots = {
+            "sceneform": None,
+            "propertyform": None,
+        }
+
         self.init()
         self.resize(width, height)
         self.started = False
@@ -201,6 +228,7 @@ class App:
         self._init_menubar(self.config.get('menubar'))
         self._init_toolbar(self.config.get('toolbar'))
         self._init_sidebar(self.config.get('sidebar'))
+        self._init_sidedocks()
 
     def resize(self, width: int, height: int):
         """Resize the main window programmatically.
@@ -306,8 +334,11 @@ class App:
 
         self.view.objects[obj] = obj
         self.selector.add(obj)
+        obj._app = self
         if self.view.isValid():
             obj.init()
+            if self.dock_slots['sceneform']:
+                self.dock_slots['sceneform'].update()
         return obj
 
     def add_reference(self, obj: Object, **kwargs) -> Object:
@@ -361,8 +392,12 @@ class App:
         """
         self.started = True
         self.window.show()
-        if self.show_flow:
+        if Flow and self.show_flow:
             self.flow.show()
+
+        if self.dock_slots['sceneform']:
+            self.dock_slots['sceneform'].update()
+
         self._app.exec_()
 
     run = show
@@ -504,6 +539,122 @@ class App:
         """
         self.statusFps.setText('fps: {}'.format(fps))
 
+    def sidedock(self, title: str = "", slot: str = None, location: str = "right"):
+        """Create a side dock widget.
+        """
+        if slot and slot in self.dock_slots:
+            self.dock_slots[slot].close()
+
+        locations = {
+            "left": QtCore.Qt.LeftDockWidgetArea,
+            "right": QtCore.Qt.RightDockWidgetArea,
+            "top": QtCore.Qt.TopDockWidgetArea,
+            "bottom": QtCore.Qt.BottomDockWidgetArea,
+        }
+
+        dock = DockForm(title)
+        self.window.addDockWidget(locations[location], dock)
+
+        if slot:
+            self.dock_slots[slot] = dock
+
+        return dock
+
+    def sceneform(self):
+        """Create a side object tree form widget.
+        """
+        if self.dock_slots["sceneform"]:
+            self.dock_slots["sceneform"].show()
+            return self.dock_slots["sceneform"]
+
+        sceneform = SceneForm(self)
+        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, sceneform)
+        self.dock_slots["sceneform"] = sceneform
+
+        return sceneform
+
+    def propertyform(self):
+        """Create a side object tree form widget.
+        """
+        if self.dock_slots["propertyform"]:
+            self.dock_slots["propertyform"].show()
+            return self.dock_slots["propertyform"]
+
+        propertyform = PropertyForm("Properties", on_update=self.view.update)
+        self.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, propertyform)
+        self.dock_slots["propertyform"] = propertyform
+
+        return propertyform
+
+    def treeform(self, title="tree", slot: str = None, location: str = "left"):
+        """Create a side object tree form widget.
+        """
+        if slot and slot in self.dock_slots:
+            self.dock_slots[slot].close()
+
+        locations = {
+            "left": QtCore.Qt.LeftDockWidgetArea,
+            "right": QtCore.Qt.RightDockWidgetArea,
+            "top": QtCore.Qt.TopDockWidgetArea,
+            "bottom": QtCore.Qt.BottomDockWidgetArea,
+        }
+
+        treeform = TreeForm(title)
+        self.window.addDockWidget(locations[location], treeform)
+        self.dock_slots[slot] = treeform
+
+        return treeform
+
+    def popup(self, title: str = "", slot: str = None):
+        """Create a side dock widget.
+        """
+        popup = self.sidedock(title, slot)
+        popup.setFloating(True)
+        return popup
+
+    def plot(self, title: str = "", location: str = "bottom", floating: bool = False, min_height: int = 200, min_width: int = 200):
+        """Create a matplotlib canvas as dock widget.
+        """
+        dock = self.sidedock(title, location=location)
+        dock.setFloating(floating)
+        dock.setMinimumHeight(min_height)
+        dock.setMinimumWidth(min_width)
+        sc = MplCanvas()
+        dock.content_layout.addWidget(sc)
+        return sc.figure
+
+    def threading(self, func: Callable, args: list = [], kwargs: dict = {},
+                  on_progress: Callable = None, on_result: Callable = None,
+                  include_self: bool = False) -> None:
+        """Execute a multi-threaded function.
+
+        Parameters
+        ----------
+        func : function
+            The function to be executed.
+        args : list, optional
+            The arguments to be passed to the function.
+        kwargs : dict, optional
+            The keyword arguments to be passed to the function.
+        on_progress : function, optional
+            A function to be called on progress event.
+        on_result : function, optional
+            A function to be called on result event.
+        include_self : bool, optional
+            Include the thread worker instance in the arguments, for sending out progress singals.
+
+        Returns
+        -------
+        None
+
+        """
+        worker = Worker(func, args=args, kwargs=kwargs, include_self=include_self)
+        if on_progress:
+            worker.signals.progress.connect(on_progress)
+        if on_result:
+            worker.signals.result.connect(on_result)
+        Worker.pool.start(worker)
+
     # ==============================================================================
     # UI
     # ==============================================================================
@@ -546,6 +697,18 @@ class App:
         self.sidebar.setIconSize(QtCore.QSize(16, 16))
         self.sidebar.setMinimumWidth(240)
         self._add_sidebar_items(items, self.sidebar)
+
+    def _init_sidedocks(self):
+        if self.enable_sidedock1:
+            self.sidedock1 = self.sidedock(slot="sidedock1")
+            self.sidedock1.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
+        if self.enable_sidedock2:
+            self.sidedock2 = self.sidedock(slot="sidedock2")
+            self.sidedock2.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
+        if self.enable_sceneform:
+            self.sceneform()
+        if self.enable_propertyform:
+            self.propertyform()
 
     def _add_menubar_items(self, items: List[Dict], parent: QtWidgets.QWidget):
         if not items:
@@ -626,7 +789,8 @@ class App:
     # ==============================================================================
 
     def select(self,
-               items: List[Dict[str, Any]]) -> Callable:
+               items: List[Dict[str, Any]],
+               parent=None) -> Callable:
         """Decorator for combo boxes.
 
         Parameters
@@ -640,7 +804,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             select = Select(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             items=items,
                             action=func)
             return select
@@ -648,7 +812,8 @@ class App:
 
     def radio(self,
               items: List[Dict[str, Any]],
-              title='') -> Callable:
+              title='',
+              parent=None) -> Callable:
         """Decorator for radio actions.
 
         Parameters
@@ -662,14 +827,14 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             radio = Radio(self,
-                          self.sidebar,
+                          parent or self.sidebar,
                           title=title,
                           items=items,
                           action=func)
             return radio
         return outer
 
-    def button(self, text: str) -> Callable:
+    def button(self, text: str, parent=None) -> Callable:
         """Decorator for button actions.
 
         Parameters
@@ -697,13 +862,13 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             button = Button(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             text=text,
                             action=func)
             return button
         return outer
 
-    def checkbox(self, text: str, checked: bool = True) -> Callable:
+    def checkbox(self, text: str, checked: bool = True, parent=None) -> Callable:
         """Decorator for checkbox actions.
 
         Parameters
@@ -733,7 +898,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             checkbox = Checkbox(self,
-                                self.sidebar,
+                                parent or self.sidebar,
                                 text=text,
                                 action=func,
                                 checked=checked)
@@ -747,7 +912,8 @@ class App:
                maxval: int = 100,
                step: int = 1,
                annotation: str = '',
-               bgcolor: Color = None) -> Callable:
+               bgcolor: Color = None,
+               parent=None) -> Callable:
         """Decorator for slider actions.
 
         Parameters
@@ -785,7 +951,7 @@ class App:
         """
         def outer(func: Callable) -> Callable:
             slider = Slider(self,
-                            self.sidebar,
+                            parent or self.sidebar,
                             func,
                             value=value,
                             minval=minval,

@@ -11,7 +11,7 @@ from compas.datastructures import Network
 from compas.datastructures import Mesh
 
 from compas_view2.forms import AddForm
-from compas_view2.forms import EditForm
+from compas_view2.forms import PropertyForm
 
 from .worker import Worker
 
@@ -51,10 +51,10 @@ class Controller:
 
                 def edit(obj):
                     if obj:
-                        dock = EditForm("Property", obj, on_update=self.app.view.update)
+                        dock = PropertyForm("Property", obj, on_update=self.app.view.update)
                         self.app.window.addDockWidget(QtCore.Qt.RightDockWidgetArea, dock)
 
-                worker = Worker(func, self)
+                worker = Worker(func, [self])
                 if action == "add":
                     worker.signals.result.connect(add)
                 elif action == "edit":

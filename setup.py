@@ -28,7 +28,7 @@ optional_requirements = {}
 
 setup(
     name="compas_view2",
-    version="0.4.4",
+    version="0.6.0",
     description="Second generation viewers for the COMPAS framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -50,6 +50,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
     keywords=[],

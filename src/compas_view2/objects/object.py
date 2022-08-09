@@ -186,6 +186,8 @@ class Object(ABC):
         self.name = name or str(self)
         self.is_selected = is_selected
         self.is_visible = is_visible
+        self.parent = None
+        self._children = set()
 
         self.show_points = show_points
         self.show_lines = show_lines
@@ -210,6 +212,7 @@ class Object(ABC):
         self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
+        self._app = None
 
         self._bounding_box = None
         self._bounding_box_center = None
@@ -247,6 +250,26 @@ class Object(ABC):
         return None
 
     @property
+    def children(self):
+        return self._children
+
+    def add(self, item, **kwargs):
+        if isinstance(item, Object):
+            obj = item
+        else:
+            obj = self._app.add(item, **kwargs)
+        self._children.add(obj)
+        obj.parent = self
+
+        if self._app.dock_slots['sceneform'] and self._app.view.isValid():
+            self._app.dock_slots['sceneform'].update()
+        return obj
+
+    def remove(self, obj):
+        obj.parent = None
+        self._children.remove(obj)
+
+    @property
     def translation(self):
         return self._translation
 
@@ -278,7 +301,7 @@ class Object(ABC):
 
     def _update_matrix(self):
         """Update the matrix from object's translation, rotation and scale"""
-        if self.translation == [0, 0, 0] and self.rotation == [0, 0, 0] and self.scale == [1, 1, 1]:
+        if (not self.parent or self.parent._matrix_buffer is None) and (self.translation == [0, 0, 0] and self.rotation == [0, 0, 0] and self.scale == [1, 1, 1]):
             self._transformation.matrix = identity_matrix(4)
             self._matrix_buffer = None
         else:
@@ -287,12 +310,24 @@ class Object(ABC):
             S1 = Scale.from_factors(self.scale)
             M = T1 * R1 * S1
             self._transformation.matrix = M.matrix
-            self._matrix_buffer = np.array(self.matrix).flatten()
+            self._matrix_buffer = np.array(self.matrix_world).flatten()
+
+        if self.children:
+            for child in self.children:
+                child._update_matrix()
 
     @property
     def matrix(self):
         """Get the updated matrix from object's translation, rotation and scale"""
         return self._transformation.matrix
+
+    @property
+    def matrix_world(self):
+        """Get the updated matrix from object's translation, rotation and scale"""
+        if self.parent:
+            return (self.parent._transformation * self._transformation).matrix
+        else:
+            return self.matrix
 
     @matrix.setter
     def matrix(self, matrix):
