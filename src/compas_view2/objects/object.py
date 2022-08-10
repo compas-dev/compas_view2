@@ -172,12 +172,9 @@ class Object(ABC):
                  show_points: bool = False,
                  show_lines: bool = True,
                  show_faces: bool = True,
-                 pointcolor: Color = None,
-                 linecolor: Color = None,
-                 facecolor: Color = None,
-                 facecolors: Dict[Union[str, int], Color] = None,
-                 linecolors: Dict[Union[str, int], Color] = None,
-                 pointcolors: Dict[Union[str, int], Color] = None,
+                 pointcolor: Union[Color, Dict[Union[str, int], Color]] = None,
+                 linecolor: Union[Color, Dict[Union[str, int], Color]] = None,
+                 facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
                  linewidth: int = 1,
                  pointsize: int = 10,
                  opacity: float = 1.0):
@@ -193,13 +190,25 @@ class Object(ABC):
         self.show_lines = show_lines
         self.show_faces = show_faces
 
-        self.pointcolor = Color(*(pointcolor or self.default_color_points))
-        self.linecolor = Color(*(linecolor or self.default_color_lines))
-        self.facecolor = Color(*(facecolor or self.default_color_faces))
-
-        self.pointcolors = pointcolors or {}
-        self.facecolors = facecolors or {}
-        self.linecolors = linecolors or {}
+        if isinstance(pointcolor, dict):
+            self.pointcolor = Color(*self.default_color_points)
+            self.pointcolors = pointcolor
+        else:
+            print(self.default_color_points)
+            self.pointcolor = Color(*(pointcolor or self.default_color_points))
+            self.pointcolors = {}
+        if isinstance(linecolor, dict):
+            self.linecolor = Color(*self.default_color_lines)
+            self.linecolors = linecolor
+        else:
+            self.linecolor = Color(*(linecolor or self.default_color_lines))
+            self.linecolors = {}
+        if isinstance(facecolor, dict):
+            self.facecolor = Color(*self.default_color_faces)
+            self.facecolors = facecolor
+        else:
+            self.facecolor = Color(*(facecolor or self.default_color_faces))
+            self.facecolors = {}
 
         self.linewidth = linewidth
         self.pointsize = pointsize

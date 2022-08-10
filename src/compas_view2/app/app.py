@@ -262,9 +262,6 @@ class App:
             pointcolor: Color = None,
             linecolor: Color = None,
             facecolor: Color = None,
-            facecolors: dict = None,
-            linecolors: dict = None,
-            pointcolors: dict = None,
             linewidth: int = 1,
             pointsize: int = 10,
             opacity: int = 1.0,
@@ -329,7 +326,6 @@ class App:
         obj = Object.build(data, name=name, is_selected=is_selected, is_visible=is_visible,
                            show_points=show_points, show_lines=show_lines, show_faces=show_faces,
                            pointcolor=pointcolor, linecolor=linecolor, facecolor=facecolor,
-                           facecolors=facecolors, linecolors=linecolors, pointcolors=pointcolors,
                            linewidth=linewidth, pointsize=pointsize, opacity=opacity, **kwargs)
 
         self.view.objects[obj] = obj
