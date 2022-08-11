@@ -11,8 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Moved `pointcolor`, `linecolor`, `facecolor` to `Object` from `BufferObject`.
+* Exposing `pointcolor`, `linecolor`, `facecolor` at `App.add` for pylance linting.
+* `pointcolor`, `linecolor`, `facecolor` now accepct both single value or dictionary of values.
+
 ### Removed
 
+* `pointcolors`, `linecolors`, `facecolors` are removed, use `pointcolor`, `linecolor`, `facecolor` instead.
 
 ## [0.6.0] 2022-07-21
 

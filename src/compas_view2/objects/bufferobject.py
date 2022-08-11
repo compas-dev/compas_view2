@@ -15,7 +15,7 @@ class BufferObject(Object):
 
     Attributes
     ----------
-    visualisation : list, read-only
+    visualisation : list[str], read-only
         List of visualisation properties which can be edited in the GUI.
 
     """

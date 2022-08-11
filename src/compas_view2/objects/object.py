@@ -39,92 +39,92 @@ class Object(ABC):
 
     Parameters
     ----------
-        data: :class:`compas.data.Data`
-            A COMPAS data object.
-        is_selected : bool, optional
-            Whether the object is selected.
-            Default to False.
-        is_visible : bool, optional
-            Whether to show object.
-            Default to True.
-        show_points : bool, optional
-            Whether to show points/vertices of the object.
-            Default to False.
-        show_lines : bool, optional
-            Whether to show lines/edges of the object.
-            Default to True.
-        show_faces : bool, optional
-            Whether to show faces of the object.
-            Default to True.
-        pointcolor : Union[Color, Dict[Union[str, int], Color]], optional
-            The color or the dict of colors of the points.
-            Default to `compas_view2.objects.Object.default_color_points`.
-        linecolor : Union[Color, Dict[Union[str, int], Color]], optional
-            The color or the dict of colors of the lines.
-            Default to `compas_view2.objects.Object.default_color_lines`.
-        facecolor : Union[Color, Dict[Union[str, int], Color]], optional
-            The color or the dict of colors the faces.
-            Default to `compas_view2.objects.Object.default_color_faces`.
-        linewidth : int, optional
-            The line width to be drawn on screen
-            Default to 1.
-        pointsize : int, optional
-            The point size to be drawn on screen
-            Default to 10.
-        opacity : float, optional
-            The opacity of the object.
-            Default to 1.0.
-        **kwargs : dict, optional
-            Additional visualization options for specific objects.
+    data: :class:`compas.data.Data`
+        A COMPAS data object.
+    is_selected : bool, optional
+        Whether the object is selected.
+        Default to False.
+    is_visible : bool, optional
+        Whether to show object.
+        Default to True.
+    show_points : bool, optional
+        Whether to show points/vertices of the object.
+        Default to False.
+    show_lines : bool, optional
+        Whether to show lines/edges of the object.
+        Default to True.
+    show_faces : bool, optional
+        Whether to show faces of the object.
+        Default to True.
+    pointcolor : Union[Color, Dict[Union[str, int], Color]], optional
+        The color or the dict of colors of the points.
+        Default to `compas_view2.objects.Object.default_color_points`.
+    linecolor : Union[Color, Dict[Union[str, int], Color]], optional
+        The color or the dict of colors of the lines.
+        Default to `compas_view2.objects.Object.default_color_lines`.
+    facecolor : Union[Color, Dict[Union[str, int], Color]], optional
+        The color or the dict of colors the faces.
+        Default to `compas_view2.objects.Object.default_color_faces`.
+    linewidth : int, optional
+        The line width to be drawn on screen
+        Default to 1.
+    pointsize : int, optional
+        The point size to be drawn on screen
+        Default to 10.
+    opacity : float, optional
+        The opacity of the object.
+        Default to 1.0.
+    **kwargs : dict, optional
+        Additional visualization options for specific objects.
 
     Attributes
     ----------
-        is_selected : bool
-            Whether the object is selected.
-        is_visible : bool
-            Whether to show object.
-        show_points : bool
-            Whether to show points/vertices of the object.
-        show_lines : bool
-            Whether to show lines/edges of the object.
-        show_faces : bool
-            Whether to show faces of the object.
-        pointcolor : :class:`compas.color.Color`
-            The color of the points.
-        linecolor : :class:`compas.color.Color`
-            The color of the lines.
-        facecolor : :class:`compas.color.Color`
-            The color of the faces.
-        pointcolors : Dict[Union[str, int], Color]
-            The color dict of individual points.
-        linecolors : Dict[Union[str, int], Color]
-            The color dict of individual lines.
-        facecolors : Dict[Union[str, int], Color]
-            The color dict of individual faces.
-        linewidth : int
-            The line width to be drawn on screen.
-        pointsize : int
-            The point size to be drawn on screen.
-        opacity : float
-            The opacity of the object.
-        background : bool
-            Whether the object is drawn on the backgound with depth test disabled.
-        bounding_box : :class:`numpy.array`, read-only
-            The min and max corners of object bounding box, as a numpy array of shape (2, 3).
-        bounding_box_center : :class:`numpy.array`, read-only
-            The center of object bounding box, as a numpy array of shape (3,).
-        matrix : :class:`numpy.array`
-            The transformation matrix of the object.
-        translation : :class:`numpy.array`
-            The translation vector of the object.
-        rotation : :class:`numpy.array`
-            The euler rotation vector of the object.
-        scale : :class:`numpy.array`
-            The scale vector of the object.
-        properties : list, read-only
-            The list of object-specific properties.
-        otype : class
-            The data class of the object.
+    is_selected : bool
+        Whether the object is selected.
+    is_visible : bool
+        Whether to show object.
+    show_points : bool
+        Whether to show points/vertices of the object.
+    show_lines : bool
+        Whether to show lines/edges of the object.
+    show_faces : bool
+        Whether to show faces of the object.
+    pointcolor : :class:`compas.color.Color`
+        The color of the points.
+    linecolor : :class:`compas.color.Color`
+        The color of the lines.
+    facecolor : :class:`compas.color.Color`
+        The color of the faces.
+    pointcolors : Dict[Union[str, int], Color]
+        The color dict of individual points.
+    linecolors : Dict[Union[str, int], Color]
+        The color dict of individual lines.
+    facecolors : Dict[Union[str, int], Color]
+        The color dict of individual faces.
+    linewidth : int
+        The line width to be drawn on screen.
+    pointsize : int
+        The point size to be drawn on screen.
+    opacity : float
+        The opacity of the object.
+    background : bool
+        Whether the object is drawn on the backgound with depth test disabled.
+    bounding_box : :class:`numpy.array`, read-only
+        The min and max corners of object bounding box, as a numpy array of shape (2, 3).
+    bounding_box_center : :class:`numpy.array`, read-only
+        The center of object bounding box, as a numpy array of shape (3,).
+    matrix : :class:`numpy.array`
+        The transformation matrix of the object.
+    translation : :class:`numpy.array`
+        The translation vector of the object.
+    rotation : :class:`numpy.array`
+        The euler rotation vector of the object.
+    scale : :class:`numpy.array`
+        The scale vector of the object.
+    properties : list, read-only
+        The list of object-specific properties.
+    otype : class
+        The data class of the object.
 
     Class Attributes
     ----------------
