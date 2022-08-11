@@ -10,7 +10,7 @@ for i in range(10):
     viewer.add(point, pointcolor=Color(random(), random(), random()), pointsize=30)
 
 cloud = Pointcloud.from_bounds(5, 5, 5, 1000)
-colors = {i: Color(random(), random(), random()) for i in range(1000)}
-viewer.add(cloud, pointcolors=colors)
+pointcolor = {i: Color(random(), random(), random()) for i in range(1000)}
+viewer.add(cloud, pointcolor=pointcolor)
 
 viewer.show()

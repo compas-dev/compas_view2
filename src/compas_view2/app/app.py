@@ -259,9 +259,9 @@ class App:
             show_points: bool = False,
             show_lines: bool = True,
             show_faces: bool = True,
-            pointcolor: Color = None,
-            linecolor: Color = None,
-            facecolor: Color = None,
+            pointcolor: Union[Color, Dict[Union[str, int], Color]] = None,
+            linecolor: Union[Color, Dict[Union[str, int], Color]] = None,
+            facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
             linewidth: int = 1,
             pointsize: int = 10,
             opacity: int = 1.0,
@@ -287,24 +287,15 @@ class App:
         show_faces : bool, optional
             Whether to show faces of the object.
             Default to True.
-        pointcolor : :class:`compas.color.Color`, optional
-            The color of the points.
+        pointcolor : Union[Color, Dict[Union[str, int], Color]], optional
+            The color or the dict of colors of the points.
             Default to `compas_view2.objects.Object.default_color_points`.
-        linecolor : :class:`compas.color.Color`, optional
-            The color of the lines.
+        linecolor : Union[Color, Dict[Union[str, int], Color]], optional
+            The color or the dict of colors of the lines.
             Default to `compas_view2.objects.Object.default_color_lines`.
-        facecolor : :class:`compas.color.Color`, optional
-            The color of the faces.
+        facecolor : Union[Color, Dict[Union[str, int], Color]], optional
+            The color or the dict of colors of the faces.
             Default to `compas_view2.objects.Object.default_color_faces`.
-        pointcolors : dict, optional
-            The color dict of individual points.
-            Default to None.
-        linecolors : dict, optional
-            The color dict of individual lines.
-            Default to None.
-        facecolors : dict, optional
-            The color dict of individual faces.
-            Default to None.
         linewidth : int, optional
             The line width to be drawn on screen
             Default to 1.

@@ -38,7 +38,7 @@ class Object(ABC):
     """Base object for compas_view2
 
     Parameters
-        ----------
+    ----------
         data: :class:`compas.data.Data`
             A COMPAS data object.
         is_selected : bool, optional
@@ -56,24 +56,15 @@ class Object(ABC):
         show_faces : bool, optional
             Whether to show faces of the object.
             Default to True.
-        pointcolor : :class:`compas.color.Color`, optional
-            The color of the points.
+        pointcolor : Union[Color, Dict[Union[str, int], Color]], optional
+            The color or the dict of colors of the points.
             Default to `compas_view2.objects.Object.default_color_points`.
-        linecolor : :class:`compas.color.Color`, optional
-            The color of the lines.
+        linecolor : Union[Color, Dict[Union[str, int], Color]], optional
+            The color or the dict of colors of the lines.
             Default to `compas_view2.objects.Object.default_color_lines`.
-        facecolor : :class:`compas.color.Color`, optional
-            The color of the faces.
+        facecolor : Union[Color, Dict[Union[str, int], Color]], optional
+            The color or the dict of colors the faces.
             Default to `compas_view2.objects.Object.default_color_faces`.
-        pointcolors : Dict[Union[str, int], Color], optional
-            The color dict of individual points.
-            Default to None.
-        linecolors : Dict[Union[str, int], Color], optional
-            The color dict of individual lines.
-            Default to None.
-        facecolors : Dict[Union[str, int], Color], optional
-            The color dict of individual faces.
-            Default to None.
         linewidth : int, optional
             The line width to be drawn on screen
             Default to 1.
@@ -194,7 +185,6 @@ class Object(ABC):
             self.pointcolor = Color(*self.default_color_points)
             self.pointcolors = pointcolor
         else:
-            print(self.default_color_points)
             self.pointcolor = Color(*(pointcolor or self.default_color_points))
             self.pointcolors = {}
         if isinstance(linecolor, dict):
