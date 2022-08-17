@@ -522,7 +522,7 @@ class App:
 
         return propertyform
 
-    def treeform(self, title="tree", slot: str = None, location: str = "left"):
+    def treeform(self, title="tree", data=None, slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True):
         """Create a side object tree form widget.
         """
         if slot and slot in self.dock_slots:
@@ -535,9 +535,13 @@ class App:
             "bottom": QtCore.Qt.BottomDockWidgetArea,
         }
 
-        treeform = TreeForm(title)
+        treeform = TreeForm(title=title, data=data, columns=columns, show_headers=show_headers)
         self.window.addDockWidget(locations[location], treeform)
-        self.dock_slots[slot] = treeform
+
+        if slot:
+            self.dock_slots[slot] = treeform
+        if floating:
+            treeform.setFloating(True)
 
         return treeform
 
