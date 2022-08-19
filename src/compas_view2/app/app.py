@@ -49,6 +49,7 @@ from .selector import Selector
 from .controller import Controller
 from .worker import Worker
 from .plot import MplCanvas
+from .server import start_server
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
@@ -143,6 +144,7 @@ class App:
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
                  flow_auto_update: bool = True,
+                 with_server: bool = False,
                  ):
 
         if version not in VERSIONS:
@@ -215,6 +217,8 @@ class App:
         self.init()
         self.resize(width, height)
         self.started = False
+        if with_server:
+            start_server(self)
 
     def init(self):
         """Initialize the components of the user interface.
