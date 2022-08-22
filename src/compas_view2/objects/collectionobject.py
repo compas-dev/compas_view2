@@ -19,9 +19,10 @@ class CollectionObject(BufferObject):
         self._objects = [Object.build(item, color=color, **kwargs) for item, color in zip(self._data.items, colors)]
 
         # if not given explicitly, use child object default settings
-        self.show_points = self.show_points or self._objects[0].show_points
-        self.show_lines = self.show_lines or self._objects[0].show_lines
-        self.show_faces = self.show_faces or self._objects[0].show_faces
+        if self._objects:
+            self.show_points = self.show_points or self._objects[0].show_points
+            self.show_lines = self.show_lines or self._objects[0].show_lines
+            self.show_faces = self.show_faces or self._objects[0].show_faces
         self._is_collection = True
 
     def _points_data(self):

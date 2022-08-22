@@ -35,8 +35,8 @@ class BufferObject(Object):
                  show_points=False, show_vertices=False, show_lines=False, show_edges=True, show_faces=True,
                  pointcolor=None, linecolor=None, facecolor=None, color=None,
                  facecolors=None, linecolors=None, pointcolors=None,
-                 linewidth=None, pointsize=None, opacity=None):
-        super().__init__(data, name=name, is_selected=is_selected, is_visible=is_visible)
+                 linewidth=None, pointsize=None, opacity=None, app=None):
+        super().__init__(data, name=name, is_selected=is_selected, is_visible=is_visible, app=app)
         self._data = data
 
         self.show_points = show_points or show_vertices
@@ -131,7 +131,8 @@ class BufferObject(Object):
         if hasattr(self, '_points_data'):
             data = self._points_data()
             self._points_buffer = self.make_buffer_from_data(data)
-            self._update_bounding_box(data[0])
+            if data[0]:
+                self._update_bounding_box(data[0])
         if hasattr(self, '_lines_data'):
             self._lines_buffer = self.make_buffer_from_data(self._lines_data())
         if hasattr(self, '_frontfaces_data'):

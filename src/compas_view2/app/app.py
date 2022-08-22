@@ -267,10 +267,9 @@ class App:
         :class:`compas_view2.objects.Object`
 
         """
-        obj = Object.build(data, **kwargs)
+        obj = Object.build(data, app=self, **kwargs)
         self.view.objects[obj] = obj
         self.selector.add(obj)
-        obj._app = self
         if self.view.isValid():
             obj.init()
             if self.dock_slots['sceneform']:

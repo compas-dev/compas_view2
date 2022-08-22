@@ -18,6 +18,7 @@ from compas.geometry import Cone
 from compas.geometry import Capsule
 from compas.geometry import Polyhedron
 from compas.geometry import NurbsSurface
+from compas.robots import RobotModel
 
 from compas_view2.shapes import Arrow
 from compas_view2.shapes import Text
@@ -53,6 +54,7 @@ from .capsuleobject import CapsuleObject
 from .polyhedronobject import PolyhedronObject
 
 from .nurbssurfaceobject import NurbsSurfaceObject
+from .robotobject import RobotObject
 
 from .object import DATA_OBJECT  # noqa : F401
 
@@ -87,3 +89,4 @@ Object.register(Network, NetworkObject)
 Object.register(Mesh, MeshObject)
 
 Object.register(Collection, CollectionObject)
+Object.register(RobotModel, RobotObject)
