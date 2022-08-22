@@ -14,7 +14,17 @@ from math import radians
 
 
 class RobotObject(CollectionObject):
-    """Object for displaying COMPAS RobotModel."""
+    """Object for displaying COMPAS RobotModel.
+
+    Attributes
+    ----------
+    robot : :class:`compas.robots.RobotModel`
+        The compas robot model.
+    joints : dict
+        Dictionary of joints and their corresponding objects.
+    link_objs : list
+        Dictionary of links and their corresponding objects.
+    """
 
     def __init__(self, robot, **kwargs):
         super().__init__(Collection(), name=robot.name, **kwargs)
@@ -24,7 +34,22 @@ class RobotObject(CollectionObject):
         self.create(robot.root, self)
 
     def create(self, link, parent, parent_joint=None):
+        """Recursively create the robot joints and links in hierrachy.
 
+        Parameters
+        ----------
+        link: :class:`compas.robots.Joint`
+            The robot link to create.
+        parent: :class:`compas_view2.objects.collectionobject.CollectionObject`
+            The parent compas_view2 collection object.
+        parent_joint: :class:`compas.robots.Joint`
+            The parent joint of the link.
+
+        Returns
+        -------
+        None
+
+        """
         meshes = []
 
         for item in itertools.chain(link.visual):
@@ -55,6 +80,20 @@ class RobotObject(CollectionObject):
             self.create(joint.child_link, parent=obj, parent_joint=joint)
 
     def rotate_joint(self, joint_name, angle):
+        """Rotate the joint by the given angle.
+
+        Parameters
+        ----------
+        joint_name: str
+            The name of the joint to rotate.
+        angle: float
+            The angle to rotate the joint by.
+
+        Returns
+        -------
+        None
+
+        """
         joint = self.joints[joint_name]
         T = Translation.from_vector(joint['link_obj'].translation)
         R = Rotation.from_axis_and_angle(joint['axis'], radians(angle))
