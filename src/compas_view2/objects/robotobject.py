@@ -27,7 +27,8 @@ class RobotObject(CollectionObject):
     """
 
     def __init__(self, robot, **kwargs):
-        super().__init__(Collection(), name=robot.name, **kwargs)
+        kwargs.update({'name': robot.name})
+        super().__init__(Collection(), **kwargs)
         self.robot = robot
         self.joints = {}
         self.link_objs = {}
@@ -56,7 +57,7 @@ class RobotObject(CollectionObject):
             meshes.extend(Geometry._get_item_meshes(item))
 
         if meshes:
-            obj = parent.add(Collection(meshes), name=link.name, show_edges=False)
+            obj = parent.add(Collection(meshes), name=link.name, show_lines=False)
         else:
             lines = []
             for joint in link.joints:

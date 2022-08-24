@@ -4,6 +4,7 @@ import compas
 
 from compas.datastructures import Mesh
 from compas.geometry import Translation, Scale
+from compas.colors import Color
 
 from compas_view2.app import App
 
@@ -16,11 +17,11 @@ mesh.transform(T*S)
 
 mesh2 = mesh.transformed(Translation.from_vector([-6, 0, 0]))
 
-facecolors = {k: [random(), random(), random()] for k in mesh.faces()}
-linecolors = {k: [random(), random(), random()] for k in mesh.edges()}
-pointcolors = {k: [random(), random(), random()] for k in mesh.vertices()}
+facecolor = {k: Color(random(), random(), random()) for k in mesh.faces()}
+linecolor = {k: Color(random(), random(), random()) for k in mesh.edges()}
+pointcolor = {k: Color(random(), random(), random()) for k in mesh.vertices()}
 
-viewer.add(mesh, name="mesh1", show_points=True, facecolors=facecolors, linecolors=linecolors, pointcolors=pointcolors)
-viewer.add(mesh2, name="mesh2", show_points=True, facecolor=[1, 0, 0], linecolor=[0, 1, 0], pointcolor=[0, 0, 1])
+viewer.add(mesh, name="mesh1", show_points=True, facecolor=facecolor, linecolor=linecolor, pointcolor=pointcolor)
+viewer.add(mesh2, name="mesh2", show_points=True, facecolor=Color(1, 0, 0), linecolor=Color(0, 1, 0), pointcolor=Color(0, 0, 1))
 
 viewer.show()

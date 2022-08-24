@@ -28,7 +28,7 @@ def create(link, parent=None, parent_joint=None):
     for item in itertools.chain(link.visual):
         meshes.extend(Geometry._get_item_meshes(item))
 
-    obj = parent.add(Collection(meshes), name=link.name, show_edges=False)
+    obj = parent.add(Collection(meshes), name=link.name, show_lines=False)
 
     if parent_joint:
         obj.matrix = Transformation.from_frame(parent_joint.origin).matrix

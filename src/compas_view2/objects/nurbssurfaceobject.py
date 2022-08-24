@@ -5,8 +5,8 @@ from .bufferobject import BufferObject
 class NurbsSurfaceObject(BufferObject):
     """Object for displaying COMPAS NurbsSurface geometry."""
 
-    def __init__(self, surface, u=100, v=100, show_edges=False, **kwargs):
-        super().__init__(surface, show_edges=show_edges, **kwargs)
+    def __init__(self, surface, u=100, v=100, **kwargs):
+        super().__init__(surface, **kwargs)
         self._data = surface
         self._triangles = [list(point) for triangle in surface.to_triangles(nu=u, nv=v) for point in triangle]
         self.u = u
