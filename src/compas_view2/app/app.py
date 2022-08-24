@@ -317,7 +317,7 @@ class App:
         obj = Object.build(data, name=name, is_selected=is_selected, is_visible=is_visible,
                            show_points=show_points, show_lines=show_lines, show_faces=show_faces,
                            pointcolor=pointcolor, linecolor=linecolor, facecolor=facecolor,
-                           linewidth=linewidth, pointsize=pointsize, opacity=opacity, **kwargs)
+                           linewidth=linewidth, pointsize=pointsize, opacity=opacity, app=self, **kwargs)
 
         self.view.objects[obj] = obj
         self.selector.add(obj)
