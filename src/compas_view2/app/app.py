@@ -321,7 +321,6 @@ class App:
 
         self.view.objects[obj] = obj
         self.selector.add(obj)
-        obj._app = self
         if self.view.isValid():
             obj.init()
             if self.dock_slots['sceneform']:
@@ -577,7 +576,10 @@ class App:
         """Create a side object tree form widget.
         """
         if slot and slot in self.dock_slots:
-            self.dock_slots[slot].close()
+            treeform = self.dock_slots[slot]
+            treeform.setWindowTitle(title)
+            treeform.update(data)
+            return treeform
 
         locations = {
             "left": QtCore.Qt.LeftDockWidgetArea,

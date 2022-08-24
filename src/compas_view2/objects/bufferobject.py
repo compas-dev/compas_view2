@@ -17,7 +17,6 @@ class BufferObject(Object):
     ----------
     visualisation : list[str], read-only
         List of visualisation properties which can be edited in the GUI.
-
     """
 
     @property
@@ -82,7 +81,8 @@ class BufferObject(Object):
         if hasattr(self, '_points_data'):
             data = self._points_data()
             self._points_buffer = self.make_buffer_from_data(data)
-            self._update_bounding_box(data[0])
+            if data[0]:
+                self._update_bounding_box(data[0])
         if hasattr(self, '_lines_data'):
             self._lines_buffer = self.make_buffer_from_data(self._lines_data())
         if hasattr(self, '_frontfaces_data'):
