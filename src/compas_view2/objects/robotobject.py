@@ -27,7 +27,8 @@ class RobotObject(CollectionObject):
     """
 
     def __init__(self, robot, **kwargs):
-        super().__init__(Collection(), name=robot.name, **kwargs)
+        kwargs.update({'name': robot.name})
+        super().__init__(Collection(), **kwargs)
         self.robot = robot
         self.joints = {}
         self.link_objs = {}

@@ -157,6 +157,7 @@ class Object(ABC):
 
     def __init__(self,
                  data: Data,
+                 app=None,
                  name: str = None,
                  is_selected: bool = False,
                  is_visible: bool = True,

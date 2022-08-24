@@ -6,10 +6,12 @@ class Collection:
     """A collection of COMPAS items like meshes or shapes.
     """
 
-    def __init__(self, items: Union[Data, Tuple[Data, dict]], item_properties: List[dict] = None):
+    def __init__(self, items: Union[Data, Tuple[Data, dict]] = None, item_properties: List[dict] = None):
         super().__init__()
         self.items = []
         self.item_properties = []
+        items = items or []
+        item_properties = item_properties or []
         for item in items:
             if isinstance(item, Data):
                 self.item_properties.append({})

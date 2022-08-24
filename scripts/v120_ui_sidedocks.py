@@ -6,7 +6,7 @@ curve = Bezier([[0, 0, 0], [3, 6, 0], [5, -3, 0], [10, 0, 0]])
 
 # Enable dsginated side dock 1 and 2. These are fix designated areas where the content can be dynamically created and replaced.
 viewer = App(viewmode="shaded", enable_sidebar=True, enable_sidedock1=True, enable_sidedock2=True, width=1600, height=900)
-pointobj = viewer.add(Point(* curve.point(0)), size=20, color=(1, 0, 0))
+pointobj = viewer.add(Point(* curve.point(0)), pointsize=20, pointcolor=(1, 0, 0))
 curveobj = viewer.add(Polyline(curve.locus()), linewidth=2)
 
 viewer.sidedock1.setWindowTitle("Designated Area 1")
