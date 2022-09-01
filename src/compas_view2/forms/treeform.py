@@ -8,6 +8,7 @@ class TreeForm(DockForm):
         super().__init__(app, title)
         self.column_names = list(map(lambda c: c if isinstance(c, str) else c["name"], columns))
         self.column_keys = list(map(lambda c: c if isinstance(c, str) else c["key"], columns))
+        self.column_editable = list(map(lambda c: c.get("editable") if isinstance(c, dict) else False, columns))
         self.tree = QtWidgets.QTreeWidget()
         self.tree.setColumnCount(len(columns))
         self.tree.setHeaderLabels(self.column_names)
@@ -15,6 +16,7 @@ class TreeForm(DockForm):
         self.setWidget(self.tree)
         self.tree.itemDoubleClicked.connect(self.on_item_double_clicked)
         self.tree.itemPressed.connect(self.on_item_pressed)
+        self.tree.itemChanged.connect(self.on_item_changed)
         if data:
             self.update(data)
 
@@ -59,6 +61,9 @@ class TreeForm(DockForm):
             if entry.get("on_item_pressed"):
                 item.on_item_pressed = entry.get("on_item_pressed")
 
+            if entry.get("on_item_edited"):
+                item.on_item_edited = entry.get("on_item_edited")
+
             for i, color in enumerate(colors):
                 if color:
                     item.setBackgroundColor(i, QtGui.QColor(*color))
@@ -69,9 +74,16 @@ class TreeForm(DockForm):
                 self.tree.addTopLevelItem(item)
 
     def on_item_double_clicked(self, item, column):
+        if self.column_editable[column]:
+            self.tree.openPersistentEditor(item, column)
         if hasattr(item, "on_item_double_clicked"):
             item.on_item_double_clicked(self, item.entry)
 
     def on_item_pressed(self, item, column):
         if hasattr(item, "on_item_pressed"):
             item.on_item_pressed(self, item.entry)
+
+    def on_item_changed(self, item, column):
+        self.tree.closePersistentEditor(item, column)
+        if hasattr(item, "on_item_edited"):
+            item.on_item_edited(self, item.entry, column, item.text(column))
