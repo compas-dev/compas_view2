@@ -5,8 +5,9 @@ class DockForm(QtWidgets.QDockWidget):
     """
     """
 
-    def __init__(self, title):
+    def __init__(self, app, title):
         super().__init__(title)
+        self.app = app
         self.setMinimumWidth(200)
         scroll = QtWidgets.QScrollArea()
         self.setWidget(scroll)

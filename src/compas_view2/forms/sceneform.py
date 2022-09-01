@@ -5,9 +5,7 @@ from qtpy import QtCore
 
 class SceneForm(DockForm):
     def __init__(self, app, title="Scene"):
-        super().__init__(title)
-
-        self.app = app
+        super().__init__(app, title)
         self.tree = QtWidgets.QTreeWidget()
         self.tree.setColumnCount(1)
         self.tree.setHeaderHidden(True)

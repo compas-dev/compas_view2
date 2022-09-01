@@ -538,7 +538,7 @@ class App:
             "bottom": QtCore.Qt.BottomDockWidgetArea,
         }
 
-        dock = DockForm(title)
+        dock = DockForm(self, title)
         self.window.addDockWidget(locations[location], dock)
 
         if slot:
@@ -588,7 +588,7 @@ class App:
             "bottom": QtCore.Qt.BottomDockWidgetArea,
         }
 
-        treeform = TreeForm(title=title, data=data, columns=columns, show_headers=show_headers)
+        treeform = TreeForm(self, title=title, data=data, columns=columns, show_headers=show_headers)
         self.window.addDockWidget(locations[location], treeform)
 
         if slot:

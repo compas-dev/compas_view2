@@ -4,8 +4,8 @@ from qtpy import QtGui
 
 
 class TreeForm(DockForm):
-    def __init__(self, title="Tree", data=None, columns=["key", "value"], show_headers=True):
-        super().__init__(title)
+    def __init__(self, app, title="Tree", data=None, columns=["key", "value"], show_headers=True):
+        super().__init__(app, title)
         self.column_names = list(map(lambda c: c if isinstance(c, str) else c["name"], columns))
         self.column_keys = list(map(lambda c: c if isinstance(c, str) else c["key"], columns))
         self.tree = QtWidgets.QTreeWidget()
@@ -70,8 +70,8 @@ class TreeForm(DockForm):
 
     def on_item_double_clicked(self, item, column):
         if hasattr(item, "on_item_double_clicked"):
-            item.on_item_double_clicked(item.entry)
+            item.on_item_double_clicked(self, item.entry)
 
     def on_item_pressed(self, item, column):
         if hasattr(item, "on_item_pressed"):
-            item.on_item_pressed(item.entry)
+            item.on_item_pressed(self, item.entry)

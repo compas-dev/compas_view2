@@ -3,7 +3,8 @@ from compas_view2.app import App
 viewer = App()
 
 
-def show_attributes_form(entry):
+def show_attributes_form(self, entry):
+    print(self, self.app)
     # when data is a dict, it is automatically converted to a list of key, value pairs
     attributeform = viewer.treeform("Attribute Form", data=entry["attributes"], floating=True)
 
@@ -32,7 +33,8 @@ data = [
 treeform = viewer.treeform("Content Form", data=data, show_headers=False, columns=["key"])
 
 
-def show_table_form(entry):
+def show_table_form(self, entry):
+    print(self, self.app)
     # columns can also be a list of name (the header label to show), key pairs.
     columns = [
         {"name": "Column 1", "key": "column1"},
