@@ -1,6 +1,7 @@
 from .dockform import DockForm
 from qtpy import QtWidgets
 from qtpy import QtGui
+import ast
 
 
 class TreeForm(DockForm):
@@ -17,6 +18,7 @@ class TreeForm(DockForm):
         self.tree.itemDoubleClicked.connect(self.on_item_double_clicked)
         self.tree.itemPressed.connect(self.on_item_pressed)
         self.tree.itemChanged.connect(self.on_item_changed)
+        self.datastore = []
         if data:
             self.update(data)
 
@@ -45,10 +47,11 @@ class TreeForm(DockForm):
                         color = value["color"]
                     if "value" in value:
                         value = value["value"]
-                values.append(str(value))
+                values.append(value)
                 colors.append(color)
-            item = QtWidgets.QTreeWidgetItem(values)
+            item = QtWidgets.QTreeWidgetItem([str(v) for v in values])
             item.entry = entry
+            item.data_item = {"values": values, "children": []}
             if children:
                 self.map_entries(children, item)
             if entry.get("color"):
@@ -70,8 +73,10 @@ class TreeForm(DockForm):
 
             if parent is not None:
                 parent.addChild(item)
+                parent.data_item["children"].append(item.data_item)
             else:
                 self.tree.addTopLevelItem(item)
+                self.datastore.append(item.data_item)
 
     def on_item_double_clicked(self, item, column):
         if self.column_editable[column]:
@@ -85,5 +90,12 @@ class TreeForm(DockForm):
 
     def on_item_changed(self, item, column):
         self.tree.closePersistentEditor(item, column)
+
+        try:
+            value = ast.literal_eval(item.text(column))
+        except Exception:
+            value = item.text(column)
+
+        item.data_item["values"][column] = value
         if hasattr(item, "on_item_edited"):
-            item.on_item_edited(self, item.entry, column, item.text(column))
+            item.on_item_edited(self, item.entry, column, value)
