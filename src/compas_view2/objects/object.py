@@ -2,6 +2,7 @@ import abc
 import numpy as np
 import inspect
 
+from compas.geometry import Frame
 from compas.geometry import Transformation
 from compas.geometry import Translation
 from compas.geometry import Rotation
@@ -32,6 +33,9 @@ def _get_object_cls(data):
         raise Exception('No object is registered for this data type: {}'.format(dtype))
 
     return cls
+
+
+IDENTITY_TRANSFORMATION = Transformation()
 
 
 class Object(ABC):
@@ -74,6 +78,9 @@ class Object(ABC):
     opacity : float, optional
         The opacity of the object.
         Default to 1.0.
+    frame : :class:`compas.geometry.Frame`, optional
+        The frame of the object.
+        Default to :class:`compas.geometry.Frame.worldXY()`.
     **kwargs : dict, optional
         Additional visualization options for specific objects.
 
@@ -121,10 +128,24 @@ class Object(ABC):
         The euler rotation vector of the object.
     scale : :class:`numpy.array`
         The scale vector of the object.
+    frame : :class:`compas.geometry.Frame`
+        The frame of the object.
+    transformation: :class:`compas.geometry.Transformation`
+        The transformation of the object.
+    transformation_world: :class:`compas.geometry.Transformation`
+        The transformation of the object in world coordinate system.
+    frame_transformation: :class:`compas.geometry.Transformation`
+        The transformation of the object's frame.
+    frame_transformation_world: :class:`compas.geometry.Transformation`
+        The transformation of the object's frame in world coordinate system.
     properties : list, read-only
         The list of object-specific properties.
     otype : class
         The data class of the object.
+    parent : :class:`compas_view2.objects.Object`
+        The parent object of the object.
+    children: list[:class:`compas_view2.objects.Object`]
+        The list of child objects of the object.
 
     Class Attributes
     ----------------
@@ -169,7 +190,9 @@ class Object(ABC):
                  facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
                  linewidth: int = 1,
                  pointsize: int = 10,
-                 opacity: float = 1.0):
+                 opacity: float = 1.0,
+                 frame: Frame = None
+                 ):
 
         self._data = data
         self._app = app
@@ -177,7 +200,8 @@ class Object(ABC):
         self.is_selected = is_selected
         self.is_visible = is_visible
         self.parent = None
-        self._children = set()
+        self._frame = frame or Frame.worldXY()
+        self._frame_transformation = None
 
         self.show_points = show_points
         self.show_lines = show_lines
@@ -251,14 +275,15 @@ class Object(ABC):
 
     @property
     def children(self):
-        return self._children
+        if self._app:
+            return [obj for obj in self._app.view.objects if obj.parent == self]
+        return []
 
     def add(self, item, **kwargs):
         if isinstance(item, Object):
             obj = item
         else:
             obj = self._app.add(item, **kwargs)
-        self._children.add(obj)
         obj.parent = self
 
         if self._app.dock_slots['sceneform'] and self._app.view.isValid():
@@ -267,7 +292,16 @@ class Object(ABC):
 
     def remove(self, obj):
         obj.parent = None
-        self._children.remove(obj)
+
+    @property
+    def frame(self):
+        return self._frame
+
+    @frame.setter
+    def frame(self, frame):
+        self._frame.data = frame.data
+        self.frame_transformation.data = Transformation.from_frame(self.frame).data
+        self._update_matrix()
 
     @property
     def translation(self):
@@ -301,7 +335,11 @@ class Object(ABC):
 
     def _update_matrix(self):
         """Update the matrix from object's translation, rotation and scale"""
-        if (not self.parent or self.parent._matrix_buffer is None) and (self.translation == [0, 0, 0] and self.rotation == [0, 0, 0] and self.scale == [1, 1, 1]):
+        no_parent_mattrix_buffer = not self.parent or self.parent._matrix_buffer is None
+        no_transformation = self.translation == [0, 0, 0] and self.rotation == [0, 0, 0] and self.scale == [1, 1, 1]
+        no_frame_transformation = self._frame_transformation == IDENTITY_TRANSFORMATION
+
+        if no_parent_mattrix_buffer and no_transformation and no_frame_transformation:
             self._transformation.matrix = identity_matrix(4)
             self._matrix_buffer = None
         else:
@@ -317,6 +355,19 @@ class Object(ABC):
                 child._update_matrix()
 
     @property
+    def frame_transformation(self):
+        if not self._frame_transformation:
+            self._frame_transformation = Transformation.from_frame(self.frame)
+        return self._frame_transformation
+
+    @property
+    def world_frame_transformation(self):
+        if self.parent:
+            return self.parent.world_frame_transformation * self.frame_transformation
+        else:
+            return self.frame_transformation
+
+    @property
     def transformation(self):
         return self._transformation
 
@@ -324,9 +375,9 @@ class Object(ABC):
     def transformation_world(self):
         """Get the updated matrix from object's translation, rotation and scale"""
         if self.parent:
-            return self.parent.transformation_world * self.transformation
+            return self.parent.world_frame_transformation * self.frame_transformation * self.transformation
         else:
-            return self.transformation
+            return self.frame_transformation * self.transformation
 
     @property
     def matrix(self):

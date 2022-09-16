@@ -24,6 +24,7 @@ from qtpy.QtGui import QIcon
 from compas.data import Data
 from compas.colors import Color
 from compas.utilities import gif_from_images
+from compas.geometry import Frame
 
 from compas_view2.views import View120
 from compas_view2.views import View330
@@ -265,6 +266,7 @@ class App:
             linewidth: int = 1,
             pointsize: int = 10,
             opacity: int = 1.0,
+            frame: Frame = None,
             **kwargs) -> Object:
         """Add a COMPAS object.
 
@@ -305,6 +307,9 @@ class App:
         opacity : float, optional
             The opacity of the object.
             Default to 1.0.
+        frame : :class:`compas.geometry.Frame`, optional
+            The frame of the object.
+            Default to None.
         **kwargs : dict, optional
             Additional visualization options for specific objects.
 
@@ -317,7 +322,8 @@ class App:
         obj = Object.build(data, name=name, is_selected=is_selected, is_visible=is_visible,
                            show_points=show_points, show_lines=show_lines, show_faces=show_faces,
                            pointcolor=pointcolor, linecolor=linecolor, facecolor=facecolor,
-                           linewidth=linewidth, pointsize=pointsize, opacity=opacity, app=self, **kwargs)
+                           linewidth=linewidth, pointsize=pointsize, opacity=opacity, frame=frame,
+                           app=self, **kwargs)
 
         self.view.objects[obj] = obj
         self.selector.add(obj)

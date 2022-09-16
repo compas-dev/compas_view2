@@ -6,8 +6,7 @@ import itertools
 from compas.geometry import Line
 from compas.geometry import Plane
 from compas.geometry import Circle
-from compas.geometry import Transformation
-from compas.geometry import Translation
+from compas.geometry import Frame
 from compas.geometry import Rotation
 from compas.robots import Geometry
 from math import radians
@@ -68,7 +67,7 @@ class RobotObject(CollectionObject):
             obj = parent.add(Collection(lines), name=link.name)
 
         if parent_joint:
-            obj.matrix = Transformation.from_frame(parent_joint.origin).matrix
+            obj.frame = parent_joint.origin
             self.joints[parent_joint.name] = {
                 'link_obj': obj,
                 'joint': parent_joint,
@@ -96,6 +95,6 @@ class RobotObject(CollectionObject):
 
         """
         joint = self.joints[joint_name]
-        T = Translation.from_vector(joint['link_obj'].translation)
+        T = joint['link_obj'].frame_transformation.translation
         R = Rotation.from_axis_and_angle(joint['axis'], radians(angle))
-        joint['link_obj'].matrix = (T * R).matrix
+        joint['link_obj'].frame = Frame.from_transformation(T * R)

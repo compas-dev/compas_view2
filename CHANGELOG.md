@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Added `RobotObject`.
+* Added `frame` to `compas_view2.objects.Object`.
 
 ### Changed
 
 * Give access to `self` in `TreeForm` click events.
 * Allow `TreeForm` columns to be editable.
+* Global transformation object is now based on chain of local `frame` rather than `matrix`.
 
 ### Removed
 
