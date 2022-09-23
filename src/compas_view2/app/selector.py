@@ -119,23 +119,29 @@ class Selector:
         """
         def select():
             if self.instance_map is not None:
-                instance_map = self.instance_map
-                if self.select_from == "pixel":
-                    # Pick an object from mouse pixel
-                    x = self.app.view.mouse.last_pos.x()
-                    y = self.app.view.mouse.last_pos.y()
-                    self.select_one_from_instance_map(x, y, instance_map)
-                if self.select_from == "box":
-                    # Pick objects from box selection
-                    self.select_all_from_instance_map(instance_map)
-                    self.select_from = "pixel"
-                self.app.view.update()
-                self.instance_map = None
+                if self.enabled:
+                    instance_map = self.instance_map
+                    if self.select_from == "pixel":
+                        # Pick an object from mouse pixel
+                        x = self.app.view.mouse.last_pos.x()
+                        y = self.app.view.mouse.last_pos.y()
+                        self.select_one_from_instance_map(x, y, instance_map)
+                    if self.select_from == "box":
+                        # Pick objects from box selection
+                        self.select_all_from_instance_map(instance_map)
+                        self.select_from = "pixel"
+                    self.app.view.update()
+                    # self.instance_map = None
+                    self.enabled = False
 
                 if self.app.dock_slots["propertyform"] is not None and self.selected:
                     self.app.dock_slots["propertyform"].set_object(self.selected[0])
                 if self.app.dock_slots["sceneform"] is not None:
                     self.app.dock_slots["sceneform"].select(self.selected)
+
+                x = self.app.view.mouse.pos.x()
+                y = self.app.view.mouse.pos.y()
+                self.highlight_one_from_instance_map(x, y, self.instance_map)
 
         # Start monitor loop in a separate worker thread
         ticker = Ticker(interval=0.02)
