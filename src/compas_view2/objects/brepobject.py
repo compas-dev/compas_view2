@@ -1,4 +1,3 @@
-from compas.utilities import flatten
 from compas.utilities import pairwise
 from compas.geometry import centroid_points
 from .bufferobject import BufferObject
