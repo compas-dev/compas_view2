@@ -56,6 +56,13 @@ from .polyhedronobject import PolyhedronObject
 from .nurbssurfaceobject import NurbsSurfaceObject
 from .robotobject import RobotObject
 
+try:
+    from compas_occ.brep import BRep
+    from .brepobject import BRepObject
+except ImportError:
+    BRep = None
+    BRepObject = None
+
 from .object import DATA_OBJECT  # noqa : F401
 
 Object.register(Point, PointObject)
@@ -90,3 +97,6 @@ Object.register(Mesh, MeshObject)
 
 Object.register(Collection, CollectionObject)
 Object.register(RobotModel, RobotObject)
+
+if BRep and BRepObject:
+    Object.register(BRep, BRepObject)
