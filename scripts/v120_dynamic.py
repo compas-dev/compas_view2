@@ -1,7 +1,6 @@
 from compas.geometry import Point
 from compas_view2 import app
 
-
 viewer = app.App()
 obj = viewer.add(Point(0, 0, 0))
 

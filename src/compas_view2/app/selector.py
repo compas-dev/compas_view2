@@ -1,7 +1,8 @@
+import time
 from random import randint
 import numpy as np
-import time
-from .worker import Worker
+
+from .worker import Ticker
 
 
 class Selector:
@@ -9,39 +10,42 @@ class Selector:
 
     Parameters
     ----------
-    app: :class:`compas_view2.app.App`
+    app : :class:`compas_view2.app.App`
         The parent application.
 
     Attributes
     ----------
-    app: :class:`compas_view2.app.App`
+    app : :class:`compas_view2.app.App`
         The parent application.
-    mode: "single" | "multi" | "deselect"
+    mode : "single" | "multi" | "deselect"
         The selection mode.
-    overwrite_mode: "single" | "multi" | "deselect"
+    overwrite_mode : "single" | "multi" | "deselect"
         Used in interative selection sessions to temporarily overwrite default select mode
-    types: list
+    types : list
         Selectable types.
-    select_from: "pixel" | "box"
+    select_from : "pixel" | "box"
         The selection mechanism.
-    enabled: bool
+    enabled : bool
         Flag indicating to the view that an instance map should be drawn.
-    wait_for_selection: bool
+    wait_for_selection : bool
         Flag indicating to wait for the interatice selection to finish
-    wait_for_selection_on_plane: bool
+    wait_for_selection_on_plane : bool
         Flag indicating to wait for the user to pick a location on plane
-    snap_to_grid: bool
+    snap_to_grid : bool
         Turn grid snap on or off.
-    colors_to_exclude: list[tuple[int, int, int]]
+    colors_to_exclude : list[tuple[int, int, int]]
         The instance colors to exclude from the selection process.
-    instances: dict
+    instances : dict
         Mapping between pixel colors and scene objects.
-    instance_map: np.array with shape (?,?,3)
+    instance_map : np.array with shape (?,?,3)
         The painted instance map as np array
-    box_select_coords: list of 4 floats
+    box_select_coords : list of 4 floats
         The 2D box selection coordinates on view window: [minX, minY, maxX, maxY]
-    location_on_plane:
+    location_on_plane :
         The selected location on plane
+    selected : list of instances
+        The instances that are selected
+
     """
 
     def __init__(self, app):
@@ -72,8 +76,25 @@ class Selector:
 
         self.start_monitor_instance_map()
 
+    # -------------------------------------------------------------------------
+    # properties
+    # -------------------------------------------------------------------------
+
+    @property
+    def selected(self):
+        return [self.instances[key] for key in self.instances if self.instances[key].is_selected]
+
+    # -------------------------------------------------------------------------
+    # methods
+    # -------------------------------------------------------------------------
+
     def reset(self):
-        """Reset the selector state
+        """Reset the selector state.
+
+        Returns
+        -------
+        None
+
         """
         self.mode = "single"
         self.overwrite_mode = None
@@ -90,50 +111,38 @@ class Selector:
     def start_monitor_instance_map(self):
         """This function triggers a monitor loop to watch the instance map attribute,
         Once an instance map is painted, the actual selection operation is triggered here.
-        """
 
-        self.stop_monitor_instance_map = False
-
-        def monitor_loop():
-            while not self.stop_monitor_instance_map:
-                time.sleep(0.02)
-                if self.instance_map is not None:
-                    if self.enabled:
-                        if self.select_from == "pixel":
-                            # Pick an object from mouse pixel
-                            x = self.app.view.mouse.last_pos.x()
-                            y = self.app.view.mouse.last_pos.y()
-                            self.select_one_from_instance_map(x, y, self.instance_map)
-                        if self.select_from == "box":
-                            # Pick objects from box selection
-                            self.select_all_from_instance_map(self.instance_map)
-                            self.select_from = "pixel"
-                        self.app.view.update()
-                        self.enabled = False
-
-                    x = self.app.view.mouse.pos.x()
-                    y = self.app.view.mouse.pos.y()
-                    self.highlight_one_from_instance_map(x, y, self.instance_map)
-
-        # Stop the monitor loop when the app is being closed
-        def stop():
-            self.stop_monitor_instance_map = True
-        self.app._app.aboutToQuit.connect(stop)
-
-        # Start monitor loop in a separate worker thread
-        worker = Worker(monitor_loop)
-        worker.no_signals = True  # Prevent signal emit error when closing the app
-        Worker.pool.start(worker)
-
-    @property
-    def selected(self):
-        """
         Returns
         -------
-        list of instances
-            The instances that are selected
+        None
+
         """
-        return [self.instances[key] for key in self.instances if self.instances[key].is_selected]
+        def select():
+            if self.instance_map is not None:
+                instance_map = self.instance_map
+                if self.select_from == "pixel":
+                    # Pick an object from mouse pixel
+                    x = self.app.view.mouse.last_pos.x()
+                    y = self.app.view.mouse.last_pos.y()
+                    self.select_one_from_instance_map(x, y, instance_map)
+                if self.select_from == "box":
+                    # Pick objects from box selection
+                    self.select_all_from_instance_map(instance_map)
+                    self.select_from = "pixel"
+                self.app.view.update()
+                self.instance_map = None
+
+                if self.app.dock_slots["propertyform"] is not None and self.selected:
+                    self.app.dock_slots["propertyform"].set_object(self.selected[0])
+                if self.app.dock_slots["sceneform"] is not None:
+                    self.app.dock_slots["sceneform"].select(self.selected)
+
+        # Start monitor loop in a separate worker thread
+        ticker = Ticker(interval=0.02)
+        ticker.signals.tick.connect(select)
+        Ticker.pool.start(ticker)
+
+        self.app._app.aboutToQuit.connect(ticker.stop)
 
     def get_rgb_key(self):
         """

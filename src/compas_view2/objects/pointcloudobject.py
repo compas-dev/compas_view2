@@ -3,6 +3,7 @@ from .bufferobject import BufferObject
 
 class PointcloudObject(BufferObject):
     """Object for displaying COMPAS point geometry.
+
     Parameters
     ----------
     data : :class: `compas.datastructures.Pointcloud`
@@ -18,22 +19,22 @@ class PointcloudObject(BufferObject):
         If provided, the `color` parameter will be ignored.
     size : float
         The point size to be drawn on screen.
+
     Attributes
     ----------
     colors : list
         list of point colors
+
     Raises
     -------
     ValueError
         If number of colors does not equal to number of points.
+
     """
 
-    def __init__(self, data, colors=None, **kwargs):
-        super().__init__(data, show_points=True, **kwargs)
-        if colors:
-            if len(colors) != len(data):
-                raise ValueError("Number of colors must equal to number of points")
-            self.pointcolors = colors
+    def __init__(self, data, **kwargs):
+        super().__init__(data, **kwargs)
+        self.show_points = True
 
     def _points_data(self):
         positions = self._data

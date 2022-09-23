@@ -1,22 +1,59 @@
-********************************************************************************
+*******************************************************************************
 compas_view2.objects
-********************************************************************************
+*******************************************************************************
 
 .. currentmodule:: compas_view2.objects
 
-Primitives
-==========
+Bases
+=====
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    Object
+    BufferObject
+
+
+Geometry
+========
+
+0-dimensional
+-------------
 
 .. autosummary::
     :toctree: generated/
     :nosignatures:
 
     PointObject
+    VectorObject
+    PlaneObject
+    FrameObject
+
+1-dimensional
+-------------
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
     LineObject
     PolylineObject
 
-Shapes
-======
+2-dimensional
+-------------
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    CircleObject
+    EllipseObject
+    PolygonObject
+    NurbsSurfaceObject
+
+3-dimensional
+-------------
 
 .. autosummary::
     :toctree: generated/
@@ -25,7 +62,12 @@ Shapes
     BoxObject
     SphereObject
     TorusObject
-    ArrowObject
+    CylinderObject
+    ConeObject
+    CapsuleObject
+    PolyhedronObject
+    PointcloudObject
+
 
 Datastructures
 ==============
@@ -37,17 +79,23 @@ Datastructures
     NetworkObject
     MeshObject
 
-Robots
-======
 
-*Coming soon*...
-
-Miscellaneous
-=============
+Collections
+===========
 
 .. autosummary::
     :toctree: generated/
     :nosignatures:
 
-    AxisObject
-    GridObject
+    CollectionObject
+
+
+Special
+=======
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    ArrowObject
+    TextObject

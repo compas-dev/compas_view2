@@ -1,5 +1,7 @@
+from compas_view2.gl import make_index_buffer
+from compas_view2.gl import make_vertex_buffer
+
 from .object import Object
-from ..buffers import make_index_buffer, make_vertex_buffer
 
 
 class VectorObject(Object):

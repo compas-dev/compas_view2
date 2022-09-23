@@ -1,5 +1,6 @@
 from compas.utilities import pairwise
-from compas.geometry import is_coplanar, centroid_points
+from compas.geometry import centroid_points
+from compas.geometry import is_coplanar
 
 from .bufferobject import BufferObject
 

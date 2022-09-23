@@ -1,5 +1,5 @@
-from PySide2 import QtWidgets
-from PySide2 import QtGui
+from qtpy import QtWidgets
+from qtpy import QtGui
 
 
 class Form(QtWidgets.QDialog):

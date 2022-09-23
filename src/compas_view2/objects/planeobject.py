@@ -34,7 +34,7 @@ class PlaneObject(CompositeObject):
         mesh = Mesh.from_vertices_and_faces(vertices, faces)
         meshObject = MeshObject(mesh, hide_coplanaredges=True, **kwargs)
 
-        super().__init__([meshObject, lineObject], show_edges=True, show_faces=True, **kwargs)
+        super().__init__([meshObject, lineObject], **kwargs)
 
     @classmethod
     def create_default(cls) -> Plane:

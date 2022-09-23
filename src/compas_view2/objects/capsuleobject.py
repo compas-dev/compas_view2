@@ -1,6 +1,7 @@
 from compas.datastructures import Mesh
 from compas.geometry import Capsule
 from compas.geometry import Line
+
 from .meshobject import MeshObject
 
 

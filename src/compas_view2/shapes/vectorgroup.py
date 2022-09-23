@@ -2,9 +2,6 @@ from compas.geometry import Vector
 from compas.geometry import Shape
 
 
-__all__ = ['VectorGroup']
-
-
 class VectorGroup(Shape):
 
     def __init__(self, vectors, positions=None):

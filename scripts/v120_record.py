@@ -1,10 +1,11 @@
 import os
-import compas_view2
-from compas_view2 import app
 from compas.geometry import Box
 from compas.geometry import Scale
 
-viewer = app.App()
+import compas_view2
+from compas_view2.app import App
+
+viewer = App()
 
 box1 = Box(([0, 0, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
 box2 = Box(([0, 0, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
@@ -15,7 +16,7 @@ obj3 = viewer.add(box3, facecolor=(0, 0, 1), linecolor=(0, 0, 0))
 
 s = 1
 
-FILE = os.path.join(compas_view2.TEMP, 'record.gif')
+FILE = os.path.join(compas_view2.TEMP, 'record2.gif')
 
 
 # Record 100 frames and save as "record.gif"

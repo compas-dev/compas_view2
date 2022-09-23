@@ -1,4 +1,3 @@
-from compas_view2 import app
 from compas.geometry import Circle
 from compas.geometry import Ellipse
 from compas.geometry import Plane
@@ -7,8 +6,10 @@ from compas.geometry import Cone
 from compas.geometry import Polyhedron
 from compas.geometry import Capsule
 
+from compas_view2.app import App
 
-viewer = app.App()
+
+viewer = App()
 
 polygon = Polygon([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
 obj = viewer.add(polygon, linecolor=(0, 0, 1))

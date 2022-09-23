@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
 project = "COMPAS View2"
 copyright = "Block Research Group - ETH Zurich"
 author = "tom van mele"
-release = "0.4.4"
+release = "0.7.0"
 version = ".".join(release.split(".")[0:2])
 
 master_doc = "index"
@@ -51,6 +51,13 @@ extensions = [
 ]
 
 # autodoc options
+
+autodoc_type_aliases = {}
+
+# this does not work properly yet
+autodoc_typehints = "none"
+autodoc_typehints_format = "short"
+autodoc_typehints_description_target = "documented"
 
 autodoc_default_options = {
     "undoc-members": True,
@@ -168,11 +175,12 @@ html_theme_options = {
 }
 
 html_context = {}
-html_static_path = []
+html_static_path = sphinx_compas_theme.get_html_static_path()
 html_extra_path = []
 html_last_updated_fmt = ""
 html_copy_source = False
 html_show_sourcelink = False
 html_permalinks = False
-html_add_permalinks = None
+html_permalinks_icon = ""
+html_experimental_html5_writer = False
 html_compact_lists = True

@@ -1,6 +1,11 @@
-from PySide2.QtCore import QObject, QRunnable, QThreadPool, Slot, Signal
-import traceback
 import sys
+import traceback
+import time
+from qtpy.QtCore import QObject
+from qtpy.QtCore import QRunnable
+from qtpy.QtCore import QThreadPool
+from qtpy.QtCore import Slot
+from qtpy.QtCore import Signal
 
 
 class WorkerSignals(QObject):
@@ -9,6 +14,8 @@ class WorkerSignals(QObject):
     finished = Signal()
     error = Signal(tuple)
     result = Signal(object)
+    tick = Signal()
+    progress = Signal(object)
 
 
 class Worker(QRunnable):
@@ -17,9 +24,11 @@ class Worker(QRunnable):
 
     pool = QThreadPool()
 
-    def __init__(self, fn, *args, **kwargs):
+    def __init__(self, fn, args=[], kwargs={}, include_self=False):
         super(Worker, self).__init__()
         self.fn = fn
+        if include_self:
+            args = [self] + args
         self.args = args
         self.kwargs = kwargs
         self.signals = WorkerSignals()
@@ -44,3 +53,25 @@ class Worker(QRunnable):
                 self.signals.result.emit(result)
             finally:
                 self.signals.finished.emit()  # Done
+
+
+class Ticker(QRunnable):
+
+    pool = QThreadPool()
+
+    def __init__(self, interval=1):
+        super(Ticker, self).__init__()
+        self.interval = interval
+        self.signals = WorkerSignals()
+
+    @Slot()
+    def run(self):
+        """Execute the worker function, send on signals on different scenarios
+        """
+        self.running = True
+        while self.running:
+            self.signals.tick.emit()
+            time.sleep(self.interval)
+
+    def stop(self):
+        self.running = False

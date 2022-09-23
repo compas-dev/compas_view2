@@ -1,14 +1,17 @@
-from .bufferobject import BufferObject
 from compas.geometry import Frame
+from compas.colors import Color
+from .bufferobject import BufferObject
 
 
 class FrameObject(BufferObject):
     """Object for displaying COMPAS Frame geometry."""
 
-    def __init__(self, data, show_point=True, show_lines=True, size=1.0, **kwargs):
-        super().__init__(data, show_points=show_point, show_lines=show_lines, **kwargs)
+    def __init__(self, data, size=1.0, **kwargs):
+        super().__init__(data, **kwargs)
         self.size = size
-        self.linecolors = [(1, 0, 0), (1, 0, 0), (0, 1, 0), (0, 1, 0), (0, 0, 1), (0, 0, 1)]
+        self.show_points = True
+        self.show_lines = True
+        self.linecolors = [Color(1, 0, 0), Color(1, 0, 0), Color(0, 1, 0), Color(0, 1, 0), Color(0, 0, 1), Color(0, 0, 1)]
 
     def _points_data(self):
         frame = self._data
