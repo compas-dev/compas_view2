@@ -44,6 +44,9 @@ class Object(ABC):
     is_selected : bool, optional
         Whether the object is selected.
         Default to False.
+    is_selectable : bool, optional
+        Whether the object is selectable.
+        Default to True.
     is_visible : bool, optional
         Whether to show object.
         Default to True.
@@ -81,6 +84,8 @@ class Object(ABC):
     ----------
     is_selected : bool
         Whether the object is selected.
+    is_selectable : bool
+        Whether the object is selectable.
     is_visible : bool
         Whether to show object.
     show_points : bool
@@ -160,6 +165,7 @@ class Object(ABC):
                  app=None,
                  name: str = None,
                  is_selected: bool = False,
+                 is_selectable: bool = True,
                  is_visible: bool = True,
                  show_points: bool = False,
                  show_lines: bool = True,
@@ -176,6 +182,7 @@ class Object(ABC):
         self.name = name or str(self)
         self.is_selected = is_selected
         self.is_selectable = is_selectable
+        self._is_highlighted = False
         self.is_visible = is_visible
         self.parent = None
         self._children = set()

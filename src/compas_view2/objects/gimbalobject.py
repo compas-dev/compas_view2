@@ -20,15 +20,15 @@ class GimbalObject(Object):
     def __init__(self, app):
         super().__init__({})
         self.app = app
-        self.x_translation = ArrowObject(Arrow(position=[0, 0, 0], direction=[1, 0, 0]), u=4, color=(1, 0, 0), is_selectable=False)
-        self.y_translation = ArrowObject(Arrow(position=[0, 0, 0], direction=[0, 1, 0]), u=4, color=(0, 1, 0), is_selectable=False)
-        self.z_translation = ArrowObject(Arrow(position=[0, 0, 0], direction=[0, 0, 1]), u=4, color=(0, 0, 1), is_selectable=False)
-        self.x_rotation = CircleObject(Circle(Plane([0, 0, 0], [1, 0, 0]), radius=1), u=40, color=(1, 0, 0), linewidth=5, is_selectable=False)
-        self.y_rotation = CircleObject(Circle(Plane([0, 0, 0], [0, 1, 0]), radius=1), u=40, color=(0, 1, 0), linewidth=5, is_selectable=False)
-        self.z_rotation = CircleObject(Circle(Plane([0, 0, 0], [0, 0, 1]), radius=1), u=40, color=(0, 0, 1), linewidth=5, is_selectable=False)
-        self.x_scale = LineObject(Line([0, 0, 0], [1, 0, 0]), color=(1, 0, 0), linewidth=5, is_selectable=False)
-        self.y_scale = LineObject(Line([0, 0, 0], [0, 1, 0]), color=(0, 1, 0), linewidth=5, is_selectable=False)
-        self.z_scale = LineObject(Line([0, 0, 0], [0, 0, 1]), color=(0, 0, 1), linewidth=5, is_selectable=False)
+        self.x_translation = ArrowObject(Arrow(position=[0, 0, 0], direction=[1, 0, 0]), u=4, facecolor=(1, 0, 0), is_selectable=False)
+        self.y_translation = ArrowObject(Arrow(position=[0, 0, 0], direction=[0, 1, 0]), u=4, facecolor=(0, 1, 0), is_selectable=False)
+        self.z_translation = ArrowObject(Arrow(position=[0, 0, 0], direction=[0, 0, 1]), u=4, facecolor=(0, 0, 1), is_selectable=False)
+        self.x_rotation = CircleObject(Circle(Plane([0, 0, 0], [1, 0, 0]), radius=1), u=40, linecolor=(1, 0, 0), linewidth=5, is_selectable=False)
+        self.y_rotation = CircleObject(Circle(Plane([0, 0, 0], [0, 1, 0]), radius=1), u=40, linecolor=(0, 1, 0), linewidth=5, is_selectable=False)
+        self.z_rotation = CircleObject(Circle(Plane([0, 0, 0], [0, 0, 1]), radius=1), u=40, linecolor=(0, 0, 1), linewidth=5, is_selectable=False)
+        self.x_scale = LineObject(Line([0, 0, 0], [1, 0, 0]), linecolor=(1, 0, 0), linewidth=5, is_selectable=False)
+        self.y_scale = LineObject(Line([0, 0, 0], [0, 1, 0]), linecolor=(0, 1, 0), linewidth=5, is_selectable=False)
+        self.z_scale = LineObject(Line([0, 0, 0], [0, 0, 1]), linecolor=(0, 0, 1), linewidth=5, is_selectable=False)
 
         self.translations = [self.x_translation, self.y_translation, self.z_translation]
         self.rotations = [self.x_rotation, self.y_rotation, self.z_rotation]

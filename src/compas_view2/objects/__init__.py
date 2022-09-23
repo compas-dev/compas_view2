@@ -58,10 +58,9 @@ from .nurbssurfaceobject import NurbsSurfaceObject
 from .robotobject import RobotObject
 
 from .object import DATA_OBJECT  # noqa : F401
+from .gimbalobject import GimbalObject  # noqa: F401
 
 Object.register(Point, PointObject)
-
-from .gimbalobject import GimbalObject  # noqa: F401
 
 Object.register(Vector, VectorObject)
 Object.register(Plane, PlaneObject)

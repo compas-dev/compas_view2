@@ -692,7 +692,10 @@ class App:
         self.statusbar.addWidget(self.statusText, 1)
         self.statusFps = QtWidgets.QLabel('fps: ')
         self.statusbar.addWidget(self.statusFps)
-        self.add_checkbox(self.statusbar, text='Gimbal', action=lambda: self.view.gimbal.toggle())
+
+        @self.checkbox("Gimbal", checked=False, parent=self.statusbar)
+        def gimbal(checked):
+            self.view.gimbal.toggle()
 
     def _init_menubar(self, items: List[Dict]):
         if not items:
