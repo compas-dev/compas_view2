@@ -20,6 +20,7 @@ class View120(View):
 
     def init(self):
         self.grid.init()
+        self.gimbal.init()
         # init the buffers
         for guid in self.objects:
             obj = self.objects[guid]
@@ -124,17 +125,15 @@ class View120(View):
             self.update_projection()
 
         # Draw instance maps
-        if self.app.selector.enabled:
-            self.shader_instance.bind()
-            # set projection matrix
-            self.shader_instance.uniform4x4("viewworld", viewworld)
-            if self.app.selector.select_from == "pixel":
-                self.app.selector.instance_map = self.paint_instances()
-            if self.app.selector.select_from == "box":
-                self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
-            self.app.selector.enabled = False
-            self.clear()
-            self.shader_instance.release()
+        self.shader_instance.bind()
+        # set projection matrix
+        self.shader_instance.uniform4x4("viewworld", viewworld)
+        if self.app.selector.select_from == "pixel":
+            self.app.selector.instance_map = self.paint_instances()
+        if self.app.selector.select_from == "box":
+            self.app.selector.instance_map = self.paint_instances(self.app.selector.box_select_coords)
+        self.clear()
+        self.shader_instance.release()
 
         # Draw grid
         self.shader_grid.bind()
@@ -152,6 +151,8 @@ class View120(View):
         for obj in self.sort_objects_from_viewworld(viewworld):
             if obj.is_visible:
                 obj.draw(self.shader_model, self.mode == "wireframe", self.mode == "lighted")
+        if self.gimbal.enabled:
+            self.gimbal.draw(self.shader_model)
         self.shader_model.release()
 
         # draw arrow sprites
@@ -205,6 +206,10 @@ class View120(View):
             if hasattr(obj, "draw_instance"):
                 if obj.is_visible:
                     obj.draw_instance(self.shader_instance, self.mode == "wireframe")
+
+        if self.gimbal.enabled:
+            self.gimbal.draw_instance(self.shader_instance)
+
         # create map
         r = self.devicePixelRatio()
         instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)

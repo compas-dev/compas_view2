@@ -326,6 +326,12 @@ class App:
             obj.init()
             if self.dock_slots['sceneform']:
                 self.dock_slots['sceneform'].update()
+
+        def attach_gimbal(_self, event):
+            if self.view.gimbal.enabled:
+                self.view.gimbal.attach(_self)
+        obj.add_event_listener('mousedown', attach_gimbal)
+
         return obj
 
     def add_reference(self, obj: Object, **kwargs) -> Object:
@@ -686,6 +692,10 @@ class App:
         self.statusbar.addWidget(self.statusText, 1)
         self.statusFps = QtWidgets.QLabel('fps: ')
         self.statusbar.addWidget(self.statusFps)
+
+        @self.checkbox("Gimbal", checked=False, parent=self.statusbar)
+        def gimbal(checked):
+            self.view.gimbal.toggle()
 
     def _init_menubar(self, items: List[Dict]):
         if not items:

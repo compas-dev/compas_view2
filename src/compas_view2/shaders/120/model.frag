@@ -7,6 +7,7 @@ uniform float opacity;
 uniform float object_opacity;
 uniform bool is_lighted;
 uniform bool is_selected;
+uniform bool is_highlighted;
 uniform vec3 selection_color;
 uniform int element_type;
 uniform vec3 single_color;
@@ -22,6 +23,15 @@ void main()
     }else{
         color = vertex_color;
     }
+
+    if (is_highlighted) {
+        vec3 highlight_color = vec3(0.7, 0.7, 0.0);
+        if (element_type == 0) {color = highlight_color*0.9;}
+        else if (element_type == 1) {color = highlight_color*0.8;}
+        else {color = highlight_color;}
+        if (alpha < 0.5) alpha = 0.5;
+    }
+
     if (is_selected) {
         if (element_type == 0) {color = selection_color*0.9;}
         else if (element_type == 1) {color = selection_color*0.8;}

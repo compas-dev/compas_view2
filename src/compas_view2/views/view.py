@@ -7,6 +7,7 @@ from qtpy import QtWidgets
 from compas_view2.scene import Camera
 from compas_view2.scene import Mouse
 from compas_view2.objects import GridObject
+from compas_view2.objects import GimbalObject
 
 
 class View(QtWidgets.QOpenGLWidget):
@@ -43,6 +44,7 @@ class View(QtWidgets.QOpenGLWidget):
                  show_grid=True):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setMouseTracking(True)
         self._opacity = 1.0
         self._current = View.PERSPECTIVE
         self.shader_model = None
@@ -54,6 +56,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.camera = Camera(self)
         self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
+        self.gimbal = GimbalObject(self.app)
         self.objects = {}
         self.keys = {"shift": False, "control": False}
         self._frames = 0
@@ -215,7 +218,7 @@ class View(QtWidgets.QOpenGLWidget):
                 self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
             # record mouse position
             self.mouse.last_pos = event.pos()
-            self.update()
+
         # change the view
         # if right bottom
         elif event.buttons() & QtCore.Qt.RightButton:
@@ -225,7 +228,11 @@ class View(QtWidgets.QOpenGLWidget):
                 self.camera.rotate(dx, dy)
             # record mouse position
             self.mouse.last_pos = event.pos()
-            self.update()
+
+        if self.mouse.pressed_on:
+            self.mouse.pressed_on.dispatch_event("mousedrag", {'x': self.mouse.pos.x(), 'y': self.mouse.pos.y(), 'dx': dx, 'dy': dy})
+
+        self.update()
 
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
@@ -236,7 +243,7 @@ class View(QtWidgets.QOpenGLWidget):
             self.mouse.buttons['left'] = True
             if self.keys["shift"] or self.keys["control"]:
                 self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
-        # do nothing
+
         # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons['right'] = True
@@ -261,6 +268,9 @@ class View(QtWidgets.QOpenGLWidget):
         # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons['right'] = False
+        if self.mouse.pressed_on:
+            self.mouse.pressed_on.dispatch_event("mouserelease", {'x': event.pos().x(), 'y': event.pos().y()})
+            self.mouse.pressed_on = None
         self.update()
 
     def wheelEvent(self, event):
@@ -281,6 +291,19 @@ class View(QtWidgets.QOpenGLWidget):
         if key == QtCore.Qt.Key_Control:
             self.app.selector.mode = "deselect"
             self.keys["control"] = True
+        if key == QtCore.Qt.Key_Q:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.switch_coordinate_system()
+        if key == QtCore.Qt.Key_W:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.mode = 'translate'
+        if key == QtCore.Qt.Key_E:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.mode = 'rotate'
+        if key == QtCore.Qt.Key_R:
+            if self.app.view.gimbal.enabled:
+                self.app.view.gimbal.mode = 'scale'
+        self.update()
 
     def keyReleaseEvent(self, event):
         key = event.key()

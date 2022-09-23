@@ -44,6 +44,9 @@ class Object(ABC):
     is_selected : bool, optional
         Whether the object is selected.
         Default to False.
+    is_selectable : bool, optional
+        Whether the object is selectable.
+        Default to True.
     is_visible : bool, optional
         Whether to show object.
         Default to True.
@@ -81,6 +84,8 @@ class Object(ABC):
     ----------
     is_selected : bool
         Whether the object is selected.
+    is_selectable : bool
+        Whether the object is selectable.
     is_visible : bool
         Whether to show object.
     show_points : bool
@@ -160,6 +165,7 @@ class Object(ABC):
                  app=None,
                  name: str = None,
                  is_selected: bool = False,
+                 is_selectable: bool = True,
                  is_visible: bool = True,
                  show_points: bool = False,
                  show_lines: bool = True,
@@ -175,6 +181,8 @@ class Object(ABC):
         self._app = app
         self.name = name or str(self)
         self.is_selected = is_selected
+        self.is_selectable = is_selectable
+        self._is_highlighted = False
         self.is_visible = is_visible
         self.parent = None
         self._children = set()
@@ -213,6 +221,7 @@ class Object(ABC):
         self._scale = [1., 1., 1.]
         self._transformation = Transformation()
         self._matrix_buffer = None
+        self._event_listeners = {}
 
         self._bounding_box = None
         self._bounding_box_center = None
@@ -279,6 +288,11 @@ class Object(ABC):
         self._translation[1] = vector[1]
         self._translation[2] = vector[2]
 
+    def translate(self, vector):
+        self._translation[0] += vector[0]
+        self._translation[1] += vector[1]
+        self._translation[2] += vector[2]
+
     @property
     def rotation(self):
         return self._rotation
@@ -288,6 +302,11 @@ class Object(ABC):
         self._rotation[0] = angles[0]
         self._rotation[1] = angles[1]
         self._rotation[2] = angles[2]
+
+    def rotate(self, angles):
+        self._rotation[0] += angles[0]
+        self._rotation[1] += angles[1]
+        self._rotation[2] += angles[2]
 
     @property
     def scale(self):
@@ -346,3 +365,21 @@ class Object(ABC):
         self.rotation = rotation
         self.scale = scale
         self._update_matrix()
+
+    def add_event_listener(self, event_name, func):
+        """Add a callback function to be called when an event occurs"""
+        if event_name not in self._event_listeners:
+            self._event_listeners[event_name] = []
+        self._event_listeners[event_name].append(func)
+
+    def remove_event_listener(self, func):
+        """Remove a callback function from being called when an event occurs"""
+        for listeners in self._event_listeners.values():
+            if func in listeners:
+                listeners.remove(func)
+
+    def dispatch_event(self, event_name, event):
+        """Call all the callback functions registered for an event"""
+        if event_name in self._event_listeners:
+            for func in self._event_listeners[event_name]:
+                func(self, event)

@@ -122,6 +122,7 @@ class BufferObject(Object):
         shader.enable_attribute('position')
         shader.enable_attribute('color')
         shader.uniform1i('is_selected', self.is_selected)
+        shader.uniform1i('is_highlighted', self._is_highlighted)
         if self._matrix_buffer is not None:
             shader.uniform4x4('transform', self._matrix_buffer)
         shader.uniform1i('is_lighted', is_lighted)
@@ -170,15 +171,15 @@ class BufferObject(Object):
             shader.uniform4x4('transform', self._matrix_buffer)
         if hasattr(self, "_points_buffer") and self.show_points:
             shader.bind_attribute('position', self._points_buffer['positions'])
-            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'])
+            shader.draw_points(size=self.pointsize, elements=self._points_buffer['elements'], n=self._points_buffer['n'], background=self.background)
         if hasattr(self, "_lines_buffer") and (self.show_lines or wireframe):
             shader.bind_attribute('position', self._lines_buffer['positions'])
-            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'])
+            shader.draw_lines(width=self.linewidth, elements=self._lines_buffer['elements'], n=self._lines_buffer['n'], background=self.background)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
-            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'])
+            shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'], background=self.background)
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
-            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'])
+            shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'], background=self.background)
         if self._matrix_buffer is not None:
             shader.uniform4x4('transform', np.identity(4).flatten())
         shader.uniform3f('instance_color', [0, 0, 0])

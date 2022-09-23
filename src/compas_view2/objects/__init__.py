@@ -24,6 +24,7 @@ from compas_view2.shapes import Arrow
 from compas_view2.shapes import Text
 from compas_view2.collections import Collection
 
+
 from .object import Object
 from .bufferobject import BufferObject  # noqa : F401
 
@@ -64,8 +65,10 @@ except ImportError:
     BRepObject = None
 
 from .object import DATA_OBJECT  # noqa : F401
+from .gimbalobject import GimbalObject  # noqa: F401
 
 Object.register(Point, PointObject)
+
 Object.register(Vector, VectorObject)
 Object.register(Plane, PlaneObject)
 Object.register(Frame, FrameObject)
