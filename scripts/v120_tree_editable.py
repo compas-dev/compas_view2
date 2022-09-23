@@ -2,11 +2,16 @@ from compas_view2.app import App
 
 viewer = App()
 
-def on_item_edited(self, entry, column, value):
-    print("form", self)
-    print("entry", entry)
-    print("column", column)
-    print("value", value)
+
+def on_item_edited(form, entry, column, value):
+    print("form:\n", form)
+    print("entry:\n", entry)
+    print("column:\n", column)
+    print("value:\n", value)
+    print("datastore:")
+    for row in form.datastore:
+        print(row)
+
 
 data = [
     {"column1": "a", "column2": 1, "on_item_edited": on_item_edited, "some_binded_obj": {}},
