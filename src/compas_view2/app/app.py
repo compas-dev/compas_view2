@@ -32,6 +32,7 @@ from compas_view2.forms.dockform import DockForm
 from compas_view2.forms.sceneform import SceneForm
 from compas_view2.forms.propertyform import PropertyForm
 from compas_view2.forms.treeform import TreeForm
+from compas_view2.forms.tabsform import TabsForm
 
 from compas_view2.ui import Button
 from compas_view2.ui import Slider
@@ -597,6 +598,29 @@ class App:
             treeform.setFloating(True)
 
         return treeform
+
+    def tabsform(self, title="tree", tabs=[], slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True):
+        """Create a tabs form widget.
+        """
+        if slot and slot in self.dock_slots:
+            self.dock_slots[slot].close()
+
+        locations = {
+            "left": QtCore.Qt.LeftDockWidgetArea,
+            "right": QtCore.Qt.RightDockWidgetArea,
+            "top": QtCore.Qt.TopDockWidgetArea,
+            "bottom": QtCore.Qt.BottomDockWidgetArea,
+        }
+
+        tabsform = TabsForm(self, title=title, tabs=tabs, columns=columns, show_headers=show_headers)
+        self.window.addDockWidget(locations[location], tabsform)
+
+        if slot:
+            self.dock_slots[slot] = tabsform
+        if floating:
+            tabsform.setFloating(True)
+
+        return tabsform
 
     def popup(self, title: str = "", slot: str = None):
         """Create a side dock widget.
