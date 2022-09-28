@@ -173,6 +173,10 @@ class App:
         app.setWindowIcon(appIcon)
         app.setApplicationName(title)
 
+        with open(os.path.join(HERE, "theme", "dark_blue.qss"), "r") as file:
+            app.setStyleSheet(file.read())
+            QtCore.QDir.addSearchPath('icon', os.path.join(HERE, "theme", "resources"))
+
         self.timer = None
         self.frame_count = 0
         self.record = False
