@@ -30,6 +30,7 @@ class TreeForm(DockForm):
         for item in self.items:
             if item.entry.get("expanded"):
                 item.setExpanded(True)
+        self.tree.resizeColumnToContents(0)
 
     @property
     def items(self):
