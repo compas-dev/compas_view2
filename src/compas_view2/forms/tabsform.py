@@ -9,7 +9,7 @@ class TabsForm(DockForm):
         containerwidget = QtWidgets.QWidget()
         tabwidget = QtWidgets.QTabWidget()
         for tab in tabs:
-            treeForm = TreeForm(app, title=tab["name"], data=tab["data"], columns=columns, show_headers=show_headers, striped_rows=striped_rows)
+            treeForm = TreeForm(app, title=tab["name"], data=tab["data"], columns=tab.get("columns") or columns, show_headers=show_headers, striped_rows=striped_rows)
             treeForm.setTitleBarWidget(QtWidgets.QWidget())
             tabwidget.addTab(treeForm, tab["name"])
         layout = QtWidgets.QVBoxLayout()
