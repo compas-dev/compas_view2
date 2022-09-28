@@ -255,17 +255,17 @@ class App:
 
     def add(self, data: Data,
             name: str = None,
-            is_selected: bool = False,
-            is_visible: bool = True,
-            show_points: bool = False,
-            show_lines: bool = True,
-            show_faces: bool = True,
+            is_selected: bool = None,
+            is_visible: bool = None,
+            show_points: bool = None,
+            show_lines: bool = None,
+            show_faces: bool = None,
             pointcolor: Union[Color, Dict[Union[str, int], Color]] = None,
             linecolor: Union[Color, Dict[Union[str, int], Color]] = None,
             facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
-            linewidth: int = 1,
-            pointsize: int = 10,
-            opacity: int = 1.0,
+            linewidth: int = None,
+            pointsize: int = None,
+            opacity: int = None,
             **kwargs) -> Object:
         """Add a COMPAS object.
 
@@ -315,10 +315,32 @@ class App:
             The added object.
 
         """
-        obj = Object.build(data, name=name, is_selected=is_selected, is_visible=is_visible,
-                           show_points=show_points, show_lines=show_lines, show_faces=show_faces,
-                           pointcolor=pointcolor, linecolor=linecolor, facecolor=facecolor,
-                           linewidth=linewidth, pointsize=pointsize, opacity=opacity, app=self, **kwargs)
+        if name is not None:
+            kwargs['name'] = name
+        if is_selected is not None:
+            kwargs['is_selected'] = is_selected
+        if is_visible is not None:
+            kwargs['is_visible'] = is_visible
+        if show_points is not None:
+            kwargs['show_points'] = show_points
+        if show_lines is not None:
+            kwargs['show_lines'] = show_lines
+        if show_faces is not None:
+            kwargs['show_faces'] = show_faces
+        if pointcolor is not None:
+            kwargs['pointcolor'] = pointcolor
+        if linecolor is not None:
+            kwargs['linecolor'] = linecolor
+        if facecolor is not None:
+            kwargs['facecolor'] = facecolor
+        if linewidth is not None:
+            kwargs['linewidth'] = linewidth
+        if pointsize is not None:
+            kwargs['pointsize'] = pointsize
+        if opacity is not None:
+            kwargs['opacity'] = opacity
+
+        obj = Object.build(data, app=self, **kwargs)
 
         self.view.objects[obj] = obj
         self.selector.add(obj)
