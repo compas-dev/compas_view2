@@ -35,4 +35,5 @@ for point in cloud.transformed(R1):
     box = Box((point, [1, 0, 0], [0, 1, 0]), size, size, size)
     viewer.add(box, facecolor=cmap(random.random()), opacity=random.random())
 
+viewer.view.camera.zoom_extents()
 viewer.show()

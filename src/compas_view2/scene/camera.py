@@ -9,7 +9,8 @@ from numpy import array
 from numpy import asfortranarray
 from numpy import dot
 from numpy import float32
-
+from compas_view2.objects import Object
+from typing import List
 
 from .matrices import perspective, ortho
 
@@ -335,3 +336,29 @@ class Camera:
         R = Rotation.from_euler_angles(self.rotation)
         W = T * R
         return asfortranarray(W.inverted(), dtype=float32)
+
+    def zoom_extents(self, objects: List[Object] = None):
+
+        objects = objects or self.view.objects.values()
+
+        extents = []
+
+        for obj in objects:
+            if not obj.is_visible:
+                continue
+
+            if obj.bounding_box is None and hasattr(obj, '_update_bounding_box'):
+                obj._update_bounding_box()
+
+            if obj.bounding_box is not None:
+                extents.append(obj.bounding_box)
+
+        extents = array([obj.bounding_box for obj in objects]).reshape(-1, 3)
+        max_corner = extents.max(axis=0)
+        min_corner = extents.min(axis=0)
+        center = (max_corner + min_corner) / 2
+        distance = norm(max_corner - min_corner)
+
+        self.target = center
+        self.position = center + self.position
+        self.distance = distance * 1.5

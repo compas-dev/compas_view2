@@ -113,7 +113,18 @@ class BufferObject(Object):
 
     def _update_bounding_box(self, positions=None):
         """Update the bounding box of the object"""
-        positions = np.array(positions or self._points_data()[0])
+        if positions is None:
+            positions = []
+            if hasattr(self, '_points_data'):
+                positions += self._points_data()[0]
+            if hasattr(self, '_lines_data'):
+                positions += self._lines_data()[0]
+            if hasattr(self, '_frontfaces_data'):
+                positions += self._frontfaces_data()[0]
+            if not positions:
+                return
+
+        positions = np.array(positions)
         self._bounding_box = np.array([positions.min(axis=0), positions.max(axis=0)])
         self._bounding_box_center = np.average(self.bounding_box, axis=0)
 
