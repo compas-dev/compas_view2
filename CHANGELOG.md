@@ -13,11 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * add `datastore` to `TreeForm`.
 * Added `TabsForm`.
 * Added `BRepObject`.
+* Added `zoom_extents` to `Camera`.
+* Added `expanded` option for `TreeForm` data entries.
+* Added `striped_rows` option for `TreeForm`.
 
 ### Changed
 
 * Give access to `self` in `TreeForm` click events.
 * Allow `TreeForm` columns to be editable.
+* Auto adjust first column width in `TreeForm`.
+* Allow set colums individually in `TabsForm`.
+* Fix `TabsForm` top margin display issue on macos.
 
 ### Removed
 
