@@ -595,7 +595,7 @@ class App:
 
         return propertyform
 
-    def treeform(self, title="tree", data=None, slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True):
+    def treeform(self, title="tree", data=None, slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True, striped_rows=False):
         """Create a side object tree form widget.
         """
         if slot and slot in self.dock_slots:
@@ -611,7 +611,7 @@ class App:
             "bottom": QtCore.Qt.BottomDockWidgetArea,
         }
 
-        treeform = TreeForm(self, title=title, data=data, columns=columns, show_headers=show_headers)
+        treeform = TreeForm(self, title=title, data=data, columns=columns, show_headers=show_headers, striped_rows=striped_rows)
         self.window.addDockWidget(locations[location], treeform)
 
         if slot:
@@ -621,7 +621,7 @@ class App:
 
         return treeform
 
-    def tabsform(self, title="tree", tabs=[], slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True):
+    def tabsform(self, title="tree", tabs=[], slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True, striped_rows=False):
         """Create a tabs form widget.
         """
         if slot and slot in self.dock_slots:
@@ -634,7 +634,7 @@ class App:
             "bottom": QtCore.Qt.BottomDockWidgetArea,
         }
 
-        tabsform = TabsForm(self, title=title, tabs=tabs, columns=columns, show_headers=show_headers)
+        tabsform = TabsForm(self, title=title, tabs=tabs, columns=columns, show_headers=show_headers, striped_rows=striped_rows)
         self.window.addDockWidget(locations[location], tabsform)
 
         if slot:

@@ -5,11 +5,12 @@ import ast
 
 
 class TreeForm(DockForm):
-    def __init__(self, app, title="Tree", data=None, columns=["key", "value"], show_headers=True):
+    def __init__(self, app, title="Tree", data=None, columns=["key", "value"], show_headers=True, striped_rows=False):
         super().__init__(app, title)
         self.column_names = list(map(lambda c: c if isinstance(c, str) else c["name"], columns))
         self.column_keys = list(map(lambda c: c if isinstance(c, str) else c["key"], columns))
         self.column_editable = list(map(lambda c: c.get("editable") if isinstance(c, dict) else False, columns))
+        self.striped_rows = striped_rows
         self.tree = QtWidgets.QTreeWidget()
         self.tree.setColumnCount(len(columns))
         self.tree.setHeaderLabels(self.column_names)
@@ -24,6 +25,7 @@ class TreeForm(DockForm):
 
     def update(self, entries):
         self.tree.clear()
+        self.item_count = 0
         self.map_entries(entries)
 
     def map_entries(self, entries, parent=None):
@@ -57,6 +59,9 @@ class TreeForm(DockForm):
             if entry.get("color"):
                 for i in range(self.tree.columnCount()):
                     item.setBackgroundColor(i, QtGui.QColor(*entry.get("color")))
+            elif self.striped_rows and self.item_count % 2 == 1:
+                for i in range(self.tree.columnCount()):
+                    item.setBackgroundColor(i, QtGui.QColor(240, 240, 240))
 
             if entry.get("on_item_double_clicked"):
                 item.on_item_double_clicked = entry.get("on_item_double_clicked")
@@ -70,6 +75,8 @@ class TreeForm(DockForm):
             for i, color in enumerate(colors):
                 if color:
                     item.setBackgroundColor(i, QtGui.QColor(*color))
+
+            self.item_count += 1
 
             if parent is not None:
                 parent.addChild(item)
