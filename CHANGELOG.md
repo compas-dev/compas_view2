@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added `zoom_extents` to `Camera`.
 * Added `expanded` option for `TreeForm` data entries.
 * Added `striped_rows` option for `TreeForm`.
-* Added `theme` option from `qdarktheme`.
+* Added `theme` option from `pyqtdarktheme`.
 
 ### Changed
 
