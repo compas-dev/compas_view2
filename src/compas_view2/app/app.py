@@ -51,6 +51,8 @@ from .controller import Controller
 from .worker import Worker
 from .plot import MplCanvas
 
+import qdarktheme
+
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, '../icons')
 CONFIG = os.path.join(HERE, 'config.json')
@@ -144,6 +146,7 @@ class App:
                  show_flow: bool = False,
                  flow_view_size: Union[Tuple[int], List[int]] = None,
                  flow_auto_update: bool = True,
+                 theme: Literal['light', 'dark'] = 'light',
                  ):
 
         if version not in VERSIONS:
@@ -172,11 +175,13 @@ class App:
         appIcon = QIcon(os.path.join(ICONS, "compas_icon_white.png"))
         app.setWindowIcon(appIcon)
         app.setApplicationName(title)
+        app.setStyleSheet(qdarktheme.load_stylesheet(theme))
 
         self.timer = None
         self.frame_count = 0
         self.record = False
         self.recorded_frames = []
+        self.theme = theme
 
         self.width = width
         self.height = height

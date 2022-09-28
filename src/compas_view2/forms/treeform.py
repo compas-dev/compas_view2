@@ -80,7 +80,10 @@ class TreeForm(DockForm):
                     item.setBackgroundColor(i, QtGui.QColor(*entry.get("color")))
             elif self.striped_rows and self.item_count % 2 == 1:
                 for i in range(self.tree.columnCount()):
-                    item.setBackgroundColor(i, QtGui.QColor(240, 240, 240))
+                    if self.app.theme == "dark":
+                        item.setBackgroundColor(i, QtGui.QColor(50, 50, 50))
+                    else:
+                        item.setBackgroundColor(i, QtGui.QColor(240, 240, 240))
 
             if entry.get("on_item_double_clicked"):
                 item.on_item_double_clicked = entry.get("on_item_double_clicked")
