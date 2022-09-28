@@ -27,6 +27,24 @@ class TreeForm(DockForm):
         self.tree.clear()
         self.item_count = 0
         self.map_entries(entries)
+        for item in self.items:
+            if item.entry.get("expanded"):
+                item.setExpanded(True)
+
+    @property
+    def items(self):
+        items = []
+
+        def traverseNode(item):
+            for i in range(item.childCount()):
+                items.append(item.child(i))
+                traverseNode(item.child(i))
+
+        for i in range(self.tree.topLevelItemCount()):
+            items.append(self.tree.topLevelItem(i))
+            traverseNode(self.tree.topLevelItem(i))
+
+        return items
 
     def map_entries(self, entries, parent=None):
 
