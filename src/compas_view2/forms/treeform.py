@@ -15,6 +15,7 @@ class TreeForm(DockForm):
         self.tree.setColumnCount(len(columns))
         self.tree.setHeaderLabels(self.column_names)
         self.tree.setHeaderHidden(not show_headers)
+        self.tree.setStyleSheet("QTreeWidget::item { height:35px; }")
         self.setWidget(self.tree)
         self.tree.itemDoubleClicked.connect(self.on_item_double_clicked)
         self.tree.itemPressed.connect(self.on_item_pressed)
