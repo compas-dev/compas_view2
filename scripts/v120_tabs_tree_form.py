@@ -40,6 +40,6 @@ tabs = [
         ]
     }
 ]
-treeform2 = viewer.tabsform("Tabs Form", location="right", tabs=tabs, show_headers=True, columns=["name", "value"])
+treeform2 = viewer.tabsform("Tabs Form", location="right", tabs=tabs, show_headers=True, columns=["name", "value"], striped_rows=True)
 
 viewer.show()
