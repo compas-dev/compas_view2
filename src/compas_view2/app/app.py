@@ -186,7 +186,7 @@ class App:
             "density_scale": "-3",
         }
 
-        apply_stylesheet(app, theme="dark_lightgreen.xml", extra=extra)
+        apply_stylesheet(app, theme="dark_blue.xml", extra=extra)
         # apply_stylesheet(app, theme="light_blue.xml", invert_secondary=True)
 
         self.timer = None
@@ -442,9 +442,8 @@ class App:
         None
 
         """
-        QtWidgets.QMessageBox.about(
-            self.window, "About", self.config["messages"]["about"]
-        )
+        message = self.config["messages"]["about"]
+        QtWidgets.QMessageBox.about(self.window, "About", message)
 
     def info(self, message: str) -> None:
         """Display info.
