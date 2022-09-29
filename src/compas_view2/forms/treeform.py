@@ -5,6 +5,60 @@ from qtpy import QtCore
 import ast
 
 
+class ValueDelegate(QtWidgets.QStyledItemDelegate):
+
+    def get_value(self, index):
+        treeform = self.parent()
+        item = treeform.tree.itemFromIndex(index)
+        column = index.column()
+        key = treeform.column_keys[column]
+        value = item.entry[key]
+        return value
+
+    def set_value(self, index, new_value):
+        treeform = self.parent()
+        item = treeform.tree.itemFromIndex(index)
+        column = index.column()
+        key = treeform.column_keys[column]
+        value = item.entry[key]
+        if self.has_options(value):
+            value["value"] = new_value
+        else:
+            item.entry[key] = new_value
+
+    def has_options(self, value):
+        return isinstance(value, dict) and "options" in value
+
+    def createEditor(self, parent, option, index):
+        value = self.get_value(index)
+        if self.has_options(value):
+            editor = QtWidgets.QComboBox(parent)
+            editor.addItems([str(o) for o in value["options"]])
+            return editor
+        else:
+            editor = QtWidgets.QLineEdit(parent)
+            return editor
+
+    def setEditorData(self, editor, index):
+        value = self.get_value(index)
+        if self.has_options(value):
+            editor.setCurrentIndex(value["options"].index(value["value"]))
+        else:
+            editor.setText(str(value))
+
+    def setModelData(self, editor, model, index):
+        value = self.get_value(index)
+        if self.has_options(value):
+            new_value = value["options"][editor.currentIndex()]
+        else:
+            new_value = editor.text()
+        self.set_value(index, new_value)
+        model.setData(index, new_value, QtCore.Qt.EditRole)
+
+    def updateEditorGeometry(self, editor, option, index):
+        editor.setGeometry(option.rect)
+
+
 class TreeForm(DockForm):
     def __init__(self, app, title="Tree", data=None, columns=["key", "value"], show_headers=True, striped_rows=False):
         super().__init__(app, title)
@@ -16,10 +70,12 @@ class TreeForm(DockForm):
         self.tree.setColumnCount(len(columns))
         self.tree.setHeaderLabels(self.column_names)
         self.tree.setHeaderHidden(not show_headers)
+        self.tree.setItemDelegateForColumn(1, ValueDelegate(self))
         self.setWidget(self.tree)
         self.tree.itemDoubleClicked.connect(self.on_item_double_clicked)
         self.tree.itemPressed.connect(self.on_item_pressed)
         self.tree.itemChanged.connect(self.on_item_changed)
+        self.tree.currentItemChanged.connect(self.on_current_item_changed)
         self.datastore = []
         if data:
             self.update(data)
@@ -121,7 +177,6 @@ class TreeForm(DockForm):
 
     def on_item_changed(self, item, column):
         self.tree.closePersistentEditor(item, column)
-
         try:
             value = ast.literal_eval(item.text(column))
         except Exception:
@@ -130,6 +185,11 @@ class TreeForm(DockForm):
         item.data_item["values"][column] = value
         if hasattr(item, "on_item_edited"):
             item.on_item_edited(self, item.entry, column, value)
+
+    def on_current_item_changed(self, current_item, privious_item):
+        if privious_item:
+            for i in range(self.tree.columnCount()):
+                self.tree.closePersistentEditor(privious_item, i)
 
     def select(self, entries):
         all_items = self.tree.findItems("", QtCore.Qt.MatchContains | QtCore.Qt.MatchRecursive)
