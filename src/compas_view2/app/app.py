@@ -216,6 +216,7 @@ class App:
         self.init()
         self.resize(width, height)
         self.started = False
+        self.on_object_selected = []
 
     def init(self):
         """Initialize the components of the user interface.

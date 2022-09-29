@@ -353,7 +353,12 @@ class Camera:
             if obj.bounding_box is not None:
                 extents.append(obj.bounding_box)
 
-        extents = array([obj.bounding_box for obj in objects]).reshape(-1, 3)
+        extents = array([obj.bounding_box for obj in objects if obj.bounding_box is not None])
+
+        if len(extents) == 0:
+            return
+
+        extents = extents.reshape(-1, 3)
         max_corner = extents.max(axis=0)
         min_corner = extents.min(axis=0)
         center = (max_corner + min_corner) / 2

@@ -1,6 +1,7 @@
 from .dockform import DockForm
 from qtpy import QtWidgets
 from qtpy import QtGui
+from qtpy import QtCore
 import ast
 
 
@@ -47,6 +48,10 @@ class TreeForm(DockForm):
             traverseNode(self.tree.topLevelItem(i))
 
         return items
+
+    @property
+    def entries(self):
+        return list(map(lambda i: i.entry, self.items))
 
     def map_entries(self, entries, parent=None):
 
@@ -126,3 +131,11 @@ class TreeForm(DockForm):
         item.data_item["values"][column] = value
         if hasattr(item, "on_item_edited"):
             item.on_item_edited(self, item.entry, column, value)
+
+    def select(self, entries):
+        all_items = self.tree.findItems("", QtCore.Qt.MatchContains | QtCore.Qt.MatchRecursive)
+        for item in all_items:
+            if item.entry in entries:
+                item.setSelected(True)
+            else:
+                item.setSelected(False)

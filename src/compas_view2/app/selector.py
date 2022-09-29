@@ -128,6 +128,8 @@ class Selector:
                     self.app.dock_slots["propertyform"].set_object(self.selected[0])
                 if self.app.dock_slots["sceneform"] is not None:
                     self.app.dock_slots["sceneform"].select(self.selected)
+                for func in self.app.on_object_selected:
+                    func(self.selected)
 
         # Start monitor loop in a separate worker thread
         ticker = Ticker(interval=0.02)
