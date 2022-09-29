@@ -52,10 +52,10 @@ from .worker import Worker
 from .plot import MplCanvas
 
 HERE = os.path.dirname(__file__)
-ICONS = os.path.join(HERE, '../icons')
-CONFIG = os.path.join(HERE, 'config.json')
+ICONS = os.path.join(HERE, "../icons")
+CONFIG = os.path.join(HERE, "config.json")
 
-VERSIONS = {'120': (2, 1), '330': (3, 3)}
+VERSIONS = {"120": (2, 1), "330": (3, 3)}
 
 
 class App:
@@ -127,35 +127,38 @@ class App:
 
     """
 
-    def __init__(self,
-                 title: str = 'COMPAS View2',
-                 version: Literal['120', '330'] = '120',
-                 width: int = 800,
-                 height: int = 500,
-                 viewmode: Literal['wireframe', 'shaded', 'ghosted', 'lighted'] = 'shaded',
-                 controller_class: Optional[Controller] = None,
-                 show_grid: bool = True,
-                 config: Optional[dict] = None,
-                 enable_sidebar: bool = False,
-                 enable_sidedock1: bool = False,
-                 enable_sidedock2: bool = False,
-                 enable_sceneform: bool = False,
-                 enable_propertyform: bool = False,
-                 show_flow: bool = False,
-                 flow_view_size: Union[Tuple[int], List[int]] = None,
-                 flow_auto_update: bool = True,
-                 ):
+    def __init__(
+        self,
+        title: str = "COMPAS View2",
+        version: Literal["120", "330"] = "120",
+        width: int = 800,
+        height: int = 500,
+        viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = "shaded",
+        controller_class: Optional[Controller] = None,
+        show_grid: bool = True,
+        config: Optional[dict] = None,
+        enable_sidebar: bool = False,
+        enable_sidedock1: bool = False,
+        enable_sidedock2: bool = False,
+        enable_sceneform: bool = False,
+        enable_propertyform: bool = False,
+        show_flow: bool = False,
+        flow_view_size: Union[Tuple[int], List[int]] = None,
+        flow_auto_update: bool = True,
+    ):
 
         if version not in VERSIONS:
-            raise Exception('Only these versions are currently supported: {}'.format(VERSIONS))
+            raise Exception(
+                "Only these versions are currently supported: {}".format(VERSIONS)
+            )
 
         glFormat = QtGui.QSurfaceFormat()
-        glFormat.setVersion(* VERSIONS[version])
+        glFormat.setVersion(*VERSIONS[version])
 
-        if version == '330':
+        if version == "330":
             View = View330
             glFormat.setProfile(QtGui.QSurfaceFormat.CoreProfile)
-        elif version == '120':
+        elif version == "120":
             View = View120
             glFormat.setProfile(QtGui.QSurfaceFormat.CompatibilityProfile)
         else:
@@ -201,7 +204,11 @@ class App:
 
         self.show_flow = show_flow
         if Flow:
-            self.flow = Flow(self, flow_view_size=flow_view_size or (self.width, self.height), flow_auto_update=flow_auto_update)
+            self.flow = Flow(
+                self,
+                flow_view_size=flow_view_size or (self.width, self.height),
+                flow_auto_update=flow_auto_update,
+            )
 
         self.enable_sidebar = enable_sidebar
         self.enable_sidedock1 = enable_sidedock1
@@ -227,9 +234,9 @@ class App:
 
         """
         self._init_statusbar()
-        self._init_menubar(self.config.get('menubar'))
-        self._init_toolbar(self.config.get('toolbar'))
-        self._init_sidebar(self.config.get('sidebar'))
+        self._init_menubar(self.config.get("menubar"))
+        self._init_toolbar(self.config.get("toolbar"))
+        self._init_sidebar(self.config.get("sidebar"))
         self._init_sidedocks()
 
     def resize(self, width: int, height: int):
@@ -254,20 +261,23 @@ class App:
         y = 0.5 * (rect.height() - height)
         self.window.setGeometry(x, y, width, height)
 
-    def add(self, data: Data,
-            name: str = None,
-            is_selected: bool = None,
-            is_visible: bool = None,
-            show_points: bool = None,
-            show_lines: bool = None,
-            show_faces: bool = None,
-            pointcolor: Union[Color, Dict[Union[str, int], Color]] = None,
-            linecolor: Union[Color, Dict[Union[str, int], Color]] = None,
-            facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
-            linewidth: int = None,
-            pointsize: int = None,
-            opacity: int = None,
-            **kwargs) -> Object:
+    def add(
+        self,
+        data: Data,
+        name: str = None,
+        is_selected: bool = None,
+        is_visible: bool = None,
+        show_points: bool = None,
+        show_lines: bool = None,
+        show_faces: bool = None,
+        pointcolor: Union[Color, Dict[Union[str, int], Color]] = None,
+        linecolor: Union[Color, Dict[Union[str, int], Color]] = None,
+        facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
+        linewidth: int = None,
+        pointsize: int = None,
+        opacity: int = None,
+        **kwargs,
+    ) -> Object:
         """Add a COMPAS object.
 
         Parameters
@@ -317,29 +327,29 @@ class App:
 
         """
         if name is not None:
-            kwargs['name'] = name
+            kwargs["name"] = name
         if is_selected is not None:
-            kwargs['is_selected'] = is_selected
+            kwargs["is_selected"] = is_selected
         if is_visible is not None:
-            kwargs['is_visible'] = is_visible
+            kwargs["is_visible"] = is_visible
         if show_points is not None:
-            kwargs['show_points'] = show_points
+            kwargs["show_points"] = show_points
         if show_lines is not None:
-            kwargs['show_lines'] = show_lines
+            kwargs["show_lines"] = show_lines
         if show_faces is not None:
-            kwargs['show_faces'] = show_faces
+            kwargs["show_faces"] = show_faces
         if pointcolor is not None:
-            kwargs['pointcolor'] = pointcolor
+            kwargs["pointcolor"] = pointcolor
         if linecolor is not None:
-            kwargs['linecolor'] = linecolor
+            kwargs["linecolor"] = linecolor
         if facecolor is not None:
-            kwargs['facecolor'] = facecolor
+            kwargs["facecolor"] = facecolor
         if linewidth is not None:
-            kwargs['linewidth'] = linewidth
+            kwargs["linewidth"] = linewidth
         if pointsize is not None:
-            kwargs['pointsize'] = pointsize
+            kwargs["pointsize"] = pointsize
         if opacity is not None:
-            kwargs['opacity'] = opacity
+            kwargs["opacity"] = opacity
 
         obj = Object.build(data, app=self, **kwargs)
 
@@ -347,8 +357,8 @@ class App:
         self.selector.add(obj)
         if self.view.isValid():
             obj.init()
-            if self.dock_slots['sceneform']:
-                self.dock_slots['sceneform'].update()
+            if self.dock_slots["sceneform"]:
+                self.dock_slots["sceneform"].update()
         return obj
 
     def add_reference(self, obj: Object, **kwargs) -> Object:
@@ -405,8 +415,8 @@ class App:
         if Flow and self.show_flow:
             self.flow.show()
 
-        if self.dock_slots['sceneform']:
-            self.dock_slots['sceneform'].update()
+        if self.dock_slots["sceneform"]:
+            self.dock_slots["sceneform"].update()
 
         self._app.exec_()
 
@@ -420,7 +430,9 @@ class App:
         None
 
         """
-        QtWidgets.QMessageBox.about(self.window, 'About', self.config['messages']['about'])
+        QtWidgets.QMessageBox.about(
+            self.window, "About", self.config["messages"]["about"]
+        )
 
     def info(self, message: str) -> None:
         """Display info.
@@ -435,7 +447,7 @@ class App:
         None
 
         """
-        result = QtWidgets.QMessageBox.information(self.window, 'Info', message)
+        result = QtWidgets.QMessageBox.information(self.window, "Info", message)
         print(result)
 
     def warning(self, message: str) -> None:
@@ -451,7 +463,7 @@ class App:
         None
 
         """
-        result = QtWidgets.QMessageBox.warning(self.window, 'Warning', message)
+        result = QtWidgets.QMessageBox.warning(self.window, "Warning", message)
         print(result)
 
     def critical(self, message: str) -> None:
@@ -467,7 +479,7 @@ class App:
         None
 
         """
-        result = QtWidgets.QMessageBox.critical(self.window, 'Critical', message)
+        result = QtWidgets.QMessageBox.critical(self.window, "Critical", message)
         print(result)
 
     def question(self, message: str) -> None:
@@ -485,7 +497,9 @@ class App:
         """
         flags = QtWidgets.QMessageBox.StandardButton.Yes
         flags |= QtWidgets.QMessageBox.StandardButton.No
-        response = QtWidgets.QMessageBox.question(self.window, 'Question', message, flags)
+        response = QtWidgets.QMessageBox.question(
+            self.window, "Question", message, flags
+        )
         if response == QtWidgets.QMessageBox.Yes:
             return True
         return False
@@ -514,7 +528,9 @@ class App:
         """
         flags = QtWidgets.QMessageBox.StandardButton.Ok
         flags |= QtWidgets.QMessageBox.StandardButton.Cancel
-        response = QtWidgets.QMessageBox.warning(self.window, 'Confirmation', message, flags)
+        response = QtWidgets.QMessageBox.warning(
+            self.window, "Confirmation", message, flags
+        )
         if response == QtWidgets.QMessageBox.StandardButton.Ok:
             return True
         return False
@@ -547,11 +563,10 @@ class App:
         None
 
         """
-        self.statusFps.setText('fps: {}'.format(fps))
+        self.statusFps.setText("fps: {}".format(fps))
 
     def sidedock(self, title: str = "", slot: str = None, location: str = "right"):
-        """Create a side dock widget.
-        """
+        """Create a side dock widget."""
         if slot and slot in self.dock_slots:
             self.dock_slots[slot].close()
 
@@ -571,8 +586,7 @@ class App:
         return dock
 
     def sceneform(self):
-        """Create a side object tree form widget.
-        """
+        """Create a side object tree form widget."""
         if self.dock_slots["sceneform"]:
             self.dock_slots["sceneform"].show()
             return self.dock_slots["sceneform"]
@@ -584,8 +598,7 @@ class App:
         return sceneform
 
     def propertyform(self):
-        """Create a side object tree form widget.
-        """
+        """Create a side object tree form widget."""
         if self.dock_slots["propertyform"]:
             self.dock_slots["propertyform"].show()
             return self.dock_slots["propertyform"]
@@ -596,9 +609,18 @@ class App:
 
         return propertyform
 
-    def treeform(self, title="tree", data=None, slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True, striped_rows=False):
-        """Create a side object tree form widget.
-        """
+    def treeform(
+        self,
+        title="tree",
+        data=None,
+        slot: str = None,
+        location: str = "left",
+        floating=False,
+        columns=["key", "value"],
+        show_headers=True,
+        striped_rows=False,
+    ):
+        """Create a side object tree form widget."""
         if slot and slot in self.dock_slots:
             treeform = self.dock_slots[slot]
             treeform.setWindowTitle(title)
@@ -612,7 +634,14 @@ class App:
             "bottom": QtCore.Qt.BottomDockWidgetArea,
         }
 
-        treeform = TreeForm(self, title=title, data=data, columns=columns, show_headers=show_headers, striped_rows=striped_rows)
+        treeform = TreeForm(
+            self,
+            title=title,
+            data=data,
+            columns=columns,
+            show_headers=show_headers,
+            striped_rows=striped_rows,
+        )
         self.window.addDockWidget(locations[location], treeform)
 
         if slot:
@@ -622,9 +651,18 @@ class App:
 
         return treeform
 
-    def tabsform(self, title="tree", tabs=[], slot: str = None, location: str = "left", floating=False, columns=["key", "value"], show_headers=True, striped_rows=False):
-        """Create a tabs form widget.
-        """
+    def tabsform(
+        self,
+        title="tree",
+        tabs=[],
+        slot: str = None,
+        location: str = "left",
+        floating=False,
+        columns=["key", "value"],
+        show_headers=True,
+        striped_rows=False,
+    ):
+        """Create a tabs form widget."""
         if slot and slot in self.dock_slots:
             self.dock_slots[slot].close()
 
@@ -635,7 +673,14 @@ class App:
             "bottom": QtCore.Qt.BottomDockWidgetArea,
         }
 
-        tabsform = TabsForm(self, title=title, tabs=tabs, columns=columns, show_headers=show_headers, striped_rows=striped_rows)
+        tabsform = TabsForm(
+            self,
+            title=title,
+            tabs=tabs,
+            columns=columns,
+            show_headers=show_headers,
+            striped_rows=striped_rows,
+        )
         self.window.addDockWidget(locations[location], tabsform)
 
         if slot:
@@ -646,15 +691,20 @@ class App:
         return tabsform
 
     def popup(self, title: str = "", slot: str = None):
-        """Create a side dock widget.
-        """
+        """Create a side dock widget."""
         popup = self.sidedock(title, slot)
         popup.setFloating(True)
         return popup
 
-    def plot(self, title: str = "", location: str = "bottom", floating: bool = False, min_height: int = 200, min_width: int = 200):
-        """Create a matplotlib canvas as dock widget.
-        """
+    def plot(
+        self,
+        title: str = "",
+        location: str = "bottom",
+        floating: bool = False,
+        min_height: int = 200,
+        min_width: int = 200,
+    ):
+        """Create a matplotlib canvas as dock widget."""
         dock = self.sidedock(title, location=location)
         dock.setFloating(floating)
         dock.setMinimumHeight(min_height)
@@ -663,9 +713,15 @@ class App:
         dock.content_layout.addWidget(sc)
         return sc.figure
 
-    def threading(self, func: Callable, args: list = [], kwargs: dict = {},
-                  on_progress: Callable = None, on_result: Callable = None,
-                  include_self: bool = False) -> None:
+    def threading(
+        self,
+        func: Callable,
+        args: list = [],
+        kwargs: dict = {},
+        on_progress: Callable = None,
+        on_result: Callable = None,
+        include_self: bool = False,
+    ) -> None:
         """Execute a multi-threaded function.
 
         Parameters
@@ -705,9 +761,9 @@ class App:
     def _init_statusbar(self):
         self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
-        self.statusText = QtWidgets.QLabel('Ready')
+        self.statusText = QtWidgets.QLabel("Ready")
         self.statusbar.addWidget(self.statusText, 1)
-        self.statusFps = QtWidgets.QLabel('fps: ')
+        self.statusFps = QtWidgets.QLabel("fps: ")
         self.statusbar.addWidget(self.statusFps)
 
     def _init_menubar(self, items: List[Dict]):
@@ -721,9 +777,9 @@ class App:
     def _init_toolbar(self, items: List[Dict]):
         if not items:
             return
-        self.toolbar = self.window.addToolBar('Tools')
+        self.toolbar = self.window.addToolBar("Tools")
         self.toolbar.setMovable(False)
-        self.toolbar.setObjectName('Tools')
+        self.toolbar.setObjectName("Tools")
         self.toolbar.setIconSize(QtCore.QSize(16, 16))
         self._add_toolbar_items(items, self.toolbar)
 
@@ -732,7 +788,7 @@ class App:
             return
         self.sidebar = QtWidgets.QToolBar(self.window)
         self.window.addToolBar(QtCore.Qt.LeftToolBarArea, self.sidebar)
-        self.sidebar.setObjectName('Sidebar')
+        self.sidebar.setObjectName("Sidebar")
         self.sidebar.setMovable(False)
         self.sidebar.setIconSize(QtCore.QSize(16, 16))
         self.sidebar.setMinimumWidth(240)
@@ -754,22 +810,24 @@ class App:
         if not items:
             return
         for item in items:
-            if item['type'] == 'separator':
+            if item["type"] == "separator":
                 parent.addSeparator()
-            elif item['type'] == 'menu':
-                menu = parent.addMenu(item['text'])
-                if 'items' in item:
-                    self._add_menubar_items(item['items'], menu)
-            elif item['type'] == 'radio':
+            elif item["type"] == "menu":
+                menu = parent.addMenu(item["text"])
+                if "items" in item:
+                    self._add_menubar_items(item["items"], menu)
+            elif item["type"] == "radio":
                 radio = QtWidgets.QActionGroup(self.window, exclusive=True)
-                for item in item['items']:
-                    action = self._add_action(parent, text=item['text'], action=item['action'])
+                for item in item["items"]:
+                    action = self._add_action(
+                        parent, text=item["text"], action=item["action"]
+                    )
                     action.setCheckable(True)
-                    action.setChecked(item['checked'])
+                    action.setChecked(item["checked"])
                     radio.addAction(action)
-            elif item['type'] == 'action':
-                del item['type']
-                self._add_action(parent, text=item['text'], action=item['action'])
+            elif item["type"] == "action":
+                del item["type"]
+                self._add_action(parent, text=item["text"], action=item["action"])
             else:
                 raise NotImplementedError
 
@@ -777,10 +835,10 @@ class App:
         if not items:
             return
         for item in items:
-            if item['type'] == 'separator':
+            if item["type"] == "separator":
                 parent.addSeparator()
-            elif item['type'] == 'action':
-                del item['type']
+            elif item["type"] == "action":
+                del item["type"]
                 self._add_action(parent, **item)
             else:
                 raise NotImplementedError
@@ -789,31 +847,33 @@ class App:
         if not items:
             return
         for item in items:
-            if item['type'] == 'separator':
+            if item["type"] == "separator":
                 parent.addSeparator()
-            elif item['type'] == 'radio':
-                del item['type']
+            elif item["type"] == "radio":
+                del item["type"]
                 Radio(self, self.sidebar, **item)
-            elif item['type'] == 'checkbox':
-                del item['type']
+            elif item["type"] == "checkbox":
+                del item["type"]
                 Checkbox(self, self.sidebar, **item)
-            elif item['type'] == 'slider':
-                del item['type']
+            elif item["type"] == "slider":
+                del item["type"]
                 Slider(self, self.sidebar, **item)
-            elif item['type'] == 'button':
-                del item['type']
+            elif item["type"] == "button":
+                del item["type"]
                 Button(self, self.sidebar, **item)
             else:
                 raise NotImplementedError
 
-    def _add_action(self,
-                    parent: QtWidgets.QWidget,
-                    *,
-                    text: str,
-                    action: Callable,
-                    args: Optional[List[Any]] = None,
-                    kwargs: Optional[Dict] = None,
-                    icon: Optional[AnyStr] = None):
+    def _add_action(
+        self,
+        parent: QtWidgets.QWidget,
+        *,
+        text: str,
+        action: Callable,
+        args: Optional[List[Any]] = None,
+        kwargs: Optional[Dict] = None,
+        icon: Optional[AnyStr] = None,
+    ):
         action = action if callable(action) else getattr(self.controller, action)
         args = args or []
         kwargs = kwargs or {}
@@ -828,9 +888,7 @@ class App:
     # Decorators
     # ==============================================================================
 
-    def select(self,
-               items: List[Dict[str, Any]],
-               parent=None) -> Callable:
+    def select(self, items: List[Dict[str, Any]], parent=None) -> Callable:
         """Decorator for combo boxes.
 
         Parameters
@@ -842,18 +900,14 @@ class App:
         callable
 
         """
+
         def outer(func: Callable) -> Callable:
-            select = Select(self,
-                            parent or self.sidebar,
-                            items=items,
-                            action=func)
+            select = Select(self, parent or self.sidebar, items=items, action=func)
             return select
+
         return outer
 
-    def radio(self,
-              items: List[Dict[str, Any]],
-              title='',
-              parent=None) -> Callable:
+    def radio(self, items: List[Dict[str, Any]], title="", parent=None) -> Callable:
         """Decorator for radio actions.
 
         Parameters
@@ -865,13 +919,13 @@ class App:
         callable
 
         """
+
         def outer(func: Callable) -> Callable:
-            radio = Radio(self,
-                          parent or self.sidebar,
-                          title=title,
-                          items=items,
-                          action=func)
+            radio = Radio(
+                self, parent or self.sidebar, title=title, items=items, action=func
+            )
             return radio
+
         return outer
 
     def button(self, text: str, parent=None) -> Callable:
@@ -900,12 +954,11 @@ class App:
                 app.info('Thanks for clicking...')
 
         """
+
         def outer(func: Callable) -> Callable:
-            button = Button(self,
-                            parent or self.sidebar,
-                            text=text,
-                            action=func)
+            button = Button(self, parent or self.sidebar, text=text, action=func)
             return button
+
         return outer
 
     def checkbox(self, text: str, checked: bool = True, parent=None) -> Callable:
@@ -936,24 +989,26 @@ class App:
                 app.info('Thanks for checking...')
 
         """
+
         def outer(func: Callable) -> Callable:
-            checkbox = Checkbox(self,
-                                parent or self.sidebar,
-                                text=text,
-                                action=func,
-                                checked=checked)
+            checkbox = Checkbox(
+                self, parent or self.sidebar, text=text, action=func, checked=checked
+            )
             return checkbox
+
         return outer
 
-    def slider(self,
-               title: str,
-               value: int = 0,
-               minval: int = 0,
-               maxval: int = 100,
-               step: int = 1,
-               annotation: str = '',
-               bgcolor: Color = None,
-               parent=None) -> Callable:
+    def slider(
+        self,
+        title: str,
+        value: int = 0,
+        minval: int = 0,
+        maxval: int = 100,
+        step: int = 1,
+        annotation: str = "",
+        bgcolor: Color = None,
+        parent=None,
+    ) -> Callable:
         """Decorator for slider actions.
 
         Parameters
@@ -989,28 +1044,34 @@ class App:
                 app.info('Thanks for sliding...')
 
         """
+
         def outer(func: Callable) -> Callable:
-            slider = Slider(self,
-                            parent or self.sidebar,
-                            func,
-                            value=value,
-                            minval=minval,
-                            maxval=maxval,
-                            step=step,
-                            title=title,
-                            annotation=annotation,
-                            bgcolor=bgcolor)
+            slider = Slider(
+                self,
+                parent or self.sidebar,
+                func,
+                value=value,
+                minval=minval,
+                maxval=maxval,
+                step=step,
+                title=title,
+                annotation=annotation,
+                bgcolor=bgcolor,
+            )
             return slider
+
         return outer
 
-    def on(self,
-           interval: int = None,
-           timeout: int = None,
-           frames: int = None,
-           record: bool = False,
-           record_path: str = 'temp/out.gif',
-           record_fps: int = None,
-           playback_interval: int = None) -> Callable:
+    def on(
+        self,
+        interval: int = None,
+        timeout: int = None,
+        frames: int = None,
+        record: bool = False,
+        record_path: str = "temp/out.gif",
+        record_fps: int = None,
+        playback_interval: int = None,
+    ) -> Callable:
         """Decorator for callbacks of a dynamic drawing process.
 
         Parameters
@@ -1052,13 +1113,13 @@ class App:
 
         """
         if (not interval and not timeout) or (interval and timeout):
-            raise ValueError('Must specify either interval or timeout')
+            raise ValueError("Must specify either interval or timeout")
 
         if record:
             # check if record_path is writable
             # create temp dir for frames
             self.tempdir = tempfile.mkdtemp()
-            record_fps = record_fps or 1000/interval
+            record_fps = record_fps or 1000 / interval
 
         def outer(func: Callable):
             def render():
@@ -1074,10 +1135,18 @@ class App:
                         #     duration=playback_interval or interval,
                         #     append_images=self.recorded_frames[1:],
                         #     loop=100)
-                        files = [os.path.join(self.tempdir, f"{i}.png") for i in range(frames)]
-                        gif_from_images(files=files, gif_path=record_path, fps=record_fps, delete_files=True)
+                        files = [
+                            os.path.join(self.tempdir, f"{i}.png")
+                            for i in range(frames)
+                        ]
+                        gif_from_images(
+                            files=files,
+                            gif_path=record_path,
+                            fps=record_fps,
+                            delete_files=True,
+                        )
                         shutil.rmtree(self.tempdir)
-                        print('Recorded to ', record_path)
+                        print("Recorded to ", record_path)
 
             if interval:
                 self.timer = Timer(interval=interval, callback=render)
