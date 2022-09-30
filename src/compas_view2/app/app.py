@@ -664,7 +664,10 @@ class App:
     ):
         """Create a tabs form widget."""
         if slot and slot in self.dock_slots:
-            self.dock_slots[slot].close()
+            tabsform = self.dock_slots[slot]
+            tabsform.setWindowTitle(title)
+            tabsform.update(tabs)
+            return tabsform
 
         locations = {
             "left": QtCore.Qt.LeftDockWidgetArea,

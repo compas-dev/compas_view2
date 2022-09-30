@@ -84,11 +84,20 @@ class BufferObject(Object):
             if data[0]:
                 self._update_bounding_box(data[0])
         if hasattr(self, '_lines_data'):
-            self._lines_buffer = self.make_buffer_from_data(self._lines_data())
+            data = self._lines_data()
+            self._lines_buffer = self.make_buffer_from_data(data)
+            if data[0] and self._bounding_box_center is None:
+                self._update_bounding_box(data[0])
         if hasattr(self, '_frontfaces_data'):
-            self._frontfaces_buffer = self.make_buffer_from_data(self._frontfaces_data())
+            data = self._frontfaces_data()
+            self._frontfaces_buffer = self.make_buffer_from_data(data)
+            if data[0] and self._bounding_box_center is None:
+                self._update_bounding_box(data[0])
         if hasattr(self, '_backfaces_data'):
-            self._backfaces_buffer = self.make_buffer_from_data(self._backfaces_data())
+            data = self._backfaces_data()
+            self._backfaces_buffer = self.make_buffer_from_data(data)
+            if data[0] and self._bounding_box_center is None:
+                self._update_bounding_box(data[0])
 
     def update_buffers(self):
         """Update all buffers from object's data"""

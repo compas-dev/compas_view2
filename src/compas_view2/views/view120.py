@@ -107,7 +107,7 @@ class View120(View):
         for guid in self.objects:
             obj = self.objects[guid]
             if isinstance(obj, BufferObject):
-                if obj.opacity * self.opacity < 1:
+                if obj.opacity * self.opacity < 1 and obj.bounding_box_center is not None:
                     transparent_objects.append(obj)
                     centers.append(transform_points_numpy([obj.bounding_box_center], obj.matrix)[0])
                 else:

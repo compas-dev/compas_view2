@@ -19,3 +19,7 @@ class TabsForm(DockForm):
         containerwidget.setLayout(layout)
         layout.setContentsMargins(0, 0, 0, 0)
         self.setWidget(containerwidget)
+
+    def update(self, tabs):
+        for tab in tabs:
+            self.treeforms[tab["name"]].update(tab["data"])
