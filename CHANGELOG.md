@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added `zoom_extents` to `Camera`.
 * Added `expanded` option for `TreeForm` data entries.
 * Added `striped_rows` option for `TreeForm`.
+* Added `option` to display drop down list for `TreeForm` item editing.
+* Aded `on_object_selected` event listener.
 
 ### Changed
 
@@ -24,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Auto adjust first column width in `TreeForm`.
 * Allow set colums individually in `TabsForm`.
 * Fix `TabsForm` top margin display issue on macos.
+* Fixed a `Ghostmode` bug.
+* Allow `TabsFrom` to update.
 
 ### Removed
 
