@@ -1,7 +1,7 @@
 from compas.utilities import pairwise
 from compas.geometry import centroid_points
 from compas.geometry import is_coplanar
-
+from compas.colors import Color
 from .bufferobject import BufferObject
 
 
@@ -67,10 +67,11 @@ class MeshObject(BufferObject):
     """
 
     def __init__(self, data, vertices=None, edges=None, faces=None,
-                 hide_coplanaredges=False, **kwargs):
+                 hide_coplanaredges=False, use_vertex_color=False, **kwargs):
         super().__init__(data,  **kwargs)
         self._mesh = data
         self.hide_coplanaredges = hide_coplanaredges
+        self.use_vertex_color = use_vertex_color
         self.vertices = vertices
         self.edges = edges
         self.faces = faces
@@ -120,6 +121,8 @@ class MeshObject(BufferObject):
     def _frontfaces_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        if self.use_vertex_color:
+            vertex_color = {vertex: mesh.vertex_attribute(vertex, 'color') or Color.grey() for vertex in mesh.vertices()}
         positions = []
         colors = []
         elements = []
@@ -133,9 +136,14 @@ class MeshObject(BufferObject):
                 positions.append(vertex_xyz[a])
                 positions.append(vertex_xyz[b])
                 positions.append(vertex_xyz[c])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                if self.use_vertex_color:
+                    colors.append(vertex_color[a])
+                    colors.append(vertex_color[b])
+                    colors.append(vertex_color[c])
+                else:
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
                 elements.append([i + 0, i + 1, i + 2])
                 i += 3
             elif len(vertices) == 4:
@@ -146,12 +154,20 @@ class MeshObject(BufferObject):
                 positions.append(vertex_xyz[a])
                 positions.append(vertex_xyz[c])
                 positions.append(vertex_xyz[d])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                if self.use_vertex_color:
+                    colors.append(vertex_color[a])
+                    colors.append(vertex_color[b])
+                    colors.append(vertex_color[c])
+                    colors.append(vertex_color[a])
+                    colors.append(vertex_color[c])
+                    colors.append(vertex_color[d])
+                else:
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
                 elements.append([i + 0, i + 1, i + 2])
                 elements.append([i + 3, i + 4, i + 5])
                 i += 6
@@ -162,17 +178,23 @@ class MeshObject(BufferObject):
                     positions.append(a)
                     positions.append(b)
                     positions.append(c)
-                    colors.append(color)
-                    colors.append(color)
-                    colors.append(color)
+                    if self.use_vertex_color:
+                        colors.append(vertex_color[a])
+                        colors.append(vertex_color[b])
+                        colors.append(vertex_color[c])
+                    else:
+                        colors.append(color)
+                        colors.append(color)
+                        colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
-
         return positions, colors, elements
 
     def _backfaces_data(self):
         mesh = self._mesh
         vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        if self.use_vertex_color:
+            vertex_color = {vertex: mesh.vertex_attribute(vertex, 'color') or Color.grey() for vertex in mesh.vertices()}
         positions = []
         colors = []
         elements = []
@@ -186,9 +208,14 @@ class MeshObject(BufferObject):
                 positions.append(vertex_xyz[a])
                 positions.append(vertex_xyz[b])
                 positions.append(vertex_xyz[c])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                if self.use_vertex_color:
+                    colors.append(vertex_color[a])
+                    colors.append(vertex_color[b])
+                    colors.append(vertex_color[c])
+                else:
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
                 elements.append([i + 0, i + 1, i + 2])
                 i += 3
             elif len(vertices) == 4:
@@ -199,12 +226,20 @@ class MeshObject(BufferObject):
                 positions.append(vertex_xyz[a])
                 positions.append(vertex_xyz[c])
                 positions.append(vertex_xyz[d])
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
-                colors.append(color)
+                if self.use_vertex_color:
+                    colors.append(vertex_color[a])
+                    colors.append(vertex_color[b])
+                    colors.append(vertex_color[c])
+                    colors.append(vertex_color[a])
+                    colors.append(vertex_color[c])
+                    colors.append(vertex_color[d])
+                else:
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
+                    colors.append(color)
                 elements.append([i + 0, i + 1, i + 2])
                 elements.append([i + 3, i + 4, i + 5])
                 i += 6
@@ -215,9 +250,14 @@ class MeshObject(BufferObject):
                     positions.append(a)
                     positions.append(b)
                     positions.append(c)
-                    colors.append(color)
-                    colors.append(color)
-                    colors.append(color)
+                    if self.use_vertex_color:
+                        colors.append(vertex_color[a])
+                        colors.append(vertex_color[b])
+                        colors.append(vertex_color[c])
+                    else:
+                        colors.append(color)
+                        colors.append(color)
+                        colors.append(color)
                     elements.append([i + 0, i + 1, i + 2])
                     i += 3
         return positions, colors, elements
