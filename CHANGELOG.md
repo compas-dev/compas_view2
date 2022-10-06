@@ -10,14 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Added `RobotObject`.
-* add `datastore` to `TreeForm`.
+* Added `datastore` to `TreeForm`.
 * Added `TabsForm`.
 * Added `BRepObject`.
 * Added `zoom_extents` to `Camera`.
 * Added `expanded` option for `TreeForm` data entries.
 * Added `striped_rows` option for `TreeForm`.
 * Added `option` to display drop down list for `TreeForm` item editing.
-* Aded `on_object_selected` event listener.
+* Added `on_object_selected` event listener.
+* Added `use_vertex_color` option to `MeshObject`.
 
 ### Changed
 

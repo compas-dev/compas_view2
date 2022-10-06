@@ -149,13 +149,13 @@ class BufferObject(Object):
         shader.uniform1i('element_type', 2)
         if hasattr(self, "_frontfaces_buffer") and self.show_faces and not wireframe:
             shader.uniform3f('single_color', self.facecolor)
-            shader.uniform1i('use_single_color', not self.facecolors and not self._is_collection)
+            shader.uniform1i('use_single_color', not self.facecolors and not self._is_collection and not getattr(self, 'use_vertex_color', False))
             shader.bind_attribute('position', self._frontfaces_buffer['positions'])
             shader.bind_attribute('color', self._frontfaces_buffer['colors'])
             shader.draw_triangles(elements=self._frontfaces_buffer['elements'], n=self._frontfaces_buffer['n'], background=self.background)
         if hasattr(self, "_backfaces_buffer") and self.show_faces and not wireframe:
             shader.uniform3f('single_color', self.facecolor)
-            shader.uniform1i('use_single_color', not self.facecolors and not self._is_collection)
+            shader.uniform1i('use_single_color', not self.facecolors and not self._is_collection and not getattr(self, 'use_vertex_color', False))
             shader.bind_attribute('position', self._backfaces_buffer['positions'])
             shader.bind_attribute('color', self._backfaces_buffer['colors'])
             shader.draw_triangles(elements=self._backfaces_buffer['elements'], n=self._backfaces_buffer['n'], background=self.background)
