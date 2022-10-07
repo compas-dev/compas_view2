@@ -28,7 +28,7 @@ optional_requirements = {}
 
 setup(
     name="compas_view2",
-    version="0.7.0",
+    version="0.8.0",
     description="Second generation viewers for the COMPAS framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
