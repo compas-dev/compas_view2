@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_view2.values.Value` class.
+* Added `compas_view2.values.BoolValue` class.
+* Added `compas_view2.values.IntValue` class.
+* Added `compas_view2.values.FloatValue` class.
+* Added `compas_view2.values.StrValue` class.
+* Added `compas_view2.values.ListValue` class.
+* Added `compas_view2.values.DictValue` class.
+* Added `compas_view2.values.Settings` class.
+
 ### Changed
 
 ### Removed

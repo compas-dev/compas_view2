@@ -3,6 +3,7 @@ from qtpy import QtWidgets
 from qtpy import QtGui
 from qtpy import QtCore
 import ast
+from compas_view2.values import Value
 
 
 class ValueDelegate(QtWidgets.QStyledItemDelegate):
@@ -21,19 +22,26 @@ class ValueDelegate(QtWidgets.QStyledItemDelegate):
         column = index.column()
         key = treeform.column_keys[column]
         value = item.entry[key]
-        if self.has_options(value):
-            value["value"] = new_value
+        try:
+            new_value = ast.literal_eval(new_value)
+        except Exception:
+            pass
+        if isinstance(value, Value):
+            value.set(new_value)
+            new_value = value.value
         else:
             item.entry[key] = new_value
+        return new_value
 
     def has_options(self, value):
-        return isinstance(value, dict) and "options" in value
+        return isinstance(value, Value) and value.options is not None
 
     def createEditor(self, parent, option, index):
         value = self.get_value(index)
         if self.has_options(value):
+            print("createEditor: has_options")
             editor = QtWidgets.QComboBox(parent)
-            editor.addItems([str(o) for o in value["options"]])
+            editor.addItems([str(o) for o in value.options])
             return editor
         else:
             editor = QtWidgets.QLineEdit(parent)
@@ -42,18 +50,20 @@ class ValueDelegate(QtWidgets.QStyledItemDelegate):
     def setEditorData(self, editor, index):
         value = self.get_value(index)
         if self.has_options(value):
-            editor.setCurrentIndex(value["options"].index(value["value"]))
+            editor.setCurrentIndex(value.options.index(value.value))
+        elif isinstance(value, Value):
+            editor.setText(str(value.value))
         else:
             editor.setText(str(value))
 
     def setModelData(self, editor, model, index):
         value = self.get_value(index)
         if self.has_options(value):
-            new_value = value["options"][editor.currentIndex()]
+            new_value = value.options[editor.currentIndex()]
         else:
             new_value = editor.text()
-        self.set_value(index, new_value)
-        model.setData(index, new_value, QtCore.Qt.EditRole)
+        new_value = self.set_value(index, new_value)
+        model.setData(index, str(new_value), QtCore.Qt.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
@@ -124,11 +134,13 @@ class TreeForm(DockForm):
             for key in self.column_keys:
                 value = entry.get(key, "")
                 color = None
-                if isinstance(value, dict):
-                    if "color" in value:
-                        color = value["color"]
-                    if "value" in value:
-                        value = value["value"]
+                # if isinstance(value, dict):
+                #     if "color" in value:
+                #         color = value["color"]
+                #     if "value" in value:
+                #         value = value["value"]
+                if isinstance(value, Value):
+                    value = value.value
                 values.append(value)
                 colors.append(color)
             item = QtWidgets.QTreeWidgetItem([str(v) for v in values])
@@ -178,7 +190,12 @@ class TreeForm(DockForm):
     def on_item_changed(self, item, column):
         self.tree.closePersistentEditor(item, column)
         try:
-            value = ast.literal_eval(item.text(column))
+            key = self.column_keys[column]
+            value = item.entry[key]
+            if isinstance(value, Value):
+                value = value.value
+            else:
+                value = ast.literal_eval(item.text(column))
         except Exception:
             value = item.text(column)
 
