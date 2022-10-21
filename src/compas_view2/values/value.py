@@ -3,18 +3,21 @@ from compas.data import Data
 
 class Value(Data):
 
-    def __init__(self, value, dtype, options=None):
+    def __init__(self, value, value_type: type, options=None):
         super().__init__()
         self._value = value
-        self._dtype = dtype
+        self._value_type = value_type
         self._check_type(value)
 
         self._options = None
         if options is not None:
             self.options = options
 
+    def __repr__(self):
+        return "<{}: {}>".format(self.__class__.__name__, self.value)
+
     def _check_type(self, value):
-        assert type(value) == self.dtype, "{} is not of type {}".format(value, self.dtype)
+        assert type(value) == self.value_type, "{} is not of type {}".format(value, self.value_type)
 
     def _check_options(self, value):
         if self.options is not None:
@@ -26,9 +29,9 @@ class Value(Data):
 
     def cast(self, value):
         try:
-            return self.dtype(value)
+            return self.value_type(value)
         except ValueError:
-            raise ValueError("Cannot cast {} to {}".format(value, self.dtype))
+            raise ValueError("Cannot cast {} to {}".format(value, self.value_type))
 
     def set(self, value, raise_error=True, cast=True):
         try:
@@ -52,8 +55,8 @@ class Value(Data):
         self._value = value
 
     @property
-    def dtype(self):
-        return self._dtype
+    def value_type(self):
+        return self._value_type
 
     @property
     def options(self):
@@ -70,12 +73,12 @@ class Value(Data):
     def data(self):
         return {
             'value': self.value,
-            'dtype': self.dtype,
+            'value_type': self.value_type.__name__,
             'options': self.options,
         }
 
     @data.setter
     def data(self, data):
         self._value = data['value']
-        self._dtype = data['dtype']
+        self._value_type = eval(data['value_type'])  # TODO: support imported types
         self._options = data['options']

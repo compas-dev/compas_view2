@@ -1,10 +1,10 @@
 from .value import Value
 
 
-class IntValue(Value):
+class FloatValue(Value):
 
-    def __init__(self, value: int, min: int = None, max: int = None, options: list = None):
-        super().__init__(value, int, options=options)
+    def __init__(self, value: float, min: float = None, max: float = None, options: list = None):
+        super().__init__(value, float, options=options)
         if min is not None:
             self._check_type(min)
         if max is not None:

@@ -22,10 +22,16 @@ class ValueDelegate(QtWidgets.QStyledItemDelegate):
         column = index.column()
         key = treeform.column_keys[column]
         value = item.entry[key]
+        try:
+            new_value = ast.literal_eval(new_value)
+        except Exception:
+            pass
         if isinstance(value, Value):
             value.set(new_value)
+            new_value = value.value
         else:
             item.entry[key] = new_value
+        return new_value
 
     def has_options(self, value):
         return isinstance(value, Value) and value.options is not None
@@ -56,8 +62,8 @@ class ValueDelegate(QtWidgets.QStyledItemDelegate):
             new_value = value.options[editor.currentIndex()]
         else:
             new_value = editor.text()
-        self.set_value(index, new_value)
-        model.setData(index, new_value, QtCore.Qt.EditRole)
+        new_value = self.set_value(index, new_value)
+        model.setData(index, str(new_value), QtCore.Qt.EditRole)
 
     def updateEditorGeometry(self, editor, option, index):
         editor.setGeometry(option.rect)
@@ -184,7 +190,12 @@ class TreeForm(DockForm):
     def on_item_changed(self, item, column):
         self.tree.closePersistentEditor(item, column)
         try:
-            value = ast.literal_eval(item.text(column))
+            key = self.column_keys[column]
+            value = item.entry[key]
+            if isinstance(value, Value):
+                value = value.value
+            else:
+                value = ast.literal_eval(item.text(column))
         except Exception:
             value = item.text(column)
 
