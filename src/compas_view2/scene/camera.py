@@ -84,6 +84,9 @@ class Camera:
     target: list[float], optional
         The target location the camera is aimed at.
         Default is None, in which case the origin of the world coordinate system is used.
+    scale: float, optional
+        The scale factor for camera's near, far and pan_delta.
+        Default is 1.0.
 
     Attributes
     ----------
@@ -108,6 +111,8 @@ class Camera:
         Size of one rotation increment.
     pan_delta : float
         Size of one pan increment.
+    scale : float
+        The scale factor for camera's near, far and pan_delta.
 
     Notes
     -----
@@ -115,12 +120,13 @@ class Camera:
 
     """
 
-    def __init__(self, view, fov=45, near=0.1, far=1000, position=None, target=None):
+    def __init__(self, view, fov=45, near=0.1, far=1000, position=None, target=None, scale=1.0):
         self.view = view
         self.fov = fov
         self.near = near
         self.far = far
-        self._position = Position([0, 0, 10], on_update=self._on_position_update)
+        self.scale = scale
+        self._position = Position([0, 0, 10*scale], on_update=self._on_position_update)
         self._rotation = RotationEuler([0, 0, 0], on_update=self._on_rotation_update)
         self._target = Position([0, 0, 0], on_update=self._on_target_update)
         self.zoom_delta = 0.05
@@ -155,6 +161,12 @@ class Camera:
     @target.setter
     def target(self, target):
         self._target.set(*target)
+
+    def look_at(self, target):
+        """Set the target of the camera, while keeping the current position."""
+        position = list(self.position)
+        self.target = target
+        self.position = position
 
     @property
     def distance(self):
@@ -268,7 +280,7 @@ class Camera:
 
         """
         R = Rotation.from_euler_angles(self.rotation)
-        T = Translation.from_vector([-dx * self.pan_delta, dy * self.pan_delta, 0])
+        T = Translation.from_vector([-dx * self.pan_delta*self.scale, dy * self.pan_delta*self.scale, 0])
         M = (R * T).matrix
         vector = [M[i][3] for i in range(3)]
         self.target += vector
@@ -310,13 +322,13 @@ class Camera:
         """
         aspect = width / height
         if self.view.current == self.view.PERSPECTIVE:
-            P = perspective(self.fov, aspect, self.near, self.far)
+            P = perspective(self.fov, aspect, self.near*self.scale, self.far*self.scale)
         else:
             left = -self.distance
             right = self.distance
             bottom = -self.distance / aspect
             top = self.distance / aspect
-            P = ortho(left, right, bottom, top, self.near, self.far)
+            P = ortho(left, right, bottom, top, self.near*self.scale, self.far*self.scale)
         return asfortranarray(P, dtype=float32)
 
     def viewworld(self):
