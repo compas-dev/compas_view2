@@ -14,7 +14,7 @@ from compas.data import Data
 from typing import Dict, Union
 
 
-ABC = abc.ABCMeta('ABC', (object,), {'__slots__': ()})
+ABC = abc.ABCMeta("ABC", (object,), {"__slots__": ()})
 
 DATA_OBJECT = {}
 
@@ -29,7 +29,7 @@ def _get_object_cls(data):
             break
 
     if cls is None:
-        raise Exception('No object is registered for this data type: {}'.format(dtype))
+        raise Exception("No object is registered for this data type: {}".format(dtype))
 
     return cls
 
@@ -155,21 +155,23 @@ class Object(ABC):
             raise TypeError("Type {} is not supported by the viewer.".format(type(data)))
         return obj
 
-    def __init__(self,
-                 data: Data,
-                 app=None,
-                 name: str = None,
-                 is_selected: bool = False,
-                 is_visible: bool = True,
-                 show_points: bool = False,
-                 show_lines: bool = True,
-                 show_faces: bool = True,
-                 pointcolor: Union[Color, Dict[Union[str, int], Color]] = None,
-                 linecolor: Union[Color, Dict[Union[str, int], Color]] = None,
-                 facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
-                 linewidth: int = 1,
-                 pointsize: int = 10,
-                 opacity: float = 1.0):
+    def __init__(
+        self,
+        data: Data,
+        app=None,
+        name: str = None,
+        is_selected: bool = False,
+        is_visible: bool = True,
+        show_points: bool = False,
+        show_lines: bool = True,
+        show_faces: bool = True,
+        pointcolor: Union[Color, Dict[Union[str, int], Color]] = None,
+        linecolor: Union[Color, Dict[Union[str, int], Color]] = None,
+        facecolor: Union[Color, Dict[Union[str, int], Color]] = None,
+        linewidth: int = 1,
+        pointsize: int = 10,
+        opacity: float = 1.0,
+    ):
 
         self._data = data
         self._app = app
@@ -208,9 +210,9 @@ class Object(ABC):
         self.background = False
 
         self._instance_color = None
-        self._translation = [0., 0., 0.]
-        self._rotation = [0., 0., 0.]
-        self._scale = [1., 1., 1.]
+        self._translation = [0.0, 0.0, 0.0]
+        self._rotation = [0.0, 0.0, 0.0]
+        self._scale = [1.0, 1.0, 1.0]
         self._transformation = Transformation()
         self._matrix_buffer = None
 
@@ -261,8 +263,8 @@ class Object(ABC):
         self._children.add(obj)
         obj.parent = self
 
-        if self._app.dock_slots['sceneform'] and self._app.view.isValid():
-            self._app.dock_slots['sceneform'].update()
+        if self._app.dock_slots["sceneform"] and self._app.view.isValid():
+            self._app.dock_slots["sceneform"].update()
         return obj
 
     def remove(self, obj):
@@ -301,7 +303,9 @@ class Object(ABC):
 
     def _update_matrix(self):
         """Update the matrix from object's translation, rotation and scale"""
-        if (not self.parent or self.parent._matrix_buffer is None) and (self.translation == [0, 0, 0] and self.rotation == [0, 0, 0] and self.scale == [1, 1, 1]):
+        if (not self.parent or self.parent._matrix_buffer is None) and (
+            self.translation == [0, 0, 0] and self.rotation == [0, 0, 0] and self.scale == [1, 1, 1]
+        ):
             self._transformation.matrix = identity_matrix(4)
             self._matrix_buffer = None
         else:

@@ -3,8 +3,7 @@ from typing import Tuple, Union, List
 
 
 class Collection:
-    """A collection of COMPAS items like meshes or shapes.
-    """
+    """A collection of COMPAS items like meshes or shapes."""
 
     def __init__(self, items: Union[Data, Tuple[Data, dict]] = None, item_properties: List[dict] = None):
         super().__init__()

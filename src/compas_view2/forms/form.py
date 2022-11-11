@@ -3,7 +3,6 @@ from qtpy import QtGui
 
 
 class Form(QtWidgets.QDialog):
-
     def __init__(self, title):
         super().__init__(f=QtGui.Qt.WindowTitleHint | QtGui.Qt.WindowSystemMenuHint)
         self.setWindowTitle(title)

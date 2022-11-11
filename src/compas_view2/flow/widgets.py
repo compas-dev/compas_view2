@@ -15,11 +15,11 @@ class ExecutionControl(QWidget):
         h_layout = QHBoxLayout()
         layout.addLayout(h_layout)
 
-        self.checkbox = QCheckBox('Auto Update')
+        self.checkbox = QCheckBox("Auto Update")
         self.checkbox.setStyleSheet("color: white;")
         h_layout.addWidget(self.checkbox)
 
-        self.button = QPushButton('Run')
+        self.button = QPushButton("Run")
         self.button.setStyleSheet("background-color: #0092D2;")
         h_layout.addWidget(self.button)
 

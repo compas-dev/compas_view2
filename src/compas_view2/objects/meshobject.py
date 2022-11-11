@@ -66,9 +66,10 @@ class MeshObject(BufferObject):
 
     """
 
-    def __init__(self, data, vertices=None, edges=None, faces=None,
-                 hide_coplanaredges=False, use_vertex_color=False, **kwargs):
-        super().__init__(data,  **kwargs)
+    def __init__(
+        self, data, vertices=None, edges=None, faces=None, hide_coplanaredges=False, use_vertex_color=False, **kwargs
+    ):
+        super().__init__(data, **kwargs)
         self._mesh = data
         self.hide_coplanaredges = hide_coplanaredges
         self.use_vertex_color = use_vertex_color
@@ -78,7 +79,7 @@ class MeshObject(BufferObject):
 
     def _points_data(self):
         mesh = self._mesh
-        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()}
         positions = []
         colors = []
         elements = []
@@ -93,7 +94,7 @@ class MeshObject(BufferObject):
 
     def _lines_data(self):
         mesh = self._mesh
-        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()}
         positions = []
         colors = []
         elements = []
@@ -105,9 +106,7 @@ class MeshObject(BufferObject):
                 # hide the edge if neighbor faces are coplanar
                 fkeys = mesh.edge_faces(u, v)
                 if not mesh.is_edge_on_boundary(u, v):
-                    ps = [mesh.face_center(fkeys[0]),
-                          mesh.face_center(fkeys[1]),
-                          *mesh.edge_coordinates(u, v)]
+                    ps = [mesh.face_center(fkeys[0]), mesh.face_center(fkeys[1]), *mesh.edge_coordinates(u, v)]
                     if is_coplanar(ps, tol=1e-5):
                         continue
             positions.append(vertex_xyz[u])
@@ -120,9 +119,11 @@ class MeshObject(BufferObject):
 
     def _frontfaces_data(self):
         mesh = self._mesh
-        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()}
         if self.use_vertex_color:
-            vertex_color = {vertex: mesh.vertex_attribute(vertex, 'color') or Color.grey() for vertex in mesh.vertices()}
+            vertex_color = {
+                vertex: mesh.vertex_attribute(vertex, "color") or Color.grey() for vertex in mesh.vertices()
+            }
         positions = []
         colors = []
         elements = []
@@ -192,9 +193,11 @@ class MeshObject(BufferObject):
 
     def _backfaces_data(self):
         mesh = self._mesh
-        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, 'xyz') for vertex in mesh.vertices()}
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()}
         if self.use_vertex_color:
-            vertex_color = {vertex: mesh.vertex_attribute(vertex, 'color') or Color.grey() for vertex in mesh.vertices()}
+            vertex_color = {
+                vertex: mesh.vertex_attribute(vertex, "color") or Color.grey() for vertex in mesh.vertices()
+            }
         positions = []
         colors = []
         elements = []

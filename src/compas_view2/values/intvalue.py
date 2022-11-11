@@ -2,7 +2,6 @@ from .value import Value
 
 
 class IntValue(Value):
-
     def __init__(self, value: int, min: int = None, max: int = None, options: list = None):
         super().__init__(value, int, options=options)
         if min is not None:
@@ -44,14 +43,11 @@ class IntValue(Value):
     @property
     def data(self):
         data = super().data
-        data.update({
-            'min': self.min,
-            'max': self.max
-        })
+        data.update({"min": self.min, "max": self.max})
         return data
 
     @data.setter
     def data(self, data):
         super().data = data
-        self._min = data['min']
-        self._max = data['max']
+        self._min = data["min"]
+        self._max = data["max"]

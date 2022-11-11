@@ -5,7 +5,7 @@ from OpenGL import GL
 class Shader:
     """The shader used by the OpenGL view."""
 
-    def __init__(self, name='120/mesh'):
+    def __init__(self, name="120/mesh"):
         self.program = make_shader_program(name)
         self.locations = {}
 
@@ -146,10 +146,10 @@ class Shader:
 
     def draw_2d_box(self, box_coords, width, height):
         x1, y1, x2, y2 = box_coords
-        x1 = (x1/width - 0.5)*2
-        x2 = (x2/width - 0.5)*2
-        y1 = -(y1/height - 0.5)*2
-        y2 = -(y2/height - 0.5)*2
+        x1 = (x1 / width - 0.5) * 2
+        x2 = (x2 / width - 0.5) * 2
+        y1 = -(y1 / height - 0.5) * 2
+        y2 = -(y2 / height - 0.5) * 2
         if x1 > x2:
             x1, x2 = x2, x1
         if y1 > y2:

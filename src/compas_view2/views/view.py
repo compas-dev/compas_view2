@@ -35,12 +35,9 @@ class View(QtWidgets.QOpenGLWidget):
     TOP = 3
     PERSPECTIVE = 4
 
-    def __init__(self,
-                 app,
-                 background_color=(1, 1, 1, 1),
-                 selection_color=(1.0, 1.0, 0.0),
-                 mode='shaded',
-                 show_grid=True):
+    def __init__(
+        self, app, background_color=(1, 1, 1, 1), selection_color=(1.0, 1.0, 0.0), mode="shaded", show_grid=True
+    ):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
@@ -66,7 +63,7 @@ class View(QtWidgets.QOpenGLWidget):
     @mode.setter
     def mode(self, mode):
         self._mode = mode
-        if mode == 'ghosted':
+        if mode == "ghosted":
             self._opacity = 0.7
         else:
             self._opacity = 1.0
@@ -113,7 +110,7 @@ class View(QtWidgets.QOpenGLWidget):
         .. [1] https://doc.qt.io/qtforpython-5.12/PySide2/QtWidgets/QOpenGLWidget.html#PySide2.QtWidgets.PySide2.QtWidgets.QOpenGLWidget.initializeGL
 
         """
-        GL.glClearColor(* self.color)
+        GL.glClearColor(*self.color)
         GL.glPolygonOffset(1.0, 1.0)
         GL.glEnable(GL.GL_POLYGON_OFFSET_FILL)
         GL.glEnable(GL.GL_CULL_FACE)
@@ -233,13 +230,13 @@ class View(QtWidgets.QOpenGLWidget):
         # start selecting
         # if left button
         if event.buttons() & QtCore.Qt.LeftButton:
-            self.mouse.buttons['left'] = True
+            self.mouse.buttons["left"] = True
             if self.keys["shift"] or self.keys["control"]:
                 self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
         # do nothing
         # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
-            self.mouse.buttons['right'] = True
+            self.mouse.buttons["right"] = True
         # recod mouse position
         self.mouse.last_pos = event.pos()
         self.update()
@@ -250,7 +247,7 @@ class View(QtWidgets.QOpenGLWidget):
         # finalize selecting
         # if left button
         if event.button() == QtCore.Qt.MouseButton.LeftButton:
-            self.mouse.buttons['left'] = False
+            self.mouse.buttons["left"] = False
             # select location on grid
             if self.app.selector.wait_for_selection_on_plane:
                 self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
@@ -260,7 +257,7 @@ class View(QtWidgets.QOpenGLWidget):
         # do nothing
         # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
-            self.mouse.buttons['right'] = False
+            self.mouse.buttons["right"] = False
         self.update()
 
     def wheelEvent(self, event):

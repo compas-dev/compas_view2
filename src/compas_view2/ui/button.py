@@ -24,12 +24,7 @@ class Button:
 
     """
 
-    def __init__(self,
-                 app,
-                 parent,
-                 *,
-                 text,
-                 action):
+    def __init__(self, app, parent, *, text, action):
         box = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout()
         box.setLayout(layout)

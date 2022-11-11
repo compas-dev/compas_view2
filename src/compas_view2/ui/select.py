@@ -39,7 +39,7 @@ class Select:
         layout = QtWidgets.QHBoxLayout()
         combo = QtWidgets.QComboBox()
         for item in items:
-            combo.addItem(item['text'])
+            combo.addItem(item["text"])
         layout.addWidget(combo)
         container.setLayout(layout)
         parent.addWidget(container)

@@ -16,11 +16,13 @@ class EllipseObject(PolylineObject):
     def calculate_ellipse_points(self, ellipse):
         frame = Frame.from_plane(ellipse.plane)
         ellipse.points = [
-            frame.to_world_coordinates([
-                math.cos(i*math.pi*2/self.u) * ellipse.major,
-                math.sin(i*math.pi*2/self.u) * ellipse.minor,
-                0
-            ])
+            frame.to_world_coordinates(
+                [
+                    math.cos(i * math.pi * 2 / self.u) * ellipse.major,
+                    math.sin(i * math.pi * 2 / self.u) * ellipse.minor,
+                    0,
+                ]
+            )
             for i in range(self.u)
         ]
 

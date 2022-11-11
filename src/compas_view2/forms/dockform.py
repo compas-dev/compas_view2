@@ -2,8 +2,7 @@ from qtpy import QtWidgets
 
 
 class DockForm(QtWidgets.QDockWidget):
-    """
-    """
+    """ """
 
     def __init__(self, app, title):
         super().__init__(title)

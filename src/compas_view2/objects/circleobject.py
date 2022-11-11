@@ -18,11 +18,13 @@ class CircleObject(PolylineObject):
     def calculate_circle_points(self, circle):
         frame = Frame.from_plane(circle.plane)
         circle.points = [
-            frame.to_world_coordinates([
-                math.cos(i*math.pi*2/self.u) * circle.radius,
-                math.sin(i*math.pi*2/self.u) * circle.radius,
-                0
-            ])
+            frame.to_world_coordinates(
+                [
+                    math.cos(i * math.pi * 2 / self.u) * circle.radius,
+                    math.sin(i * math.pi * 2 / self.u) * circle.radius,
+                    0,
+                ]
+            )
             for i in range(self.u)
         ]
 

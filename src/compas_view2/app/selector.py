@@ -61,7 +61,14 @@ class Selector:
         self.wait_for_selection_on_plane = False
         self.snap_to_grid = False
         # Selector data
-        self.colors_to_exclude = [(0, 0, 0,), (255, 255, 255)]
+        self.colors_to_exclude = [
+            (
+                0,
+                0,
+                0,
+            ),
+            (255, 255, 255),
+        ]
         self.instances = {}
         self.instance_map = None
         self.box_select_coords = np.zeros((4,), np.int)
@@ -109,6 +116,7 @@ class Selector:
         None
 
         """
+
         def select():
             if self.instance_map is not None:
                 instance_map = self.instance_map
@@ -160,7 +168,7 @@ class Selector:
         """
         rgb_key = self.get_rgb_key()
         self.instances[rgb_key] = obj
-        obj._instance_color = np.array(rgb_key)/255
+        obj._instance_color = np.array(rgb_key) / 255
         return rgb_key
 
     def select_one_from_instance_map(self, x, y, instance_map):
@@ -224,11 +232,11 @@ class Selector:
         """
         mode = mode or self.mode
         types = types or self.types
-        if mode == 'single':
+        if mode == "single":
             if obj:
                 self.deselect()
                 obj.is_selected = True
-        elif mode == 'multi':
+        elif mode == "multi":
             if not obj:
                 return
             if types:
@@ -237,7 +245,7 @@ class Selector:
                         obj.is_selected = True
             else:
                 obj.is_selected = True
-        elif mode == 'deselect':
+        elif mode == "deselect":
             self.deselect(obj)
         else:
             raise NotImplementedError
@@ -348,8 +356,8 @@ class Selector:
         else:
             x_size = self.app.view.grid.x_cells * self.app.view.grid.cell_size
             y_size = self.app.view.grid.y_cells * self.app.view.grid.cell_size
-            x = -x_size + 2*x_size*u
-            y = -y_size + 2*y_size*v
+            x = -x_size + 2 * x_size * u
+            y = -y_size + 2 * y_size * v
             if self.snap_to_grid:
                 x = round(x / self.app.view.grid.cell_size) * self.app.view.grid.cell_size
                 y = round(y / self.app.view.grid.cell_size) * self.app.view.grid.cell_size
@@ -357,8 +365,7 @@ class Selector:
         self.wait_for_selection_on_plane = False
 
     def finish_selection(self):
-        """Finish the interactive selection session.
-        """
+        """Finish the interactive selection session."""
         self.wait_for_selection = False
         self.wait_for_selection_on_plane = False
 

@@ -2,7 +2,6 @@ from qtpy import QtCore
 
 
 class Timer:
-
     def __init__(self, interval, callback, singleshot=False):
         self.timer = QtCore.QTimer()
         self.timer.setInterval(interval)

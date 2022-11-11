@@ -186,7 +186,17 @@ class PropertyForm(QtWidgets.QDockWidget):
         for i in range(len(_list)):
             self.map_number(_list, i, layout=h_layout, update_data=update_data)
 
-    def map_number(self, obj, attribute, name=None, layout=None, update_data=False, minimum=float('-inf'), maximum=float('inf'), step=None):
+    def map_number(
+        self,
+        obj,
+        attribute,
+        name=None,
+        layout=None,
+        update_data=False,
+        minimum=float("-inf"),
+        maximum=float("inf"),
+        step=None,
+    ):
         """Map number input field to an object attribute
 
         Parameters
@@ -217,9 +227,9 @@ class PropertyForm(QtWidgets.QDockWidget):
             _input.setMaximum(maximum)
         elif isinstance(value, int):
             _input = QtWidgets.QSpinBox()
-            if minimum == float('-inf'):
-                minimum = -10**9
-            if maximum == float('inf'):
+            if minimum == float("-inf"):
+                minimum = -(10**9)
+            if maximum == float("inf"):
                 maximum = 10**9
             _input.setMinimum(minimum)
             _input.setMaximum(maximum)
@@ -242,8 +252,7 @@ class PropertyForm(QtWidgets.QDockWidget):
         return layout
 
     def map_color(self, color, layout=None, update_data=False):
-        """Map color input field to an object attribute
-        """
+        """Map color input field to an object attribute"""
         h_layout = QtWidgets.QHBoxLayout()
         layout = layout or self._inputs
         layout.addLayout(h_layout)
@@ -251,8 +260,7 @@ class PropertyForm(QtWidgets.QDockWidget):
             self.map_number(color, channel, layout=h_layout, update_data=update_data, minimum=0, maximum=1, step=0.01)
 
     def map_bool(self, obj, attribute, name=None, layout=None, update_data=False):
-        """Map color input field to an object attribute
-        """
+        """Map color input field to an object attribute"""
         if not layout:
             layout = QtWidgets.QHBoxLayout()
             self._inputs.addLayout(layout)

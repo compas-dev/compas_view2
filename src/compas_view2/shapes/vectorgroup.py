@@ -3,7 +3,6 @@ from compas.geometry import Shape
 
 
 class VectorGroup(Shape):
-
     def __init__(self, vectors, positions=None):
         super().__init__()
         print(vectors[0])
@@ -15,21 +14,26 @@ class VectorGroup(Shape):
 
     @property
     def data(self):
-        return {'positions': [list(p) for p in self.positions], 'vectors': [list(d) for d in self.vectors], 'sizes': self.sizes, 'colors': self.colors}
+        return {
+            "positions": [list(p) for p in self.positions],
+            "vectors": [list(d) for d in self.vectors],
+            "sizes": self.sizes,
+            "colors": self.colors,
+        }
 
     @data.setter
     def data(self, data):
-        self.positions = [Vector(*p) for p in data['positions']]
-        self.vectors = [Vector(*d) for d in data['vectors']]
-        self.colors = data['colors']
-        self.sizes = data['sizes']
+        self.positions = [Vector(*p) for p in data["positions"]]
+        self.vectors = [Vector(*d) for d in data["vectors"]]
+        self.colors = data["colors"]
+        self.sizes = data["sizes"]
 
     # ==========================================================================
     # customisation
     # ==========================================================================
 
     def __repr__(self):
-        return 'VectorGroup[{}]'.format(len(self.positions))
+        return "VectorGroup[{}]".format(len(self.positions))
 
     # ==========================================================================
     # constructors

@@ -11,7 +11,14 @@ class FrameObject(BufferObject):
         self.size = size
         self.show_points = True
         self.show_lines = True
-        self.linecolors = [Color(1, 0, 0), Color(1, 0, 0), Color(0, 1, 0), Color(0, 1, 0), Color(0, 0, 1), Color(0, 0, 1)]
+        self.linecolors = [
+            Color(1, 0, 0),
+            Color(1, 0, 0),
+            Color(0, 1, 0),
+            Color(0, 1, 0),
+            Color(0, 0, 1),
+            Color(0, 0, 1),
+        ]
 
     def _points_data(self):
         frame = self._data
@@ -23,9 +30,13 @@ class FrameObject(BufferObject):
     def _lines_data(self):
         frame = self._data
         positions = [
-            frame.point, frame.point + (frame.xaxis * self.size),
-            frame.point, frame.point + (frame.yaxis * self.size),
-            frame.point, frame.point + (frame.zaxis * self.size)]
+            frame.point,
+            frame.point + (frame.xaxis * self.size),
+            frame.point,
+            frame.point + (frame.yaxis * self.size),
+            frame.point,
+            frame.point + (frame.zaxis * self.size),
+        ]
         colors = self.linecolors
         elements = [[0, 1], [2, 3], [4, 5]]
         return positions, colors, elements

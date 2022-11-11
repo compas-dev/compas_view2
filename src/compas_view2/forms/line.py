@@ -5,9 +5,8 @@ from .form import Form
 
 
 class LineForm(Form):
-
     def __init__(self):
-        super().__init__(title='Add Line')
+        super().__init__(title="Add Line")
 
     def float_field(self, text, value, layout=None, parent=None):
         if not layout:
@@ -25,21 +24,21 @@ class LineForm(Form):
         inputs = QtWidgets.QVBoxLayout()
         points = QtWidgets.QHBoxLayout()
         # point A
-        A_group = QtWidgets.QGroupBox('Point A')
+        A_group = QtWidgets.QGroupBox("Point A")
         A_layout = QtWidgets.QVBoxLayout()
         A_group.setLayout(A_layout)
-        self.Ax_input = self.float_field('X', 0.0, parent=A_layout)
-        self.Ay_input = self.float_field('Y', 0.0, parent=A_layout)
-        self.Az_input = self.float_field('Z', 0.0, parent=A_layout)
+        self.Ax_input = self.float_field("X", 0.0, parent=A_layout)
+        self.Ay_input = self.float_field("Y", 0.0, parent=A_layout)
+        self.Az_input = self.float_field("Z", 0.0, parent=A_layout)
         # point B
-        B_group = QtWidgets.QGroupBox('Point B')
+        B_group = QtWidgets.QGroupBox("Point B")
         B_layout = QtWidgets.QVBoxLayout()
         B_group.setLayout(B_layout)
-        self.Bx_input = self.float_field('X', 0.0, parent=B_layout)
-        self.By_input = self.float_field('Y', 0.0, parent=B_layout)
-        self.Bz_input = self.float_field('Z', 0.0, parent=B_layout)
+        self.Bx_input = self.float_field("X", 0.0, parent=B_layout)
+        self.By_input = self.float_field("Y", 0.0, parent=B_layout)
+        self.Bz_input = self.float_field("Z", 0.0, parent=B_layout)
         # show points
-        self.show_points_input = QtWidgets.QCheckBox('Show Points')
+        self.show_points_input = QtWidgets.QCheckBox("Show Points")
         self.show_points_input.setCheckState(QtCore.Qt.Checked)
         # combine
         points.addWidget(A_group)

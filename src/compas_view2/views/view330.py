@@ -3,8 +3,7 @@ from .view import View
 
 
 class View330(View):
-    """View widget for OpenGL 3.3 and GLSL 330 and above, with a Core Profile.
-    """
+    """View widget for OpenGL 3.3 and GLSL 330 and above, with a Core Profile."""
 
     def init(self):
         # init the buffers
@@ -14,8 +13,7 @@ class View330(View):
         # create the program
         self.shader = Shader()
         self.shader.bind()
-        self.shader.uniform4x4(
-            "projection", self.camera.projection(self.app.width, self.app.height))
+        self.shader.uniform4x4("projection", self.camera.projection(self.app.width, self.app.height))
         self.shader.uniform4x4("viewworld", self.camera.viewworld())
         self.shader.uniform1i("is_selected", 0)
         self.shader.uniform1f("opacity", self.opacity)
