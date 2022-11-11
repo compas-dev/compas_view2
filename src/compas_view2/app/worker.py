@@ -9,8 +9,8 @@ from qtpy.QtCore import Signal
 
 
 class WorkerSignals(QObject):
-    """Signals to allow worker to communicate with outside in event-driven manner
-    """
+    """Signals to allow worker to communicate with outside in event-driven manner"""
+
     finished = Signal()
     error = Signal(tuple)
     result = Signal(object)
@@ -19,8 +19,7 @@ class WorkerSignals(QObject):
 
 
 class Worker(QRunnable):
-    """Worker instance that runs in a independent thread without blocking the main process
-    """
+    """Worker instance that runs in a independent thread without blocking the main process"""
 
     pool = QThreadPool()
 
@@ -36,8 +35,7 @@ class Worker(QRunnable):
 
     @Slot()
     def run(self):
-        """Execute the worker function, send on signals on different scenarios
-        """
+        """Execute the worker function, send on signals on different scenarios"""
         if self.no_signals:
             result = self.fn(*self.args, **self.kwargs)
         else:
@@ -46,8 +44,7 @@ class Worker(QRunnable):
             except Exception:
                 traceback.print_exc()
                 exctype, value = sys.exc_info()[:2]
-                self.signals.error.emit(
-                    (exctype, value, traceback.format_exc()))
+                self.signals.error.emit((exctype, value, traceback.format_exc()))
             else:
                 # Return the result of the processing
                 self.signals.result.emit(result)
@@ -66,8 +63,7 @@ class Ticker(QRunnable):
 
     @Slot()
     def run(self):
-        """Execute the worker function, send on signals on different scenarios
-        """
+        """Execute the worker function, send on signals on different scenarios"""
         self.running = True
         while self.running:
             self.signals.tick.emit()

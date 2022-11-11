@@ -17,7 +17,7 @@ class NetworkObject(BufferObject):
 
     def _points_data(self):
         data = self._data
-        node_xyz = {node: data.node_attributes(node, 'xyz') for node in data.nodes()}
+        node_xyz = {node: data.node_attributes(node, "xyz") for node in data.nodes()}
         # nodes
         positions = []
         colors = []
@@ -30,7 +30,7 @@ class NetworkObject(BufferObject):
 
     def _lines_data(self):
         data = self._data
-        node_xyz = {node: data.node_attributes(node, 'xyz') for node in data.nodes()}
+        node_xyz = {node: data.node_attributes(node, "xyz") for node in data.nodes()}
         positions = []
         colors = []
         elements = []

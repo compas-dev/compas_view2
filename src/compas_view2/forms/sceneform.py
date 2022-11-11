@@ -14,7 +14,7 @@ class SceneForm(DockForm):
 
     def update(self):
         self.tree.clear()
-        root_objects = filter(lambda obj: obj.parent is None,  self.app.view.objects.values())
+        root_objects = filter(lambda obj: obj.parent is None, self.app.view.objects.values())
         self.map_objects(root_objects)
 
     def map_objects(self, objects, parent=None):

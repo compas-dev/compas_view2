@@ -19,7 +19,7 @@ def gl_info():
         GL.glGetString(GL.GL_VENDOR),
         GL.glGetString(GL.GL_RENDERER),
         GL.glGetString(GL.GL_VERSION),
-        GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION)
+        GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION),
     )
     return info
 
@@ -50,7 +50,7 @@ def make_vertex_buffer(data, dynamic=False):
     n = len(data)
     size = n * ct.sizeof(ct.c_float)
     vbo = GL.glGenBuffers(1)
-    data = (ct.c_float * n)(* data)
+    data = (ct.c_float * n)(*data)
     GL.glBindBuffer(GL.GL_ARRAY_BUFFER, vbo)
     GL.glBufferData(GL.GL_ARRAY_BUFFER, size, data, access)
     GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
@@ -83,7 +83,7 @@ def make_index_buffer(data, dynamic=False):
     n = len(data)
     size = n * ct.sizeof(ct.c_uint)
     vbo = GL.glGenBuffers(1)
-    data = (ct.c_int * n)(* data)
+    data = (ct.c_int * n)(*data)
     GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, vbo)
     GL.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, size, data, access)
     GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, 0)
@@ -107,7 +107,7 @@ def update_vertex_buffer(data, buffer):
     """
     n = len(data)
     size = n * ct.sizeof(ct.c_float)
-    data = (ct.c_float * n)(* data)
+    data = (ct.c_float * n)(*data)
     GL.glBindBuffer(GL.GL_ARRAY_BUFFER, buffer)
     GL.glBufferSubData(GL.GL_ARRAY_BUFFER, 0, size, data)
     GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)
@@ -130,7 +130,7 @@ def update_index_buffer(data, buffer):
     """
     n = len(data)
     size = n * ct.sizeof(ct.c_uint)
-    data = (ct.c_int * n)(* data)
+    data = (ct.c_int * n)(*data)
     GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, buffer)
     GL.glBufferSubData(GL.GL_ELEMENT_ARRAY_BUFFER, 0, size, data)
     GL.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, 0)

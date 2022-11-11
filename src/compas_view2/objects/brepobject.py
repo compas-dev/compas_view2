@@ -59,9 +59,7 @@ class BRepObject(BufferObject):
 
     def _frontfaces_data(self):
         mesh = self.mesh
-        vertex_xyz = {
-            vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()
-        }
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()}
         positions = []
         colors = []
         elements = []
@@ -114,9 +112,7 @@ class BRepObject(BufferObject):
 
     def _backfaces_data(self):
         mesh = self._mesh
-        vertex_xyz = {
-            vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()
-        }
+        vertex_xyz = {vertex: mesh.vertex_attributes(vertex, "xyz") for vertex in mesh.vertices()}
         positions = []
         colors = []
         elements = []

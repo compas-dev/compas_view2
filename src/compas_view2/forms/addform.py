@@ -7,14 +7,14 @@ from .form import Form
 
 class AddForm(Form):
     def __init__(self, on_create=None):
-        super().__init__('Add Object')
+        super().__init__("Add Object")
 
         for data_cls in DATA_OBJECT:
             self.add_create_button(data_cls, on_create)
 
     def add_create_button(self, data_cls, on_create):
         object_cls = DATA_OBJECT[data_cls]
-        if hasattr(object_cls, 'create_default'):
+        if hasattr(object_cls, "create_default"):
             layout = QtWidgets.QHBoxLayout()
             self._inputs.addLayout(layout)
             button = QtWidgets.QPushButton()
@@ -24,6 +24,7 @@ class AddForm(Form):
                 default_data = object_cls.create_default()
                 on_create(default_data)
                 self.accept()
+
             button.clicked.connect(_on_create)
             layout.addWidget(button)
 

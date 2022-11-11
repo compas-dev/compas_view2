@@ -27,7 +27,7 @@ class RobotObject(CollectionObject):
     """
 
     def __init__(self, robot, **kwargs):
-        kwargs.update({'name': robot.name})
+        kwargs.update({"name": robot.name})
         super().__init__(Collection(), **kwargs)
         self.robot = robot
         self.joints = {}
@@ -64,16 +64,12 @@ class RobotObject(CollectionObject):
                 line = Line([0, 0, 0], joint.origin.point)
                 lines.append(line)
                 if parent_joint:
-                    lines.append(Circle(Plane([0, 0, 0], parent_joint.axis.vector), line.length/3))
+                    lines.append(Circle(Plane([0, 0, 0], parent_joint.axis.vector), line.length / 3))
             obj = parent.add(Collection(lines), name=link.name)
 
         if parent_joint:
             obj.matrix = Transformation.from_frame(parent_joint.origin).matrix
-            self.joints[parent_joint.name] = {
-                'link_obj': obj,
-                'joint': parent_joint,
-                'axis': parent_joint.axis.vector
-            }
+            self.joints[parent_joint.name] = {"link_obj": obj, "joint": parent_joint, "axis": parent_joint.axis.vector}
 
         self.link_objs[link.name] = obj
 
@@ -96,6 +92,6 @@ class RobotObject(CollectionObject):
 
         """
         joint = self.joints[joint_name]
-        T = Translation.from_vector(joint['link_obj'].translation)
-        R = Rotation.from_axis_and_angle(joint['axis'], radians(angle))
-        joint['link_obj'].matrix = (T * R).matrix
+        T = Translation.from_vector(joint["link_obj"].translation)
+        R = Rotation.from_axis_and_angle(joint["axis"], radians(angle))
+        joint["link_obj"].matrix = (T * R).matrix

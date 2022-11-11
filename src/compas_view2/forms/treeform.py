@@ -7,7 +7,6 @@ from compas_view2.values import Value
 
 
 class ValueDelegate(QtWidgets.QStyledItemDelegate):
-
     def get_value(self, index):
         treeform = self.parent()
         item = treeform.tree.itemFromIndex(index)

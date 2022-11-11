@@ -2,7 +2,6 @@ from .value import Value
 
 
 class FloatValue(Value):
-
     def __init__(self, value: float, min: float = None, max: float = None, options: list = None):
         super().__init__(value, float, options=options)
         if min is not None:
@@ -44,14 +43,11 @@ class FloatValue(Value):
     @property
     def data(self):
         data = super().data
-        data.update({
-            'min': self.min,
-            'max': self.max
-        })
+        data.update({"min": self.min, "max": self.max})
         return data
 
     @data.setter
     def data(self, data):
         super().data = data
-        self._min = data['min']
-        self._max = data['max']
+        self._min = data["min"]
+        self._max = data["max"]

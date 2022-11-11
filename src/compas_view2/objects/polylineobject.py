@@ -33,6 +33,6 @@ class PolylineObject(BufferObject):
             color = self.linecolors.get(i, self.linecolor)
             colors.append(color)
             colors.append(color)
-            elements.append([count, count+1])
+            elements.append([count, count + 1])
             count += 2
         return positions, colors, elements

@@ -39,13 +39,7 @@ class Radio:
 
     """
 
-    def __init__(self,
-                 app,
-                 parent,
-                 *,
-                 title,
-                 items,
-                 action):
+    def __init__(self, app, parent, *, title, items, action):
 
         box = QtWidgets.QGroupBox(title)
         layout = QtWidgets.QVBoxLayout()
@@ -54,11 +48,11 @@ class Radio:
         button_value = {}
         for item in items:
             button = QtWidgets.QRadioButton()
-            button.setText(item['text'])
-            button.setChecked(item['checked'])
+            button.setText(item["text"])
+            button.setChecked(item["checked"])
             group.addButton(button)
             layout.addWidget(button)
-            button_value[button] = item.get('value', item['text'])
+            button_value[button] = item.get("value", item["text"])
         # connect actions
         group.buttonClicked.connect(self)
         group.buttonClicked.connect(app.view.update)

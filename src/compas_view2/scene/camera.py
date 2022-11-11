@@ -16,7 +16,6 @@ from .matrices import perspective, ortho
 
 
 class Position(Vector):
-
     def __init__(self, vector, on_update=None):
         super().__init__(*vector)
         self.pause_update = False
@@ -25,7 +24,7 @@ class Position(Vector):
 
     def set(self, x, y, z, pause_update=False):
         pause_update = pause_update or self.pause_update
-        if hasattr(self, 'on_update') and not pause_update:
+        if hasattr(self, "on_update") and not pause_update:
             self.on_update([x, y, z])
         self._x = x
         self._y = y
@@ -37,7 +36,7 @@ class Position(Vector):
 
     @x.setter
     def x(self, x):
-        if hasattr(self, 'on_update') and not self.pause_update:
+        if hasattr(self, "on_update") and not self.pause_update:
             self.on_update([x, self.y, self.z])
         self._x = float(x)
 
@@ -47,7 +46,7 @@ class Position(Vector):
 
     @y.setter
     def y(self, y):
-        if hasattr(self, 'on_update') and not self.pause_update:
+        if hasattr(self, "on_update") and not self.pause_update:
             self.on_update([self.x, y, self.z])
         self._y = float(y)
 
@@ -57,7 +56,7 @@ class Position(Vector):
 
     @z.setter
     def z(self, z):
-        if hasattr(self, 'on_update') and not self.pause_update:
+        if hasattr(self, "on_update") and not self.pause_update:
             self.on_update([self.x, self.y, z])
         self._z = float(z)
 
@@ -126,7 +125,7 @@ class Camera:
         self.near = near
         self.far = far
         self.scale = scale
-        self._position = Position([0, 0, 10*scale], on_update=self._on_position_update)
+        self._position = Position([0, 0, 10 * scale], on_update=self._on_position_update)
         self._rotation = RotationEuler([0, 0, 0], on_update=self._on_rotation_update)
         self._target = Position([0, 0, 0], on_update=self._on_target_update)
         self.zoom_delta = 0.05
@@ -234,13 +233,13 @@ class Camera:
         """Reset the position of the camera based current view type."""
         self.target.set(0, 0, 0)
         if self.view.current == self.view.PERSPECTIVE:
-            self.rotation.set(pi/4, 0, -pi/4)
+            self.rotation.set(pi / 4, 0, -pi / 4)
         if self.view.current == self.view.TOP:
             self.rotation.set(0, 0, 0)
         if self.view.current == self.view.FRONT:
-            self.rotation.set(pi/2, 0, 0)
+            self.rotation.set(pi / 2, 0, 0)
         if self.view.current == self.view.RIGHT:
-            self.rotation.set(pi/2, 0, pi/2)
+            self.rotation.set(pi / 2, 0, pi / 2)
 
     def rotate(self, dx, dy):
         """Rotate the camera based on current mouse movement.
@@ -280,7 +279,7 @@ class Camera:
 
         """
         R = Rotation.from_euler_angles(self.rotation)
-        T = Translation.from_vector([-dx * self.pan_delta*self.scale, dy * self.pan_delta*self.scale, 0])
+        T = Translation.from_vector([-dx * self.pan_delta * self.scale, dy * self.pan_delta * self.scale, 0])
         M = (R * T).matrix
         vector = [M[i][3] for i in range(3)]
         self.target += vector
@@ -322,13 +321,13 @@ class Camera:
         """
         aspect = width / height
         if self.view.current == self.view.PERSPECTIVE:
-            P = perspective(self.fov, aspect, self.near*self.scale, self.far*self.scale)
+            P = perspective(self.fov, aspect, self.near * self.scale, self.far * self.scale)
         else:
             left = -self.distance
             right = self.distance
             bottom = -self.distance / aspect
             top = self.distance / aspect
-            P = ortho(left, right, bottom, top, self.near*self.scale, self.far*self.scale)
+            P = ortho(left, right, bottom, top, self.near * self.scale, self.far * self.scale)
         return asfortranarray(P, dtype=float32)
 
     def viewworld(self):
@@ -359,7 +358,7 @@ class Camera:
             if not obj.is_visible:
                 continue
 
-            if obj.bounding_box is None and hasattr(obj, '_update_bounding_box'):
+            if obj.bounding_box is None and hasattr(obj, "_update_bounding_box"):
                 obj._update_bounding_box()
 
             if obj.bounding_box is not None:

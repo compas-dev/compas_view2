@@ -13,7 +13,9 @@ class NurbsSurfaceObject(BufferObject):
         self.v = v
 
     def update(self):
-        self._triangles = [list(point) for triangle in self._data.to_triangles(nu=self.u, nv=self.v) for point in triangle]
+        self._triangles = [
+            list(point) for triangle in self._data.to_triangles(nu=self.u, nv=self.v) for point in triangle
+        ]
         self.init()
         super().update()
 

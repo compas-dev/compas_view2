@@ -2,7 +2,6 @@ from compas.data import Data
 
 
 class Value(Data):
-
     def __init__(self, value, value_type: type, options=None):
         super().__init__()
         self._value = value
@@ -72,13 +71,13 @@ class Value(Data):
     @property
     def data(self):
         return {
-            'value': self.value,
-            'value_type': self.value_type.__name__,
-            'options': self.options,
+            "value": self.value,
+            "value_type": self.value_type.__name__,
+            "options": self.options,
         }
 
     @data.setter
     def data(self, data):
-        self._value = data['value']
-        self._value_type = eval(data['value_type'])  # TODO: support imported types
-        self._options = data['options']
+        self._value = data["value"]
+        self._value_type = eval(data["value_type"])  # TODO: support imported types
+        self._options = data["options"]

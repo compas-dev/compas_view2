@@ -1,4 +1,5 @@
 from OpenGL import GL
+
 # from PIL import Image
 
 import os
@@ -15,8 +16,7 @@ from .view import View
 
 
 class View120(View):
-    """View widget for OpenGL version 2.1 and GLSL 120 with a Compatibility Profile.
-    """
+    """View widget for OpenGL version 2.1 and GLSL 120 with a Compatibility Profile."""
 
     def init(self):
         self.grid.init()
@@ -29,7 +29,7 @@ class View120(View):
         viewworld = self.camera.viewworld()
         transform = np.identity(4)
         # create the program
-        self.shader_model = Shader(name='120/model')
+        self.shader_model = Shader(name="120/model")
         self.shader_model.bind()
         self.shader_model.uniform4x4("projection", projection)
         self.shader_model.uniform4x4("viewworld", viewworld)
@@ -39,7 +39,7 @@ class View120(View):
         self.shader_model.uniform3f("selection_color", self.selection_color)
         self.shader_model.release()
 
-        self.shader_text = Shader(name='120/text')
+        self.shader_text = Shader(name="120/text")
         self.shader_text.bind()
         self.shader_text.uniform4x4("projection", projection)
         self.shader_text.uniform4x4("viewworld", viewworld)
@@ -47,7 +47,7 @@ class View120(View):
         self.shader_text.uniform1f("opacity", self.opacity)
         self.shader_text.release()
 
-        self.shader_arrow = Shader(name='120/arrow')
+        self.shader_arrow = Shader(name="120/arrow")
         self.shader_arrow.bind()
         self.shader_arrow.uniform4x4("projection", projection)
         self.shader_arrow.uniform4x4("viewworld", viewworld)
@@ -56,14 +56,14 @@ class View120(View):
         self.shader_arrow.uniform1f("aspect", self.app.width / self.app.height)
         self.shader_arrow.release()
 
-        self.shader_instance = Shader(name='120/instance')
+        self.shader_instance = Shader(name="120/instance")
         self.shader_instance.bind()
         self.shader_instance.uniform4x4("projection", projection)
         self.shader_instance.uniform4x4("viewworld", viewworld)
         self.shader_instance.uniform4x4("transform", transform)
         self.shader_instance.release()
 
-        self.shader_grid = Shader(name='120/grid')
+        self.shader_grid = Shader(name="120/grid")
         self.shader_grid.bind()
         self.shader_grid.uniform4x4("projection", projection)
         self.shader_grid.uniform4x4("viewworld", viewworld)
@@ -115,7 +115,7 @@ class View120(View):
         if transparent_objects:
             centers = transform_points_numpy(centers, viewworld)
             transparent_objects = sorted(zip(transparent_objects, centers), key=lambda pair: pair[1][2])
-            transparent_objects, _ = (zip(*transparent_objects))
+            transparent_objects, _ = zip(*transparent_objects)
         return opaque_objects + list(transparent_objects)
 
     def paint(self):
@@ -207,8 +207,8 @@ class View120(View):
                     obj.draw_instance(self.shader_instance, self.mode == "wireframe")
         # create map
         r = self.devicePixelRatio()
-        instance_buffer = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
-        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(height*r, width*r, 3)
+        instance_buffer = GL.glReadPixels(x * r, y * r, width * r, height * r, GL.GL_RGB, GL.GL_UNSIGNED_BYTE)
+        instance_map = np.frombuffer(instance_buffer, dtype=np.uint8).reshape(height * r, width * r, 3)
         instance_map = instance_map[::-r, ::r, :]
         GL.glEnable(GL.GL_POINT_SMOOTH)
         GL.glEnable(GL.GL_LINE_SMOOTH)
@@ -218,7 +218,7 @@ class View120(View):
         x, y, width, height = 0, 0, self.app.width, self.app.height
         self.grid.draw_plane(self.shader_grid)
         r = self.devicePixelRatio()
-        plane_uv_map = GL.glReadPixels(x*r, y*r, width*r, height*r, GL.GL_RGB, GL.GL_FLOAT)
-        plane_uv_map = plane_uv_map.reshape(height*r, width*r, 3)
+        plane_uv_map = GL.glReadPixels(x * r, y * r, width * r, height * r, GL.GL_RGB, GL.GL_FLOAT)
+        plane_uv_map = plane_uv_map.reshape(height * r, width * r, 3)
         plane_uv_map = plane_uv_map[::-r, ::r, :]
         return plane_uv_map

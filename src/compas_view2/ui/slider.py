@@ -62,18 +62,20 @@ QSlider::handle:horizontal {
 }
 """
 
-    def __init__(self,
-                 app,
-                 parent,
-                 action,
-                 value=0,
-                 minval=0,
-                 maxval=100,
-                 step=1,
-                 title=None,
-                 annotation=None,
-                 interval=1,
-                 bgcolor=None):
+    def __init__(
+        self,
+        app,
+        parent,
+        action,
+        value=0,
+        minval=0,
+        maxval=100,
+        step=1,
+        title=None,
+        annotation=None,
+        interval=1,
+        bgcolor=None,
+    ):
         # row containing labels
         # with horizontal box layout
         row1 = QtWidgets.QWidget()

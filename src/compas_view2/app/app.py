@@ -148,9 +148,7 @@ class App:
     ):
 
         if version not in VERSIONS:
-            raise Exception(
-                "Only these versions are currently supported: {}".format(VERSIONS)
-            )
+            raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
         glFormat = QtGui.QSurfaceFormat()
         glFormat.setVersion(*VERSIONS[version])
@@ -430,9 +428,7 @@ class App:
         None
 
         """
-        QtWidgets.QMessageBox.about(
-            self.window, "About", self.config["messages"]["about"]
-        )
+        QtWidgets.QMessageBox.about(self.window, "About", self.config["messages"]["about"])
 
     def info(self, message: str) -> None:
         """Display info.
@@ -497,9 +493,7 @@ class App:
         """
         flags = QtWidgets.QMessageBox.StandardButton.Yes
         flags |= QtWidgets.QMessageBox.StandardButton.No
-        response = QtWidgets.QMessageBox.question(
-            self.window, "Question", message, flags
-        )
+        response = QtWidgets.QMessageBox.question(self.window, "Question", message, flags)
         if response == QtWidgets.QMessageBox.Yes:
             return True
         return False
@@ -528,9 +522,7 @@ class App:
         """
         flags = QtWidgets.QMessageBox.StandardButton.Ok
         flags |= QtWidgets.QMessageBox.StandardButton.Cancel
-        response = QtWidgets.QMessageBox.warning(
-            self.window, "Confirmation", message, flags
-        )
+        response = QtWidgets.QMessageBox.warning(self.window, "Confirmation", message, flags)
         if response == QtWidgets.QMessageBox.StandardButton.Ok:
             return True
         return False
@@ -822,9 +814,7 @@ class App:
             elif item["type"] == "radio":
                 radio = QtWidgets.QActionGroup(self.window, exclusive=True)
                 for item in item["items"]:
-                    action = self._add_action(
-                        parent, text=item["text"], action=item["action"]
-                    )
+                    action = self._add_action(parent, text=item["text"], action=item["action"])
                     action.setCheckable(True)
                     action.setChecked(item["checked"])
                     radio.addAction(action)
@@ -924,9 +914,7 @@ class App:
         """
 
         def outer(func: Callable) -> Callable:
-            radio = Radio(
-                self, parent or self.sidebar, title=title, items=items, action=func
-            )
+            radio = Radio(self, parent or self.sidebar, title=title, items=items, action=func)
             return radio
 
         return outer
@@ -994,9 +982,7 @@ class App:
         """
 
         def outer(func: Callable) -> Callable:
-            checkbox = Checkbox(
-                self, parent or self.sidebar, text=text, action=func, checked=checked
-            )
+            checkbox = Checkbox(self, parent or self.sidebar, text=text, action=func, checked=checked)
             return checkbox
 
         return outer
@@ -1138,10 +1124,7 @@ class App:
                         #     duration=playback_interval or interval,
                         #     append_images=self.recorded_frames[1:],
                         #     loop=100)
-                        files = [
-                            os.path.join(self.tempdir, f"{i}.png")
-                            for i in range(frames)
-                        ]
+                        files = [os.path.join(self.tempdir, f"{i}.png") for i in range(frames)]
                         gif_from_images(
                             files=files,
                             gif_path=record_path,

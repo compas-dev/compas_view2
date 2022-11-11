@@ -42,6 +42,7 @@ class Controller:
         callable
 
         """
+
         def outer(func):
             def wrapped(self):
                 def add(data):
@@ -62,7 +63,9 @@ class Controller:
                 else:
                     raise NotImplementedError()
                 Worker.pool.start(worker)
+
             return wrapped
+
         return outer
 
     # ==============================================================================
@@ -97,7 +100,7 @@ class Controller:
         None
 
         """
-        value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode('ascii'))
+        value = "OpenGL {}".format(GL.glGetString(GL.GL_VERSION).decode("ascii"))
         self.app.info(value)
 
     def glsl_version(self):
@@ -108,7 +111,7 @@ class Controller:
         None
 
         """
-        value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode('ascii'))
+        value = "GLSL {}".format(GL.glGetString(GL.GL_SHADING_LANGUAGE_VERSION).decode("ascii"))
         self.app.info(value)
 
     # ==============================================================================
@@ -123,7 +126,7 @@ class Controller:
         None
 
         """
-        self.app.view.mode = 'shaded'
+        self.app.view.mode = "shaded"
         self.app.view.update()
 
     def view_ghosted(self):
@@ -134,7 +137,7 @@ class Controller:
         None
 
         """
-        self.app.view.mode = 'ghosted'
+        self.app.view.mode = "ghosted"
         self.app.view.update()
 
     def view_wireframe(self):
@@ -145,7 +148,7 @@ class Controller:
         None
 
         """
-        self.app.view.mode = 'wireframe'
+        self.app.view.mode = "wireframe"
         self.app.view.update()
 
     def view_lighted(self):
@@ -156,7 +159,7 @@ class Controller:
         None
 
         """
-        self.app.view.mode = 'lighted'
+        self.app.view.mode = "lighted"
         self.app.view.update()
 
     def view_capture(self, filepath=None):
@@ -244,11 +247,11 @@ class Controller:
 
     def load_scene(self):
         """Load a scene from a file."""
-        self.app.info('Not available yet...')
+        self.app.info("Not available yet...")
 
     def save_scene(self):
         """Save the current scene to a file."""
-        self.app.info('Not available yet...')
+        self.app.info("Not available yet...")
 
     def redraw_scene(self):
         """Redraw the current scene.
@@ -262,19 +265,19 @@ class Controller:
 
     def clear_scene(self):
         """Clear all objects from the current scene."""
-        self.app.info('Not available yet...')
+        self.app.info("Not available yet...")
 
     def undo(self):
         """Undo the last scene modification."""
-        self.app.info('Not available yet...')
+        self.app.info("Not available yet...")
 
     def redo(self):
         """Redo the last scene modification."""
-        self.app.info('Not available yet...')
+        self.app.info("Not available yet...")
 
     def history(self):
         """Display the undo history of the scene."""
-        self.app.info('Not available yet...')
+        self.app.info("Not available yet...")
 
     # ==============================================================================
     # Primitive actions
@@ -284,6 +287,7 @@ class Controller:
         def on_create(data):
             self.app.add(data)
             self.app.view.update()
+
         form = AddForm(on_create=on_create)
         form.exec_()
 
@@ -315,10 +319,9 @@ class Controller:
             or None otherwise.
 
         """
-        filename, _ = QtWidgets.QFileDialog.getOpenFileName(parent=self.app.window,
-                                                            caption="Select File",
-                                                            dir="",
-                                                            filter="OBJ Files (*.obj)")
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(
+            parent=self.app.window, caption="Select File", dir="", filter="OBJ Files (*.obj)"
+        )
         if filename:
             network = Network.from_obj(filename)
             self.app.add(network)
@@ -350,21 +353,19 @@ class Controller:
 
         """
         filepath, selectedfilter = QtWidgets.QFileDialog.getOpenFileName(
-            parent=self.app.window,
-            caption="Select File",
-            dir="",
-            filter="Mesh Files (*.obj, *.off, *.ply, *.stl)")
+            parent=self.app.window, caption="Select File", dir="", filter="Mesh Files (*.obj, *.off, *.ply, *.stl)"
+        )
 
         if filepath:
             path = Path(filepath)
 
-            if path.suffix == '.obj':
+            if path.suffix == ".obj":
                 mesh = Mesh.from_obj(path)
-            elif path.suffix == '.off':
+            elif path.suffix == ".off":
                 mesh = Mesh.from_off(path)
-            elif path.suffix == '.ply':
+            elif path.suffix == ".ply":
                 mesh = Mesh.from_ply(path)
-            elif path.suffix == '.stl':
+            elif path.suffix == ".stl":
                 mesh = Mesh.from_stl(path)
 
             self.app.add(mesh)

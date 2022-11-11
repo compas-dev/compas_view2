@@ -37,10 +37,10 @@ def ortho(left, right, bottom, top, near, far):
     ry = -(top + bottom) / dy
     rz = -(far + near) / dz
     matrix = [
-        [2.0 / dx,        0,         0, rx],
-        [       0, 2.0 / dy,         0, ry],  # noqa: E201
-        [       0,        0, -2.0 / dz, rz],  # noqa: E201
-        [       0,        0,         0,  1]   # noqa: E201
+        [2.0 / dx, 0, 0, rx],
+        [0, 2.0 / dy, 0, ry],  # noqa: E201
+        [0, 0, -2.0 / dz, rz],  # noqa: E201
+        [0, 0, 0, 1],  # noqa: E201
     ]
     return Transformation.from_matrix(matrix)
 
@@ -68,12 +68,7 @@ def perspective(fov, aspect, near, far):
     sx = sy / aspect
     zz = (far + near) / (near - far)
     zw = 2 * far * near / (near - far)
-    matrix = [
-        [sx,  0,  0,  0],
-        [ 0, sy,  0,  0],  # noqa: E201
-        [ 0,  0, zz, zw],  # noqa: E201
-        [ 0,  0, -1,  0]   # noqa: E201
-    ]
+    matrix = [[sx, 0, 0, 0], [0, sy, 0, 0], [0, 0, zz, zw], [0, 0, -1, 0]]  # noqa: E201  # noqa: E201  # noqa: E201
     return Transformation.from_matrix(matrix)
 
 
@@ -101,6 +96,6 @@ def lookat(eye, target, up):
         [+r[0], +r[1], +r[2], -eye[0]],
         [+u[0], +u[1], +u[2], -eye[1]],
         [-d[0], -d[1], -d[2], -eye[2]],
-        [    0,     0,    0,       1]  # noqa: E201
+        [0, 0, 0, 1],  # noqa: E201
     ]
     return Transformation.from_matrix(matrix)

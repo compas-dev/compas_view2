@@ -5,7 +5,7 @@ from typing import Union, Tuple
 
 
 class Flow(Graph):
-    """"A Class that represents maps a Ryven Flow graph.
+    """ "A Class that represents maps a Ryven Flow graph.
 
     Parameters
     ----------
@@ -25,10 +25,10 @@ class Flow(Graph):
         self.app = app
         self.flow_auto_update = flow_auto_update
         self.session = rc.Session()
-        self.session.design.set_flow_theme(name='pure dark')
+        self.session.design.set_flow_theme(name="pure dark")
         self.script = self.session.create_script(flow_view_size=flow_view_size)
         self.flow_view = self.session.flow_views[self.script]
-        self.script.flow.set_algorithm_mode('data opt')
+        self.script.flow.set_algorithm_mode("data opt")
         self.init_run = False
 
     def run_all(self):
@@ -90,10 +90,12 @@ class Flow(Graph):
         self.flow_view.node_items[ryven_node].setY(y)
         data = ryven_node.complete_data(ryven_node.data())
 
-        super().add_node(key=ryven_node.GLOBAL_ID, attr_dict={'ryven_data': data})
+        super().add_node(key=ryven_node.GLOBAL_ID, attr_dict={"ryven_data": data})
         return ryven_node
 
-    def add_connection(self, port1: ryvencore.NodePort.NodeOutput, port2: ryvencore.NodePort.NodeInput) -> ryvencore.Connection.DataConnection:
+    def add_connection(
+        self, port1: ryvencore.NodePort.NodeOutput, port2: ryvencore.NodePort.NodeInput
+    ) -> ryvencore.Connection.DataConnection:
         """Adds a connection between two ryven nodes.
 
         Parameters
@@ -118,10 +120,10 @@ class Flow(Graph):
         node2 = port2.node
         edge_key = (node1.GLOBAL_ID, node2.GLOBAL_ID)
         if not self.has_edge(*edge_key):
-            self.add_edge(*edge_key, {'connections': []})
-        connections = self.edge_attribute(edge_key, 'connections')
-        connections.append({'port1': self.get_port_info(port1), 'port2': self.get_port_info(port2)})
-        self.edge_attribute(edge_key, 'connections', connections)
+            self.add_edge(*edge_key, {"connections": []})
+        connections = self.edge_attribute(edge_key, "connections")
+        connections.append({"port1": self.get_port_info(port1), "port2": self.get_port_info(port2)})
+        self.edge_attribute(edge_key, "connections", connections)
 
         return ryven_connection
 
@@ -142,14 +144,14 @@ class Flow(Graph):
         node = port.node
         data = {}
         if port in node.inputs:
-            data['type'] = 'input'
-            data['index'] = node.inputs.index(port)
+            data["type"] = "input"
+            data["index"] = node.inputs.index(port)
         elif port in node.outputs:
-            data['type'] = 'output'
-            data['index'] = node.outputs.index(port)
+            data["type"] = "output"
+            data["index"] = node.outputs.index(port)
         else:
-            raise ValueError('Port is not in inputs or outputs.')
+            raise ValueError("Port is not in inputs or outputs.")
 
-        data['node'] = node.GLOBAL_ID
+        data["node"] = node.GLOBAL_ID
 
         return data
