@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Updated workflows to v2.
+* Updated dev dependencies.
+* Uses `compas_invocations` for `task.py`.
+
 ### Removed
 
 
