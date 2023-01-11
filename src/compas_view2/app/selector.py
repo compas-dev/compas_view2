@@ -71,7 +71,7 @@ class Selector:
         ]
         self.instances = {}
         self.instance_map = None
-        self.box_select_coords = np.zeros((4,), np.int)
+        self.box_select_coords = np.zeros((4,), int)
         self.location_on_plane = None
         self.start_monitor_instance_map()
 
