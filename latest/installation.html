@@ -50,7 +50,7 @@
         <meta id="doc_versions" data-url="https://compas.dev/compas_view2/doc_versions.txt" data-docs="https://compas.dev/compas_view2/">
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0.9.0
+            0.9.1
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -94,7 +94,7 @@
 <section id="stable">
 <h2>Stable</h2>
 <p>The recommended way to install <code class="docutils literal notranslate"><span class="pre">compas_view2</span></code> is with <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 -c conda-forge compas compas_view2
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>compas<span class="w"> </span>compas_view2
 </code></pre></div>
 </div>
 </section>
@@ -104,28 +104,28 @@
 directly from the github repo.</p>
 <section id="windows">
 <h3>Windows</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 git cython freeglut freetype-py textdistance
-conda activate view2
-pip install pyside2 pyopengl qtpy ryvencore_qt
-pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8<span class="w"> </span>git<span class="w"> </span>cython<span class="w"> </span>freeglut<span class="w"> </span>freetype-py<span class="w"> </span>textdistance
+conda<span class="w"> </span>activate<span class="w"> </span>view2
+pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span>ryvencore_qt
+pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
 </section>
 <section id="mac">
 <h3>Mac</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython python.app freetype-py textdistance
-conda activate view2
-pip install pyside2 pyopengl qtpy ryvencore_qt
-pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8<span class="w"> </span>cython<span class="w"> </span>python.app<span class="w"> </span>freetype-py<span class="w"> </span>textdistance
+conda<span class="w"> </span>activate<span class="w"> </span>view2
+pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span>ryvencore_qt
+pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
 </section>
 <section id="linux">
 <h3>Linux</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n view2 <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8 cython freetype-py textdistance
-conda activate view2
-pip install pyside2 pyopengl qtpy ryvencore_qt
-pip install git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8<span class="w"> </span>cython<span class="w"> </span>freetype-py<span class="w"> </span>textdistance
+conda<span class="w"> </span>activate<span class="w"> </span>view2
+pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span>ryvencore_qt
+pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
 </section>
