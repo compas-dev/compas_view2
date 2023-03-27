@@ -812,7 +812,8 @@ class App:
                 if "items" in item:
                     self._add_menubar_items(item["items"], menu)
             elif item["type"] == "radio":
-                radio = QtWidgets.QActionGroup(self.window, exclusive=True)
+                radio = QtWidgets.QActionGroup(self.window)
+                radio.setExclusive(True)
                 for item in item["items"]:
                     action = self._add_action(parent, text=item["text"], action=item["action"])
                     action.setCheckable(True)
