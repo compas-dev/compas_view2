@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <title>compas_view2 - App</title>
+  
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="compas-dev" />
+  <meta name="description" content="" />
+
+  <link rel="shortcut icon" href="../../_static/images/compas.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/mono-blue.min.css">
+  <link rel="stylesheet" type="text/css" href="../../_static/css/compas.css" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
+
+  
+  <link rel="next" title="App.about" href="compas_view2.app.App.about.html" />
+  
+
+  
+  <link rel="prev" title="compas_view2.app" href="../compas_view2.app.html" />
+  
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+
+<body data-spy="scroll" data-target="#compas-toc">
+  <!-- header -->
+  <header id="header" class="compas-header d-flex align-items-center">
+    <nav class="navbar navbar-expand navbar-dark col flex-column flex-md-row text-center">
+      <!-- brand -->
+      <a class="navbar-brand" href="https://compas.dev/compas_view2/">
+        <img src="../../_static/images/compas_icon_white.png" alt="COMPAS View2" width="48px" height="48px" />
+      </a>
+      <!-- brand -->
+      <!-- primary -->
+      <ul class="navbar-nav">
+        <li class="nav-item active"><a class="nav-link" href="https://compas.dev/compas_view2/">COMPAS View2</a></li>
+      </ul>
+      <!-- primary -->
+      <ul class="navbar-nav d-none d-md-flex ml-md-auto">
+        <!-- version -->
+        
+        <meta id="doc_versions" data-url="https://compas.dev/compas_view2/doc_versions.txt" data-docs="https://compas.dev/compas_view2/">
+        <li class="nav-item nav-versions dropdown">
+          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            0.9.2
+          </a>
+          <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
+        </li>
+        
+        <!-- version -->
+        <!-- social -->
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/compas-dev/compas_view2" target="_blank">
+            <span class="fab fa-github fa-1x"></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://forum.compas-framework.org" target="_blank">
+            <span class="fab fa-discourse fa-1x"></span>
+          </a>
+        </li>
+        <!-- social -->
+      </ul>
+    </nav>
+  </header>
+  <!-- header -->
+  <!-- main -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- main -->
+      <main class="col-12 col-md-9 col-xl-7 px-4 px-md-5 pt-2 pb-5 compas-content" role="main">
+        
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-3 bg-white px-0">
+            <li class="breadcrumb-item"><a href="../../index.html">COMPAS View2</a></li>
+            
+            <li class="breadcrumb-item"><a href="../../api.html">API Reference</a></li>
+            
+            <li class="breadcrumb-item"><a href="../compas_view2.app.html">compas_view2.app</a></li>
+            
+            <!-- <li class="breadcrumb-item active" aria-current="page">App</li> -->
+          </ol>
+        </nav>
+        
+
+        
+        
+        <section class="detail" id="app">
+<h1>App</h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="compas_view2.app.App">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'COMPAS</span> <span class="pre">View2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'120'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shaded'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_sidebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_sidedock1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_sidedock2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_sceneform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_propertyform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_flow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flow_view_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flow_auto_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/app.py#L61"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Viewer app.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str, optional</em>) – The title of the viewer window.</p></li>
+<li><p><strong>version</strong> (<em>{‘120’, ‘330’}, optional</em>) – The version of the GLSL used by the shaders.
+Default is <code class="docutils literal notranslate"><span class="pre">'120'</span></code> with a compatibility profile.
+The option <code class="docutils literal notranslate"><span class="pre">'330'</span></code> is not yet available.</p></li>
+<li><p><strong>width</strong> (<em>int, optional</em>) – The width of the app window at startup.</p></li>
+<li><p><strong>height</strong> (<em>int, optional</em>) – The height of the app window at startup.</p></li>
+<li><p><strong>viewmode</strong> (<em>{‘shaded’, ‘ghosted’, ‘wireframe’, ‘lighted’}, optional</em>) – The display mode of the OpenGL view.
+In <cite>ghosted</cite> mode, all objects have a default opacity of 0.7.</p></li>
+<li><p><strong>show_grid</strong> (<em>bool, optional</em>) – Show the XY plane.</p></li>
+<li><p><strong>controller_class</strong> (<a class="reference internal" href="compas_view2.app.Controller.html#compas_view2.app.Controller" title="compas_view2.app.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.app.Controller</span></code></a>, optional) – A custom controller corresponding to a custom config file.
+Default is None, in which case the default controller is used, matching the default config file.</p></li>
+<li><p><strong>config</strong> (<em>dict | filepath, optional</em>) – A configuration dict for the UI, or a path to a JSON file containing such a dict.
+Default is None, in which case the default configuration is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>window</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QMainWindow</span></code>) – The main window of the application.
+This window contains the view and any other UI components
+such as the menu, toolbar, statusbar, …</p></li>
+<li><p><strong>view</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.View</span></code>) – Instance of OpenGL view.
+This view is the central widget of the main window.</p></li>
+<li><p><strong>controller</strong> (<a class="reference internal" href="compas_view2.app.Controller.html#compas_view2.app.Controller" title="compas_view2.app.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.app.Controller</span></code></a>) – The action controller of the app.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The app has a (main) window with a central OpenGL widget (i.e. the ‘view’),
+and a menubar, toolbar, and statusbar.
+The menubar provides access to all supported ‘actions’.
+The toolbar is meant to be a ‘quicknav’ to a selected set of actions.
+The app supports rotate/pan/zoom, and object selection via picking or box selections.</p>
+<p>Currently the app uses OpenGL 2.2 and GLSL 120 with a ‘compatibility’ profile.
+Support for OpenGL 3.3 and GLSL 330 with a ‘core’ profile is under development.</p>
+<p>The app can currently only be used ‘as-is’.
+This means that there is no formal mechanism for adding actions to the controller
+or to add functionality to the shader, other than by extending the core classes.
+In the future, such mechanism will be provided by allowing the user to overwrite
+the configuration file and add actions to the controller, without having
+to modify the package source code.</p>
+<p>Currently the app has no scene graph.
+All added COMPAS objects are wrapped in a viewer object and stored in a dictionary,
+mapping the object’s ID (<code class="docutils literal notranslate"><span class="pre">id(object)</span></code>) to the instance.</p>
+<p class="rubric">Examples</p>
+<div class="doctest language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">App</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.about.html#compas_view2.app.App.about" title="compas_view2.app.App.about"><code class="xref py py-obj docutils literal notranslate"><span class="pre">about</span></code></a></p></td>
+<td><p>Display the about message as defined in the config file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.add.html#compas_view2.app.App.add" title="compas_view2.app.App.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a></p></td>
+<td><p>Add a COMPAS object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.add_reference.html#compas_view2.app.App.add_reference" title="compas_view2.app.App.add_reference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_reference</span></code></a></p></td>
+<td><p>Add an object as a reference to another object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.button.html#compas_view2.app.App.button" title="compas_view2.app.App.button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">button</span></code></a></p></td>
+<td><p>Decorator for button actions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.checkbox.html#compas_view2.app.App.checkbox" title="compas_view2.app.App.checkbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkbox</span></code></a></p></td>
+<td><p>Decorator for checkbox actions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.confirm.html#compas_view2.app.App.confirm" title="compas_view2.app.App.confirm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">confirm</span></code></a></p></td>
+<td><p>Confirm the execution of an action.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.critical.html#compas_view2.app.App.critical" title="compas_view2.app.App.critical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">critical</span></code></a></p></td>
+<td><p>Display a critical warning.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.fps.html#compas_view2.app.App.fps" title="compas_view2.app.App.fps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fps</span></code></a></p></td>
+<td><p>Update fps info in the status bar.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.info.html#compas_view2.app.App.info" title="compas_view2.app.App.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a></p></td>
+<td><p>Display info.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.init.html#compas_view2.app.App.init" title="compas_view2.app.App.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a></p></td>
+<td><p>Initialize the components of the user interface.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.on.html#compas_view2.app.App.on" title="compas_view2.app.App.on"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on</span></code></a></p></td>
+<td><p>Decorator for callbacks of a dynamic drawing process.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.plot.html#compas_view2.app.App.plot" title="compas_view2.app.App.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a></p></td>
+<td><p>Create a matplotlib canvas as dock widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.popup.html#compas_view2.app.App.popup" title="compas_view2.app.App.popup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">popup</span></code></a></p></td>
+<td><p>Create a side dock widget.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.propertyform.html#compas_view2.app.App.propertyform" title="compas_view2.app.App.propertyform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">propertyform</span></code></a></p></td>
+<td><p>Create a side object tree form widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.question.html#compas_view2.app.App.question" title="compas_view2.app.App.question"><code class="xref py py-obj docutils literal notranslate"><span class="pre">question</span></code></a></p></td>
+<td><p>Ask a question.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.radio.html#compas_view2.app.App.radio" title="compas_view2.app.App.radio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">radio</span></code></a></p></td>
+<td><p>Decorator for radio actions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.remove.html#compas_view2.app.App.remove" title="compas_view2.app.App.remove"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove</span></code></a></p></td>
+<td><p>Remove an object from the view.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.resize.html#compas_view2.app.App.resize" title="compas_view2.app.App.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a></p></td>
+<td><p>Resize the main window programmatically.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.run.html#compas_view2.app.App.run" title="compas_view2.app.App.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a></p></td>
+<td><p>Show the viewer window.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.sceneform.html#compas_view2.app.App.sceneform" title="compas_view2.app.App.sceneform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sceneform</span></code></a></p></td>
+<td><p>Create a side object tree form widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.select.html#compas_view2.app.App.select" title="compas_view2.app.App.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a></p></td>
+<td><p>Decorator for combo boxes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.show.html#compas_view2.app.App.show" title="compas_view2.app.App.show"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></a></p></td>
+<td><p>Show the viewer window.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.sidedock.html#compas_view2.app.App.sidedock" title="compas_view2.app.App.sidedock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sidedock</span></code></a></p></td>
+<td><p>Create a side dock widget.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.slider.html#compas_view2.app.App.slider" title="compas_view2.app.App.slider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slider</span></code></a></p></td>
+<td><p>Decorator for slider actions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.status.html#compas_view2.app.App.status" title="compas_view2.app.App.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span></code></a></p></td>
+<td><p>Display a message in the status bar.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.tabsform.html#compas_view2.app.App.tabsform" title="compas_view2.app.App.tabsform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tabsform</span></code></a></p></td>
+<td><p>Create a tabs form widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.threading.html#compas_view2.app.App.threading" title="compas_view2.app.App.threading"><code class="xref py py-obj docutils literal notranslate"><span class="pre">threading</span></code></a></p></td>
+<td><p>Execute a multi-threaded function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.App.treeform.html#compas_view2.app.App.treeform" title="compas_view2.app.App.treeform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">treeform</span></code></a></p></td>
+<td><p>Create a side object tree form widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.App.warning.html#compas_view2.app.App.warning" title="compas_view2.app.App.warning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">warning</span></code></a></p></td>
+<td><p>Display a warning.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+
+        
+      </main>
+      <!-- content -->
+      <!-- sidebar -->
+      <div class="col-12 col-md-3 compas-sidebar" role="navigation">
+        <form id="search" class="d-flex align-items-center compas-searchbox" action="../../search.html" method="get">
+          <input class="form-control" type="text" name="q" placeholder="Search docs" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+          <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#compas-navigation" aria-controls="compas-navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </form>
+        
+        
+        <div id="compas-navigation" class="collapse compas-navigation">
+          <ul class="nav flex-column collapse show active">
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../index.html">Introduction</a></li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/example_coplanaredges.html">Coplanar Edges</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/example_customui.html">Make a Custom UI From a Script</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/example_orbiting.html">Orbit Around an Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
+<li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_view2.app.html">compas_view2.app</a><ul class="nav flex-column collapse show active">
+<li class="toctree-l3 nav-item active"><a class="nav-link active reference internal" href="#">App</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.app.Controller.html">Controller</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.forms.html">compas_view2.forms</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.Form.html">Form</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.AddForm.html">AddForm</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.gl.html">compas_view2.gl</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.make_index_buffer.html">make_index_buffer</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.make_vertex_buffer.html">make_vertex_buffer</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.update_index_buffer.html">update_index_buffer</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.update_vertex_buffer.html">update_vertex_buffer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.objects.html">compas_view2.objects</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.Object.html">Object</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.BufferObject.html">BufferObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PointObject.html">PointObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.VectorObject.html">VectorObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PlaneObject.html">PlaneObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.FrameObject.html">FrameObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.LineObject.html">LineObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolylineObject.html">PolylineObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CircleObject.html">CircleObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.EllipseObject.html">EllipseObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolygonObject.html">PolygonObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NurbsSurfaceObject.html">NurbsSurfaceObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.BoxObject.html">BoxObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.SphereObject.html">SphereObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.TorusObject.html">TorusObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CylinderObject.html">CylinderObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ConeObject.html">ConeObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CapsuleObject.html">CapsuleObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolyhedronObject.html">PolyhedronObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PointcloudObject.html">PointcloudObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NetworkObject.html">NetworkObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.MeshObject.html">MeshObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CollectionObject.html">CollectionObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ArrowObject.html">ArrowObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.TextObject.html">TextObject</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.scene.html">compas_view2.scene</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.Camera.html">Camera</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.Mouse.html">Mouse</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.ortho.html">ortho</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.perspective.html">perspective</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.lookat.html">lookat</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.shaders.html">compas_view2.shaders</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shaders.Shader.html">Shader</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.shapes.html">compas_view2.shapes</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shapes.Arrow.html">Arrow</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shapes.Text.html">Text</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shapes.VectorGroup.html">VectorGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.ui.html">compas_view2.ui</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Button.html">Button</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Checkbox.html">Checkbox</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Radio.html">Radio</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Slider.html">Slider</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Select.html">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.views.html">compas_view2.views</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.views.View.html">View</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.views.View120.html">View120</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.views.View330.html">View330</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
+</ul>
+
+        </div>
+        
+      </div>
+      <!-- sidebar -->
+      <!-- toc -->
+      <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
+        
+        <ul class="nav flex-column" id="compas-toc">
+<li class="nav-item"><a class="nav-link reference internal" href="#">App</a><ul class="nav flex-column">
+<li class="nav-item"><a class="nav-link reference internal" href="#compas_view2.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      <!-- toc -->
+    </div>
+  </div>
+  <!-- main -->
+  <!-- footer -->
+  <footer class="compas-footer">
+    <nav class="nav p-2">
+      
+      <a href="../compas_view2.app.html" title="compas_view2.app" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+        <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
+        <div class="nav-title flex-grow-1 align-self-center">
+          <div class="nav-direction small font-weight-light">Previous</div>
+          compas_view2.app
+        </div>
+      </a>
+      
+
+      
+      <a href="compas_view2.app.App.about.html" title="App.about" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+        <div class="nav-title footer-link flex-grow-1 align-self-center">
+          <div class="nav-direction small font-weight-light">Next</div>
+          App.about
+        </div>
+        <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
+      </a>
+      
+    </nav>
+  </footer>
+  <!-- footer -->
+  <!-- below -->
+  <div class="below py-5" style="background-color: #222;">
+    <div class="container">
+      <div class="row flex-column">
+        <div class="col-12 col-md-6 mx-md-auto text-center">
+          <h4 class="pb-3 below-text">COMPAS</h4>
+          <p class="below-text">
+            A computational framework for collaboration and research
+            in Architecture, Engineering, Fabrication, and Construction.
+          </p>
+          <nav class="nav justify-content-center pb-3">
+            <a class="nav-link mx-2 px-0 below-link" href="http://github.com/compas-dev" target="_blank">
+              <span class="fab fa-github fa-1x"></span>
+            </a>
+            <a class="nav-link mx-2 px-0 below-link" href="http://forum.compas-framework.org" target="_blank">
+              <span class="fab fa-discourse fa-1x"></span>
+            </a>
+            <a class="nav-link mx-2 px-0 below-link" href="https://pypi.org/project/COMPAS/" target="_blank">
+              <span class="fab fa-python fa-1x"></span>
+            </a>
+          </nav>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <p class="p-0 m-0 below-text">Copyright &copy; 2017-2021 compas-dev</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- below -->
+  <!-- scripts -->
+  <script id="documentation_options" data-url_root="" src="../../_static/documentation_options.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+  <script src="../../_static/underscore.js"></script>
+  <script src="../../_static/doctools.js"></script>
+  <script src="../../_static/searchtools.js"></script>
+  <script src="../../_static/language_data.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $(".language-default code").addClass("python");
+      $(".language-python code").addClass("python");
+      $(".language-bash code").addClass("bash");
+      $(".language-cpp code").addClass("cpp");
+      $(".language-json code").addClass("json");
+      $(".language-none code").addClass("plaintext");
+
+      hljs.initHighlighting();
+      anchors.add();
+
+      new ClipboardJS(".btn.copy", {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      $("#compas-navigation li.active > ul").each(function() {
+        var ul = $(this);
+        if (! ul.hasClass("show")) {
+          ul.addClass("show");
+        }
+      });
+
+      $("#compas-navigation li.toctree-l1").has("ul").each(function() {
+        var li = $(this);
+        li.addClass("has-children");
+        if (li.hasClass("active")) {
+          li.prepend('<span class="menu-toggle"><i class="fas fa-chevron-up"></i></span>');
+        }
+        else {
+          li.prepend('<span class="menu-toggle"><i class="fas fa-chevron-down"></i></span>');
+        }
+      });
+
+      $(".menu-toggle").click(function() {
+        var toggle = $(this);
+        toggle.siblings("ul").toggleClass("show");
+      });
+
+    });
+
+
+    var url = $("#doc_versions").data("url");
+    var docs_site = $("#doc_versions").data("docs");
+
+    if (url) {
+      $.get(url, res => {
+        var lines = res.match(/[^\r\n]+/g);
+        lines.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        lines.reverse();
+        lines.forEach(version => {
+          $("#doc_version_list").append("<a class=\"dropdown-item\" href=\"" + docs_site + version + "\">" + version + "</a>");
+        });
+
+        var selected_version = $('.nav-versions .dropdown-item').filter(function (i, ver) {
+          return window.location.href.startsWith(ver.href);
+        });
+        selected_version.addClass('active');
+        $("#bd-versions").text(selected_version.text());
+
+      })
+    }
+  </script>
+  <!-- scripts -->
+  
+  
+</body>
+
+</html>
