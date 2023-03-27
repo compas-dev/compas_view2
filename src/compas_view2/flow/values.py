@@ -52,7 +52,6 @@ def IntegerNode(title: str = "Integer", default: int = 1, bounds: Tuple[float, f
     bounds = bounds or (-(10**9), 10**9)
 
     class IntegerNode(ValueNode):
-
         title = _title
 
         init_inputs = [
@@ -88,7 +87,6 @@ def FloatNode(title: str = "Float", default: float = 0.0, bounds: tuple = None) 
     bounds = bounds or (-(10**9), 10**9)
 
     class FloatNode(ValueNode):
-
         title = _title
 
         init_inputs = [
@@ -124,7 +122,6 @@ def ChoiceNode(title: str = "Choice", default: str = None, items: List[str] = No
     items = items or []
 
     class ChoiceNode(ValueNode):
-
         title = _title
 
         init_inputs = [
@@ -156,7 +153,6 @@ def StringNode(title: str = "String", default: str = None) -> ValueNode:
     _title = title
 
     class StringNode(ValueNode):
-
         title = _title
 
         init_inputs = [
@@ -191,7 +187,6 @@ def VectorNode(
     default = default or [0, 0, 0]
 
     class VectorNode(ValueNode):
-
         title = _title
 
         init_inputs = [

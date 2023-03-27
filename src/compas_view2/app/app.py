@@ -146,7 +146,6 @@ class App:
         flow_view_size: Union[Tuple[int], List[int]] = None,
         flow_auto_update: bool = True,
     ):
-
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 

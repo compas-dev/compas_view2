@@ -118,7 +118,6 @@ class TreeForm(DockForm):
         return list(map(lambda i: i.entry, self.items))
 
     def map_entries(self, entries, parent=None):
-
         # automatically convert dict to list of key, value pairs
         if isinstance(entries, dict):
             _entries = []

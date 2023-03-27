@@ -40,7 +40,6 @@ class Radio:
     """
 
     def __init__(self, app, parent, *, title, items, action):
-
         box = QtWidgets.QGroupBox(title)
         layout = QtWidgets.QVBoxLayout()
         group = QtWidgets.QButtonGroup(app.window, exclusive=True)

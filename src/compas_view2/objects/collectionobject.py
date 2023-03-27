@@ -9,7 +9,6 @@ class CollectionObject(BufferObject):
     """Object for displaying COMPAS collection."""
 
     def __init__(self, collection: Collection, **kwargs):
-
         super().__init__(collection, **kwargs)
 
         self._objects = []

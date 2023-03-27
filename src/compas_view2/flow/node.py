@@ -43,7 +43,6 @@ def Node(app, color: Union[Color, str, list, tuple] = "#0092D2", auto_update: bo
     node_color = color.hex
 
     def decorator(func):
-
         signature = inspect.signature(func)
 
         if auto_update is None:

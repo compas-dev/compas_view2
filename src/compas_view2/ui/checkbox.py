@@ -28,7 +28,6 @@ class Checkbox:
     """
 
     def __init__(self, app, parent, *, text, action, checked=False):
-
         box = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout()
         checkbox = QtWidgets.QCheckBox(text)

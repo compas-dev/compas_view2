@@ -53,7 +53,6 @@ class Worker(QRunnable):
 
 
 class Ticker(QRunnable):
-
     pool = QThreadPool()
 
     def __init__(self, interval=1):

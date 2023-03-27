@@ -48,7 +48,6 @@ class ExecutionControl(QWidget):
             self.message.setVisible(False)
 
     def set_auto_update(self, _, value=None, update_node=True):
-
         if self.pause_event:
             return
 

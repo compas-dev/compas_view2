@@ -172,7 +172,6 @@ class Object(ABC):
         pointsize: int = 10,
         opacity: float = 1.0,
     ):
-
         self._data = data
         self._app = app
         self.name = name or str(self)

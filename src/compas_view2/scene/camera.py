@@ -349,7 +349,6 @@ class Camera:
         return asfortranarray(W.inverted(), dtype=float32)
 
     def zoom_extents(self, objects: List[Object] = None):
-
         objects = objects or self.view.objects.values()
 
         extents = []

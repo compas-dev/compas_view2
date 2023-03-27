@@ -30,7 +30,6 @@ class SceneForm(DockForm):
             self.map_objects(obj.children, item)
 
     def show_properties(self, obj):
-
         self.app.selector.select(obj, update=True)
 
         propertyform = self.app.dock_slots.get("propertyform")

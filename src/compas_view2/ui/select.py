@@ -34,7 +34,6 @@ class Select:
     """
 
     def __init__(self, app, parent, *, items, action):
-
         container = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout()
         combo = QtWidgets.QComboBox()
