@@ -55,6 +55,9 @@ class RobotObject(CollectionObject):
 
         for item in itertools.chain(link.visual):
             meshes.extend(Geometry._get_item_meshes(item))
+            if item.origin:
+                for mesh in meshes:
+                    mesh.transform(Transformation.from_frame(item.origin))
 
         if meshes:
             obj = parent.add(Collection(meshes), name=link.name, show_lines=False)
@@ -69,7 +72,7 @@ class RobotObject(CollectionObject):
 
         if parent_joint:
             obj.matrix = Transformation.from_frame(parent_joint.origin).matrix
-            self.joints[parent_joint.name] = {"link_obj": obj, "joint": parent_joint, "axis": parent_joint.axis.vector}
+            self.joints[parent_joint.name] = {"link_obj": obj, "joint": parent_joint, "axis": parent_joint.axis.vector, "origin": parent_joint.origin}
 
         self.link_objs[link.name] = obj
 
@@ -92,6 +95,6 @@ class RobotObject(CollectionObject):
 
         """
         joint = self.joints[joint_name]
-        T = Translation.from_vector(joint["link_obj"].translation)
+        T = Transformation.from_frame(joint["origin"])
         R = Rotation.from_axis_and_angle(joint["axis"], radians(angle))
         joint["link_obj"].matrix = (T * R).matrix
