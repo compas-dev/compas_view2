@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <title>compas_view2 - Tutorial</title>
+  
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="compas-dev" />
+  <meta name="description" content="" />
+
+  <link rel="shortcut icon" href="_static/images/compas.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/mono-blue.min.css">
+  <link rel="stylesheet" type="text/css" href="_static/css/compas.css" />
+  <link rel="stylesheet" type="text/css" href="_static/css/compas-reference.css" />
+
+  
+  <link rel="next" title="Examples" href="examples.html" />
+  
+
+  
+  <link rel="prev" title="Installation" href="installation.html" />
+  
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+
+<body data-spy="scroll" data-target="#compas-toc">
+  <!-- header -->
+  <header id="header" class="compas-header d-flex align-items-center">
+    <nav class="navbar navbar-expand navbar-dark col flex-column flex-md-row text-center">
+      <!-- brand -->
+      <a class="navbar-brand" href="https://compas.dev/compas_view2/">
+        <img src="_static/images/compas_icon_white.png" alt="COMPAS View2" width="48px" height="48px" />
+      </a>
+      <!-- brand -->
+      <!-- primary -->
+      <ul class="navbar-nav">
+        <li class="nav-item active"><a class="nav-link" href="https://compas.dev/compas_view2/">COMPAS View2</a></li>
+      </ul>
+      <!-- primary -->
+      <ul class="navbar-nav d-none d-md-flex ml-md-auto">
+        <!-- version -->
+        
+        <meta id="doc_versions" data-url="https://compas.dev/compas_view2/doc_versions.txt" data-docs="https://compas.dev/compas_view2/">
+        <li class="nav-item nav-versions dropdown">
+          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            0.9.3
+          </a>
+          <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
+        </li>
+        
+        <!-- version -->
+        <!-- social -->
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/compas-dev/compas_view2" target="_blank">
+            <span class="fab fa-github fa-1x"></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://forum.compas-framework.org" target="_blank">
+            <span class="fab fa-discourse fa-1x"></span>
+          </a>
+        </li>
+        <!-- social -->
+      </ul>
+    </nav>
+  </header>
+  <!-- header -->
+  <!-- main -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- main -->
+      <main class="col-12 col-md-9 col-xl-7 px-4 px-md-5 pt-2 pb-5 compas-content" role="main">
+        
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-3 bg-white px-0">
+            <li class="breadcrumb-item"><a href="index.html">COMPAS View2</a></li>
+            
+            <!-- <li class="breadcrumb-item active" aria-current="page">Tutorial</li> -->
+          </ol>
+        </nav>
+        
+
+        
+        
+        <section id="tutorial">
+<h1>Tutorial</h1>
+<p class="lead">This tutorial covers basic usage of the viewer through scripting.
+Other usage modes are possible and will be described in a separate tutorial.</p>
+<section id="basic-usage">
+<h2>Basic Usage</h2>
+<p>The basic process of visualizing COMPAS objects with <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code> consists out of three steps:</p>
+<ol class="arabic simple">
+<li><p>Create an instance of a viewer.</p></li>
+<li><p>Add objects.</p></li>
+<li><p>Launch the viewer.</p></li>
+</ol>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</section>
+<section id="add-objects">
+<h2>Add Objects</h2>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+</code></pre></div>
+</div>
+<p>When a COMPAS object is added, the viewer looks for a corresponding view object in a registry.
+If a registered view object is found, the add method wraps the COMPAS object in it and returns a view object instance.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="go">&lt;class &#39;compas_view2.objects.sphereobject.SphereObject&#39;&gt;</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">_data</span>
+<span class="go">Sphere(Point(0.000, 0.000, 0.000), 1.0)</span>
+</code></pre></div>
+</div>
+</section>
+<section id="object-appearance">
+<h2>Object Appearance</h2>
+<p>The appearance of an object can be changed through various visualization options
+which can be passed as keyword arguments to the add function,
+or by changing the corresponding attributes of the view object.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">u</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">v</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">show_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">show_lines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">show_faces</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">pointcolor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">linecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">pointsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">is_selected</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">is_visible</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">show_points</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre></div>
+</div>
+</section>
+<section id="object-collections">
+<h2>Object Collections</h2>
+<p>Drawing many different objects can slow down the viewer considerably.
+To avoid this, you can group same tpye objects in collections.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span><span class="p">,</span> <span class="n">Pointcloud</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Collection</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cloud</span> <span class="o">=</span> <span class="n">Pointcloud</span><span class="o">.</span><span class="n">from_bounds</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spheres</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">cloud</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">spheres</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Sphere</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">spheres</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p>The objects in a collection can only be styled uniformly with the same keyword arguments
+used to style the individual objects.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">spheres</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">linecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>Individual object styling will be available for collections soon!</p>
+</section>
+<section id="object-transformations">
+<h2>Object Transformations</h2>
+<p>Every view object has an associated transformation matrix in world coordinates,
+which is multiplied with the coordinates of the data object to determine
+the final location and orientation of the object in the scene.</p>
+<p>The default transformation matrix of a view object is the identity matrix,
+which has no effect on the placement and/or orientation of the object in the scene.</p>
+<p>To move an object through the scene, or to change its orientation,
+assign a transformation matrix to the <cite>matrix</cite> attribute of the view object.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">Translation</span><span class="o">.</span><span class="n">from_vector</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">matrix</span>
+</code></pre></div>
+</div>
+<p>For convenience, the translation, rotation, and scale can be modified separately.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">translation</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+</div>
+</section>
+<section id="dynamic-visualization">
+<h2>Dynamic Visualization</h2>
+<p>To visualize a dynamic process, for example the process of moving a box along a curve,
+use the “on” decorator (<a class="reference internal" href="api/generated/compas_view2.app.App.on.html#compas_view2.app.App.on" title="compas_view2.app.App.on"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compas_view2.app.App.on()</span></code></a>) on a callback function.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span> <span class="mf">1.0</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@viewer</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">translation</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</section>
+<section id="zoom-pan-rotate">
+<h2>Zoom, Pan, Rotate</h2>
+<p>After launching the viewer, the view can be transformed by zooming, panning, and rotating.
+To zoom, use the mousewheel or “pinch” the trackpad of your laptop.
+To rotate the view, move the mouse while holding down the right mouse button (<code class="docutils literal notranslate"><span class="pre">right</span> <span class="pre">click</span></code>).
+To pan, move the mouse while holding <code class="docutils literal notranslate"><span class="pre">SHIFT</span> <span class="pre">+</span> <span class="pre">right</span> <span class="pre">click</span></code>.</p>
+</section>
+<section id="view-configuration">
+<h2>View Configuration</h2>
+<p>To transform the view programmatically, you can modify the relevant attributes of the camera directly.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">rz</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">rx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">60</span>
+</code></pre></div>
+</div>
+<p>More convenient configuration methods using camera position and camera target are under construction and will be available soon.</p>
+</section>
+<section id="selections">
+<h2>Selections</h2>
+<p>To create a selection programmatically, set the attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">compas_view2.objects.Object.is_selected</span></code> of the objects in the selection to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Sphere</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span><span class="o">.</span><span class="n">is_selected</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+</div>
+<p>To select an object interactively, click on the object with the left mouse button.
+To select multiple objects hold down <code class="docutils literal notranslate"><span class="pre">SHIFT</span></code> while selecting objects individually or collectively using a selection window.</p>
+<p>To unselect objects, hold down <code class="docutils literal notranslate"><span class="pre">COMMAND</span></code> on Mac or <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> on Windows while clicking in an empty area of the view.</p>
+</section>
+<section id="capturing">
+<h2>Capturing</h2>
+<p>To grab a screenshot of the view, select “Capture” from the “View” menu (<code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">&gt;</span> <span class="pre">Capture</span></code>) and select a location for saving the image.
+To record the frames of a dynamic visualization into an animated GIF, use the relevant options of the “on” decorator.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@viewer</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">record_path</span><span class="o">=</span><span class="s1">&#39;animated.gif&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">translation</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">obj</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</section>
+<section id="custom-ui-elements">
+<h2>Custom UI Elements</h2>
+<p>coming soon…</p>
+</section>
+</section>
+
+        
+      </main>
+      <!-- content -->
+      <!-- sidebar -->
+      <div class="col-12 col-md-3 compas-sidebar" role="navigation">
+        <form id="search" class="d-flex align-items-center compas-searchbox" action="search.html" method="get">
+          <input class="form-control" type="text" name="q" placeholder="Search docs" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+          <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#compas-navigation" aria-controls="compas-navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </form>
+        
+        
+        <div id="compas-navigation" class="collapse compas-navigation">
+          <ul class="nav flex-column collapse show active">
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="index.html">Introduction</a></li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 nav-item active"><a class="nav-link active reference internal" href="#">Tutorial</a></li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="examples.html">Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/example_coplanaredges.html">Coplanar Edges</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/example_customui.html">Make a Custom UI From a Script</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/example_orbiting.html">Orbit Around an Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="api.html">API Reference</a><ul class="nav flex-column collapse">
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.app.html">compas_view2.app</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.app.App.html">App</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.app.Controller.html">Controller</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.forms.html">compas_view2.forms</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.forms.Form.html">Form</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.forms.AddForm.html">AddForm</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.gl.html">compas_view2.gl</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.gl.make_index_buffer.html">make_index_buffer</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.gl.make_vertex_buffer.html">make_vertex_buffer</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.gl.update_index_buffer.html">update_index_buffer</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.gl.update_vertex_buffer.html">update_vertex_buffer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.objects.html">compas_view2.objects</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.Object.html">Object</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.BufferObject.html">BufferObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.PointObject.html">PointObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.VectorObject.html">VectorObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.PlaneObject.html">PlaneObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.FrameObject.html">FrameObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.LineObject.html">LineObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.PolylineObject.html">PolylineObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.CircleObject.html">CircleObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.EllipseObject.html">EllipseObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.PolygonObject.html">PolygonObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.NurbsSurfaceObject.html">NurbsSurfaceObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.BoxObject.html">BoxObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.SphereObject.html">SphereObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.TorusObject.html">TorusObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.CylinderObject.html">CylinderObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.ConeObject.html">ConeObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.CapsuleObject.html">CapsuleObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.PolyhedronObject.html">PolyhedronObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.PointcloudObject.html">PointcloudObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.NetworkObject.html">NetworkObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.MeshObject.html">MeshObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.CollectionObject.html">CollectionObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.ArrowObject.html">ArrowObject</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.objects.TextObject.html">TextObject</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.scene.html">compas_view2.scene</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.scene.Camera.html">Camera</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.scene.Mouse.html">Mouse</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.scene.ortho.html">ortho</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.scene.perspective.html">perspective</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.scene.lookat.html">lookat</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.shaders.html">compas_view2.shaders</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.shaders.Shader.html">Shader</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.shapes.html">compas_view2.shapes</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.shapes.Arrow.html">Arrow</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.shapes.Text.html">Text</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.shapes.VectorGroup.html">VectorGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.ui.html">compas_view2.ui</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.ui.Button.html">Button</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.ui.Checkbox.html">Checkbox</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.ui.Radio.html">Radio</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.ui.Slider.html">Slider</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.ui.Select.html">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="api/compas_view2.views.html">compas_view2.views</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.views.View.html">View</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.views.View120.html">View120</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="api/generated/compas_view2.views.View330.html">View330</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+        
+      </div>
+      <!-- sidebar -->
+      <!-- toc -->
+      <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
+        
+        <ul class="nav flex-column" id="compas-toc">
+<li class="nav-item"><a class="nav-link reference internal" href="#">Tutorial</a><ul class="nav flex-column">
+<li class="nav-item"><a class="nav-link reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#add-objects">Add Objects</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#object-appearance">Object Appearance</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#object-collections">Object Collections</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#object-transformations">Object Transformations</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#dynamic-visualization">Dynamic Visualization</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#zoom-pan-rotate">Zoom, Pan, Rotate</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#view-configuration">View Configuration</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#selections">Selections</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#capturing">Capturing</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#custom-ui-elements">Custom UI Elements</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      <!-- toc -->
+    </div>
+  </div>
+  <!-- main -->
+  <!-- footer -->
+  <footer class="compas-footer">
+    <nav class="nav p-2">
+      
+      <a href="installation.html" title="Installation" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+        <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
+        <div class="nav-title flex-grow-1 align-self-center">
+          <div class="nav-direction small font-weight-light">Previous</div>
+          Installation
+        </div>
+      </a>
+      
+
+      
+      <a href="examples.html" title="Examples" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+        <div class="nav-title footer-link flex-grow-1 align-self-center">
+          <div class="nav-direction small font-weight-light">Next</div>
+          Examples
+        </div>
+        <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
+      </a>
+      
+    </nav>
+  </footer>
+  <!-- footer -->
+  <!-- below -->
+  <div class="below py-5" style="background-color: #222;">
+    <div class="container">
+      <div class="row flex-column">
+        <div class="col-12 col-md-6 mx-md-auto text-center">
+          <h4 class="pb-3 below-text">COMPAS</h4>
+          <p class="below-text">
+            A computational framework for collaboration and research
+            in Architecture, Engineering, Fabrication, and Construction.
+          </p>
+          <nav class="nav justify-content-center pb-3">
+            <a class="nav-link mx-2 px-0 below-link" href="http://github.com/compas-dev" target="_blank">
+              <span class="fab fa-github fa-1x"></span>
+            </a>
+            <a class="nav-link mx-2 px-0 below-link" href="http://forum.compas-framework.org" target="_blank">
+              <span class="fab fa-discourse fa-1x"></span>
+            </a>
+            <a class="nav-link mx-2 px-0 below-link" href="https://pypi.org/project/COMPAS/" target="_blank">
+              <span class="fab fa-python fa-1x"></span>
+            </a>
+          </nav>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <p class="p-0 m-0 below-text">Copyright &copy; 2017-2021 compas-dev</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- below -->
+  <!-- scripts -->
+  <script id="documentation_options" data-url_root="" src="_static/documentation_options.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+  <script src="_static/underscore.js"></script>
+  <script src="_static/doctools.js"></script>
+  <script src="_static/searchtools.js"></script>
+  <script src="_static/language_data.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $(".language-default code").addClass("python");
+      $(".language-python code").addClass("python");
+      $(".language-bash code").addClass("bash");
+      $(".language-cpp code").addClass("cpp");
+      $(".language-json code").addClass("json");
+      $(".language-none code").addClass("plaintext");
+
+      hljs.initHighlighting();
+      anchors.add();
+
+      new ClipboardJS(".btn.copy", {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      $("#compas-navigation li.active > ul").each(function() {
+        var ul = $(this);
+        if (! ul.hasClass("show")) {
+          ul.addClass("show");
+        }
+      });
+
+      $("#compas-navigation li.toctree-l1").has("ul").each(function() {
+        var li = $(this);
+        li.addClass("has-children");
+        if (li.hasClass("active")) {
+          li.prepend('<span class="menu-toggle"><i class="fas fa-chevron-up"></i></span>');
+        }
+        else {
+          li.prepend('<span class="menu-toggle"><i class="fas fa-chevron-down"></i></span>');
+        }
+      });
+
+      $(".menu-toggle").click(function() {
+        var toggle = $(this);
+        toggle.siblings("ul").toggleClass("show");
+      });
+
+    });
+
+
+    var url = $("#doc_versions").data("url");
+    var docs_site = $("#doc_versions").data("docs");
+
+    if (url) {
+      $.get(url, res => {
+        var lines = res.match(/[^\r\n]+/g);
+        lines.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        lines.reverse();
+        lines.forEach(version => {
+          $("#doc_version_list").append("<a class=\"dropdown-item\" href=\"" + docs_site + version + "\">" + version + "</a>");
+        });
+
+        var selected_version = $('.nav-versions .dropdown-item').filter(function (i, ver) {
+          return window.location.href.startsWith(ver.href);
+        });
+        selected_version.addClass('active');
+        $("#bd-versions").text(selected_version.text());
+
+      })
+    }
+  </script>
+  <!-- scripts -->
+  
+  
+</body>
+
+</html>
