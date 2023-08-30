@@ -415,6 +415,7 @@ class App:
         if self.dock_slots["sceneform"]:
             self.dock_slots["sceneform"].update()
 
+        self.selector.start_monitor_instance_map()
         self._app.exec_()
 
     run = show
