@@ -4,13 +4,13 @@ from compas_view2.app import App
 viewer = App()
 
 
-box = Box(((0, 0, 0), [1, 0, 0], [0, 1, 0]), 1, 1, 1)
+box = Box(frame=([0, 0, 0], [1, 0, 0], [0, 1, 0]))
 obj1 = viewer.add(box, facecolor=(1, 0, 0), opacity=0.7)
 
-box = Box(((0, 0, 0), [1, 0, 0], [0, 1, 0]), 1, 1, 1)
+box = Box(frame=([0, 0, 0], [1, 0, 0], [0, 1, 0]))
 obj2 = viewer.add(box, facecolor=(0, 1, 0), opacity=0.7)
 
-box = Box(((0, 0, 0), [1, 0, 0], [0, 1, 0]), 1, 1, 1)
+box = Box(frame=([0, 0, 0], [1, 0, 0], [0, 1, 0]))
 obj3 = viewer.add(box, facecolor=(0, 0, 1), opacity=0.7)
 
 

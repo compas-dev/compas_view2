@@ -104,9 +104,9 @@ class MeshObject(BufferObject):
             color = self.linecolors.get((u, v), self.linecolor)
             if self.hide_coplanaredges:
                 # hide the edge if neighbor faces are coplanar
-                fkeys = mesh.edge_faces(u, v)
-                if not mesh.is_edge_on_boundary(u, v):
-                    ps = [mesh.face_center(fkeys[0]), mesh.face_center(fkeys[1]), *mesh.edge_coordinates(u, v)]
+                fkeys = mesh.edge_faces((u, v))
+                if not mesh.is_edge_on_boundary((u, v)):
+                    ps = [mesh.face_center(fkeys[0]), mesh.face_center(fkeys[1]), *mesh.edge_coordinates((u, v))]
                     if is_coplanar(ps, tol=1e-5):
                         continue
             positions.append(vertex_xyz[u])

@@ -5,8 +5,8 @@ from compas.geometry import Point, Polyline, Bezier
 curve = Bezier([[0, 0, 0], [3, 6, 0], [5, -3, 0], [10, 0, 0]])
 viewer = App(viewmode="shaded", enable_sidebar=True, width=1600, height=900)
 
-pointobj = viewer.add(Point(* curve.point(0)), size=20, color=(1, 0, 0))
-curveobj = viewer.add(Polyline(curve.locus()), linewidth=2)
+pointobj = viewer.add(Point(* curve.point_at(0)), pointsize=20, pointcolor=(1, 0, 0))
+curveobj = viewer.add(Polyline(curve.to_points(50)), linewidth=2)
 
 
 @viewer.button(text="Compute")
@@ -31,7 +31,7 @@ def click():
     def on_progress(value):
         # This function will be triggered under main thread when `signals.progress.emit()` sends out value from background threads.
         viewer.status(f"waiting...t={value}")
-        pointobj._data = curve.point(value)
+        pointobj._data = curve.point_at(value)
         pointobj.update()
         viewer.view.update()
 

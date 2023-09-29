@@ -15,7 +15,7 @@ sphere_properties = []
 for x in range(5):
     for y in range(5):
         for z in range(5):
-            sphere = Sphere([x, y, z], 0.2)
+            sphere = Sphere(0.2, [x, y, z])
             spheres.append(sphere)
             sphere_properties.append({'u': 20, 'v': 5, 'facecolor': Color(x/5, y/5, z/5), 'linecolor': Color(0.2, 0, 0)})
 

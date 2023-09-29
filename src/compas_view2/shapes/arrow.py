@@ -3,6 +3,7 @@ from compas.geometry import Cone
 from compas.geometry import Circle
 from compas.geometry import Cylinder
 from compas.geometry import Plane
+from compas.geometry import Frame
 from compas.geometry import Shape
 from compas.datastructures import Mesh
 
@@ -121,16 +122,16 @@ class Arrow(Shape):
         # Construct the head of arrow
         head_position = self.position + self.direction * (1 - self.head_portion)
         plane = Plane(head_position, self.direction)
-        circle = Circle(plane, self.head_width * self.direction.length)
-        cone = Cone(circle, self.direction.length * self.head_portion)
+        circle = Circle.from_plane_and_radius(plane, self.head_width * self.direction.length)
+        cone = Cone.from_circle_and_height(circle, self.direction.length * self.head_portion)
         v, f = cone.to_vertices_and_faces(u=u)
         head = Mesh.from_vertices_and_faces(v, f)
 
         # COnstruct the body of arrow
         body_center = self.position + self.direction * (1 - self.head_portion) / 2
         plane = Plane(body_center, self.direction)
-        circle = Circle(plane, self.body_width * self.direction.length)
-        cylinder = Cylinder(circle, self.direction.length * (1 - self.head_portion))
+        circle = Circle.from_plane_and_radius(plane, self.body_width * self.direction.length)
+        cylinder = Cylinder.from_circle_and_height(circle, self.direction.length * (1 - self.head_portion))
         v, f = cylinder.to_vertices_and_faces(u=u)
         body = Mesh.from_vertices_and_faces(v, f)
 

@@ -32,7 +32,7 @@ cloud = Pointcloud.from_bounds(10, 5, 3, 100)
 R1 = Rotation.from_axis_and_angle([0, 0, 1], math.radians(180))
 for point in cloud.transformed(R1):
     size = random.random()
-    box = Box((point, [1, 0, 0], [0, 1, 0]), size, size, size)
+    box = Box(size, size, size, frame=(point, [1, 0, 0], [0, 1, 0]))
     viewer.add(box, facecolor=cmap(random.random()), opacity=random.random())
 
 viewer.view.camera.zoom_extents()

@@ -24,11 +24,14 @@ class PlaneObject(CompositeObject):
             self.frame.to_world_coordinates([size, size, 0]),
             self.frame.to_world_coordinates([-size, size, 0]),
         ]
+
+        vertices = [[*v] for v in vertices]
         faces = [[0, 1, 2], [0, 2, 3]]
         mesh = Mesh.from_vertices_and_faces(vertices, faces)
         meshObject = MeshObject(mesh, hide_coplanaredges=True, **kwargs)
+        print(vertices)
 
-        super().__init__([meshObject, lineObject], **kwargs)
+        super().__init__([lineObject, meshObject], **kwargs)
 
     @classmethod
     def create_default(cls) -> Plane:

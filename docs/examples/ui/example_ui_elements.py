@@ -8,8 +8,8 @@ viewer = App(viewmode="shaded", enable_sidebar=True, width=1600, height=900)
 viewer.view.camera.target = [5, 0, 0]
 viewer.view.camera.distance = 20
 
-pointobj = viewer.add(Point(* curve.point(0)), pointsize=20, pointcolor=(1, 0, 0))
-curveobj = viewer.add(Polyline(curve.locus()), linewidth=2)
+pointobj = viewer.add(Point(* curve.point_at(0)), pointsize=20, pointcolor=(1, 0, 0))
+curveobj = viewer.add(Polyline(curve.to_points(50)), linewidth=2)
 
 
 @viewer.checkbox(text="Show Point", checked=True)
