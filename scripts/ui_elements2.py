@@ -8,11 +8,11 @@ viewer = App(viewmode="shaded", enable_sidebar=True, width=1600, height=900)
 viewer.view.camera.target = [5, 0, 0]
 viewer.view.camera.distance = 20
 
-viewer.add(Polyline(curve.locus()), linewidth=2)
+viewer.add(Polyline(curve.to_points(50)), linewidth=2)
 
 points = []
 for i in range(10):
-    p = viewer.add(Point(* curve.point(0)), pointsize=20, pointcolor=(1, 0, 0))
+    p = viewer.add(Point(* curve.point_at(0)), pointsize=20, pointcolor=(1, 0, 0))
     points.append(p)
 
 
@@ -20,7 +20,7 @@ for i in range(10):
 def slide(value):
     value = value / 100
     for i, p in enumerate(points):
-        p._data = curve.point(min(1.0, i * value))
+        p._data = curve.point_at(min(1.0, i * value))
         p.update()
     viewer.view.update()
 

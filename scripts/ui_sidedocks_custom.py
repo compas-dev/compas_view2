@@ -5,8 +5,8 @@ from compas_view2.app import App
 curve = Bezier([[0, 0, 0], [3, 6, 0], [5, -3, 0], [10, 0, 0]])
 
 viewer = App(viewmode="shaded", enable_sidebar=True, width=1600, height=900)
-pointobj = viewer.add(Point(* curve.point(0)), pointsize=20, pointcolor=(1, 0, 0))
-curveobj = viewer.add(Polyline(curve.locus()), linewidth=2)
+pointobj = viewer.add(Point(* curve.point_at(0)), pointsize=20, pointcolor=(1, 0, 0))
+curveobj = viewer.add(Polyline(curve.to_points(50)), linewidth=2)
 
 
 @viewer.button(text="Open Dock 1")
@@ -28,14 +28,14 @@ def click():
     @viewer.slider(title="Slide Point", maxval=100, step=1, bgcolor=Color.white(), parent=dock.content_layout)
     def slide(value):
         value = value / 100
-        pointobj._data = curve.point(value)
+        pointobj._data = curve.point_at(value)
         pointobj.update()
         viewer.view.update()
 
     @viewer.button(text="Reset", parent=dock.content_layout)
     def click():
         if viewer.confirm('This will reset the point to parameter t=0.'):
-            pointobj._data = curve.point(0)
+            pointobj._data = curve.point_at(0)
             pointobj.update()
             slide.value = 0
             viewer.view.update()
