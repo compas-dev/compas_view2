@@ -2,7 +2,7 @@ from compas.datastructures import Mesh
 from compas_view2.shapes import Arrow
 from .meshobject import MeshObject
 
-
+# asdfasfadsfadsf
 class ArrowObject(MeshObject):
     """Object for displaying COMPAS arrow geometry."""
 
