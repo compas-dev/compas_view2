@@ -3,6 +3,8 @@ from OpenGL import GL
 
 from qtpy import QtCore
 from qtpy import QtWidgets
+from qtpy import QtGui
+
 
 from compas_view2.scene import Camera
 from compas_view2.scene import Mouse
@@ -35,9 +37,7 @@ class View(QtWidgets.QOpenGLWidget):
     TOP = 3
     PERSPECTIVE = 4
 
-    def __init__(
-        self, app, background_color=(1, 1, 1, 1), selection_color=(1.0, 1.0, 0.0), mode="shaded", show_grid=True
-    ):
+    def __init__(self, app, background_color=(1, 1, 1, 1), selection_color=(1.0, 1.0, 0.0), mode="shaded", show_grid=True):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
@@ -237,6 +237,10 @@ class View(QtWidgets.QOpenGLWidget):
         # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons["right"] = True
+            if self.keys["shift"]:
+                QtGui.QGuiApplication.setOverrideCursor(QtCore.Qt.OpenHandCursor)
+            else:
+                QtGui.QGuiApplication.setOverrideCursor(QtCore.Qt.SizeAllCursor)
         # recod mouse position
         self.mouse.last_pos = event.pos()
         self.update()
@@ -258,6 +262,7 @@ class View(QtWidgets.QOpenGLWidget):
         # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons["right"] = False
+        QtGui.QGuiApplication.restoreOverrideCursor()
         self.update()
 
     def wheelEvent(self, event):
