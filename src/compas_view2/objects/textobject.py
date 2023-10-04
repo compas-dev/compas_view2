@@ -9,6 +9,7 @@ from compas_view2.gl import make_vertex_buffer
 from .object import Object
 
 from matplotlib import font_manager
+
 here = os.path.dirname(__file__)
 fonts = os.path.join(here, "..", "fonts")
 
