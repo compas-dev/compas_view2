@@ -82,12 +82,23 @@ class TextObject(Object):
         )
         return texture
 
-    def draw(self, shader):
+    def calculate_text_height(self, camera_position):
+        if self._data.absolute_height:
+            return int(
+                (10 * self._data.height)
+                / np.linalg.norm(
+                    np.array(self._data.position) - np.array([camera_position.x, camera_position.y, camera_position.z])
+                )
+            )
+        else:
+            return self._data.height
+
+    def draw(self, shader, camera_position):
         """Draw the object from its buffers"""
         shader.enable_attribute("position")
         shader.uniform4x4("transform", self.matrix)
         shader.uniform1f("object_opacity", self.opacity)
-        shader.uniform1i("text_height", self._data.height)
+        shader.uniform1i("text_height", self.calculate_text_height(camera_position))
         shader.uniform1i("text_num", len(self._data.text))
         shader.uniform3f("text_color", self.color)
         shader.uniformTex("text_texture", self._text_buffer["text_texture"])
