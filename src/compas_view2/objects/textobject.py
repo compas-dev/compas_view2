@@ -7,6 +7,7 @@ from compas_view2.gl import make_index_buffer
 from compas_view2.gl import make_vertex_buffer
 
 from .object import Object
+from matplotlib import font_manager
 
 here = os.path.dirname(__file__)
 fonts = os.path.join(here, "..", "fonts")
@@ -35,7 +36,14 @@ class TextObject(Object):
 
     def make_text_texture(self):
         # change the filename if necessary
-        face = ft.Face(os.path.join(fonts, "FreeSans.ttf"))
+
+        font_dir = os.path.join(fonts, "FreeSans.ttf")
+        if self._data.font:
+            for font in font_manager.fontManager.ttflist:
+                if font.name == self._data.font:
+                    font_dir = font.fname
+                    break
+        face = ft.Face(font_dir)
 
         char_width = 48
         char_height = 80
