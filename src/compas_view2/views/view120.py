@@ -171,7 +171,7 @@ class View120(View):
             obj = self.objects[guid]
             if isinstance(obj, TextObject):
                 if obj.is_visible:
-                    obj.draw(self.shader_text)
+                    obj.draw(self.shader_text, self.camera.position)
         self.shader_text.release()
 
         # draw 2D box for multi-selection
