@@ -36,7 +36,7 @@ class TextObject(Object):
 
     def make_text_texture(self):
         font_dir = os.path.join(fonts, "FreeSans.ttf")
-        if self._data.font != None:
+        if self._data.font is not None:
             for font in font_manager.fontManager.ttflist:
                 if font.name == self._data.font:
                     font_dir = font.fname
