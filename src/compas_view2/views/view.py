@@ -37,7 +37,9 @@ class View(QtWidgets.QOpenGLWidget):
     TOP = 3
     PERSPECTIVE = 4
 
-    def __init__(self, app, background_color=(1, 1, 1, 1), selection_color=(1.0, 1.0, 0.0), mode="shaded", show_grid=True):
+    def __init__(
+        self, app, background_color=(1, 1, 1, 1), selection_color=(1.0, 1.0, 0.0), mode="shaded", show_grid=True
+    ):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
