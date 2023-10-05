@@ -237,7 +237,7 @@ class View(QtWidgets.QOpenGLWidget):
         # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons["right"] = True
-            if  self.keys["shift"]:
+            if self.keys["shift"]:
                 QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.OpenHandCursor)
             else:
                 QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.SizeAllCursor)
