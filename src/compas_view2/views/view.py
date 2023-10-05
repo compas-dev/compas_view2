@@ -237,6 +237,10 @@ class View(QtWidgets.QOpenGLWidget):
         # if right button
         elif event.buttons() & QtCore.Qt.RightButton:
             self.mouse.buttons["right"] = True
+            if self.keys["shift"]:
+                QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.OpenHandCursor)
+            else:
+                QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.SizeAllCursor)
         # recod mouse position
         self.mouse.last_pos = event.pos()
         self.update()
@@ -258,6 +262,8 @@ class View(QtWidgets.QOpenGLWidget):
         # if right button
         elif event.button() == QtCore.Qt.MouseButton.RightButton:
             self.mouse.buttons["right"] = False
+        QtWidgets.QApplication.restoreOverrideCursor()
+
         self.update()
 
     def wheelEvent(self, event):
