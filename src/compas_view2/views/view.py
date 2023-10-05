@@ -52,7 +52,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
-        self.keys = {"shift": False, "control": False}
+        self.keys = {"shift": False, "control": False, "f": False}
         self._frames = 0
         self._now = time.time()
 
@@ -284,6 +284,10 @@ class View(QtWidgets.QOpenGLWidget):
         if key == QtCore.Qt.Key_Control:
             self.app.selector.mode = "deselect"
             self.keys["control"] = True
+        if key == QtCore.Qt.Key_F and self.app.selector.selected:
+            self.keys["F"] = True
+            self.camera.zoom_extents(self.app.selector.selected)
+            self.update()
 
     def keyReleaseEvent(self, event):
         key = event.key()
@@ -293,3 +297,5 @@ class View(QtWidgets.QOpenGLWidget):
         if key == QtCore.Qt.Key_Control:
             self.app.selector.mode = self.app.selector.overwrite_mode or "single"
             self.keys["control"] = False
+        if key == QtCore.Qt.Key_F:
+            self.keys["F"] = False

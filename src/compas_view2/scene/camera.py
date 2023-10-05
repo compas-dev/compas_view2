@@ -357,7 +357,7 @@ class Camera:
             if not obj.is_visible:
                 continue
 
-            if obj.bounding_box is None and hasattr(obj, "_update_bounding_box"):
+            if hasattr(obj, "_update_bounding_box"):
                 obj._update_bounding_box()
 
             if obj.bounding_box is not None:
