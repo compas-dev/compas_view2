@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added `absolute_height` option to the `TextObject`.
 * Added `font` option to `TextObject`.
 * Multi-cursor visual effects.
-* Added `F` key for focusing the selected objects.
+* Added `F` key for focusing the selected objects. If no object is selected, it will focus the whole scene geometries.
 
 ### Changed
 

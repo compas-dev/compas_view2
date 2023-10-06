@@ -284,9 +284,12 @@ class View(QtWidgets.QOpenGLWidget):
         if key == QtCore.Qt.Key_Control:
             self.app.selector.mode = "deselect"
             self.keys["control"] = True
-        if key == QtCore.Qt.Key_F and self.app.selector.selected:
-            self.keys["F"] = True
-            self.camera.zoom_extents(self.app.selector.selected)
+        if key == QtCore.Qt.Key_F:
+            self.keys["f"] = True
+            if self.app.selector.selected:
+                self.camera.zoom_extents(self.app.selector.selected)
+            else:
+                self.camera.zoom_extents(self.objects)
             self.update()
 
     def keyReleaseEvent(self, event):
@@ -298,4 +301,4 @@ class View(QtWidgets.QOpenGLWidget):
             self.app.selector.mode = self.app.selector.overwrite_mode or "single"
             self.keys["control"] = False
         if key == QtCore.Qt.Key_F:
-            self.keys["F"] = False
+            self.keys["f"] = False
