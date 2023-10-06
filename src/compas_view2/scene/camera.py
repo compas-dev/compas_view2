@@ -372,8 +372,8 @@ class Camera:
         max_corner = extents.max(axis=0)
         min_corner = extents.min(axis=0)
         center = (max_corner + min_corner) / 2
-        distance = norm(max_corner - min_corner)
+        distance = max(norm(max_corner - min_corner), 1)
 
         self.target = center
-        self.position = center + self.position
-        self.distance = distance * 1.5
+        vec = (self.target - self.position) / norm(self.target - self.position)
+        self.position = self.target - vec * distance * 1.5
