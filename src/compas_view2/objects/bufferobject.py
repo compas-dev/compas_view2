@@ -1,6 +1,7 @@
 import numpy as np
 
 from compas.utilities import flatten
+from compas.geometry import transform_points_numpy
 
 from compas_view2.gl import make_index_buffer
 from compas_view2.gl import make_vertex_buffer
@@ -134,7 +135,9 @@ class BufferObject(Object):
                 return
 
         positions = np.array(positions)
-        self._bounding_box = np.array([positions.min(axis=0), positions.max(axis=0)])
+        self._bounding_box = transform_points_numpy(
+            np.array([positions.min(axis=0), positions.max(axis=0)]), self._transformation
+        )
         self._bounding_box_center = np.average(self.bounding_box, axis=0)
 
     def draw(self, shader, wireframe=False, is_lighted=False):
