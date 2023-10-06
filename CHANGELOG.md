@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added `F` key for focusing the selected objects. If no object is selected, it will focus the whole scene geometries.
 
 ### Changed
+* Changed `sphinx` requirement for the development environment. Otherwise, there will be a bug similar to [this](https://github.com/compas-dev/sphinx_compas_theme/issues/20).
+* Bug fixed when pressing `F` multiple times, the camera angle shifts.
+* Bug fixed in `Camera.zoom_extents` when one single point is selected.
 
 ### Removed
 
