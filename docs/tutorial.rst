@@ -182,13 +182,24 @@ use the "on" decorator (:meth:`compas_view2.app.App.on`) on a callback function.
     >>> viewer.show()
 
 
-Zoom, Pan, Rotate
+Zoom, Pan, Rotate, and Select
 =================
 
-After launching the viewer, the view can be transformed by zooming, panning, and rotating.
-To zoom, use the mousewheel or "pinch" the trackpad of your laptop.
-To rotate the view, move the mouse while holding down the right mouse button (``right click``).
-To pan, move the mouse while holding ``SHIFT + right click``.
+After launching the viewer, the view can be transformed by zooming, panning, and rotating. Object selection is also possible.
+
+Below are list of default key-mouse combinations to perform these actions:
+
+- To ``zoom``, "pinch" the trackpad of your laptop or use the ``mousewheel``.
+
+- To ``rotate``, move the mouse while holding ``right click``.
+
+- To ``pan``, move the mouse while holding ``sift + right click``.
+
+- To ``select``, click or box select the object while holding ``shift``.
+
+- To ``unselect``, click the object while holding ``ctrl``.
+
+- To ``zoom-selected``, select the object (or not) and press ``f``.
 
 
 View Configuration
@@ -239,7 +250,8 @@ To record the frames of a dynamic visualization into an animated GIF, use the re
     >>> viewer.show()
 
 
-Custom UI Elements
+More Examples
 ==================
 
-coming soon...
+See the examples section for more examples.
+

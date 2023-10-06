@@ -14,9 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Multi-cursor visual effects.
 * Added `F` key for focusing the selected objects. If no object is selected, it will focus the whole scene geometries.
 * Added all the examples based on the `scripts` file.
+* All the examples are categorized into different folders.
 
 ### Changed
 * Changed the language settings in the `config.py` file for better `invoke docs` generation.
+* Remove `modindex` in the index page of the documentation as the file no longer exists.
 ### Removed
 
 
