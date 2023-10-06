@@ -14,7 +14,7 @@ YZ = Plane(P, X)
 ZX = Plane(P, Y)
 XY = Plane(P, Z)
 
-viewer = App(viewmode='lighted', width=1500, height=1000, show_flow=True, flow_auto_update=True)
+viewer = App(viewmode="lighted", width=1500, height=1000, show_flow=True, flow_auto_update=True)
 
 
 @Node(viewer, is_visible=False)
@@ -22,25 +22,25 @@ def create_box(size: float) -> Box:
     return Box.from_width_height_depth(size, size, size)
 
 
-@Node(viewer, show_edges=False, opacity=0.2)
+@Node(viewer, opacity=0.2)
 def create_cylinder_x(radius: float, height: float) -> Box:
     YZ = Plane(P, X)
     return Cylinder((YZ, radius), height)
 
 
-@Node(viewer, show_edges=False, opacity=0.2)
+@Node(viewer, opacity=0.2)
 def create_cylinder_y(radius: float, height: float) -> Box:
     XZ = Plane(P, Y)
     return Cylinder((XZ, radius), height)
 
 
-@Node(viewer, show_edges=False, opacity=0.2)
+@Node(viewer, opacity=0.2)
 def create_cylinder_z(radius: float, height: float) -> Box:
     XY = Plane(P, Z)
     return Cylinder((XY, radius), height)
 
 
-@Node(viewer, show_edges=False)
+@Node(viewer)
 def create_csg_geometry(A: Box, B1: Cylinder, B2: Cylinder, B3: Cylinder) -> Mesh:
     A = BRep.from_box(A)
     B1 = BRep.from_cylinder(B1)
@@ -50,9 +50,9 @@ def create_csg_geometry(A: Box, B1: Cylinder, B2: Cylinder, B3: Cylinder) -> Mes
     return C.to_tesselation()
 
 
-size = viewer.flow.add_node(FloatNode(title='size', default=2), location=(200, 200))
-radius = viewer.flow.add_node(FloatNode(title='radius', default=0.7), location=(200, 400))
-height = viewer.flow.add_node(FloatNode(title='height', default=4), location=(200, 600))
+size = viewer.flow.add_node(FloatNode(title="size", default=2), location=(200, 200))
+radius = viewer.flow.add_node(FloatNode(title="radius", default=0.7), location=(200, 400))
+height = viewer.flow.add_node(FloatNode(title="height", default=4), location=(200, 600))
 box = viewer.flow.add_node(create_box, location=(600, 200))
 cylinder_x = viewer.flow.add_node(create_cylinder_x, location=(600, 400))
 cylinder_y = viewer.flow.add_node(create_cylinder_y, location=(600, 600))
