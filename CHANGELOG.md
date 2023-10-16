@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+<<<<<<< HEAD
+=======
+
+* Categorize all the view settings in to one config file.
+
+* Added `absolute_height` option to the `TextObject`.
+* Added `font` option to `TextObject`.
+* Multi-cursor visual effects.
+* Added `F` key for focusing the selected objects. If no object is selected, it will focus the whole scene geometries.
+* Added all the examples based on the `scripts` file.
+* All the examples are categorized into different folders.
+
+>>>>>>> 7de5856 (half-way changes)
 ### Changed
 
 ### Removed

@@ -1,0 +1,84 @@
+{
+    "messages": {
+        "about": "COMPAS View2 is the second generation of standalone viewers for the COMPAS framework.",
+        "keyboard_reference": "http://docs.mcneel.com/rhino/5/help/en-us/options/keyboard.htm",
+        "authors": ["Tom Van Mele", "Li Chen", "Zac Zhuo Zhang"],
+        "license": "MIT License"
+    },
+    "app": {
+        "title": "COMPAS View2",
+        "version": "120",
+        "width": 800,
+        "height": 500,
+        "enable_sidebar": false,
+        "enable_sidedock1": false,
+        "enable_sidedock2": false,
+        "enable_sceneform": false,
+        "enable_propertyform": false,
+        "show_flow": false,
+        "flow_view_size": [300, 300],
+        "flow_auto_update": true
+    },
+    "view": {
+        "show_grid": true,
+        "viewmode": "shaded"
+    },
+    "menubar": [
+        {
+            "type": "menu",
+            "text": "COMPASVIEW 2",
+            "items": [
+                { "type": "action", "text": "About", "action": "about" },
+                { "type": "separator" },
+                { "type": "action", "text": "OpenGL Version", "action": "opengl_version" },
+                { "type": "action", "text": "GLSL Version", "action": "glsl_version" }
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "View",
+            "items": [
+                {
+                    "type": "radio",
+                    "items": [
+                        { "type": "action", "text": "Shaded", "checked": false, "action": "view_shaded" },
+                        { "type": "action", "text": "Ghosted", "checked": false, "action": "view_ghosted" },
+                        { "type": "action", "text": "Wireframe", "checked": false, "action": "view_wireframe" },
+                        { "type": "action", "text": "Lighted", "checked": false, "action": "view_lighted" }
+                    ]
+                },
+                { "type": "separator" },
+                { "type": "action", "text": "Capture", "action": "view_capture" },
+                { "type": "separator" },
+                { "type": "action", "text": "Front", "action": "view_front" },
+                { "type": "action", "text": "Right", "action": "view_right" },
+                { "type": "action", "text": "Top", "action": "view_top" },
+                { "type": "action", "text": "Perspective", "action": "view_perspective" }
+            ]
+        }
+    ],
+
+    "toolbar": [
+        { "type": "action", "text": "Capture", "action": "view_capture" },
+        { "type": "separator" },
+        { "type": "action", "text": "Front", "action": "view_front" },
+        { "type": "action", "text": "Right", "action": "view_right" },
+        { "type": "action", "text": "Top", "action": "view_top" },
+        { "type": "action", "text": "Perspective", "action": "view_perspective" }
+    ],
+    "sidebar": {},
+    "keys": {
+        "view_top": ["ctrl", "f1"],
+        "view_front": ["ctrl", "f2"],
+        "view_right": ["ctrl", "f3"],
+        "view_perspective": ["ctrl", "f4"],
+        "grid _show": ["ctrl", "a"],
+        "select_all": ["z"],
+        "zoom_selected": ["f7"],
+        "view_ghosted": ["ctrl", "alt", "g"],
+        "view_shaded": ["ctrl", "alt", "s"],
+        "view_wireframe": ["ctrl", "alt", "w"],
+        "view_lighted": ["ctrl+alt", "l"]
+    },
+    "advanced": []
+}

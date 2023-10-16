@@ -21,7 +21,7 @@ Table of Contents
 
    Introduction <self>
    installation
-   tutorial
+   tutorials
    examples
    api
    license
