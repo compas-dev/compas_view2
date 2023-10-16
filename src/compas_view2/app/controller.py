@@ -16,7 +16,7 @@ from compas_view2.forms import PropertyForm
 from .worker import Worker
 
 
-class Controller:
+class Controller ():
     """Action controller for the default config file.
 
     Parameters

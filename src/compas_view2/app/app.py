@@ -53,7 +53,7 @@ from .plot import MplCanvas
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, "../icons")
-CONFIG = os.path.join(HERE, "config.json")
+CONFIG = os.path.join(HERE, "config_rhino_style.json")
 
 VERSIONS = {"120": (2, 1), "330": (3, 3)}
 
@@ -63,27 +63,13 @@ class App:
 
     Parameters
     ----------
-    title : str, optional
-        The title of the viewer window.
-    version: {'120', '330'}, optional
-        The version of the GLSL used by the shaders.
-        Default is ``'120'`` with a compatibility profile.
-        The option ``'330'`` is not yet available.
-    width: int, optional
-        The width of the app window at startup.
-    height: int, optional
-        The height of the app window at startup.
-    viewmode: {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
-        The display mode of the OpenGL view.
-        In `ghosted` mode, all objects have a default opacity of 0.7.
-    show_grid: bool, optional
-        Show the XY plane.
     controller_class: :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
         Default is None, in which case the default controller is used, matching the default config file.
     config: dict | filepath, optional
         A configuration dict for the UI, or a path to a JSON file containing such a dict.
-        Default is None, in which case the default configuration is used.
+        Default is None, in which case the default configuration (A `Rhino-style` preference) is used.
+        More configuration options can be found in the `example-control` of the page.
 
     Attributes
     ----------
@@ -129,23 +115,33 @@ class App:
 
     def __init__(
         self,
-        title: str = "COMPAS View2",
-        version: Literal["120", "330"] = "120",
-        width: int = 800,
-        height: int = 500,
-        viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = "shaded",
         controller_class: Optional[Controller] = None,
-        show_grid: bool = True,
-        config: Optional[dict] = None,
-        enable_sidebar: bool = False,
-        enable_sidedock1: bool = False,
-        enable_sidedock2: bool = False,
-        enable_sceneform: bool = False,
-        enable_propertyform: bool = False,
-        show_flow: bool = False,
-        flow_view_size: Union[Tuple[int], List[int]] = None,
-        flow_auto_update: bool = True,
+        config: Optional[dict] = None
     ):
+
+
+        # Initialize the config.
+        config = config or CONFIG
+        if not isinstance(config, dict):
+            with open(config) as f:
+                config = json.load(f)
+        self.config = config["app"]
+        view_config = config["view"]
+
+        # config variables for the app.
+        version = self.config["version"]
+        title = self.config["title"]
+        width = self.config["width"]
+        height = self.config["height"]
+        enable_sidebar= self.config["enable_sidebar"]
+        enable_sidedock1= self.config["enable_sidedock1"]
+        enable_sidedock2= self.config["enable_sidedock2"]
+        enable_sceneform= self.config["enable_sceneform"]
+        enable_propertyform= self.config["enable_propertyform"]
+        show_flow= self.config["show_flow"]
+        flow_view_size = self.config["flow_view_size"]
+        flow_auto_update = self.config["flow_auto_update"]
+
         if version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
@@ -181,20 +177,12 @@ class App:
         self.width = width
         self.height = height
         self.window = QtWidgets.QMainWindow()
-        self.view = View(self, mode=viewmode, show_grid=show_grid)
+        self.view = View(self, view_config)
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
 
         controller_class = controller_class or Controller
         self.controller = controller_class(self)
-
-        config = config or CONFIG
-        if not isinstance(config, dict):
-            with open(config) as f:
-                config = json.load(f)
-
-        self.config = config
-
         self._app = app
         self._app.references.add(self.window)
         self.selector = Selector(self)
@@ -217,13 +205,17 @@ class App:
             "propertyform": None,
         }
 
-        self.init()
+        self.init(config)
         self.resize(width, height)
         self.started = False
         self.on_object_selected = []
 
-    def init(self):
+    def init(self, config):
         """Initialize the components of the user interface.
+        Parameters
+        ----------
+        config: dict
+            The configuration dictionary.
 
         Returns
         -------
@@ -231,9 +223,9 @@ class App:
 
         """
         self._init_statusbar()
-        self._init_menubar(self.config.get("menubar"))
-        self._init_toolbar(self.config.get("toolbar"))
-        self._init_sidebar(self.config.get("sidebar"))
+        self._init_menubar(config["menubar"])
+        self._init_toolbar(config["toolbar"])
+        self._init_sidebar(config["sidebar"])
         self._init_sidedocks()
 
     def resize(self, width: int, height: int):
