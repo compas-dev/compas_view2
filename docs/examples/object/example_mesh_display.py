@@ -6,7 +6,7 @@ from compas.geometry import Scale
 
 from compas_view2.app import App
 
-viewer = App(width=800, height=500)
+viewer = App()
 
 mesh = Mesh.from_obj(compas.get('faces.obj'))
 T = Translation.from_vector([0, 0, 1])
