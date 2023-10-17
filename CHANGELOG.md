@@ -10,7 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+<!-- TODO: Setup assistant info panel. -->
+
+
+>>>>>>> 5b6976c (halfway commit)
 
 * Categorize all the view settings in to one config file.
 

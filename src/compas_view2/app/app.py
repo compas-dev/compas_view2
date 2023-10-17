@@ -2,11 +2,9 @@ from typing import AnyStr
 from typing import Callable
 from typing import Optional
 from typing import Union
-from typing import Tuple
 from typing import List
 from typing import Dict
 from typing import Any
-from typing_extensions import Literal
 
 import sys
 import os
@@ -53,7 +51,7 @@ from .plot import MplCanvas
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, "../icons")
-CONFIG = os.path.join(HERE, "config_rhino_style.json")
+CONFIG = os.path.join(HERE, "config_default.json")
 
 VERSIONS = {"120": (2, 1), "330": (3, 3)}
 
@@ -63,13 +61,13 @@ class App:
 
     Parameters
     ----------
+    config: dict | filepath, optional
+        A configuration dict for the App, or a path to a JSON file containing such a dict.
+        Default is None, in which case the default configuration (A `Rhino-style` preference) is used.
+        More configuration options can be found in the `example-control` of the page.
     controller_class: :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
         Default is None, in which case the default controller is used, matching the default config file.
-    config: dict | filepath, optional
-        A configuration dict for the UI, or a path to a JSON file containing such a dict.
-        Default is None, in which case the default configuration (A `Rhino-style` preference) is used.
-        More configuration options can be found in the `example-control` of the page.
 
     Attributes
     ----------
@@ -115,43 +113,32 @@ class App:
 
     def __init__(
         self,
-        controller_class: Optional[Controller] = None,
-        config: Optional[dict] = None
+        config: Optional[dict] = None,
+        controller_class: Optional[Controller] = None
     ):
-
-
         # Initialize the config.
         config = config or CONFIG
         if not isinstance(config, dict):
             with open(config) as f:
                 config = json.load(f)
         self.config = config["app"]
-        view_config = config["view"]
 
         # config variables for the app.
-        version = self.config["version"]
-        title = self.config["title"]
-        width = self.config["width"]
-        height = self.config["height"]
-        enable_sidebar= self.config["enable_sidebar"]
-        enable_sidedock1= self.config["enable_sidedock1"]
-        enable_sidedock2= self.config["enable_sidedock2"]
-        enable_sceneform= self.config["enable_sceneform"]
-        enable_propertyform= self.config["enable_propertyform"]
+        self.version = self.config["version"]
         show_flow= self.config["show_flow"]
         flow_view_size = self.config["flow_view_size"]
         flow_auto_update = self.config["flow_auto_update"]
 
-        if version not in VERSIONS:
+        if self.version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
 
         glFormat = QtGui.QSurfaceFormat()
-        glFormat.setVersion(*VERSIONS[version])
+        glFormat.setVersion(*VERSIONS[self.version])
 
-        if version == "330":
+        if self.version == "330":
             View = View330
             glFormat.setProfile(QtGui.QSurfaceFormat.CoreProfile)
-        elif version == "120":
+        elif self.version == "120":
             View = View120
             glFormat.setProfile(QtGui.QSurfaceFormat.CompatibilityProfile)
         else:
@@ -167,17 +154,18 @@ class App:
 
         appIcon = QIcon(os.path.join(ICONS, "compas_icon_white.png"))
         app.setWindowIcon(appIcon)
-        app.setApplicationName(title)
+        self.title = self.config["title"]
+        app.setApplicationName(self.title)
 
         self.timer = None
         self.frame_count = 0
         self.record = False
         self.recorded_frames = []
 
-        self.width = width
-        self.height = height
+        self.width = self.config["width"]
+        self.height = self.config["height"]
         self.window = QtWidgets.QMainWindow()
-        self.view = View(self, view_config)
+        self.view = View(self, config["view"])
         self.window.setCentralWidget(self.view)
         self.window.setContentsMargins(0, 0, 0, 0)
 
@@ -195,18 +183,13 @@ class App:
                 flow_auto_update=flow_auto_update,
             )
 
-        self.enable_sidebar = enable_sidebar
-        self.enable_sidedock1 = enable_sidedock1
-        self.enable_sidedock2 = enable_sidedock2
-        self.enable_sceneform = enable_sceneform
-        self.enable_propertyform = enable_propertyform
         self.dock_slots = {
             "sceneform": None,
             "propertyform": None,
         }
 
         self.init(config)
-        self.resize(width, height)
+        self.resize(self.width, self.height)
         self.started = False
         self.on_object_selected = []
 
@@ -215,18 +198,18 @@ class App:
         Parameters
         ----------
         config: dict
-            The configuration dictionary.
+            The overall configuration dictionary.
 
         Returns
         -------
         None
 
         """
-        self._init_statusbar()
+        self._init_statusbar(config["statusbar"])
         self._init_menubar(config["menubar"])
         self._init_toolbar(config["toolbar"])
         self._init_sidebar(config["sidebar"])
-        self._init_sidedocks()
+        self._init_sidedocks(config["sidedocks"])
 
     def resize(self, width: int, height: int):
         """Resize the main window programmatically.
@@ -745,33 +728,34 @@ class App:
     def _get_icon(self, icon: str):
         return QtGui.QIcon(os.path.join(ICONS, icon))
 
-    def _init_statusbar(self):
+    def _init_statusbar(self,statusbar_config: Dict):
         self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
-        self.statusText = QtWidgets.QLabel("Ready")
+        self.statusText = QtWidgets.QLabel(statusbar_config["texts"])
         self.statusbar.addWidget(self.statusText, 1)
-        self.statusFps = QtWidgets.QLabel("fps: ")
-        self.statusbar.addWidget(self.statusFps)
+        if statusbar_config["show_fps"]:
+            self.statusFps = QtWidgets.QLabel("fps: ")
+            self.statusbar.addWidget(self.statusFps)
 
-    def _init_menubar(self, items: List[Dict]):
-        if not items:
+    def _init_menubar(self,menubar_config:Dict):
+        if not menubar_config["enable_menubar"]:
             return
         self.menubar = self.window.menuBar()
         self.menubar.setNativeMenuBar(True)
         self.menubar.setContentsMargins(0, 0, 0, 0)
-        self._add_menubar_items(items, self.menubar)
+        self._add_menubar_items(menubar_config["items"], self.menubar)
 
-    def _init_toolbar(self, items: List[Dict]):
-        if not items:
+    def _init_toolbar(self,toolbar_config : Dict):
+        if not toolbar_config["enable_toolbar"]:
             return
         self.toolbar = self.window.addToolBar("Tools")
         self.toolbar.setMovable(False)
         self.toolbar.setObjectName("Tools")
         self.toolbar.setIconSize(QtCore.QSize(16, 16))
-        self._add_toolbar_items(items, self.toolbar)
+        self._add_toolbar_items(toolbar_config["items"], self.toolbar)
 
-    def _init_sidebar(self, items: List[Dict]):
-        if not self.enable_sidebar:
+    def _init_sidebar(self, sidebar_config: Dict):
+        if not sidebar_config["enable_sidebar"]:
             return
         self.sidebar = QtWidgets.QToolBar(self.window)
         self.window.addToolBar(QtCore.Qt.LeftToolBarArea, self.sidebar)
@@ -779,18 +763,18 @@ class App:
         self.sidebar.setMovable(False)
         self.sidebar.setIconSize(QtCore.QSize(16, 16))
         self.sidebar.setMinimumWidth(240)
-        self._add_sidebar_items(items, self.sidebar)
+        self._add_sidebar_items(sidebar_config["items"], self.sidebar)
 
-    def _init_sidedocks(self):
-        if self.enable_sidedock1:
+    def _init_sidedocks(self, sidedocks_config: Dict):
+        if sidedocks_config["enable_sidedock1"]:
             self.sidedock1 = self.sidedock(slot="sidedock1")
             self.sidedock1.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
-        if self.enable_sidedock2:
+        if sidedocks_config["enable_sidedock2"]:
             self.sidedock2 = self.sidedock(slot="sidedock2")
             self.sidedock2.setFeatures(QtWidgets.QDockWidget.NoDockWidgetFeatures)
-        if self.enable_sceneform:
+        if sidedocks_config["enable_sceneform"]:
             self.sceneform()
-        if self.enable_propertyform:
+        if sidedocks_config["enable_propertyform"]:
             self.propertyform()
 
     def _add_menubar_items(self, items: List[Dict], parent: QtWidgets.QWidget):

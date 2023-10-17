@@ -5,7 +5,6 @@ from qtpy import QtCore
 from qtpy import QtWidgets
 
 from compas_view2.scene import Camera
-from compas_view2.scene import Mouse
 from compas_view2.objects import GridObject
 
 
@@ -16,18 +15,8 @@ class View(QtWidgets.QOpenGLWidget):
     ----------
     app: :class:`compas_view2.app.App`
         The parent application of the view.
-    background_color: tuple[float, float, float, float], optional
-        The background or "clear" color of the view.
-        Default is ``(1.0, 1.0, 1.0, 1.0)``.
-    selection_color: tuple[float, float, float], optional
-        The highlight color of selected objects.
-        Default is ``(1.0, 1.0, 0.0)``.
-    mode: 'shaded' | 'ghosted', optional
-        The display mode.
-        Default is ``'shaded'``.
-    show_grid: bool, optional
-        Flag for turning the grid on or off.
-        Default is ``True``, which turns the grid on.
+    view_config: dict
+        The view configuration.
     """
 
     FRONT = 1
@@ -36,21 +25,17 @@ class View(QtWidgets.QOpenGLWidget):
     PERSPECTIVE = 4
 
     def __init__(self, app, view_config):
-
-# background_color=(1, 1, 1, 1), selection_color=(1.0, 1.0, 0.0), mode="shaded", show_grid=True
-
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
         self._current = View.PERSPECTIVE
         self.shader_model = None
         self.app = app
-        self.color = background_color
-        self.mode = mode
-        self.selection_color = selection_color
-        self.show_grid = show_grid
+        self.color = view_config["background_color"]
+        self.mode = view_config["view_mode"]
+        self.selection_color = view_config["selection_color"]
+        self.show_grid = view_config["show_grid"]
         self.camera = Camera(self)
-        self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
         self.keys = {"shift": False, "control": False}
@@ -201,90 +186,31 @@ class View(QtWidgets.QOpenGLWidget):
         """
         if not self.isActiveWindow() or not self.underMouse():
             return
-        # record mouse position
-        self.mouse.pos = event.pos()
-        # compute displacement
-        dx = self.mouse.dx()
-        dy = self.mouse.dy()
-        # do a box selection
-        # if left button + SHIFT
-        if event.buttons() & QtCore.Qt.LeftButton:
-            if self.keys["shift"] or self.keys["control"]:
-                self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
-            # record mouse position
-            self.mouse.last_pos = event.pos()
-            self.update()
-        # change the view
-        # if right bottom
-        elif event.buttons() & QtCore.Qt.RightButton:
-            if self.keys["shift"]:
-                self.camera.pan(dx, dy)
-            else:
-                self.camera.rotate(dx, dy)
-            # record mouse position
-            self.mouse.last_pos = event.pos()
-            self.update()
+        else:
+            self.app.controller.mouse_move_action(event)
 
     def mousePressEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-        # start selecting
-        # if left button
-        if event.buttons() & QtCore.Qt.LeftButton:
-            self.mouse.buttons["left"] = True
-            if self.keys["shift"] or self.keys["control"]:
-                self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
-        # do nothing
-        # if right button
-        elif event.buttons() & QtCore.Qt.RightButton:
-            self.mouse.buttons["right"] = True
-        # recod mouse position
-        self.mouse.last_pos = event.pos()
-        self.update()
+        else:
+            self.app.controller.mouse_press_action(event)
 
     def mouseReleaseEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-        # finalize selecting
-        # if left button
-        if event.button() == QtCore.Qt.MouseButton.LeftButton:
-            self.mouse.buttons["left"] = False
-            # select location on grid
-            if self.app.selector.wait_for_selection_on_plane:
-                self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
-            # trigger object selection
-            else:
-                self.app.selector.enabled = True
-        # do nothing
-        # if right button
-        elif event.button() == QtCore.Qt.MouseButton.RightButton:
-            self.mouse.buttons["right"] = False
+        else:
+            self.app.controller.mouse_release_action(event)
+
         self.update()
 
     def wheelEvent(self, event):
         if not self.isActiveWindow() or not self.underMouse():
             return
-        degrees = event.delta() / 8
-        steps = degrees / 15
-        self.camera.zoom(steps)
-        self.update()
+        else:
+            self.app.controller.wheel_action(event)
 
     def keyPressEvent(self, event):
-        key = event.key()
-        if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
-            self.app.selector.finish_selection()
-        if key == QtCore.Qt.Key_Shift:
-            self.app.selector.mode = "multi"
-            self.keys["shift"] = True
-        if key == QtCore.Qt.Key_Control:
-            self.app.selector.mode = "deselect"
-            self.keys["control"] = True
+        self.app.controller.key_press_action(event)
 
     def keyReleaseEvent(self, event):
-        key = event.key()
-        if key == QtCore.Qt.Key_Shift:
-            self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-            self.keys["shift"] = False
-        if key == QtCore.Qt.Key_Control:
-            self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-            self.keys["control"] = False
+        self.app.controller.key_release_action(event)

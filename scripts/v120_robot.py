@@ -9,7 +9,7 @@ model = RobotModel.from_urdf_file(github.load_urdf('irb6640.urdf'))
 model.load_geometry(github)
 # model = RobotModel.ur5(False)
 
-viewer = App(viewmode="lighted", enable_sceneform=True, enable_sidebar=True, width=2000, height=1000)
+viewer = App()
 
 robotObj = viewer.add(model)
 
