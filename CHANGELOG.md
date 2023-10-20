@@ -8,18 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-<!-- TODO: Setup assistant info panel. -->
-
-
->>>>>>> 5b6976c (halfway commit)
-
+* Remove the `scripts` folder as it is duplicated with the `examples` folder, and the other COMPAS packages do not contain this folder.
+* Add example `example_custom_keys.py` in the examples/control.
+* Update the example files in the tutorial.
+* Update the software architecture diagram in the documentation.
+* Update the UI naming conventions diagram in the documentation.
+* Add the `Tutorial Software Concepts` section in the documentation.
+* Add the `Tutorial Configuration` section in the documentation.
+* Action class which controls all the key actions.
 * Categorize all the view settings in to one config file.
-
 * Added `absolute_height` option to the `TextObject`.
 * Added `font` option to `TextObject`.
 * Multi-cursor visual effects.

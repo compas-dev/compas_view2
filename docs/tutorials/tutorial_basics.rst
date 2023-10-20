@@ -14,6 +14,12 @@ Tutorial Basics
 
 .. rst-class:: lead
 
+
+.. autosummary::
+    :toctree:
+    :nosignatures:
+
+
 This tutorial covers basic usage of the viewer through scripting.
 Other usage modes are possible and will be described in a separate tutorial.
 
@@ -185,10 +191,21 @@ use the "on" decorator (:meth:`compas_view2.app.App.on`) on a callback function.
 Zoom, Pan, Rotate
 =================
 
-After launching the viewer, the view can be transformed by zooming, panning, and rotating.
-To zoom, use the mousewheel or "pinch" the trackpad of your laptop.
-To rotate the view, move the mouse while holding down the right mouse button (``right click``).
-To pan, move the mouse while holding ``SHIFT + right click``.
+After launching the viewer, the view can be transformed by zooming, panning, and rotating. Object selection is also possible.
+
+Below are list of default key-mouse combinations to perform these actions:
+
+- To ``zoom``, "pinch" the trackpad of your laptop or use the ``mousewheel``.
+
+- To ``rotate``, move the mouse while holding ``right click``.
+
+- To ``pan``, move the mouse while holding ``sift + right click``.
+
+- To ``select``, click or box select the object while holding ``left click``.
+
+- To ``unselect``, click the object while holding ``ctrl``.
+
+- To ``zoom-selected``, select the object (or not) and press ``f7``.
 
 
 View Configuration

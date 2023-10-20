@@ -14,6 +14,8 @@ import shutil
 
 from functools import partial
 
+from typing import Literal, Tuple
+
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
@@ -51,7 +53,10 @@ from .plot import MplCanvas
 
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, "../icons")
-CONFIG = os.path.join(HERE, "config_default.json")
+
+with open(os.path.join(HERE, "config_default.json")) as f:
+    DEFAULT_CONFIG = json.load(f)
+
 
 VERSIONS = {"120": (2, 1), "330": (3, 3)}
 
@@ -61,9 +66,24 @@ class App:
 
     Parameters
     ----------
+    title : str, optional
+        The title of the viewer window. It will override the value in the config file.
+    version: {'120', '330'}, optional
+        The version of the GLSL used by the shaders.  It will override the value in the config file.
+        Default is ``'120'`` with a compatibility profile.
+        The option ``'330'`` is not yet available.
+    width: int, optional
+        The width of the app window at startup.  It will override the value in the config file.
+    height: int, optional
+        The height of the app window at startup.  It will override the value in the config file.
+    viewmode: {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
+        The display mode of the OpenGL view.  It will override the value in the config file.
+        In `ghosted` mode, all objects have a default opacity of 0.7.
+    show_grid: bool, optional
+        Show the XY plane.  It will override the value in the config file.
     config: dict | filepath, optional
         A configuration dict for the App, or a path to a JSON file containing such a dict.
-        Default is None, in which case the default configuration (A `Rhino-style` preference) is used.
+        Default is None, in which case the default configuration (a `Rhino-like` preference) is used.
         More configuration options can be found in the `example-control` of the page.
     controller_class: :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
@@ -113,21 +133,74 @@ class App:
 
     def __init__(
         self,
+        title: str = None,
+        version: Literal["120", "330"] = None,
+        width: int = None,
+        height: int = None,
+        viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = None,
+        show_grid: bool = None,
+        enable_sidebar=None,
+        enable_sidedock1: bool = None,
+        enable_sidedock2: bool = None,
+        enable_sceneform: bool = None,
+        enable_propertyform: bool = None,
+        show_flow: bool = None,
+        flow_view_size: Union[Tuple[int], List[int]] = None,
+        flow_auto_update: bool = None,
         config: Optional[dict] = None,
-        controller_class: Optional[Controller] = None
+        controller_class: Optional[Controller] = None,
     ):
         # Initialize the config.
-        config = config or CONFIG
-        if not isinstance(config, dict):
-            with open(config) as f:
-                config = json.load(f)
+        if config is not None:
+            if not isinstance(config, dict):
+                with open(config) as f:
+                    config = json.load(f)
+
+            for key in DEFAULT_CONFIG:
+                if key not in config:
+                    config[key] = DEFAULT_CONFIG[key]
+        else:
+            config = DEFAULT_CONFIG
+
+        # config variables for the app.
+        if title:
+            config["app"]["title"] = title
+        if version:
+            config["app"]["version"] = version
+        if width:
+            config["app"]["width"] = width
+        if height:
+            config["app"]["height"] = height
+
+        if viewmode:
+            config["view"]["viewmode"] = viewmode
+        if show_grid:
+            config["view"]["show_grid"] = show_grid
+
+        if enable_sidebar:
+            config["sidebar"]["enable_sidebar"] = enable_sidebar
+
+        if enable_sidedock1:
+            config["sidedocks"]["enable_sidedock1"] = enable_sidedock1
+        if enable_sidedock2:
+            config["sidedocks"]["enable_sidedock2"] = enable_sidedock2
+        if enable_sceneform:
+            config["sidedocks"]["enable_sceneform"] = enable_sceneform
+        if enable_propertyform:
+            config["sidedocks"]["enable_propertyform"] = enable_propertyform
+
+        if show_flow:
+            config["flow"]["show_flow"] = show_flow
+        if flow_view_size:
+            config["app"]["flow_view_size"] = flow_view_size
+        if flow_auto_update:
+            config["app"]["flow_auto_update"] = flow_auto_update
+
         self.config = config["app"]
+        self.all_config = config
 
         # config variables for the app.
         self.version = self.config["version"]
-        show_flow= self.config["show_flow"]
-        flow_view_size = self.config["flow_view_size"]
-        flow_auto_update = self.config["flow_auto_update"]
 
         if self.version not in VERSIONS:
             raise Exception("Only these versions are currently supported: {}".format(VERSIONS))
@@ -170,18 +243,13 @@ class App:
         self.window.setContentsMargins(0, 0, 0, 0)
 
         controller_class = controller_class or Controller
-        self.controller = controller_class(self)
+        self.controller = controller_class(self, controller_config=config["controller"])
         self._app = app
         self._app.references.add(self.window)
         self.selector = Selector(self)
 
-        self.show_flow = show_flow
         if Flow:
-            self.flow = Flow(
-                self,
-                flow_view_size=flow_view_size or (self.width, self.height),
-                flow_auto_update=flow_auto_update,
-            )
+            self.flow = Flow(self, self.all_config["flow"])
 
         self.dock_slots = {
             "sceneform": None,
@@ -384,7 +452,7 @@ class App:
         """
         self.started = True
         self.window.show()
-        if Flow and self.show_flow:
+        if Flow and self.all_config["flow"]["show_flow"]:
             self.flow.show()
 
         if self.dock_slots["sceneform"]:
@@ -403,7 +471,7 @@ class App:
         None
 
         """
-        QtWidgets.QMessageBox.about(self.window, "About", self.config["messages"]["about"])
+        QtWidgets.QMessageBox.about(self.window, "About", self.all_config["messages"]["about"])
 
     def info(self, message: str) -> None:
         """Display info.
@@ -728,7 +796,7 @@ class App:
     def _get_icon(self, icon: str):
         return QtGui.QIcon(os.path.join(ICONS, icon))
 
-    def _init_statusbar(self,statusbar_config: Dict):
+    def _init_statusbar(self, statusbar_config: Dict):
         self.statusbar = self.window.statusBar()
         self.statusbar.setContentsMargins(0, 0, 0, 0)
         self.statusText = QtWidgets.QLabel(statusbar_config["texts"])
@@ -737,7 +805,7 @@ class App:
             self.statusFps = QtWidgets.QLabel("fps: ")
             self.statusbar.addWidget(self.statusFps)
 
-    def _init_menubar(self,menubar_config:Dict):
+    def _init_menubar(self, menubar_config: Dict):
         if not menubar_config["enable_menubar"]:
             return
         self.menubar = self.window.menuBar()
@@ -745,7 +813,7 @@ class App:
         self.menubar.setContentsMargins(0, 0, 0, 0)
         self._add_menubar_items(menubar_config["items"], self.menubar)
 
-    def _init_toolbar(self,toolbar_config : Dict):
+    def _init_toolbar(self, toolbar_config: Dict):
         if not toolbar_config["enable_toolbar"]:
             return
         self.toolbar = self.window.addToolBar("Tools")
@@ -844,7 +912,12 @@ class App:
         kwargs: Optional[Dict] = None,
         icon: Optional[AnyStr] = None,
     ):
-        action = action if callable(action) else getattr(self.controller, action)
+        if not callable(action):
+            try:
+                action = getattr(self.controller, action)
+            except Exception:
+                action = getattr(self.controller.actions[action], "ui_action")
+
         args = args or []
         kwargs = kwargs or {}
         if icon:
@@ -1012,6 +1085,11 @@ class App:
         """
 
         def outer(func: Callable) -> Callable:
+            try:
+                self.sidebar
+            except Exception:
+                raise ValueError("No sidebar to add slider to.")
+
             slider = Slider(
                 self,
                 parent or self.sidebar,
