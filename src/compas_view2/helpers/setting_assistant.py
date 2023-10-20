@@ -1,5 +1,3 @@
-
-
 # Copyright (C) 2022 The Qt Company Ltd.
 # SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
@@ -72,9 +70,7 @@ class TreeItem:
         self._value_type = value
 
     @classmethod
-    def load(
-        cls, value: Union[List, Dict], parent: "TreeItem" = None, sort=True
-    ) -> "TreeItem":
+    def load(cls, value: Union[List, Dict], parent: "TreeItem" = None, sort=True) -> "TreeItem":
         """Create a 'root' TreeItem from a nested list or a nested dictonary
 
         Examples:
@@ -114,7 +110,7 @@ class TreeItem:
 
 
 class JsonModel(QAbstractItemModel):
-    """ An editable model of Json data """
+    """An editable model of Json data"""
 
     def __init__(self, parent: QObject = None):
         super().__init__(parent)
@@ -123,7 +119,7 @@ class JsonModel(QAbstractItemModel):
         self._headers = ("key", "value")
 
     def clear(self):
-        """ Clear data from the model """
+        """Clear data from the model"""
         self.load({})
 
     def load(self, document: dict):
@@ -133,9 +129,9 @@ class JsonModel(QAbstractItemModel):
             document (dict): JSON-compatible dictionary
         """
 
-        assert isinstance(
-            document, (dict, list, tuple)
-        ), "`document` must be of dict, list or tuple, " f"not {type(document)}"
+        assert isinstance(document, (dict, list, tuple)), (
+            "`document` must be of dict, list or tuple, " f"not {type(document)}"
+        )
 
         self.beginResetModel()
 
@@ -190,9 +186,7 @@ class JsonModel(QAbstractItemModel):
 
         return False
 
-    def headerData(
-        self, section: int, orientation: Qt.Orientation, role: Qt.ItemDataRole
-    ):
+    def headerData(self, section: int, orientation: Qt.Orientation, role: Qt.ItemDataRole):
         """Override from QAbstractItemModel
 
         For the JsonModel, it returns only data for columns (orientation = Horizontal)
@@ -277,7 +271,6 @@ class JsonModel(QAbstractItemModel):
             return flags
 
     def to_json(self, item=None):
-
         if item is None:
             item = self._rootItem
 
@@ -302,7 +295,6 @@ class JsonModel(QAbstractItemModel):
 
 
 if __name__ == "__main__":
-
     app = QApplication(sys.argv)
     view = QTreeView()
     model = JsonModel()

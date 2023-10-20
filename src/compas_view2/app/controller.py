@@ -14,12 +14,10 @@ from compas_view2.forms import AddForm
 from compas_view2.forms import PropertyForm
 
 from .worker import Worker
-from .app import App
-from .key import Key
+from compas_view2.actions import action_manager, mouse_key_check, mouse_check, key_check
 
 
-
-class Controller ():
+class Controller:
     """Action controller for the default config file.
 
     Parameters
@@ -29,10 +27,14 @@ class Controller ():
 
     """
 
-    def __init__(self, app:App, controller_config:Dict):
+    def __init__(self, app, controller_config: Dict):
         self.app = app
         self.config = controller_config
+        self.mouse_key = controller_config["actions"]["mouse_key"]
+        self.keys = controller_config["actions"]["keys"]
         self.mouse = Mouse()
+        self.key_status = {}
+        self.actions = action_manager(self)
 
     def interactive(action="add"):
         """Decorator for transforming functions into "data add" or "object edit" actions.
@@ -123,229 +125,115 @@ class Controller ():
     # Key mouse actions
     # ==============================================================================
 
-    def mouse_move_action(self,event):
+    def mouse_move_action(self, event):
         # record mouse position
         self.mouse.pos = event.pos()
         # compute displacement
         dx = self.mouse.dx()
         dy = self.mouse.dy()
-        # do a box selection
-        # if left button + SHIFT
-        # TODO
-        if event.buttons() & QtCore.Qt.LeftButton:
-            if self.keys["shift"] or self.keys["control"]:
-                self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
-            # record mouse position
-            self.mouse.last_pos = event.pos()
-            self.update()
-        # change the view
-        # if right bottom
-        elif event.buttons() & QtCore.Qt.RightButton:
-            if self.keys["shift"]:
-                self.camera.pan(dx, dy)
-            else:
-                self.camera.rotate(dx, dy)
-            # record mouse position
-            self.mouse.last_pos = event.pos()
-            self.update()
 
-    def mouse_press_action(self,event):
-        # start selecting
-        # if left button
-        if event.buttons() & QtCore.Qt.LeftButton:
-            self.mouse.buttons["left"] = True
-            if self.keys["shift"] or self.keys["control"]:
-                self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
-        # do nothing
-        # if right button
-        elif event.buttons() & QtCore.Qt.RightButton:
-            self.mouse.buttons["right"] = True
-            if self.keys["shift"]:
-                QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.OpenHandCursor)
-            else:
-                QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.SizeAllCursor)
-        # recod mouse position
+        # * mouse_key
+        # box_selection
+        if mouse_key_check(event, self.key_status, self.mouse_key["box_selection"]):
+            self.app.selector.mode = "multi"
+            self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
+        # box_deselection
+        elif mouse_key_check(event, self.key_status, self.mouse_key["box_deselection"]):
+            self.app.selector.mode = "deselect"
+            self.app.selector.perform_box_selection(self.mouse.pos.x(), self.mouse.pos.y())
+        # pan
+        elif mouse_key_check(event, self.key_status, self.mouse_key["pan"]):
+            self.app.view.camera.pan(dx, dy)
+        # rotate
+        elif mouse_key_check(event, self.key_status, self.mouse_key["rotate"]):
+            self.app.view.camera.rotate(dx, dy)
+
+        # record mouse position
         self.mouse.last_pos = event.pos()
-        self.update()
+        self.app.view.update()
 
-    def mouse_release_action(self,event):
-        # finalize selecting
-        # if left button
-        if event.button() == QtCore.Qt.MouseButton.LeftButton:
-            self.mouse.buttons["left"] = False
-            # select location on grid
+    def mouse_press_action(self, event):
+        # * mouse_key
+        # box_selection
+        if mouse_key_check(event, self.key_status, self.mouse_key["box_selection"]) or mouse_key_check(
+            event, self.key_status, self.mouse_key["box_deselection"]
+        ):
+            self.app.selector.reset_box_selection(event.pos().x(), event.pos().y())
+        # change cursor
+        elif mouse_key_check(event, self.key_status, self.mouse_key["pan"]):
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.OpenHandCursor)
+        elif mouse_key_check(event, self.key_status, self.mouse_key["rotate"]):
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.SizeAllCursor)
+
+        self.mouse.last_pos = event.pos()
+        self.app.view.update()
+
+    def mouse_release_action(self, event):
+        # * mouse_key
+        # selection
+        if mouse_check(event, self.mouse_key["selection"]["mouse"]):
             if self.app.selector.wait_for_selection_on_plane:
                 self.app.selector.finish_selection_on_plane(event.pos().x(), event.pos().y())
-            # trigger object selection
             else:
                 self.app.selector.enabled = True
-        # do nothing
-        # if right button
-        elif event.button() == QtCore.Qt.MouseButton.RightButton:
-            self.mouse.buttons["right"] = False
+
         QtWidgets.QApplication.restoreOverrideCursor()
 
-    def wheel_action(self,event):
+    def wheel_action(self, event):
         degrees = event.delta() / 8
         steps = degrees / 15
-        self.camera.zoom(steps)
-        self.update()
+        self.app.view.camera.zoom(steps)
+        self.app.view.update()
 
     def key_press_action(self, event):
-        key = event.key()
-        if key == QtCore.Qt.Key_Return or key == QtCore.Qt.Key_Enter:
+        # * mouse_key
+        # selection
+        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
             self.app.selector.finish_selection()
-        if key == QtCore.Qt.Key_Shift:
+            self.key_status[self.mouse_key["selection"]["key"]] = True
+        # multi_selection
+        if key_check(event, self.key_status, self.mouse_key["selection"]["multi_selection"]):
             self.app.selector.mode = "multi"
-            self.keys["shift"] = True
-        if key == QtCore.Qt.Key_Control:
+            self.key_status[self.mouse_key["selection"]["multi_selection"]] = True
+        # deselect
+        if key_check(event, self.key_status, self.mouse_key["selection"]["deselect"]):
             self.app.selector.mode = "deselect"
-            self.keys["control"] = True
-        if key == QtCore.Qt.Key_F:
-            self.keys["f"] = True
-            if self.app.selector.selected:
-                self.camera.zoom_extents(self.app.selector.selected)
-            else:
-                self.camera.zoom_extents(self.objects)
-            self.update()
+            self.key_status[self.mouse_key["selection"]["deselect"]] = True
+
+        # * key actions
+        for action in self.actions.values():
+            if action.keys_pressed_check(event):
+                action.keys_pressed_action()
+
+        self.app.view.update()
 
     def key_release_action(self, event):
-        key = event.key()
-        if key == QtCore.Qt.Key_Shift:
+        # * box_selection
+        # box_selection
+        if key_check(event, self.key_status, self.mouse_key["box_selection"]["key"]):
+            self.key_status[self.mouse_key["box_selection"]["key"]] = False
+        # box_deselection
+        elif key_check(event, self.key_status, self.mouse_key["box_deselection"]["key"]):
+            self.key_status[self.mouse_key["box_deselection"]["key"]] = False
+        # pan
+        elif key_check(event, self.key_status, self.mouse_key["pan"]["key"]):
+            self.key_status[self.mouse_key["pan"]["key"]] = False
+        # rotate
+        elif key_check(event, self.key_status, self.mouse_key["rotate"]["key"]):
+            self.key_status[self.mouse_key["rotate"]["key"]] = False
+
+        # * multi_selection
+        if key_check(event, self.key_status, self.mouse_key["selection"]["multi_selection"]):
             self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-            self.keys["shift"] = False
-        if key == QtCore.Qt.Key_Control:
+            self.key_status[self.mouse_key["selection"]["multi_selection"]] = False
+        # * deselect
+        if key_check(event, self.key_status, self.mouse_key["selection"]["deselect"]):
             self.app.selector.mode = self.app.selector.overwrite_mode or "single"
-            self.keys["control"] = False
-        if key == QtCore.Qt.Key_F:
-            self.keys["f"] = False
+            self.key_status[self.mouse_key["selection"]["deselect"]] = False
 
-    # ==============================================================================
-    # View actions
-    # ==============================================================================
-
-    def view_shaded(self):
-        """Switch the view to shaded.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.mode = "shaded"
-        self.app.view.update()
-
-    def view_ghosted(self):
-        """Switch the view to ghosted.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.mode = "ghosted"
-        self.app.view.update()
-
-    def view_wireframe(self):
-        """Switch the view to wireframe.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.mode = "wireframe"
-        self.app.view.update()
-
-    def view_lighted(self):
-        """Switch the view to lighted.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.mode = "lighted"
-        self.app.view.update()
-
-    def view_capture(self, filepath=None):
-        """Capture a screenshot.
-
-        Parameters
-        ----------
-        filepath : str, optional
-            The destination path for saving the screenshot.
-            If no path is provided, a file dialog will be be opened automatically.
-
-        Returns
-        -------
-        None
-
-        """
-        if filepath:
-            result = filepath
-        else:
-            result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
-            if not result:
-                return
-            result = result[0]
-        filepath = Path(result)
-        if not filepath.suffix:
-            return
-        qimage = self.app.view.grabFramebuffer()
-        qimage.save(str(filepath), filepath.suffix[1:])
-
-    def view_front(self):
-        """Swtich to a front view.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.current = self.app.view.FRONT
-        self.app.view.camera.reset_position()
-        self.app.view.update_projection()
-        self.app.view.update()
-
-    def view_right(self):
-        """Swtich to a right view.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.current = self.app.view.RIGHT
-        self.app.view.camera.reset_position()
-        self.app.view.update_projection()
-        self.app.view.update()
-
-    def view_top(self):
-        """Swtich to a top view.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.current = self.app.view.TOP
-        self.app.view.camera.reset_position()
-        self.app.view.update_projection()
-        self.app.view.update()
-
-    def view_perspective(self):
-        """Swtich to a perspective view.
-
-        Returns
-        -------
-        None
-
-        """
-        self.app.view.current = self.app.view.PERSPECTIVE
-        self.app.view.camera.reset_position()
-        self.app.view.update_projection()
-        self.app.view.update()
+        for action in self.actions.values():
+            if action.keys_released_check(event):
+                action.keys_released_action()
 
     # ==============================================================================
     # Scene actions

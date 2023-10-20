@@ -10,5 +10,6 @@ dependencies:
   - pyside2
   - pyopengl
   - qtpy
+  - rich
   - pip:
     - -r requirements-dev.txt
