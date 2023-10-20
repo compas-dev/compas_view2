@@ -80,7 +80,7 @@ def supported_keys():
 class Action:
     """The main class for all the actions. Actions are some operations that are trigger by the key(s). The `Controller`class invokes all the actions. Typical actions are `zoom_selected`, `view_lighted`, etc."""
 
-    def __init__(self, Controller, keys: list[str]):
+    def __init__(self, Controller, keys):
         if keys is None:
             keys = "placeholder"
 
