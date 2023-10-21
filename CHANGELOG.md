@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-* Remove the `scripts` folder as it is duplicated with the `examples` folder, and the other COMPAS packages do not contain this folder.
+* Add `Developer Guide` section in the documentation.
 * Add example `example_custom_keys.py` in the examples/control.
 * Update the example files in the tutorial.
 * Update the software architecture diagram in the documentation.
@@ -16,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Add the `Tutorial Software Concepts` section in the documentation.
 * Add the `Tutorial Configuration` section in the documentation.
 * Action class which controls all the key actions.
-* Categorize all the view settings in to one config file.
 * Added `absolute_height` option to the `TextObject`.
 * Added `font` option to `TextObject`.
 * Multi-cursor visual effects.
@@ -26,9 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 >>>>>>> 7de5856 (half-way changes)
 ### Changed
-
+* Categorize all the view settings in to one config file.
 ### Removed
-
+* Remove the `scripts` folder as it is duplicated with the `examples` folder, and the other COMPAS packages do not contain this folder.
 
 ## [0.9.4] 2023-08-30
 
