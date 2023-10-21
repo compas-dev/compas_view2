@@ -12,7 +12,7 @@ class ViewCapture(Action):
 
     """
 
-    def __init__(self, Controller, keys: list[str]):
+    def __init__(self, Controller, keys):
         super().__init__(Controller, keys)
 
     def pressed_action(self):

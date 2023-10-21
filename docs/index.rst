@@ -24,6 +24,7 @@ Table of Contents
    tutorials
    examples
    api
+   developer_guide
    license
 
 

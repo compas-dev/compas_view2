@@ -98,3 +98,6 @@ Setup Assistant
 ===========
 Coming soon...
 
+Setup Assistant
+===========
+Coming soon...
