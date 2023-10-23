@@ -224,12 +224,18 @@ use the “on” decorator (<a class="reference internal" href="api/generated/co
 </code></pre></div>
 </div>
 </section>
-<section id="zoom-pan-rotate">
-<h2>Zoom, Pan, Rotate</h2>
-<p>After launching the viewer, the view can be transformed by zooming, panning, and rotating.
-To zoom, use the mousewheel or “pinch” the trackpad of your laptop.
-To rotate the view, move the mouse while holding down the right mouse button (<code class="docutils literal notranslate"><span class="pre">right</span> <span class="pre">click</span></code>).
-To pan, move the mouse while holding <code class="docutils literal notranslate"><span class="pre">SHIFT</span> <span class="pre">+</span> <span class="pre">right</span> <span class="pre">click</span></code>.</p>
+<section id="zoom-pan-rotate-and-select">
+<h2>Zoom, Pan, Rotate, and Select</h2>
+<p>After launching the viewer, the view can be transformed by zooming, panning, and rotating. Object selection is also possible.</p>
+<p>Below are list of default key-mouse combinations to perform these actions:</p>
+<ul class="simple">
+<li><p>To <code class="docutils literal notranslate"><span class="pre">zoom</span></code>, “pinch” the trackpad of your laptop or use the <code class="docutils literal notranslate"><span class="pre">mousewheel</span></code>.</p></li>
+<li><p>To <code class="docutils literal notranslate"><span class="pre">rotate</span></code>, move the mouse while holding <code class="docutils literal notranslate"><span class="pre">right</span> <span class="pre">click</span></code>.</p></li>
+<li><p>To <code class="docutils literal notranslate"><span class="pre">pan</span></code>, move the mouse while holding <code class="docutils literal notranslate"><span class="pre">sift</span> <span class="pre">+</span> <span class="pre">right</span> <span class="pre">click</span></code>.</p></li>
+<li><p>To <code class="docutils literal notranslate"><span class="pre">select</span></code>, click or box select the object while holding <code class="docutils literal notranslate"><span class="pre">shift</span></code>.</p></li>
+<li><p>To <code class="docutils literal notranslate"><span class="pre">unselect</span></code>, click the object while holding <code class="docutils literal notranslate"><span class="pre">ctrl</span></code>.</p></li>
+<li><p>To <code class="docutils literal notranslate"><span class="pre">zoom-selected</span></code>, select the object (or not) and press <code class="docutils literal notranslate"><span class="pre">f</span></code>.</p></li>
+</ul>
 </section>
 <section id="view-configuration">
 <h2>View Configuration</h2>
@@ -265,9 +271,9 @@ To record the frames of a dynamic visualization into an animated GIF, use the re
 </code></pre></div>
 </div>
 </section>
-<section id="custom-ui-elements">
-<h2>Custom UI Elements</h2>
-<p>coming soon…</p>
+<section id="more-examples">
+<h2>More Examples</h2>
+<p>See the examples section for more examples.</p>
 </section>
 </section>
 
@@ -292,9 +298,69 @@ To record the frames of a dynamic visualization into an animated GIF, use the re
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 nav-item active"><a class="nav-link active reference internal" href="#">Tutorial</a></li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="examples.html">Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/example_coplanaredges.html">Coplanar Edges</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/example_customui.html">Make a Custom UI From a Script</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/example_orbiting.html">Orbit Around an Object</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/object.html">Object Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_arrows.html">Arrows</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_brep.html">Brep</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_collection.html">Collection</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_coplanaredges.html">Coplanar Edges</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_fonts.html">Fonts</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_frames.html">Frames</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_geometries.html">Geometries</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_lines.html">Lines</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_mesh_display.html">Mesh Display</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_nurbs.html">Nurbs</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_points.html">Points</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_polyline.html">Polyline</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_robot.html">Robot</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_robot_custom.html">Robot Custom</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_scripted.html">Scripted</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_texts.html">Texts</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/object/example_vector.html">Vector</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/color.html">Color Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/color/example_blending.html">Blending</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/color/example_colors.html">Colors</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/color/example_face_vertext_color.html">Face Vertex Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/control.html">Control Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/control/example_camera.html">Camera</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/control/example_camera_lookat.html">Camera LookAt</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/control/example_camera_scale.html">Camera Scale</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/control/example_custom_controller.html">Custom Controller</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/ui.html">UI Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_customui.html">Make a Custom UI From a Script</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_plot.html">Plot</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_tabs_tree_form.html">Tabs Tree Form</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_tree.html">Tree</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_tree_editable.html">Tree Editable</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_tree_interactive.html">Tree Interactive</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_ui_elements.html">UI Elements</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_ui_elements2.html">UI Elements2</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_ui_sidedocks.html">UI SideDocks</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/ui/example_ui_sidedocks_custom.html">UI SideDocks Custom</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/dynamic.html">Dynamic Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/dynamic/example_background_compute.html">Background Compute</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/dynamic/example_dynamic.html">Dynamic</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/dynamic/example_dynamic_mesh.html">Dynamic Mesh</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/dynamic/example_orbiting.html">Orbit Around an Object</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/dynamic/example_record.html">Record</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/dynamic/example_transform.html">Transform</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/flow.html">Flow Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/flow/example_csg_flow.html">CSG Flow</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="examples/flow/example_flow.html">Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="examples/other.html">Other Examples</a><ul class="simple">
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="api.html">API Reference</a><ul class="nav flex-column collapse">
@@ -395,11 +461,11 @@ To record the frames of a dynamic visualization into an animated GIF, use the re
 <li class="nav-item"><a class="nav-link reference internal" href="#object-collections">Object Collections</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#object-transformations">Object Transformations</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#dynamic-visualization">Dynamic Visualization</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#zoom-pan-rotate">Zoom, Pan, Rotate</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#zoom-pan-rotate-and-select">Zoom, Pan, Rotate, and Select</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#view-configuration">View Configuration</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#selections">Selections</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#capturing">Capturing</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#custom-ui-elements">Custom UI Elements</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#more-examples">More Examples</a></li>
 </ul>
 </li>
 </ul>
