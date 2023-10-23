@@ -5,6 +5,8 @@ from typing import Union
 from typing import List
 from typing import Dict
 from typing import Any
+from typing import Literal
+from typing import Tuple
 
 import sys
 import os
@@ -13,8 +15,6 @@ import tempfile
 import shutil
 
 from functools import partial
-
-from typing import Literal, Tuple
 
 from qtpy import QtCore
 from qtpy import QtGui
@@ -163,37 +163,37 @@ class App:
             config = DEFAULT_CONFIG
 
         # config variables for the app.
-        if title:
+        if title is not None:
             config["app"]["title"] = title
-        if version:
+        if version is not None:
             config["app"]["version"] = version
-        if width:
+        if width is not None:
             config["app"]["width"] = width
-        if height:
+        if height is not None:
             config["app"]["height"] = height
 
-        if viewmode:
+        if viewmode is not None:
             config["view"]["viewmode"] = viewmode
-        if show_grid:
+        if show_grid is not None:
             config["view"]["show_grid"] = show_grid
 
-        if enable_sidebar:
+        if enable_sidebar is not None:
             config["sidebar"]["enable_sidebar"] = enable_sidebar
 
-        if enable_sidedock1:
+        if enable_sidedock1 is not None:
             config["sidedocks"]["enable_sidedock1"] = enable_sidedock1
-        if enable_sidedock2:
+        if enable_sidedock2 is not None:
             config["sidedocks"]["enable_sidedock2"] = enable_sidedock2
-        if enable_sceneform:
+        if enable_sceneform is not None:
             config["sidedocks"]["enable_sceneform"] = enable_sceneform
-        if enable_propertyform:
+        if enable_propertyform is not None:
             config["sidedocks"]["enable_propertyform"] = enable_propertyform
 
-        if show_flow:
+        if show_flow is not None:
             config["flow"]["show_flow"] = show_flow
-        if flow_view_size:
+        if flow_view_size is not None:
             config["app"]["flow_view_size"] = flow_view_size
-        if flow_auto_update:
+        if flow_auto_update is not None:
             config["app"]["flow_auto_update"] = flow_auto_update
 
         self.config = config["app"]

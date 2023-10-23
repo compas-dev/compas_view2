@@ -1,5 +1,4 @@
 import os
-from .helpers import *  # noqa: F401, F403
 
 __author__ = ["tom van mele"]
 __copyright__ = "Block Research Group - ETH Zurich"
@@ -37,4 +36,4 @@ except Exception:
     util.find_library = new_util_find_library
 
 
-__all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_OBJECT", "register"]  # noqa: F405
+__all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_OBJECT", "register"]
