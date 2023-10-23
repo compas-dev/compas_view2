@@ -1,10 +1,12 @@
 *******************************************************************************
-Coplanar Edges
+Frames
 *******************************************************************************
-
-.. figure:: /_images/example_coplanaredges.png
+.. autosummary::
+    :toctree:
+    :nosignatures:
+.. figure:: /_images/example_frames.jpg
     :figclass: figure
     :class: figure-img img-fluid
 
-.. literalinclude:: example_coplanaredges.py
+.. literalinclude:: example_frames.py
     :language: python

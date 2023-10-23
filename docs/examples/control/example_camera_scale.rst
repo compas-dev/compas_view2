@@ -1,10 +1,15 @@
 *******************************************************************************
-Orbit Around an Object
+Camera Scale
 *******************************************************************************
 
-.. figure:: /_images/example_orbiting.gif
+
+
+.. autosummary::
+    :toctree:
+    :nosignatures:
+.. figure:: /_images/example_camera_scale.jpg
     :figclass: figure
     :class: figure-img img-fluid
 
-.. literalinclude:: example_orbiting.py
+.. literalinclude:: example_camera_scale.py
     :language: python

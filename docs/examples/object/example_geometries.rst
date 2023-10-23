@@ -1,10 +1,12 @@
 *******************************************************************************
-Make a Custom UI From a Script
+Geometries
 *******************************************************************************
-
-.. figure:: /_images/example_customui.png
+.. autosummary::
+    :toctree:
+    :nosignatures:
+.. figure:: /_images/example_geometries.jpg
     :figclass: figure
     :class: figure-img img-fluid
 
-.. literalinclude:: example_customui.py
+.. literalinclude:: example_geometries.py
     :language: python
