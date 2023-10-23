@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * All the examples are categorized into different folders.
 
 ### Changed
+* Rebased to the up-to-date `compas_view2` repository.
 * Categorize all the view settings in to one config file.
 * Changed the language settings in the `config.py` file for better `invoke docs` generation.
 * Remove `modindex` in the index page of the documentation as the file no longer exists.
