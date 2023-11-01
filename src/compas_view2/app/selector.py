@@ -99,7 +99,7 @@ class Selector:
         self.types = []
         self.select_from = "pixel"
         self.enabled = False
-        self.box_select_coords = np.zeros((4,), np.int)
+        self.box_select_coords = np.zeros((4,), int)
         self.wait_for_selection = False
         self.wait_for_selection_on_plane = False
         self.location_on_plane = None
