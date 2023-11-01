@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+
 * Multi-selection in scene form.
+* Added an example `example_pair_object_form.py`.
 * Added `absolute_height` option to the `TextObject`.
 * Added `font` option to `TextObject`.
 * Multi-cursor visual effects.
