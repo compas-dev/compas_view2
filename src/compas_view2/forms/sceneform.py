@@ -3,6 +3,7 @@ from qtpy import QtWidgets
 from qtpy import QtCore
 from qtpy.QtWidgets import QAbstractItemView
 
+
 class SceneForm(DockForm):
     def __init__(self, app, title="Scene"):
         super().__init__(app, title)
@@ -31,7 +32,6 @@ class SceneForm(DockForm):
             self.map_objects(obj.children, item)
 
     def display_selected(self):
-
         selected = self.tree.selectedItems()
         self.app.selector.deselect()
 
@@ -41,8 +41,8 @@ class SceneForm(DockForm):
             self.app.selector.mode = "multi"
             [self.app.selector.select(s.obj, update=True, mode="multi") for s in selected]
         self.show_properties(selected[0].obj)
-    def show_properties(self, obj):
 
+    def show_properties(self, obj):
         propertyform = self.app.dock_slots.get("propertyform")
         if propertyform:
             propertyform.set_object(obj)
