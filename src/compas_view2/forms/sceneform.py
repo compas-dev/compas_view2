@@ -1,6 +1,7 @@
 from .dockform import DockForm
 from qtpy import QtWidgets
 from qtpy import QtCore
+from qtpy.QtWidgets import QAbstractItemView
 
 
 class SceneForm(DockForm):
@@ -10,7 +11,8 @@ class SceneForm(DockForm):
         self.tree.setColumnCount(1)
         self.tree.setHeaderHidden(True)
         self.setWidget(self.tree)
-        self.tree.itemPressed.connect(lambda item: self.show_properties(item.obj))
+        self.tree.itemPressed.connect(self.display_selected)
+        self.tree.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
     def update(self):
         self.tree.clear()
@@ -29,9 +31,18 @@ class SceneForm(DockForm):
 
             self.map_objects(obj.children, item)
 
-    def show_properties(self, obj):
-        self.app.selector.select(obj, update=True)
+    def display_selected(self):
+        selected = self.tree.selectedItems()
+        self.app.selector.deselect()
 
+        if len(selected) == 0:
+            return
+        else:
+            self.app.selector.mode = "multi"
+            [self.app.selector.select(s.obj, update=True, mode="multi") for s in selected]
+        self.show_properties(selected[0].obj)
+
+    def show_properties(self, obj):
         propertyform = self.app.dock_slots.get("propertyform")
         if propertyform:
             propertyform.set_object(obj)
