@@ -1,7 +1,7 @@
 from .dockform import DockForm
 from qtpy import QtWidgets
 from qtpy import QtCore
-
+from qtpy.QtWidgets import QAbstractItemView
 
 class SceneForm(DockForm):
     def __init__(self, app, title="Scene"):
@@ -10,6 +10,7 @@ class SceneForm(DockForm):
         self.tree.setColumnCount(1)
         self.tree.setHeaderHidden(True)
         self.setWidget(self.tree)
+        self.tree.setSelectionMode(QAbstractItemView.MultiSelection)
         self.tree.itemPressed.connect(lambda item: self.show_properties(item.obj))
 
     def update(self):

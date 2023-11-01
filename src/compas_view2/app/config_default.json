@@ -69,12 +69,12 @@
             { "type": "action", "text": "Perspective", "action": "view_perspective" }
         ]
     },
-    "sidebar": { "enable_sidebar": false, "items": [] },
+    "sidebar": { "enable_sidebar": true, "items": [] },
     "sidedocks": {
-        "enable_sidedock1": false,
-        "enable_sidedock2": false,
-        "enable_sceneform": false,
-        "enable_propertyform": false
+        "enable_sidedock1": true,
+        "enable_sidedock2": true,
+        "enable_sceneform": true,
+        "enable_propertyform": true
     },
     "flow": { "show_flow": false, "flow_view_size": [300, 300], "flow_auto_update": true },
     "controller": {
