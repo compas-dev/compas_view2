@@ -122,4 +122,4 @@ docs/api/generated/
 
 conda.recipe/
 
-* .drawio
+*.drawio
