@@ -121,3 +121,5 @@ scripts/__old/**
 docs/api/generated/
 
 conda.recipe/
+
+*.drawio

@@ -8,7 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-
+* Option to pass in App init parameters through config file (with an example)
+* Add `Developer Guide` section in the documentation.
+* Update the example files in the tutorial.
+* Update the software architecture diagram in the documentation.
+* Update the UI naming conventions diagram in the documentation.
+* Add the `Tutorial Software Concepts` section in the documentation.
+* Add the `Tutorial Configuration` section in the documentation.
 * Multi-selection in scene form.
 * Added an example `example_pair_object_form.py`.
 * Added `absolute_height` option to the `TextObject`.
