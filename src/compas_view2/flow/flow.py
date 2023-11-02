@@ -1,7 +1,7 @@
 import ryvencore_qt as rc
 import ryvencore
 from compas.datastructures import Graph
-from typing import Union, Tuple
+from typing import Union, Tuple, Dict
 
 
 class Flow(Graph):
@@ -20,13 +20,13 @@ class Flow(Graph):
 
     """
 
-    def __init__(self, app, flow_auto_update: bool = True, flow_view_size: Tuple[int, int] = (800, 500)):
+    def __init__(self, app, flow_config: Dict):
         super().__init__()
         self.app = app
-        self.flow_auto_update = flow_auto_update
+        self.flow_auto_update = flow_config["flow_auto_update"]
         self.session = rc.Session()
         self.session.design.set_flow_theme(name="pure dark")
-        self.script = self.session.create_script(flow_view_size=flow_view_size)
+        self.script = self.session.create_script(flow_view_size=flow_config["flow_view_size"])
         self.flow_view = self.session.flow_views[self.script]
         self.script.flow.set_algorithm_mode("data opt")
         self.init_run = False

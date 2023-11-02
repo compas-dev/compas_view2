@@ -5,6 +5,7 @@ __copyright__ = "Block Research Group - ETH Zurich"
 __license__ = "MIT License"
 __email__ = "van.mele@arch.ethz.ch"
 __version__ = "0.9.4"
+__url__ = "https://compas.dev/compas_view2"
 
 
 HERE = os.path.dirname(__file__)

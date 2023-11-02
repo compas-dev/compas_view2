@@ -21,9 +21,10 @@ Table of Contents
 
    Introduction <self>
    installation
-   tutorial
+   tutorials
    examples
    api
+   developer_guide
    license
 
 

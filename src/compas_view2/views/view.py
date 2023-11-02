@@ -16,18 +16,8 @@ class View(QtWidgets.QOpenGLWidget):
     ----------
     app: :class:`compas_view2.app.App`
         The parent application of the view.
-    background_color: tuple[float, float, float, float], optional
-        The background or "clear" color of the view.
-        Default is ``(1.0, 1.0, 1.0, 1.0)``.
-    selection_color: tuple[float, float, float], optional
-        The highlight color of selected objects.
-        Default is ``(1.0, 1.0, 0.0)``.
-    mode: 'shaded' | 'ghosted', optional
-        The display mode.
-        Default is ``'shaded'``.
-    show_grid: bool, optional
-        Flag for turning the grid on or off.
-        Default is ``True``, which turns the grid on.
+    view_config: dict
+        The view configuration.
     """
 
     FRONT = 1
@@ -35,26 +25,24 @@ class View(QtWidgets.QOpenGLWidget):
     TOP = 3
     PERSPECTIVE = 4
 
-    def __init__(
-        self, app, background_color=(1, 1, 1, 1), selection_color=(1.0, 1.0, 0.0), mode="shaded", show_grid=True
-    ):
+    def __init__(self, app, view_config):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
         self._current = View.PERSPECTIVE
         self.shader_model = None
         self.app = app
-        self.color = background_color
-        self.mode = mode
-        self.selection_color = selection_color
-        self.show_grid = show_grid
+        self.color = view_config["background_color"]
+        self.mode = view_config["view_mode"]
+        self.selection_color = view_config["selection_color"]
+        self.show_grid = view_config["show_grid"]
         self.camera = Camera(self)
-        self.mouse = Mouse()
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
         self.keys = {"shift": False, "control": False, "f": False}
         self._frames = 0
         self._now = time.time()
+        self.mouse = Mouse()
 
     @property
     def mode(self):

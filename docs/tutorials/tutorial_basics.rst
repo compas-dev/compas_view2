@@ -1,5 +1,5 @@
 ********************************************************************************
-Tutorial
+Tutorial Basics
 ********************************************************************************
 
 .. |checked| raw:: html
@@ -13,6 +13,12 @@ Tutorial
 .. highlight:: python
 
 .. rst-class:: lead
+
+
+.. autosummary::
+    :toctree:
+    :nosignatures:
+    
 
 This tutorial covers basic usage of the viewer through scripting.
 Other usage modes are possible and will be described in a separate tutorial.
@@ -195,11 +201,11 @@ Below are list of default key-mouse combinations to perform these actions:
 
 - To ``pan``, move the mouse while holding ``sift + right click``.
 
-- To ``select``, click or box select the object while holding ``shift``.
+- To ``select``, click or box select the object while holding ``left click``.
 
 - To ``unselect``, click the object while holding ``ctrl``.
 
-- To ``zoom-selected``, select the object (or not) and press ``f``.
+- To ``zoom-selected``, select the object (or not) and press ``f7``.
 
 
 View Configuration
