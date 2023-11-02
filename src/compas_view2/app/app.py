@@ -54,10 +54,6 @@ from .plot import MplCanvas
 HERE = os.path.dirname(__file__)
 ICONS = os.path.join(HERE, "../icons")
 
-with open(os.path.join(HERE, "config_default.json")) as f:
-    DEFAULT_CONFIG = json.load(f)
-
-
 VERSIONS = {"120": (2, 1), "330": (3, 3)}
 
 
@@ -151,6 +147,10 @@ class App:
         controller_class: Optional[Controller] = None,
     ):
         # Initialize the config.
+
+        with open(os.path.join(HERE, "config_default.json")) as f:
+            DEFAULT_CONFIG = json.load(f)
+
         if config is not None:
             if not isinstance(config, dict):
                 with open(config) as f:

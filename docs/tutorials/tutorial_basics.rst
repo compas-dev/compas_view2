@@ -18,7 +18,7 @@ Tutorial Basics
 .. autosummary::
     :toctree:
     :nosignatures:
-    
+
 
 This tutorial covers basic usage of the viewer through scripting.
 Other usage modes are possible and will be described in a separate tutorial.
@@ -205,7 +205,7 @@ Below are list of default key-mouse combinations to perform these actions:
 
 - To ``unselect``, click the object while holding ``ctrl``.
 
-- To ``zoom-selected``, select the object (or not) and press ``f7``.
+- To ``zoom-selected``, select the object (or not) and press ``f``.
 
 
 View Configuration
