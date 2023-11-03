@@ -243,7 +243,7 @@ class App:
         self.window.setContentsMargins(0, 0, 0, 0)
 
         controller_class = controller_class or Controller
-        self.controller = controller_class(self)
+        self.controller = controller_class(self, controller_config=config["controller"])
         self._app = app
         self._app.references.add(self.window)
         self.selector = Selector(self)
