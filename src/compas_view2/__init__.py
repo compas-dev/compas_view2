@@ -37,3 +37,12 @@ except Exception:
 
 
 __all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_OBJECT", "register"]
+
+
+def _find_resource(filename):
+    filename = filename.strip("/")
+    return os.path.abspath(os.path.join(DATA, filename))
+
+
+def get(filename):
+    return _find_resource(filename)
