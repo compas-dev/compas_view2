@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * All the examples are categorized into different folders.
 
 ### Changed
-
+* Using `Sphinx Book Theme` for documentation generation.
 * Changed the language settings in the `config.py` file for better `invoke docs` generation.
 * Remove `modindex` in the index page of the documentation as the file no longer exists.
 * Changed `sphinx` requirement for the development environment. Otherwise, there will be a bug similar to [this](https://github.com/compas-dev/sphinx_compas_theme/issues/20).
