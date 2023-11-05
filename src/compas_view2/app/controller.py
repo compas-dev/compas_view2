@@ -235,6 +235,133 @@ class Controller:
         self.app.info(value)
 
     # ==============================================================================
+    # View actions
+    # ==============================================================================
+
+    def view_shaded(self):
+        """Switch the view to shaded.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.mode = "shaded"
+        self.app.view.update()
+
+    def view_ghosted(self):
+        """Switch the view to ghosted.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.mode = "ghosted"
+        self.app.view.update()
+
+    def view_wireframe(self):
+        """Switch the view to wireframe.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.mode = "wireframe"
+        self.app.view.update()
+
+    def view_lighted(self):
+        """Switch the view to lighted.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.mode = "lighted"
+        self.app.view.update()
+
+    def view_capture(self, filepath=None):
+        """Capture a screenshot.
+
+        Parameters
+        ----------
+        filepath : str, optional
+            The destination path for saving the screenshot.
+            If no path is provided, a file dialog will be be opened automatically.
+
+        Returns
+        -------
+        None
+
+        """
+        if filepath:
+            result = filepath
+        else:
+            result = QtWidgets.QFileDialog.getSaveFileName(caption="File name", dir="")
+            if not result:
+                return
+            result = result[0]
+        filepath = Path(result)
+        if not filepath.suffix:
+            return
+        qimage = self.app.view.grabFramebuffer()
+        qimage.save(str(filepath), filepath.suffix[1:])
+
+    def view_front(self):
+        """Swtich to a front view.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.current = self.app.view.FRONT
+        self.app.view.camera.reset_position()
+        self.app.view.update_projection()
+        self.app.view.update()
+
+    def view_right(self):
+        """Swtich to a right view.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.current = self.app.view.RIGHT
+        self.app.view.camera.reset_position()
+        self.app.view.update_projection()
+        self.app.view.update()
+
+    def view_top(self):
+        """Swtich to a top view.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.current = self.app.view.TOP
+        self.app.view.camera.reset_position()
+        self.app.view.update_projection()
+        self.app.view.update()
+
+    def view_perspective(self):
+        """Swtich to a perspective view.
+
+        Returns
+        -------
+        None
+
+        """
+        self.app.view.current = self.app.view.PERSPECTIVE
+        self.app.view.camera.reset_position()
+        self.app.view.update_projection()
+        self.app.view.update()
+
+    # ==============================================================================
     # Key mouse actions
     # ==============================================================================
 

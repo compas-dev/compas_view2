@@ -121,8 +121,8 @@ class Selector:
                 instance_map = self.instance_map
                 if self.select_from == "pixel":
                     # Pick an object from mouse pixel
-                    x = self.app.view.mouse.last_pos.x()
-                    y = self.app.view.mouse.last_pos.y()
+                    x = self.app.controller.mouse.last_pos.x()
+                    y = self.app.controller.mouse.last_pos.y()
                     self.select_one_from_instance_map(x, y, instance_map)
                 if self.select_from == "box":
                     # Pick objects from box selection
