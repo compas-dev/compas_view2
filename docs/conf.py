@@ -13,7 +13,7 @@ import importlib
 import sphinx_compas_theme
 from sphinx.ext.napoleon.docstring import NumpyDocstring
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../src"))
 
 # -- General configuration ------------------------------------------------
 
@@ -24,14 +24,16 @@ release = "0.9.4"
 version = ".".join(release.split(".")[0:2])
 
 master_doc = "index"
-source_suffix = [".rst", ]
+source_suffix = [
+    ".rst",
+]
 templates_path = sphinx_compas_theme.get_autosummary_templates_path()
 exclude_patterns = []
 
-pygments_style   = "sphinx"
-show_authors     = True
+pygments_style = "sphinx"
+show_authors = True
 add_module_names = True
-language         = 'en'
+language = "en"
 
 
 # -- Extension configuration ------------------------------------------------
@@ -68,13 +70,16 @@ autodoc_member_order = "alphabetical"
 
 autoclass_content = "class"
 
+
 def skip(app, what, name, obj, would_skip, options):
-    if name.startswith('_'):
+    if name.startswith("_"):
         return True
     return would_skip
 
+
 def setup(app):
     app.connect("autodoc-skip-member", skip)
+
 
 # autosummary options
 
@@ -101,14 +106,18 @@ plot_html_show_formats = False
 
 # docstring sections
 
+
 def parse_attributes_section(self, section):
     return self._format_fields("Attributes", self._consume_fields())
 
+
 NumpyDocstring._parse_attributes_section = parse_attributes_section
+
 
 def patched_parse(self):
     self._sections["attributes"] = self._parse_attributes_section
     self._unpatched_parse()
+
 
 NumpyDocstring._unpatched_parse = NumpyDocstring._parse
 NumpyDocstring._parse = patched_parse
@@ -122,31 +131,32 @@ intersphinx_mapping = {
 
 # linkcode
 
+
 def linkcode_resolve(domain, info):
-    if domain != 'py':
+    if domain != "py":
         return None
-    if not info['module']:
+    if not info["module"]:
         return None
-    if not info['fullname']:
-        return None
-
-    package = info['module'].split('.')[0]
-    if not package.startswith('compas_view2'):
+    if not info["fullname"]:
         return None
 
-    module = importlib.import_module(info['module'])
-    parts = info['fullname'].split('.')
+    package = info["module"].split(".")[0]
+    if not package.startswith("compas_view2"):
+        return None
+
+    module = importlib.import_module(info["module"])
+    parts = info["fullname"].split(".")
 
     if len(parts) == 1:
-        obj = getattr(module, info['fullname'])
-        filename = inspect.getmodule(obj).__name__.replace('.', '/')
+        obj = getattr(module, info["fullname"])
+        filename = inspect.getmodule(obj).__name__.replace(".", "/")
         lineno = inspect.getsourcelines(obj)[1]
     elif len(parts) == 2:
         obj_name, attr_name = parts
         obj = getattr(module, obj_name)
         attr = getattr(obj, attr_name)
         if inspect.isfunction(attr):
-            filename = inspect.getmodule(obj).__name__.replace('.', '/')
+            filename = inspect.getmodule(obj).__name__.replace(".", "/")
             lineno = inspect.getsourcelines(attr)[1]
         else:
             return None
@@ -155,32 +165,46 @@ def linkcode_resolve(domain, info):
 
     return f"https://github.com/compas-dev/compas_view2/blob/master/src/{filename}.py#L{lineno}"
 
+
 # extlinks
 
 extlinks = {}
 
 # -- Options for HTML output ----------------------------------------------
 
-html_theme = "compaspkg"
-html_theme_path = sphinx_compas_theme.get_html_theme_path()
+html_theme = "sphinx_book_theme"
+# html_theme_path = sphinx_compas_theme.get_html_theme_path()
 
 html_theme_options = {
-    "package_name"    : "compas_view2",
-    "package_title"   : project,
-    "package_version" : release,
-    "package_author"  : "compas-dev",
-    "package_docs"    : "https://compas.dev/compas_view2/",
-    "package_repo"    : "https://github.com/compas-dev/compas_view2",
-    "package_old_versions_txt": "https://compas.dev/compas_view2/doc_versions.txt"
+    "repository_url": "https://github.com/compas-dev/compas_view2",
+    # "package_name": "compas_view2",
+    # "package_title": project,
+    # "package_version": release,
+    # "package_author": "compas-dev",
+    # "package_docs": "https://compas.dev/compas_view2/",
+    # "package_repo": "https://github.com/compas-dev/compas_view2",
+    # "package_old_versions_txt": "https://compas.dev/compas_view2/doc_versions.txt",
+    "use_repository_button": True,
+    "logo": {
+        "image_light": "compas_icon_white.png",  # relative to parent of conf.py
+        "image_dark": "compas_icon_white.png",  # relative to parent of conf.py
+        "text": "COMPAS VIEW2 docs",
+    },
 }
 
-html_context = {}
-html_static_path = sphinx_compas_theme.get_html_static_path()
-html_extra_path = []
-html_last_updated_fmt = ""
-html_copy_source = False
-html_show_sourcelink = False
-html_permalinks = False
-html_permalinks_icon = ""
-html_experimental_html5_writer = False
-html_compact_lists = True
+# html_context = {}
+# html_static_path = sphinx_compas_theme.get_html_static_path()
+# html_extra_path = []
+# html_last_updated_fmt = ""
+# html_copy_source = False
+# html_show_sourcelink = False
+# html_permalinks = False
+# html_permalinks_icon = ""
+# html_experimental_html5_writer = False
+# html_compact_lists = True
+
+html_static_path = ["_static"]
+
+html_css_files = [
+    "custom.css",
+]
