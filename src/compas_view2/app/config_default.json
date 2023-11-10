@@ -7,6 +7,7 @@
     "app": {
         "title": "COMPAS View2",
         "version": "120",
+        "fullscreen": false,
         "width": 1280,
         "height": 720
     },

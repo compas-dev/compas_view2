@@ -131,6 +131,7 @@ class App:
         self,
         title: str = None,
         version: Literal["120", "330"] = None,
+        fullscreen: bool = None,
         width: int = None,
         height: int = None,
         viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = None,
@@ -167,6 +168,8 @@ class App:
             config["app"]["title"] = title
         if version is not None:
             config["app"]["version"] = version
+        if fullscreen is not None:
+            config["app"]["fullscreen"] = fullscreen
         if width is not None:
             config["app"]["width"] = width
         if height is not None:
@@ -258,6 +261,8 @@ class App:
 
         self.init(config)
         self.resize(self.width, self.height)
+        if self.config["fullscreen"]:
+            self.window.setWindowState(self.window.windowState() | QtCore.Qt.WindowMaximized)
         self.started = False
         self.on_object_selected = []
 
