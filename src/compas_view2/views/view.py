@@ -183,6 +183,11 @@ class View(QtWidgets.QOpenGLWidget):
 
         This method registers selections, if the left button is pressed,
         and modifies the view (pan/rotate), if the right button is pressed.
+
+        Parameters
+        ----------
+        event : PySide2.QtGui.QMouseEvent
+            The Qt event.
         """
         if not self.isActiveWindow() or not self.underMouse():
             return
@@ -190,12 +195,26 @@ class View(QtWidgets.QOpenGLWidget):
             self.app.controller.mouse_move_action(event)
 
     def mousePressEvent(self, event):
+        """Callback for the mouse press event.
+
+        Parameters
+        ----------
+        event : PySide2.QtGui.QMouseEvent
+            The Qt event.
+        """
         if not self.isActiveWindow() or not self.underMouse():
             return
         else:
             self.app.controller.mouse_press_action(event)
 
     def mouseReleaseEvent(self, event):
+        """Callback for the release press event.
+
+        Parameters
+        ----------
+        event : PySide2.QtGui.QMouseEvent
+            The Qt event.
+        """
         if not self.isActiveWindow() or not self.underMouse():
             return
         else:
@@ -204,13 +223,34 @@ class View(QtWidgets.QOpenGLWidget):
         self.update()
 
     def wheelEvent(self, event):
+        """Callback for the mouse wheel event.
+
+        Parameters
+        ----------
+        event : PySide2.QtGui.QMouseEvent
+            The Qt event.
+        """
         if not self.isActiveWindow() or not self.underMouse():
             return
         else:
             self.app.controller.wheel_action(event)
 
     def keyPressEvent(self, event):
+        """Callback for the key press event.
+
+        Parameters
+        ----------
+        event : PySide2.QtGui.QMouseEvent
+            The Qt event.
+        """
         self.app.controller.key_press_action(event)
 
     def keyReleaseEvent(self, event):
+        """Callback for the key release event.
+
+        Parameters
+        ----------
+        event : PySide2.QtGui.QMouseEvent
+            The Qt event.
+        """
         self.app.controller.key_release_action(event)

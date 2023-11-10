@@ -49,7 +49,7 @@ class Controller:
 
         Parameters
         ----------
-        event:
+        event : PySide2.QtGui.QMouseEvent
             The Qt event.
         key_status : Dict
             The status dictionary that is like `"key_status": { "shift": False, "control": False, "alt": False }`.
@@ -94,7 +94,7 @@ class Controller:
 
         Parameters
         ----------
-        event:
+        event : PySide2.QtGui.QMouseEvent
             The Qt event.
         button_name : str
             The name of the button. It should be exist in the list of `supported buttons`.
@@ -123,7 +123,7 @@ class Controller:
 
         Parameters
         ----------
-        event:
+        event : PySide2.QtGui.QMouseEvent
             The Qt event.
         key_status : Dict
             The status dictionary that is like `"key_status": { "shift": False, "control": False, "alt": False }`.
