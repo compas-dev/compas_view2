@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+
+* Added example: `example_image_display`.
+* Added `fullscreen` option to `App` and the corresponding config file.
 * Option to pass in App init parameters through config file (with an example)
 * Add `Developer Guide` section in the documentation.
 * Update the example files in the tutorial.
