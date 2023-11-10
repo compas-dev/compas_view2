@@ -35,8 +35,10 @@ except Exception:
 
     util.find_library = new_util_find_library
 
+
 def get(filename):
     filename = filename.strip("/")
     return os.path.abspath(os.path.join(DATA, filename))
+
 
 __all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_OBJECT", "register"]
