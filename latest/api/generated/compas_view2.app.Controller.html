@@ -97,7 +97,7 @@
 <h1>Controller</h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.app.Controller">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/controller.py#L19"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.app.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_config</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/app/controller.py#L19"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Action controller for the default config file.</p>
 <dl class="field-list simple">
@@ -144,8 +144,32 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.interactive.html#compas_view2.app.Controller.interactive" title="compas_view2.app.Controller.interactive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interactive</span></code></a></p></td>
 <td><p>Decorator for transforming functions into &quot;data add&quot; or &quot;object edit&quot; actions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.load_scene.html#compas_view2.app.Controller.load_scene" title="compas_view2.app.Controller.load_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_scene</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.key_check.html#compas_view2.app.Controller.key_check" title="compas_view2.app.Controller.key_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">key_check</span></code></a></p></td>
+<td><p>Giving the key name that is one of the supported keys, return if the key is pressed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.key_press_action.html#compas_view2.app.Controller.key_press_action" title="compas_view2.app.Controller.key_press_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">key_press_action</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.key_release_action.html#compas_view2.app.Controller.key_release_action" title="compas_view2.app.Controller.key_release_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">key_release_action</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.load_scene.html#compas_view2.app.Controller.load_scene" title="compas_view2.app.Controller.load_scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_scene</span></code></a></p></td>
 <td><p>Load a scene from a file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.mouse_check.html#compas_view2.app.Controller.mouse_check" title="compas_view2.app.Controller.mouse_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouse_check</span></code></a></p></td>
+<td><p>Giving the button name that is one of the supported buttons, return if the button is pressed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.mouse_key_check.html#compas_view2.app.Controller.mouse_key_check" title="compas_view2.app.Controller.mouse_key_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouse_key_check</span></code></a></p></td>
+<td><p>Giving the mouse key as a dictionary that is in the list of supported keys, return if it is happening (bool).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.mouse_move_action.html#compas_view2.app.Controller.mouse_move_action" title="compas_view2.app.Controller.mouse_move_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouse_move_action</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.mouse_press_action.html#compas_view2.app.Controller.mouse_press_action" title="compas_view2.app.Controller.mouse_press_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouse_press_action</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.mouse_release_action.html#compas_view2.app.Controller.mouse_release_action" title="compas_view2.app.Controller.mouse_release_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouse_release_action</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.opengl_version.html#compas_view2.app.Controller.opengl_version" title="compas_view2.app.Controller.opengl_version"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opengl_version</span></code></a></p></td>
 <td><p>Display the OpenGL version.</p></td>
@@ -194,6 +218,9 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.app.Controller.view_wireframe.html#compas_view2.app.Controller.view_wireframe" title="compas_view2.app.Controller.view_wireframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_wireframe</span></code></a></p></td>
 <td><p>Switch the view to wireframe.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.app.Controller.wheel_action.html#compas_view2.app.Controller.wheel_action" title="compas_view2.app.Controller.wheel_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wheel_action</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>

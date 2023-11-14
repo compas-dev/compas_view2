@@ -94,7 +94,15 @@
 <section id="stable">
 <h2>Stable</h2>
 <p>The recommended way to install <code class="docutils literal notranslate"><span class="pre">compas_view2</span></code> is with <code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
+<p>To create a new environment:</p>
 <div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>compas<span class="w"> </span>compas_view2
+</code></pre></div>
+</div>
+<p>To add <code class="docutils literal notranslate"><span class="pre">compas_view2</span></code> into your existing environment (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">3.8</span></code> required):</p>
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>activate<span class="w"> </span>YOUR_ENVIRONMENT
+pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy
+pip<span class="w"> </span>install<span class="w"> </span><span class="nv">ryvencore_qt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>.3.1.4<span class="w"> </span><span class="c1">#optional if you want to have `Flow` functionality.</span>
+pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
 </section>
@@ -106,7 +114,7 @@ directly from the github repo.</p>
 <h3>Windows</h3>
 <div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8<span class="w"> </span>git<span class="w"> </span>cython<span class="w"> </span>freeglut<span class="w"> </span>freetype-py<span class="w"> </span>textdistance
 conda<span class="w"> </span>activate<span class="w"> </span>view2
-pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span>ryvencore_qt
+pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span><span class="nv">ryvencore_qt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>.3.1.4
 pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
@@ -115,7 +123,7 @@ pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com
 <h3>Mac</h3>
 <div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8<span class="w"> </span>cython<span class="w"> </span>python.app<span class="w"> </span>freetype-py<span class="w"> </span>textdistance
 conda<span class="w"> </span>activate<span class="w"> </span>view2
-pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span>ryvencore_qt
+pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span><span class="nv">ryvencore_qt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>.3.1.4
 pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
@@ -124,7 +132,7 @@ pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com
 <h3>Linux</h3>
 <div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>view2<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8<span class="w"> </span>cython<span class="w"> </span>freetype-py<span class="w"> </span>textdistance
 conda<span class="w"> </span>activate<span class="w"> </span>view2
-pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span>ryvencore_qt
+pip<span class="w"> </span>install<span class="w"> </span>pyside2<span class="w"> </span>pyopengl<span class="w"> </span>qtpy<span class="w"> </span><span class="nv">ryvencore_qt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span>.3.1.4
 pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/compas-dev/compas_view2.git#egg<span class="o">=</span>compas_view2
 </code></pre></div>
 </div>
