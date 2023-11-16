@@ -27,7 +27,7 @@ class Checkbox:
 
     """
 
-    def __init__(self, app, parent, *, text, action, checked=False):
+    def __init__(self, app, parent, *, text, action, checked=False, name=None):
         box = QtWidgets.QWidget()
         layout = QtWidgets.QHBoxLayout()
         checkbox = QtWidgets.QCheckBox(text)
@@ -41,6 +41,8 @@ class Checkbox:
         # identify attributes
         self.checkbox = checkbox
         self.action = action
+        if name:
+            app._controls[name] = self
 
     def __call__(self, *args, **kwargs):
         """Wrapper for the action associated with the checkbox.
@@ -50,4 +52,20 @@ class Checkbox:
         None
 
         """
-        self.action(args[0])
+        checked = args[0]
+        self.action(checked)
+
+    def set_checked_state(self, state):
+        """Set the checkbox to checked or unchecked.
+
+        Parameters
+        ----------
+        state : bool
+            True for checked, False for unchecked.
+
+        Returns
+        -------
+        None
+
+        """
+        self.checkbox.setCheckState(QtCore.Qt.CheckState.Checked if state else QtCore.Qt.CheckState.Unchecked)
