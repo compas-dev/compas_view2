@@ -1,21 +1,21 @@
 from compas.utilities import pairwise
 from compas.geometry import centroid_points
 from .bufferobject import BufferObject
-from compas_occ.brep import BRep
+from compas_occ.brep import Brep
 
 
-class BRepObject(BufferObject):
+class BrepObject(BufferObject):
     """Object for displaying compas_occ Brep.
 
     Attributes
     ----------
-    brep : :class:`compas_occ.brep.BRep`
+    brep : :class:`compas_occ.brep.Brep`
         The compas_occ Brep object.
     mesh : :class:`compas.datastructures.Mesh`
         The tesselation mesh representation of the Brep.
     """
 
-    def __init__(self, brep: BRep, **kwargs):
+    def __init__(self, brep: Brep, **kwargs):
         super().__init__(brep, **kwargs)
         mesh, boundaries = brep.to_viewmesh()
         self._mesh = mesh
