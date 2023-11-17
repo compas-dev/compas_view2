@@ -33,11 +33,77 @@ class Controller:
         self.keys = controller_config["actions"]["keys"]
         self.mouse = Mouse()
         self.key_status = {}
-        self.actions = {}  # Currently, no customized actions supported.
+        self.actions = self.keys.keys()
         self.supported_keys = {
             "shift": QtCore.Qt.Key_Shift,
             "control": QtCore.Qt.Key_Control,
             "alt": QtCore.Qt.Key_Alt,
+            "space": QtCore.Qt.Key_Space,
+            "escape": QtCore.Qt.Key_Escape,
+            "delete": QtCore.Qt.Key_Delete,
+            "enter": QtCore.Qt.Key_Enter,
+            "a": QtCore.Qt.Key_A,
+            "b": QtCore.Qt.Key_B,
+            "c": QtCore.Qt.Key_C,
+            "d": QtCore.Qt.Key_D,
+            "e": QtCore.Qt.Key_E,
+            "f": QtCore.Qt.Key_F,
+            "g": QtCore.Qt.Key_G,
+            "h": QtCore.Qt.Key_H,
+            "i": QtCore.Qt.Key_I,
+            "j": QtCore.Qt.Key_J,
+            "k": QtCore.Qt.Key_K,
+            "l": QtCore.Qt.Key_L,
+            "m": QtCore.Qt.Key_M,
+            "n": QtCore.Qt.Key_N,
+            "o": QtCore.Qt.Key_O,
+            "p": QtCore.Qt.Key_P,
+            "q": QtCore.Qt.Key_Q,
+            "r": QtCore.Qt.Key_R,
+            "s": QtCore.Qt.Key_S,
+            "t": QtCore.Qt.Key_T,
+            "u": QtCore.Qt.Key_U,
+            "v": QtCore.Qt.Key_V,
+            "w": QtCore.Qt.Key_W,
+            "x": QtCore.Qt.Key_X,
+            "y": QtCore.Qt.Key_Y,
+            "z": QtCore.Qt.Key_Z,
+            "0": QtCore.Qt.Key_0,
+            "1": QtCore.Qt.Key_1,
+            "2": QtCore.Qt.Key_2,
+            "3": QtCore.Qt.Key_3,
+            "4": QtCore.Qt.Key_4,
+            "5": QtCore.Qt.Key_5,
+            "6": QtCore.Qt.Key_6,
+            "7": QtCore.Qt.Key_7,
+            "8": QtCore.Qt.Key_8,
+            "9": QtCore.Qt.Key_9,
+            "f1": QtCore.Qt.Key_F1,
+            "f2": QtCore.Qt.Key_F2,
+            "f3": QtCore.Qt.Key_F3,
+            "f4": QtCore.Qt.Key_F4,
+            "f5": QtCore.Qt.Key_F5,
+            "f6": QtCore.Qt.Key_F6,
+            "f7": QtCore.Qt.Key_F7,
+            "f8": QtCore.Qt.Key_F8,
+            "f9": QtCore.Qt.Key_F9,
+            "f10": QtCore.Qt.Key_F10,
+            "f11": QtCore.Qt.Key_F11,
+            "f12": QtCore.Qt.Key_F12,
+            "left": QtCore.Qt.Key_Left,
+            "right": QtCore.Qt.Key_Right,
+            "up": QtCore.Qt.Key_Up,
+            "down": QtCore.Qt.Key_Down,
+            "page_up": QtCore.Qt.Key_PageUp,
+            "page_down": QtCore.Qt.Key_PageDown,
+            "home": QtCore.Qt.Key_Home,
+            "end": QtCore.Qt.Key_End,
+            "tab": QtCore.Qt.Key_Tab,
+            "backtab": QtCore.Qt.Key_Backtab,
+            "backspace": QtCore.Qt.Key_Backspace,
+            "insert": QtCore.Qt.Key_Insert,
+            "return": QtCore.Qt.Key_Return,
+            ".": QtCore.Qt.Key_Period,
             "placeholder": None,
         }
 
@@ -148,6 +214,52 @@ class Controller:
                 return True
             else:
                 return False
+
+    def keys_pressed_check(self, action, event):
+        """Check if all the keys are pressed.
+
+        Parameters
+        ----------
+        action : str
+        event : QKeyEvent
+
+        Returns
+        ----------
+        bool:
+            If all the keys are pressed.
+        """
+        for key in self.keys[action]:
+            if key not in self.key_status:
+                self.key_status[key] = False
+            if event.key() == self.supported_keys[key]:
+                self.key_status[key] = True
+            else:
+                if self.key_status[key] is False:
+                    return False
+        return True
+
+    def keys_released_check(self, action, event):
+        """Check if all the keys are released.
+
+        Parameters
+        ----------
+        action : str
+        event : QKeyEvent
+
+        Returns
+        ----------
+        bool:
+            If all the keys are released.
+        """
+        for key in self.keys[action]:
+            if key not in self.key_status:
+                self.key_status[key] = True
+            if event.key() == self.supported_keys[key]:
+                self.key_status[key] = False
+            else:
+                if self.key_status[key] is True:
+                    return True
+        return False
 
     def interactive(action="add"):
         """Decorator for transforming functions into "data add" or "object edit" actions.
@@ -296,6 +408,8 @@ class Controller:
         None
 
         """
+        for key in self.keys["view_capture"]:
+            self.key_status[key] = False
         if filepath:
             result = filepath
         else:
@@ -360,6 +474,16 @@ class Controller:
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
+
+    def zoom_selected(self):
+        if self.app.selector.selected:
+            self.app.view.camera.zoom_extents(self.app.selector.selected)
+        else:
+            self.app.view.camera.zoom_extents(self.app.view.objects)
+
+    def grid_show(self):
+        self.controller.app.view.show_grid = not self.controller.app.view.show_grid
+        self.controller.app.view.update()
 
     # ==============================================================================
     # Key mouse actions
@@ -441,9 +565,11 @@ class Controller:
             self.key_status[self.mouse_key["selection"]["deselect"]] = True
 
         # * key actions
-        for action in self.actions.values():
-            if action.keys_pressed_check(event):
-                action.keys_pressed_action()
+        for action in self.actions:
+            for key in self.keys[action]:
+                if self.keys_pressed_check(action, event) == False:
+                    break
+                getattr(self, action)()
 
         self.app.view.update()
 
@@ -470,6 +596,11 @@ class Controller:
         if self.key_check(event, self.key_status, self.mouse_key["selection"]["deselect"]):
             self.app.selector.mode = self.app.selector.overwrite_mode or "single"
             self.key_status[self.mouse_key["selection"]["deselect"]] = False
+
+        for action in self.actions:
+            if self.keys_released_check(action, event):
+                for key in self.keys[action]:
+                    self.key_status[key] = False
 
     # ==============================================================================
     # Scene actions
