@@ -24,7 +24,6 @@ Thinking of the ``options`` in :mod:`Rhino` , the ``preferences..`` in :mod:`Ble
 :mod:`compas_view2` also provides a ``config`` feature to allow you to customize your viewer.
 
 
-
 Customize Your Viewer
 ===================
 
@@ -66,7 +65,7 @@ This is a quick way to customize your viewer. It is suitable for task-specific c
 
 
 Configuration Structure
-===================
+====================
 The default configuration file can be downloaded here: :download:`Link <files/config_default.json>`,
 or can be printed by the following code:
 
@@ -85,4 +84,3 @@ In the `controller -> keys`, you can add you preferred keys. Currently, :mod:`co
 .. figure:: /_images/keyboard.png
     :figclass: figure
     :class: figure-img img-fluid
-
