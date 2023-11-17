@@ -101,20 +101,6 @@
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code> is closer to a software application with its solid underlying architecture and customizable features.
 Thinking of the <code class="docutils literal notranslate"><span class="pre">options</span></code> in <code class="xref py py-mod docutils literal notranslate"><span class="pre">Rhino</span></code> , the <code class="docutils literal notranslate"><span class="pre">preferences..</span></code> in <code class="xref py py-mod docutils literal notranslate"><span class="pre">Blender</span></code> or other <code class="docutils literal notranslate"><span class="pre">setting</span></code> menus in other softwares,
 <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code> also provides a <code class="docutils literal notranslate"><span class="pre">config</span></code> feature to allow you to customize your viewer.</p>
-<section id="viewer-information">
-<h2>Viewer Information</h2>
-<p>You can use the following code to check the version, supported actions, supported keys, etc. of your <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code>:</p>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This prints the basic info</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2</span> <span class="kn">import</span> <span class="n">Info</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Info</span><span class="p">()</span><span class="o">.</span><span class="n">show_info</span><span class="p">()</span>
-</code></pre></div>
-</div>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This prints the default configuration</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2</span> <span class="kn">import</span> <span class="n">Info</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Info</span><span class="p">()</span><span class="o">.</span><span class="n">show_config</span><span class="p">()</span>
-</code></pre></div>
-</div>
-</section>
 <section id="customize-your-viewer">
 <h2>Customize Your Viewer</h2>
 <p>There are two ways to customize your viewer:</p>
@@ -158,13 +144,12 @@ or can be printed by the following code:</p>
 </div>
 <p>It it the template for creating your own settings, keyboard preferences, etc.</p>
 </section>
-<section id="setup-assistant">
-<h2>Setup Assistant</h2>
-<p>Coming soon…</p>
-</section>
-<section id="id1">
-<h2>Setup Assistant</h2>
-<p>Coming soon…</p>
+<section id="supported-keys">
+<h2>Supported Keys</h2>
+<p>In the <cite>controller -&gt; keys</cite>, you can add you preferred keys. Currently, <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_view2</span></code> supports below keys:</p>
+<figure class="figure align-default">
+<img alt="../_images/keyboard.png" class="figure-img img-fluid" src="../_images/keyboard.png" />
+</figure>
 </section>
 </section>
 
@@ -270,7 +255,7 @@ or can be printed by the following code:</p>
 </li>
 <li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../api/compas_view2.forms.html">compas_view2.forms</a><ul class="nav flex-column collapse">
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/generated/compas_view2.forms.Form.html">Form</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/generated/compas_view2.forms.AddForm.html">AddForm</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/generated/compas_view2.forms.PropertyForm.html">PropertyForm</a></li>
 </ul>
 </li>
 <li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../api/compas_view2.gl.html">compas_view2.gl</a><ul class="nav flex-column collapse">
@@ -355,11 +340,9 @@ or can be printed by the following code:</p>
         
         <ul class="nav flex-column" id="compas-toc">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Tutorial Configuration</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#viewer-information">Viewer Information</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#customize-your-viewer">Customize Your Viewer</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#configuration-structure">Configuration Structure</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#setup-assistant">Setup Assistant</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#id1">Setup Assistant</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#supported-keys">Supported Keys</a></li>
 </ul>
 </li>
 </ul>
