@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 * Added keyboard diagram in the doc.
+* Add example `example_custom_keys.py` in the examples/control.
+* Action class which controls all the key actions.
 * Added `ryven` version specification (0.3.1.4).
 * Added example: `example_image_display`.
 * Added `fullscreen` option to `App` and the corresponding config file.
