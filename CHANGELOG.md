@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+* Added keyboard diagram in the doc.
 * Added `ryven` version specification (0.3.1.4).
 * Added example: `example_image_display`.
 * Added `fullscreen` option to `App` and the corresponding config file.

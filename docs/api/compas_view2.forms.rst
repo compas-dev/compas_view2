@@ -13,9 +13,4 @@ Classes
 
     Form
     EditForm
-    AddForm
-    PointForm
-    LineForm
-    SphereForm
-    TorusForm
-    PointEditForm
+    PropertyForm
