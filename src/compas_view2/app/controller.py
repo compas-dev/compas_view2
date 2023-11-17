@@ -567,7 +567,7 @@ class Controller:
         # * key actions
         for action in self.actions:
             for key in self.keys[action]:
-                if self.keys_pressed_check(action, event) == False:
+                if self.keys_pressed_check(action, event) is False:
                     break
                 getattr(self, action)()
 
