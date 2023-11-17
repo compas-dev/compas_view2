@@ -12,10 +12,6 @@ Classes
     :nosignatures:
 
     Form
-    EditForm
     AddForm
-    PointForm
-    LineForm
-    SphereForm
-    TorusForm
-    PointEditForm
+    PropertyForm
+
