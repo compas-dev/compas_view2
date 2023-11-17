@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+* Added keyboard diagram in the doc.
 * Add example `example_custom_keys.py` in the examples/control.
 * Action class which controls all the key actions.
 * Added `ryven` version specification (0.3.1.4).
