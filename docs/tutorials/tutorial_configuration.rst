@@ -24,25 +24,9 @@ Thinking of the ``options`` in :mod:`Rhino` , the ``preferences..`` in :mod:`Ble
 :mod:`compas_view2` also provides a ``config`` feature to allow you to customize your viewer.
 
 
-Viewer Information
-===========
-
-You can use the following code to check the version, supported actions, supported keys, etc. of your :mod:`compas_view2`:
-
-::
-
-    >>> # This prints the basic info
-    >>> from compas_view2 import Info
-    >>> Info().show_info()
-
-::
-
-    >>> # This prints the default configuration
-    >>> from compas_view2 import Info
-    >>> Info().show_config()
 
 Customize Your Viewer
-===========
+===================
 
 There are two ways to customize your viewer:
 
@@ -82,7 +66,7 @@ This is a quick way to customize your viewer. It is suitable for task-specific c
 
 
 Configuration Structure
-===========
+===================
 The default configuration file can be downloaded here: :download:`Link <files/config_default.json>`,
 or can be printed by the following code:
 
@@ -94,10 +78,11 @@ or can be printed by the following code:
 
 It it the template for creating your own settings, keyboard preferences, etc.
 
-Setup Assistant
-===========
-Coming soon...
+Supported Keys
+===============
+In the `controller -> keys`, you can add you preferred keys. Currently, :mod:`compas_view2` supports below keys:
 
-Setup Assistant
-===========
-Coming soon...
+.. figure:: /_images/keyboard.png
+    :figclass: figure
+    :class: figure-img img-fluid
+
