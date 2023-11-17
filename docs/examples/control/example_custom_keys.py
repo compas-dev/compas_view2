@@ -1,4 +1,4 @@
-from compas.geometry import Point, Polyline, Bezier
+from compas.geometry import Box, Frame
 from compas_view2.app import App
 
 # If you input incomplete configuration, the rest will be filled by the default values.
@@ -25,9 +25,10 @@ config = {
 
 viewer = App(config=config)
 
-curve = Bezier([[0, 0, 0], [3, 6, 0], [5, -3, 0], [10, 0, 0]])
-pointobj = viewer.add(Point(*curve.point(0)), pointsize=20, pointcolor=(1, 0, 0))
-curveobj = viewer.add(Polyline(curve.locus()), linewidth=2)
+for i in range(0, 5, 2):
+    for j in range(0, 5, 2):
+        box = Box(Frame([i, j, 0], [1, 0, 0], [0, 1, 0]), 1, 1, 1)
+        viewer.add(box)
 
 
 viewer.run()
