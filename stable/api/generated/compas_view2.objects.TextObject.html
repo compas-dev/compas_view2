@@ -20,7 +20,7 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-  <link rel="next" title="TextObject.draw" href="compas_view2.objects.TextObject.draw.html" />
+  <link rel="next" title="TextObject.calculate_text_height" href="compas_view2.objects.TextObject.calculate_text_height.html" />
   
 
   
@@ -50,7 +50,7 @@
         <meta id="doc_versions" data-url="https://compas.dev/compas_view2/doc_versions.txt" data-docs="https://compas.dev/compas_view2/">
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0.9.4
+            0.10.0
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -97,22 +97,25 @@
 <h1>TextObject</h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.objects.TextObject">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></span><span class="sig-name descname"><span class="pre">TextObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/textobject.py#L15"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.objects.</span></span><span class="sig-name descname"><span class="pre">TextObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/objects/textobject.py#L16"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Bases: <a class="reference internal" href="compas_view2.objects.Object.html#compas_view2.objects.Object" title="compas_view2.objects.object.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a></p>
 <p>Object for displaying text sprites.</p>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.draw.html#compas_view2.objects.TextObject.draw" title="compas_view2.objects.TextObject.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.calculate_text_height.html#compas_view2.objects.TextObject.calculate_text_height" title="compas_view2.objects.TextObject.calculate_text_height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_text_height</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.draw.html#compas_view2.objects.TextObject.draw" title="compas_view2.objects.TextObject.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a></p></td>
 <td><p>Draw the object from its buffers</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.init.html#compas_view2.objects.TextObject.init" title="compas_view2.objects.TextObject.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.init.html#compas_view2.objects.TextObject.init" title="compas_view2.objects.TextObject.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.make_buffers.html#compas_view2.objects.TextObject.make_buffers" title="compas_view2.objects.TextObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.make_buffers.html#compas_view2.objects.TextObject.make_buffers" title="compas_view2.objects.TextObject.make_buffers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_buffers</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.make_text_texture.html#compas_view2.objects.TextObject.make_text_texture" title="compas_view2.objects.TextObject.make_text_texture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_text_texture</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.objects.TextObject.make_text_texture.html#compas_view2.objects.TextObject.make_text_texture" title="compas_view2.objects.TextObject.make_text_texture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_text_texture</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -160,11 +163,79 @@
           <ul class="nav flex-column collapse show active">
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../index.html">Introduction</a></li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../tutorials.html">Tutorials</a><ul class="nav flex-column collapse">
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../tutorials/tutorial_basics.html">Tutorial Basics</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../tutorials/tutorial_configuration.html">Tutorial Configuration</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../tutorials/tutorial_software_concepts.html">Software Concepts</a></li>
+</ul>
+</li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/example_coplanaredges.html">Coplanar Edges</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/example_customui.html">Make a Custom UI From a Script</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/example_orbiting.html">Orbit Around an Object</a></li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/object.html">Object Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_arrows.html">Arrows</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_brep.html">Brep</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_collection.html">Collection</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_coplanaredges.html">Coplanar Edges</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_fonts.html">Fonts</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_frames.html">Frames</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_geometries.html">Geometries</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_lines.html">Lines</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_mesh_display.html">Mesh Display</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_nurbs.html">Nurbs</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_points.html">Points</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_polyline.html">Polyline</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_robot.html">Robot</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_robot_custom.html">Robot Custom</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_scripted.html">Scripted</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_texts.html">Texts</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_vector.html">Vector</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/color.html">Color Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/color/example_blending.html">Blending</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/color/example_colors.html">Colors</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/color/example_face_vertext_color.html">Face Vertex Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/control.html">Control Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_camera.html">Camera</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_camera_lookat.html">Camera LookAt</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_camera_scale.html">Camera Scale</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_custom_controller.html">Custom Controller</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_custom_keys.html">Custom Keys</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/ui.html">UI Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_customui.html">Make a Custom UI From a Script</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_image_display.html">Image Display</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_pair_object_form.html">UI SideDocks Custom</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_plot.html">Plot</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tabs_tree_form.html">Tabs Tree Form</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tree.html">Tree</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tree_editable.html">Tree Editable</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tree_interactive.html">Tree Interactive</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_elements.html">UI Elements</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_elements2.html">UI Elements2</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_sidedocks.html">UI SideDocks</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_sidedocks_custom.html">UI SideDocks Custom</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic.html">Dynamic Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_background_compute.html">Background Compute</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_dynamic.html">Dynamic</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_dynamic_mesh.html">Dynamic Mesh</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_orbiting.html">Orbit Around an Object</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_record.html">Record</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_transform.html">Transform</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/flow.html">Flow Examples</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/flow/example_csg_flow.html">CSG Flow</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/flow/example_flow.html">Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/other.html">Other Examples</a><ul class="simple">
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
@@ -175,7 +246,7 @@
 </li>
 <li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.forms.html">compas_view2.forms</a><ul class="nav flex-column collapse">
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.Form.html">Form</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.AddForm.html">AddForm</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.PropertyForm.html">PropertyForm</a></li>
 </ul>
 </li>
 <li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.gl.html">compas_view2.gl</a><ul class="nav flex-column collapse">
@@ -247,6 +318,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../developer_guide.html">Developer Guide</a></li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
 </ul>
 
@@ -283,10 +355,10 @@
       
 
       
-      <a href="compas_view2.objects.TextObject.draw.html" title="TextObject.draw" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+      <a href="compas_view2.objects.TextObject.calculate_text_height.html" title="TextObject.calculate_text_height" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
         <div class="nav-title footer-link flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Next</div>
-          TextObject.draw
+          TextObject.calculate_text_height
         </div>
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
       </a>
