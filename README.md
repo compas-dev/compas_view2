@@ -44,4 +44,4 @@ Please check the [Issue Tracker](https://github.com/compas-dev/compas_view2/issu
 
 ## Future
 
-We are actively developing the project for [compas](https://github.com/compas-dev/compas). A major version with compas2 compatibility is coming soon ...
+This project targets to [compas](https://github.com/compas-dev/compas). The next generation of it with compas_2 compatibility can be found in a separate repo [here](https://github.com/compas-dev/compas_viewer).
