@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+
 ### Changed
 
 ### Removed
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.10.0] 2023-11-27
 
 ### Added
+
 * Added keyboard diagram in the doc.
 * Add example `example_custom_keys.py` in the examples/control.
 * Action class which controls all the key actions.

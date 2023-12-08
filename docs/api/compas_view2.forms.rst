@@ -12,5 +12,5 @@ Classes
     :nosignatures:
 
     Form
-    EditForm
     PropertyForm
+    AddForm
