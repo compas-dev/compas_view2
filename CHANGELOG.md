@@ -40,6 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * All the examples are categorized into different folders.
 
 ### Changed
+
+* Update the `README.md`
 * Move mouse and key actions to controller.
 * Categorize all the view settings in to one config file.
 * Changed the language settings in the `config.py` file for better `invoke docs` generation.
@@ -47,8 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Changed `sphinx` requirement for the development environment. Otherwise, there will be a bug similar to [this](https://github.com/compas-dev/sphinx_compas_theme/issues/20).
 * Bug fixed when pressing `F` multiple times, the camera angle shifts.
 * Bug fixed in `Camera.zoom_extents` when one single point is selected.
-### Removed
 
+### Removed
 
 ## [0.9.4] 2023-08-30
 
@@ -60,7 +62,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-
 ## [0.9.3] 2023-08-24
 
 ### Added
@@ -71,7 +72,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-
 ## [0.9.2] 2023-03-27
 
 ### Added
@@ -79,7 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 
 ## [0.9.1] 2023-01-11
 
@@ -92,7 +91,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Uses `compas_invocations` for `task.py`.
 
 ### Removed
-
 
 ## [0.9.0] 2022-11-06
 
@@ -112,7 +110,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 
 ## [0.8.0] 2022-10-07
 
@@ -140,7 +137,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Allow `TabsFrom` to update.
 
 ### Removed
-
 
 ## [0.7.0] 2022-08-22
 
@@ -173,7 +169,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 
 ## [0.5.0] 2022-03-22
 
