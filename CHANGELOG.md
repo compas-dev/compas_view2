@@ -9,7 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+
 * Added `view_angle` and `camera` in the config
+
+### Changed
+
+### Removed
+
+
+## [0.10.1] 2023-12-12
+
+### Added
+
+
+### Changed
+
+
+### Removed
+
+* Removed dependency on `cython`.
+
+
+## [0.10.0] 2023-11-27
+
+### Added
+
+
 * Added keyboard diagram in the doc.
 * Add example `example_custom_keys.py` in the examples/control.
 * Action class which controls all the key actions.
@@ -34,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Update the `README.md`
 * Move mouse and key actions to controller.
 * Categorize all the view settings in to one config file.
 * Changed the language settings in the `config.py` file for better `invoke docs` generation.
