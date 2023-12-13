@@ -431,7 +431,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.FRONT
+        self.app.view.current = self.app.view.VIEW_ANGLES["FRONT"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
@@ -444,7 +444,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.RIGHT
+        self.app.view.current = self.app.view.VIEW_ANGLES["RIGHT"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
@@ -457,7 +457,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.TOP
+        self.app.view.current = self.app.view.VIEW_ANGLES["TOP"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
@@ -470,7 +470,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.PERSPECTIVE
+        self.app.view.current = self.app.view.VIEW_ANGLES["PERSPECTIVE"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
