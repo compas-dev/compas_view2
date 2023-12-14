@@ -25,7 +25,7 @@ Thinking of the ``options`` in :mod:`Rhino` , the ``preferences..`` in :mod:`Ble
 
 
 Customize Your Viewer
-===================
+=====================
 
 There are two ways to customize your viewer:
 
@@ -65,7 +65,7 @@ This is a quick way to customize your viewer. It is suitable for task-specific c
 
 
 Configuration Structure
-====================
+======================
 The default configuration file can be downloaded here: :download:`Link <files/config_default.json>`,
 or can be printed by the following code:
 

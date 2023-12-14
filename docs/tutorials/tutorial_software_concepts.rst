@@ -25,7 +25,7 @@ to help you better the design concepts behind it.
 
 
 Software Architecture
-===========
+===================
 
 .. figure:: /_images/software_concept.png
      :figclass: figure
@@ -33,13 +33,13 @@ Software Architecture
 
 
 UI Components
-===========
+===============
 .. figure:: /_images/UI.PNG
      :figclass: figure
      :class: figure-img img-fluid
 
 Configuration Structure
-===========
+=====================
 .. figure:: /_images/config_structure.png
      :figclass: figure
      :class: figure-img img-fluid

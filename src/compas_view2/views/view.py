@@ -25,7 +25,7 @@ class View(QtWidgets.QOpenGLWidget):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
-        self._current = self.VIEW_ANGLES[view_config["view_angle"]]
+        self._current = self.VIEW_ANGLES[view_config["view_port"]]
         self.shader_model = None
         self.app = app
         self.color = view_config["background_color"]
