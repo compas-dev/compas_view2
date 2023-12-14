@@ -9,31 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-
-* Added `view_angle` and `camera` in the config
+* Added `view_port` and `camera` in the config
 
 ### Changed
 
 ### Removed
-
 
 ## [0.10.1] 2023-12-12
 
 ### Added
 
-
 ### Changed
-
 
 ### Removed
 
 * Removed dependency on `cython`.
 
-
 ## [0.10.0] 2023-11-27
 
 ### Added
-
 
 * Added keyboard diagram in the doc.
 * Add example `example_custom_keys.py` in the examples/control.
