@@ -238,7 +238,7 @@ class Camera:
         if (
             self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"]
             or self.view.current == self.view.VIEW_ANGLES["CUSTOM"]
-            ):
+        ):
             self.rotation.set(pi / 4, 0, -pi / 4)
         if self.view.current == self.view.VIEW_ANGLES["TOP"]:
             self.rotation.set(0, 0, 0)
@@ -266,7 +266,10 @@ class Camera:
         Camera rotations are only available if the current view is a perspective view (``camera.view.current == camera.view.VIEW_ANGLES["PERSPECTIVE"]``).
 
         """
-        if self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"] or self.view.current == self.view.VIEW_ANGLES["CUSTOM"]:
+        if (
+            self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"]
+            or self.view.current == self.view.VIEW_ANGLES["CUSTOM"]
+        ):
             self.rotation += [-self.rotation_delta * dy, 0, -self.rotation_delta * dx]
 
     def pan(self, dx, dy):
