@@ -1,18 +1,21 @@
-from compas.geometry import Translation
-from compas.geometry import Rotation
-from compas.geometry import Vector
-from numpy.linalg import norm
-from numpy.linalg import det
 from math import atan2
-from numpy import pi
+from typing import List
+
 from numpy import array
 from numpy import asfortranarray
 from numpy import dot
 from numpy import float32
-from compas_view2.objects import Object
-from typing import List
+from numpy import pi
+from numpy.linalg import det
+from numpy.linalg import norm
 
-from .matrices import perspective, ortho
+from compas.geometry import Rotation
+from compas.geometry import Translation
+from compas.geometry import Vector
+from compas_view2.objects import Object
+
+from .matrices import ortho
+from .matrices import perspective
 
 
 class Position(Vector):
@@ -232,7 +235,10 @@ class Camera:
     def reset_position(self):
         """Reset the position of the camera based current view type."""
         self.target.set(0, 0, 0)
-        if self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"] or self.view.current == self.view.VIEW_ANGLES["CUSTOM"]:
+        if (
+            self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"]
+            or self.view.current == self.view.VIEW_ANGLES["CUSTOM"]
+            ):
             self.rotation.set(pi / 4, 0, -pi / 4)
         if self.view.current == self.view.VIEW_ANGLES["TOP"]:
             self.rotation.set(0, 0, 0)
@@ -320,7 +326,10 @@ class Camera:
 
         """
         aspect = width / height
-        if self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"] or self.view.current == self.view.VIEW_ANGLES["CUSTOM"]:
+        if (
+            self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"]
+            or self.view.current == self.view.VIEW_ANGLES["CUSTOM"]
+        ):
             P = perspective(self.fov, aspect, self.near * self.scale, self.far * self.scale)
         else:
             left = -self.distance
