@@ -87,9 +87,7 @@ class TextObject(Object):
         if self._data.absolute_height:
             return int(
                 (10 * self._data.height)
-                / np.linalg.norm(
-                    np.array(self._data.position) - np.array([camera_position.x, camera_position.y, camera_position.z])
-                )
+                / np.linalg.norm(np.array(self._data.position) - np.array([camera_position.x, camera_position.y, camera_position.z]))
             )
 
         else:
@@ -109,3 +107,7 @@ class TextObject(Object):
         shader.uniform1i("is_text", 0)
         shader.uniform1f("object_opacity", 1)
         shader.disable_attribute("position")
+
+    def update(self):
+        super()._update_matrix()
+        self.init()
