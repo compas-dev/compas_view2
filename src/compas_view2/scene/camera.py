@@ -197,8 +197,11 @@ class Camera:
         old_direction_pitch_distance = norm(old_direction_pitch)
         new_direction_pitch_distance = norm(new_direction_pitch)
 
-        old_direction_xy /= old_direction_xy_distance
-        new_direction_xy /= new_direction_xy_distance
+        if new_direction_xy[0] == 0 and new_direction_xy[1] == 0:
+            new_direction_xy[0] = 0.0001
+
+        old_direction_xy /= old_direction_xy_distance or 1
+        new_direction_xy /= new_direction_xy_distance or 1
         old_direction_pitch /= old_direction_pitch_distance
         new_direction_pitch /= new_direction_pitch_distance
 
