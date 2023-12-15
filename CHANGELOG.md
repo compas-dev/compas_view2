@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Fix a bug when camera is looking straight up or down.
+
 ### Removed
 
 ## [0.10.1] 2023-12-12
