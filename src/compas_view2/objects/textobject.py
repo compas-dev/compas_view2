@@ -1,13 +1,14 @@
 import os
-import numpy as np
+
 import freetype as ft
+import numpy as np
+from matplotlib import font_manager
 from OpenGL import GL
 
 from compas_view2.gl import make_index_buffer
 from compas_view2.gl import make_vertex_buffer
 
 from .object import Object
-from matplotlib import font_manager
 
 here = os.path.dirname(__file__)
 fonts = os.path.join(here, "..", "fonts")
@@ -87,7 +88,9 @@ class TextObject(Object):
         if self._data.absolute_height:
             return int(
                 (10 * self._data.height)
-                / np.linalg.norm(np.array(self._data.position) - np.array([camera_position.x, camera_position.y, camera_position.z]))
+                / np.linalg.norm(
+                    np.array(self._data.position) - np.array([camera_position.x, camera_position.y, camera_position.z])
+                )
             )
 
         else:
