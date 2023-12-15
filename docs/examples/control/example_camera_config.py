@@ -10,13 +10,13 @@ config = {
         "view_mode": "shaded",
         "background_color": [1, 1, 1, 1],
         "selection_color": [1.0, 1.0, 0.0],
-        "view_port": "CUSTOM",
+        "view_port": "TOP",
         "camera": {
             "fov": 45,
             "near": 0.1,
             "far": 1000,
             "position": [-15, -15, 15],
-            "target": [0, 0, 0],
+            "target": [1,1, 1],
             "scale": 1,
         },
     }

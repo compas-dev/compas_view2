@@ -14,7 +14,7 @@
     "view": {
         "show_grid": true,
         "view_mode": "shaded",
-        "view_port": "CUSTOM",
+        "view_port": "PERSPECTIVE",
         "background_color": [1, 1, 1, 1],
         "selection_color": [1.0, 1.0, 0.0],
         "camera": {

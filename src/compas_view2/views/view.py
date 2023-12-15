@@ -19,7 +19,7 @@ class View(QtWidgets.QOpenGLWidget):
         The view configuration.
     """
 
-    VIEW_ANGLES = {"CUSTOM": 0, "FRONT": 1, "RIGHT": 2, "TOP": 3, "PERSPECTIVE": 4}
+    VIEW_ANGLES = {"FRONT": 1, "RIGHT": 2, "TOP": 3, "PERSPECTIVE": 4}
 
     def __init__(self, app, view_config):
         super().__init__()
@@ -32,7 +32,7 @@ class View(QtWidgets.QOpenGLWidget):
         self.mode = view_config["view_mode"]
         self.selection_color = view_config["selection_color"]
         self.show_grid = view_config["show_grid"]
-        self.camera = Camera(self, **view_config["camera"]) if self._current == 0 else Camera(self)
+        self.camera = Camera(self, **view_config["camera"])
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
         self.keys = {"shift": False, "control": False, "f": False}

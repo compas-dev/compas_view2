@@ -119,7 +119,7 @@ class View120(View):
 
     def paint(self):
         viewworld = self.camera.viewworld()
-        if self.current != self.VIEW_ANGLES["PERSPECTIVE"] or self.current != self.VIEW_ANGLES["CUSTOM"]:
+        if self.current != self.VIEW_ANGLES["PERSPECTIVE"]:
             self.update_projection()
 
         # Draw instance maps
