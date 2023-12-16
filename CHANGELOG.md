@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Change the str options in `view_port` into all lower case.
+* Change naming `view_mode` to `viewport_mode`, `view_port` to `viewport`. 
 * Fix a bug when camera is looking straight up or down.
 
 ### Removed
