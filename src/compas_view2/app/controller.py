@@ -123,13 +123,13 @@ class Controller:
             The dictionary that is like `"mouse_key": { "mouse": "right", "key": "shift" }`.
 
         Returns
-        ----------
+        -------
         bool:
             If the mouse key is happening.
 
 
         Notes
-        ----------
+        -----
         This function is designed to check mouse_key combine interactions. The interactions are:
         "box_selection", "selection", "multi_selection", "deselect", "pan", "rotate", for now.
         """
@@ -166,7 +166,7 @@ class Controller:
             The name of the button. It should be exist in the list of `supported buttons`.
 
         Returns
-        ----------
+        -------
         bool:
             If the button is pressed.
         """
@@ -197,7 +197,7 @@ class Controller:
             The name of the key. It should be exist in the list of `supported keys`.
 
         Returns
-        ----------
+        -------
         bool:
             If the key is pressed.
         """
@@ -224,7 +224,7 @@ class Controller:
         event : QKeyEvent
 
         Returns
-        ----------
+        -------
         bool:
             If all the keys are pressed.
         """
@@ -247,7 +247,7 @@ class Controller:
         event : QKeyEvent
 
         Returns
-        ----------
+        -------
         bool:
             If all the keys are released.
         """

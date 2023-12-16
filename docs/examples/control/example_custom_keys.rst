@@ -7,7 +7,7 @@ Custom Keys
     :nosignatures:
 
 Default Keys
-===========
+=============
 
 By default, the keys are like:
 
@@ -18,7 +18,7 @@ By default, the keys are like:
 
 
 Custom Keys
-===========
+=============
 
 You can customize the keys by modifying the ``keys`` parameter of the configuration.
 
