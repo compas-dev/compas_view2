@@ -131,6 +131,7 @@ class App:
         self,
         title: str = None,
         version: Literal["120", "330"] = None,
+        fullscreen: bool = None,
         width: int = None,
         height: int = None,
         viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = None,
@@ -167,6 +168,8 @@ class App:
             config["app"]["title"] = title
         if version is not None:
             config["app"]["version"] = version
+        if fullscreen is not None:
+            config["app"]["fullscreen"] = fullscreen
         if width is not None:
             config["app"]["width"] = width
         if height is not None:
@@ -243,7 +246,7 @@ class App:
         self.window.setContentsMargins(0, 0, 0, 0)
 
         controller_class = controller_class or Controller
-        self.controller = controller_class(self)
+        self.controller = controller_class(self, controller_config=config["controller"])
         self._app = app
         self._app.references.add(self.window)
         self.selector = Selector(self)
@@ -258,6 +261,8 @@ class App:
 
         self.init(config)
         self.resize(self.width, self.height)
+        if self.config["fullscreen"]:
+            self.window.setWindowState(self.window.windowState() | QtCore.Qt.WindowMaximized)
         self.started = False
         self.on_object_selected = []
 

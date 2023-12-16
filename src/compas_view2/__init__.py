@@ -4,7 +4,7 @@ __author__ = ["tom van mele"]
 __copyright__ = "Block Research Group - ETH Zurich"
 __license__ = "MIT License"
 __email__ = "van.mele@arch.ethz.ch"
-__version__ = "0.9.4"
+__version__ = "0.10.1"
 __url__ = "https://compas.dev/compas_view2"
 
 
@@ -34,6 +34,11 @@ except Exception:
         return "/System/Library/Frameworks/" + name + ".framework/" + name
 
     util.find_library = new_util_find_library
+
+
+def get(filename):
+    filename = filename.strip("/")
+    return os.path.abspath(os.path.join(DATA, filename))
 
 
 __all__ = ["HOME", "DATA", "DOCS", "TEMP", "DATA_OBJECT", "register"]

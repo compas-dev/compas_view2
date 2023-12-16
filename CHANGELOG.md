@@ -8,6 +8,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+
+### Changed
+
+* Fix a bug when camera is looking straight up or down.
+
+### Removed
+
+
+## [0.10.1] 2023-12-12
+
+### Added
+
+
+### Changed
+
+
+### Removed
+
+* Removed dependency on `cython`.
+
+
+## [0.10.0] 2023-11-27
+
+### Added
+
+* Added keyboard diagram in the doc.
+* Add example `example_custom_keys.py` in the examples/control.
+* Action class which controls all the key actions.
+* Added `ryven` version specification (0.3.1.4).
+* Added example: `example_image_display`.
+* Added `fullscreen` option to `App` and the corresponding config file.
 * Option to pass in App init parameters through config file (with an example)
 * Add `Developer Guide` section in the documentation.
 * Update the example files in the tutorial.
@@ -25,14 +56,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * All the examples are categorized into different folders.
 
 ### Changed
-* Using `Sphinx Book Theme` for documentation generation.
+
+* Update the `README.md`
+* Move mouse and key actions to controller.
+* Categorize all the view settings in to one config file.
 * Changed the language settings in the `config.py` file for better `invoke docs` generation.
 * Remove `modindex` in the index page of the documentation as the file no longer exists.
 * Changed `sphinx` requirement for the development environment. Otherwise, there will be a bug similar to [this](https://github.com/compas-dev/sphinx_compas_theme/issues/20).
 * Bug fixed when pressing `F` multiple times, the camera angle shifts.
 * Bug fixed in `Camera.zoom_extents` when one single point is selected.
-### Removed
 
+### Removed
 
 ## [0.9.4] 2023-08-30
 
@@ -44,7 +78,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-
 ## [0.9.3] 2023-08-24
 
 ### Added
@@ -55,7 +88,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-
 ## [0.9.2] 2023-03-27
 
 ### Added
@@ -63,7 +95,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 
 ## [0.9.1] 2023-01-11
 
@@ -76,7 +107,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Uses `compas_invocations` for `task.py`.
 
 ### Removed
-
 
 ## [0.9.0] 2022-11-06
 
@@ -96,7 +126,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 
 ## [0.8.0] 2022-10-07
 
@@ -124,7 +153,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Allow `TabsFrom` to update.
 
 ### Removed
-
 
 ## [0.7.0] 2022-08-22
 
@@ -157,7 +185,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 
 ## [0.5.0] 2022-03-22
 
