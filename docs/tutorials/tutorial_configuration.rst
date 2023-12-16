@@ -52,7 +52,7 @@ This is a sustainable and sharable way to customize your viewer.
 ::
 
     >>> from compas_view2.app import App
-    >>> viewer = App(viewmode="lighted", enable_sceneform=True, enable_propertyform=True, enable_sidebar=True, width=2000, height=1000)
+    >>> viewer = App(viewmode="lighted", viewport = "top", enable_sceneform=True, enable_propertyform=True, enable_sidebar=True, width=2000, height=1000)
 
 ::
 
@@ -68,12 +68,6 @@ Configuration Structure
 ========================================
 The default configuration file can be downloaded here: :download:`Link <files/config_default.json>`,
 or can be printed by the following code:
-
-::
-
-    >>> # This prints the default configuration
-    >>> from compas_view2 import Info
-    >>> Info().show_config()
 
 It it the template for creating your own settings, keyboard preferences, etc.
 

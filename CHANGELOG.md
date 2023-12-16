@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 
-* Added `view_port` and `camera` in the config
+* Added `viewport` and `camera` in the config
 * Added the update method for the `textobject`.
 
 

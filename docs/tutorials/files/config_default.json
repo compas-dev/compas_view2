@@ -12,7 +12,7 @@
     },
     "view": {
         "show_grid": true,
-        "view_mode": "shaded",
+        "viewmode": "shaded",
         "background_color": [1, 1, 1, 1],
         "selection_color": [1.0, 1.0, 0.0]
     },

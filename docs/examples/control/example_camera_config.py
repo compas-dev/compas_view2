@@ -7,10 +7,10 @@ from compas_view2.app import App
 config = {
     "view": {
         "show_grid": True,
-        "view_mode": "shaded",
+        "viewmode": "shaded",
         "background_color": [1, 1, 1, 1],
         "selection_color": [1.0, 1.0, 0.0],
-        "view_port": "TOP",
+        "viewport": "top",
         "camera": {
             "fov": 45,
             "near": 0.1,

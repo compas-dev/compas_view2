@@ -64,24 +64,26 @@ class App:
     ----------
     title : str, optional
         The title of the viewer window.  It will override the value in the config file.
-    version: {'120', '330'}, optional
+    version : {'120', '330'}, optional
         The version of the GLSL used by the shaders. It will override the value in the config file.
         Default is ``'120'`` with a compatibility profile.
         The option ``'330'`` is not yet available.
-    width: int, optional
+    width : int, optional
         The width of the app window at startup. It will override the value in the config file.
-    height: int, optional
+    height : int, optional
         The height of the app window at startup. It will override the value in the config file.
-    viewmode: {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
+    viewmode : {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
         The display mode of the OpenGL view. It will override the value in the config file.
         In `ghosted` mode, all objects have a default opacity of 0.7.
-    show_grid: bool, optional
+    viewport : {'front', 'right', 'top', 'perspective'}, optional
+        The viewport of the OpenGL view. It will override the value in the config file.
+    show_grid : bool, optional
         Show the XY plane. It will override the value in the config file.
         config: dict | filepath, optional
         A configuration dict for the App, or a path to a JSON file containing such a dict.
         Default is None, in which case the default configuration (a `Rhino-like` preference) is used.
         More configuration options can be found in the `example-control` of the page.
-    controller_class: :class:`compas_view2.app.Controller`, optional
+    controller_class : :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
         Default is None, in which case the default controller is used, matching the default config file.
 
@@ -135,6 +137,7 @@ class App:
         width: int = None,
         height: int = None,
         viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = None,
+        viewport: Literal["front", "right", "top", "perspective"] = None,
         show_grid: bool = None,
         enable_sidebar=None,
         enable_sidedock1: bool = None,
@@ -177,6 +180,8 @@ class App:
 
         if viewmode is not None:
             config["view"]["viewmode"] = viewmode
+        if viewport is not None:
+            config["view"]["viewport"] = viewport
         if show_grid is not None:
             config["view"]["show_grid"] = show_grid
 
