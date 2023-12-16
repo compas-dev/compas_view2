@@ -431,7 +431,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.VIEW_PORTS["front"]
+        self.app.view.current = self.app.view.VIEWPORTS["front"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
@@ -444,7 +444,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.VIEW_PORTS["right"]
+        self.app.view.current = self.app.view.VIEWPORTS["right"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
@@ -457,7 +457,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.VIEW_PORTS["top"]
+        self.app.view.current = self.app.view.VIEWPORTS["top"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
@@ -470,7 +470,7 @@ class Controller:
         None
 
         """
-        self.app.view.current = self.app.view.VIEW_PORTS["perspective"]
+        self.app.view.current = self.app.view.VIEWPORTS["perspective"]
         self.app.view.camera.reset_position()
         self.app.view.update_projection()
         self.app.view.update()
