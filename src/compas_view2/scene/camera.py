@@ -238,13 +238,13 @@ class Camera:
     def reset_position(self):
         """Reset the position of the camera based current view type."""
         self.target.set(0, 0, 0)
-        if self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"]:
+        if self.view.current == self.view.VIEW_PORTS["PERSPECTIVE"]:
             self.rotation.set(pi / 4, 0, -pi / 4)
-        if self.view.current == self.view.VIEW_ANGLES["TOP"]:
+        if self.view.current == self.view.VIEW_PORTS["TOP"]:
             self.rotation.set(0, 0, 0)
-        if self.view.current == self.view.VIEW_ANGLES["FRONT"]:
+        if self.view.current == self.view.VIEW_PORTS["FRONT"]:
             self.rotation.set(pi / 2, 0, 0)
-        if self.view.current == self.view.VIEW_ANGLES["RIGHT"]:
+        if self.view.current == self.view.VIEW_PORTS["RIGHT"]:
             self.rotation.set(pi / 2, 0, pi / 2)
 
     def rotate(self, dx, dy):
@@ -263,10 +263,10 @@ class Camera:
 
         Notes
         -----
-        Camera rotations are only available if the current view is a perspective view (``camera.view.current == camera.view.VIEW_ANGLES["PERSPECTIVE"]``).
+        Camera rotations are only available if the current view is a perspective view (``camera.view.current == camera.view.VIEW_PORTS["PERSPECTIVE"]``).
 
         """
-        if self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"]:
+        if self.view.current == self.view.VIEW_PORTS["PERSPECTIVE"]:
             self.rotation += [-self.rotation_delta * dy, 0, -self.rotation_delta * dx]
 
     def pan(self, dx, dy):
@@ -326,7 +326,7 @@ class Camera:
 
         """
         aspect = width / height
-        if self.view.current == self.view.VIEW_ANGLES["PERSPECTIVE"]:
+        if self.view.current == self.view.VIEW_PORTS["PERSPECTIVE"]:
             P = perspective(self.fov, aspect, self.near * self.scale, self.far * self.scale)
         else:
             left = -self.distance

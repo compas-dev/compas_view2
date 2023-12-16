@@ -65,7 +65,7 @@ This is a quick way to customize your viewer. It is suitable for task-specific c
 
 
 Configuration Structure
-======================
+========================================
 The default configuration file can be downloaded here: :download:`Link <files/config_default.json>`,
 or can be printed by the following code:
 
@@ -78,7 +78,7 @@ or can be printed by the following code:
 It it the template for creating your own settings, keyboard preferences, etc.
 
 Supported Keys
-===============
+===================
 In the `controller -> keys`, you can add you preferred keys. Currently, :mod:`compas_view2` supports below keys:
 
 .. figure:: /_images/keyboard.png

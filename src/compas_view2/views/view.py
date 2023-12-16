@@ -19,13 +19,13 @@ class View(QtWidgets.QOpenGLWidget):
         The view configuration.
     """
 
-    VIEW_ANGLES = {"FRONT": 1, "RIGHT": 2, "TOP": 3, "PERSPECTIVE": 4}
+    VIEW_PORTS = {"FRONT": 1, "RIGHT": 2, "TOP": 3, "PERSPECTIVE": 4}
 
     def __init__(self, app, view_config):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
-        self._current = self.VIEW_ANGLES[view_config["view_port"]]
+        self._current = self.VIEW_PORTS[view_config["view_port"]]
         self.shader_model = None
         self.app = app
         self.color = view_config["background_color"]
