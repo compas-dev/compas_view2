@@ -9,25 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added the update method for the `textobject`.
+
 ### Changed
 
 * Fix a bug when camera is looking straight up or down.
 
 ### Removed
 
-
 ## [0.10.1] 2023-12-12
 
 ### Added
 
-
 ### Changed
-
 
 ### Removed
 
 * Removed dependency on `cython`.
-
 
 ## [0.10.0] 2023-11-27
 
