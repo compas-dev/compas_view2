@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Doc building using `sphinx_compas2_theme `.
+* Fix the documentation: title lines, comments.
 * Fix a bug when camera is looking straight up or down.
 
 ### Removed
