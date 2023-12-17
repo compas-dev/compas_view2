@@ -516,6 +516,7 @@ document.write(`
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../examples/control.html">Control Examples</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../examples/control/example_camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/control/example_camera_config.html">Camera Config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../examples/control/example_camera_lookat.html">Camera LookAt</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../examples/control/example_camera_scale.html">Camera Scale</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../examples/control/example_custom_controller.html">Custom Controller</a></li>
@@ -735,7 +736,7 @@ Thinking of the <code class="docutils literal notranslate"><span class="pre">opt
 <li><p>In-code definition which overwrites the configuration:</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="n">viewmode</span><span class="o">=</span><span class="s2">&quot;lighted&quot;</span><span class="p">,</span> <span class="n">enable_sceneform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enable_propertyform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enable_sidebar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span><span class="n">viewmode</span><span class="o">=</span><span class="s2">&quot;lighted&quot;</span><span class="p">,</span> <span class="n">viewport</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">enable_sceneform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enable_propertyform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">enable_sidebar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># You can put your configuration as a dictionary. If you input incomplete configuration, the rest will be filled by the default values.</span>
@@ -750,11 +751,6 @@ Thinking of the <code class="docutils literal notranslate"><span class="pre">opt
 <h2>Configuration Structure</h2>
 <p>The default configuration file can be downloaded here: <a class="reference download internal" download="" href="../_downloads/09315bc4e0f2c1ca1f50c58a0e42b464/config_default.json"><code class="xref download docutils literal notranslate"><span class="pre">Link</span></code></a>,
 or can be printed by the following code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This prints the default configuration</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas_view2</span> <span class="kn">import</span> <span class="n">Info</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Info</span><span class="p">()</span><span class="o">.</span><span class="n">show_config</span><span class="p">()</span>
-</pre></div>
-</div>
 <p>It it the template for creating your own settings, keyboard preferences, etc.</p>
 </section>
 <section id="supported-keys">
