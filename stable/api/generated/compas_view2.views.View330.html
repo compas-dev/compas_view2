@@ -1,107 +1,718 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
 
-<head>
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <link rel="icon" href="../../_static/compas.ico" type="image/x-icon">
+    <title>View330 &#8212; COMPAS View2</title>
   
-  <title>compas_view2 - View330</title>
   
-
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-  <meta name="author" content="compas-dev" />
-  <meta name="description" content="" />
-
-  <link rel="shortcut icon" href="../../_static/images/compas.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/mono-blue.min.css">
-  <link rel="stylesheet" type="text/css" href="../../_static/css/compas.css" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
-
   
-  <link rel="next" title="View330.init" href="compas_view2.views.View330.init.html" />
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
   
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link rel="prev" title="View120.y" href="compas_view2.views.View120.y.html" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/compas.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/compas_view2.views.View330';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://raw.githubusercontent.com/compas-dev/compas_view2/gh-pages/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.11';
+        </script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="View330.init" href="compas_view2.views.View330.init.html" />
+    <link rel="prev" title="View120.update_projection" href="compas_view2.views.View120.update_projection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
   
 
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-</head>
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/compas_icon_white.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/compas_icon_white.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+    <p class="title logo__title">COMPAS View2</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <!-- <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        Introduction
+                      </a>
+                    </li>
+                
 
-<body data-spy="scroll" data-target="#compas-toc">
-  <!-- header -->
-  <header id="header" class="compas-header d-flex align-items-center">
-    <nav class="navbar navbar-expand navbar-dark col flex-column flex-md-row text-center">
-      <!-- brand -->
-      <a class="navbar-brand" href="https://compas.dev/compas_view2/">
-        <img src="../../_static/images/compas_icon_white.png" alt="COMPAS View2" width="48px" height="48px" />
-      </a>
-      <!-- brand -->
-      <!-- primary -->
-      <ul class="navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="https://compas.dev/compas_view2/">COMPAS View2</a></li>
-      </ul>
-      <!-- primary -->
-      <ul class="navbar-nav d-none d-md-flex ml-md-auto">
-        <!-- version -->
-        
-        <meta id="doc_versions" data-url="https://compas.dev/compas_view2/doc_versions.txt" data-docs="https://compas.dev/compas_view2/">
-        <li class="nav-item nav-versions dropdown">
-          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0.10.1
-          </a>
-          <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
-        </li>
-        
-        <!-- version -->
-        <!-- social -->
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../developer_guide.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../license.html">
+                        License
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul> -->
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.11  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
         <li class="nav-item">
-          <a class="nav-link" href="https://github.com/compas-dev/compas_view2" target="_blank">
-            <span class="fab fa-github fa-1x"></span>
-          </a>
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/compas-dev/compas_view2" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://forum.compas-framework.org" target="_blank">
-            <span class="fab fa-discourse fa-1x"></span>
-          </a>
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="http://forum.compas-framework.org/" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
         </li>
-        <!-- social -->
-      </ul>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/compas_view2/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python"></i></span>
+            <label class="sr-only">PyPI</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
     </nav>
-  </header>
-  <!-- header -->
-  <!-- main -->
-  <div class="container-fluid">
-    <div class="row">
-      <!-- main -->
-      <main class="col-12 col-md-9 col-xl-7 px-4 px-md-5 pt-2 pb-5 compas-content" role="main">
-        
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb mb-3 bg-white px-0">
-            <li class="breadcrumb-item"><a href="../../index.html">COMPAS View2</a></li>
-            
-            <li class="breadcrumb-item"><a href="../../api.html">API Reference</a></li>
-            
-            <li class="breadcrumb-item"><a href="../compas_view2.views.html">compas_view2.views</a></li>
-            
-            <!-- <li class="breadcrumb-item active" aria-current="page">View330</li> -->
-          </ol>
-        </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <!-- <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../developer_guide.html">
+                        Developer Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../license.html">
+                        License
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+  </ul> -->
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button type="button" class="version-switcher__button btn btn-sm navbar-btn dropdown-toggle" data-bs-toggle="dropdown">
+      0.11  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div class="version-switcher__menu dropdown-menu list-group-flush py-0">
+    <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/compas-dev/compas_view2" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="http://forum.compas-framework.org/" title="Discourse" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-discourse"></i></span>
+            <label class="sr-only">Discourse</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/compas_view2/" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-python"></i></span>
+            <label class="sr-only">PyPI</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../tutorials.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/tutorial_basics.html">Tutorial Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/tutorial_configuration.html">Tutorial Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/tutorial_software_concepts.html">Software Concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/object.html">Object Examples</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_arrows.html">Arrows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_brep.html">Brep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_collection.html">Collection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_coplanaredges.html">Coplanar Edges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_fonts.html">Fonts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_frames.html">Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_geometries.html">Geometries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_lines.html">Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_mesh_display.html">Mesh Display</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_nurbs.html">Nurbs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_points.html">Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_polyline.html">Polyline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_robot.html">Robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_robot_custom.html">Robot Custom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_scripted.html">Scripted</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_texts.html">Texts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/object/example_vector.html">Vector</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/color.html">Color Examples</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/color/example_blending.html">Blending</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/color/example_colors.html">Colors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/color/example_face_vertext_color.html">Face Vertex Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/control.html">Control Examples</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/control/example_camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/control/example_camera_config.html">Camera Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/control/example_camera_lookat.html">Camera LookAt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/control/example_camera_scale.html">Camera Scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/control/example_custom_controller.html">Custom Controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/control/example_custom_keys.html">Custom Keys</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/ui.html">UI Examples</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_customui.html">Make a Custom UI From a Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_image_display.html">Image Display</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_pair_object_form.html">UI SideDocks Custom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_plot.html">Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_tabs_tree_form.html">Tabs Tree Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_tree.html">Tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_tree_editable.html">Tree Editable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_tree_interactive.html">Tree Interactive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_ui_elements.html">UI Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_ui_elements2.html">UI Elements2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_ui_sidedocks.html">UI SideDocks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/ui/example_ui_sidedocks_custom.html">UI SideDocks Custom</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/dynamic.html">Dynamic Examples</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dynamic/example_background_compute.html">Background Compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dynamic/example_dynamic.html">Dynamic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dynamic/example_dynamic_mesh.html">Dynamic Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dynamic/example_orbiting.html">Orbit Around an Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dynamic/example_record.html">Record</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/dynamic/example_transform.html">Transform</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/flow.html">Flow Examples</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/flow/example_csg_flow.html">CSG Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/flow/example_flow.html">Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/other.html">Other Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.app.html">compas_view2.app</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.app.App.html">App</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.app.Controller.html">Controller</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.forms.html">compas_view2.forms</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.forms.Form.html">Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.forms.PropertyForm.html">PropertyForm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.forms.AddForm.html">AddForm</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.gl.html">compas_view2.gl</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.gl.make_index_buffer.html">make_index_buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.gl.make_vertex_buffer.html">make_vertex_buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.gl.update_index_buffer.html">update_index_buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.gl.update_vertex_buffer.html">update_vertex_buffer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.objects.html">compas_view2.objects</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.ArrowObject.html">ArrowObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.BoxObject.html">BoxObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.BufferObject.html">BufferObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.CapsuleObject.html">CapsuleObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.CircleObject.html">CircleObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.CollectionObject.html">CollectionObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.ConeObject.html">ConeObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.CylinderObject.html">CylinderObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.EllipseObject.html">EllipseObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.FrameObject.html">FrameObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.LineObject.html">LineObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.MeshObject.html">MeshObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.NetworkObject.html">NetworkObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.NurbsSurfaceObject.html">NurbsSurfaceObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.Object.html">Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.PlaneObject.html">PlaneObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.PointObject.html">PointObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.PolygonObject.html">PolygonObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.PolyhedronObject.html">PolyhedronObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.PolylineObject.html">PolylineObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.PointcloudObject.html">PointcloudObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.SphereObject.html">SphereObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.TextObject.html">TextObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.TorusObject.html">TorusObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.objects.VectorObject.html">VectorObject</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.scene.html">compas_view2.scene</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.scene.Camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.scene.Mouse.html">Mouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.scene.ortho.html">ortho</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.scene.perspective.html">perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.scene.lookat.html">lookat</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.shaders.html">compas_view2.shaders</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.shaders.Shader.html">Shader</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.shapes.html">compas_view2.shapes</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.shapes.Arrow.html">Arrow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.shapes.Text.html">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.shapes.VectorGroup.html">VectorGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../compas_view2.ui.html">compas_view2.ui</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.ui.Button.html">Button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.ui.Checkbox.html">Checkbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.ui.Radio.html">Radio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.ui.Slider.html">Slider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.ui.Select.html">Select</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../compas_view2.views.html">compas_view2.views</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.views.View.html">View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compas_view2.views.View120.html">View120</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">View330</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer_guide.html">Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><div class="sidebar-primary-item">
+    <a href="https://compas.dev" target="_blank">
+        COMPAS.dev <i class="fa fa-external-link" aria-hidden="true"></i>
+    </a>
+</div></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
         
         
-        <section class="detail" id="view330">
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../api.html" class="nav-link">API Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../compas_view2.views.html" class="nav-link">compas_view2.views</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">View330</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="view330">
 <h1>View330</h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_view2.views.View330">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_view2.views.</span></span><span class="sig-name descname"><span class="pre">View330</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">view_config</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/master/src/compas_view2/views/view330.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Bases: <a class="reference internal" href="compas_view2.views.View.html#compas_view2.views.View" title="compas_view2.views.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">View330</span></span><a class="reference external" href="https://github.com/compas-dev/compas_view2/blob/main/src/compas_view2/views/view330.py#L5"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <a class="reference internal" href="compas_view2.views.View.html#compas_view2.views.View" title="compas_view2.views.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_view2.views.view.View</span></code></a></p>
 <p>View widget for OpenGL 3.3 and GLSL 330 and above, with a Core Profile.</p>
 <p class="rubric">Methods</p>
-<table class="autosummary longtable docutils align-default">
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.init.html#compas_view2.views.View330.init" title="compas_view2.views.View330.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a></p></td>
 <td><p></p></td>
@@ -114,1342 +725,71 @@
 </tr>
 </tbody>
 </table>
-<p class="rubric">Inherited Methods</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.acceptDrops.html#compas_view2.views.View330.acceptDrops" title="compas_view2.views.View330.acceptDrops"><code class="xref py py-obj docutils literal notranslate"><span class="pre">acceptDrops</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.accessibleDescription.html#compas_view2.views.View330.accessibleDescription" title="compas_view2.views.View330.accessibleDescription"><code class="xref py py-obj docutils literal notranslate"><span class="pre">accessibleDescription</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.accessibleName.html#compas_view2.views.View330.accessibleName" title="compas_view2.views.View330.accessibleName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">accessibleName</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.actionEvent.html#compas_view2.views.View330.actionEvent" title="compas_view2.views.View330.actionEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">actionEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.actions.html#compas_view2.views.View330.actions" title="compas_view2.views.View330.actions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">actions</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.activateWindow.html#compas_view2.views.View330.activateWindow" title="compas_view2.views.View330.activateWindow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">activateWindow</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.addAction.html#compas_view2.views.View330.addAction" title="compas_view2.views.View330.addAction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addAction</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.addActions.html#compas_view2.views.View330.addActions" title="compas_view2.views.View330.addActions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">addActions</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.adjustSize.html#compas_view2.views.View330.adjustSize" title="compas_view2.views.View330.adjustSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjustSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.autoFillBackground.html#compas_view2.views.View330.autoFillBackground" title="compas_view2.views.View330.autoFillBackground"><code class="xref py py-obj docutils literal notranslate"><span class="pre">autoFillBackground</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.backgroundRole.html#compas_view2.views.View330.backgroundRole" title="compas_view2.views.View330.backgroundRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backgroundRole</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.backingStore.html#compas_view2.views.View330.backingStore" title="compas_view2.views.View330.backingStore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backingStore</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.baseSize.html#compas_view2.views.View330.baseSize" title="compas_view2.views.View330.baseSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">baseSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.blockSignals.html#compas_view2.views.View330.blockSignals" title="compas_view2.views.View330.blockSignals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blockSignals</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.changeEvent.html#compas_view2.views.View330.changeEvent" title="compas_view2.views.View330.changeEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">changeEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.childAt.html#compas_view2.views.View330.childAt" title="compas_view2.views.View330.childAt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">childAt</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.childEvent.html#compas_view2.views.View330.childEvent" title="compas_view2.views.View330.childEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">childEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.children.html#compas_view2.views.View330.children" title="compas_view2.views.View330.children"><code class="xref py py-obj docutils literal notranslate"><span class="pre">children</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.childrenRect.html#compas_view2.views.View330.childrenRect" title="compas_view2.views.View330.childrenRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">childrenRect</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.childrenRegion.html#compas_view2.views.View330.childrenRegion" title="compas_view2.views.View330.childrenRegion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">childrenRegion</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.clear.html#compas_view2.views.View330.clear" title="compas_view2.views.View330.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a></p></td>
-<td><p>Clear the view.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.clearFocus.html#compas_view2.views.View330.clearFocus" title="compas_view2.views.View330.clearFocus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clearFocus</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.clearMask.html#compas_view2.views.View330.clearMask" title="compas_view2.views.View330.clearMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clearMask</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.close.html#compas_view2.views.View330.close" title="compas_view2.views.View330.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.closeEvent.html#compas_view2.views.View330.closeEvent" title="compas_view2.views.View330.closeEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">closeEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.colorCount.html#compas_view2.views.View330.colorCount" title="compas_view2.views.View330.colorCount"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colorCount</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.connect.html#compas_view2.views.View330.connect" title="compas_view2.views.View330.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.connectNotify.html#compas_view2.views.View330.connectNotify" title="compas_view2.views.View330.connectNotify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connectNotify</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.contentsMargins.html#compas_view2.views.View330.contentsMargins" title="compas_view2.views.View330.contentsMargins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contentsMargins</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.contentsRect.html#compas_view2.views.View330.contentsRect" title="compas_view2.views.View330.contentsRect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contentsRect</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.context.html#compas_view2.views.View330.context" title="compas_view2.views.View330.context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">context</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.contextMenuEvent.html#compas_view2.views.View330.contextMenuEvent" title="compas_view2.views.View330.contextMenuEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contextMenuEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.contextMenuPolicy.html#compas_view2.views.View330.contextMenuPolicy" title="compas_view2.views.View330.contextMenuPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contextMenuPolicy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.create.html#compas_view2.views.View330.create" title="compas_view2.views.View330.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.createWinId.html#compas_view2.views.View330.createWinId" title="compas_view2.views.View330.createWinId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createWinId</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.createWindowContainer.html#compas_view2.views.View330.createWindowContainer" title="compas_view2.views.View330.createWindowContainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">createWindowContainer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.cursor.html#compas_view2.views.View330.cursor" title="compas_view2.views.View330.cursor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cursor</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.customEvent.html#compas_view2.views.View330.customEvent" title="compas_view2.views.View330.customEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">customEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.defaultFramebufferObject.html#compas_view2.views.View330.defaultFramebufferObject" title="compas_view2.views.View330.defaultFramebufferObject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaultFramebufferObject</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.deleteLater.html#compas_view2.views.View330.deleteLater" title="compas_view2.views.View330.deleteLater"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deleteLater</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.depth.html#compas_view2.views.View330.depth" title="compas_view2.views.View330.depth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">depth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.destroy.html#compas_view2.views.View330.destroy" title="compas_view2.views.View330.destroy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">destroy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.devType.html#compas_view2.views.View330.devType" title="compas_view2.views.View330.devType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">devType</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.devicePixelRatio.html#compas_view2.views.View330.devicePixelRatio" title="compas_view2.views.View330.devicePixelRatio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">devicePixelRatio</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.devicePixelRatioF.html#compas_view2.views.View330.devicePixelRatioF" title="compas_view2.views.View330.devicePixelRatioF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">devicePixelRatioF</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.devicePixelRatioFScale.html#compas_view2.views.View330.devicePixelRatioFScale" title="compas_view2.views.View330.devicePixelRatioFScale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">devicePixelRatioFScale</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.disconnect.html#compas_view2.views.View330.disconnect" title="compas_view2.views.View330.disconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disconnect</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.disconnectNotify.html#compas_view2.views.View330.disconnectNotify" title="compas_view2.views.View330.disconnectNotify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disconnectNotify</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.doneCurrent.html#compas_view2.views.View330.doneCurrent" title="compas_view2.views.View330.doneCurrent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">doneCurrent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.dragEnterEvent.html#compas_view2.views.View330.dragEnterEvent" title="compas_view2.views.View330.dragEnterEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dragEnterEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.dragLeaveEvent.html#compas_view2.views.View330.dragLeaveEvent" title="compas_view2.views.View330.dragLeaveEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dragLeaveEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.dragMoveEvent.html#compas_view2.views.View330.dragMoveEvent" title="compas_view2.views.View330.dragMoveEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dragMoveEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.dropEvent.html#compas_view2.views.View330.dropEvent" title="compas_view2.views.View330.dropEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dropEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.dumpObjectInfo.html#compas_view2.views.View330.dumpObjectInfo" title="compas_view2.views.View330.dumpObjectInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpObjectInfo</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.dumpObjectTree.html#compas_view2.views.View330.dumpObjectTree" title="compas_view2.views.View330.dumpObjectTree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumpObjectTree</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.dynamicPropertyNames.html#compas_view2.views.View330.dynamicPropertyNames" title="compas_view2.views.View330.dynamicPropertyNames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dynamicPropertyNames</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.effectiveWinId.html#compas_view2.views.View330.effectiveWinId" title="compas_view2.views.View330.effectiveWinId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">effectiveWinId</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.emit.html#compas_view2.views.View330.emit" title="compas_view2.views.View330.emit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">emit</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.ensurePolished.html#compas_view2.views.View330.ensurePolished" title="compas_view2.views.View330.ensurePolished"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensurePolished</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.enterEvent.html#compas_view2.views.View330.enterEvent" title="compas_view2.views.View330.enterEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enterEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.event.html#compas_view2.views.View330.event" title="compas_view2.views.View330.event"><code class="xref py py-obj docutils literal notranslate"><span class="pre">event</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.eventFilter.html#compas_view2.views.View330.eventFilter" title="compas_view2.views.View330.eventFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eventFilter</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.find.html#compas_view2.views.View330.find" title="compas_view2.views.View330.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.findChild.html#compas_view2.views.View330.findChild" title="compas_view2.views.View330.findChild"><code class="xref py py-obj docutils literal notranslate"><span class="pre">findChild</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.findChildren.html#compas_view2.views.View330.findChildren" title="compas_view2.views.View330.findChildren"><code class="xref py py-obj docutils literal notranslate"><span class="pre">findChildren</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.focusInEvent.html#compas_view2.views.View330.focusInEvent" title="compas_view2.views.View330.focusInEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusInEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.focusNextChild.html#compas_view2.views.View330.focusNextChild" title="compas_view2.views.View330.focusNextChild"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusNextChild</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.focusNextPrevChild.html#compas_view2.views.View330.focusNextPrevChild" title="compas_view2.views.View330.focusNextPrevChild"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusNextPrevChild</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.focusOutEvent.html#compas_view2.views.View330.focusOutEvent" title="compas_view2.views.View330.focusOutEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusOutEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.focusPolicy.html#compas_view2.views.View330.focusPolicy" title="compas_view2.views.View330.focusPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusPolicy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.focusPreviousChild.html#compas_view2.views.View330.focusPreviousChild" title="compas_view2.views.View330.focusPreviousChild"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusPreviousChild</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.focusProxy.html#compas_view2.views.View330.focusProxy" title="compas_view2.views.View330.focusProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusProxy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.focusWidget.html#compas_view2.views.View330.focusWidget" title="compas_view2.views.View330.focusWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">focusWidget</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.font.html#compas_view2.views.View330.font" title="compas_view2.views.View330.font"><code class="xref py py-obj docutils literal notranslate"><span class="pre">font</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.fontInfo.html#compas_view2.views.View330.fontInfo" title="compas_view2.views.View330.fontInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fontInfo</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.fontMetrics.html#compas_view2.views.View330.fontMetrics" title="compas_view2.views.View330.fontMetrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fontMetrics</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.foregroundRole.html#compas_view2.views.View330.foregroundRole" title="compas_view2.views.View330.foregroundRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">foregroundRole</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.format.html#compas_view2.views.View330.format" title="compas_view2.views.View330.format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.frameGeometry.html#compas_view2.views.View330.frameGeometry" title="compas_view2.views.View330.frameGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frameGeometry</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.frameSize.html#compas_view2.views.View330.frameSize" title="compas_view2.views.View330.frameSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frameSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.geometry.html#compas_view2.views.View330.geometry" title="compas_view2.views.View330.geometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.getContentsMargins.html#compas_view2.views.View330.getContentsMargins" title="compas_view2.views.View330.getContentsMargins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getContentsMargins</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.grab.html#compas_view2.views.View330.grab" title="compas_view2.views.View330.grab"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grab</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.grabFramebuffer.html#compas_view2.views.View330.grabFramebuffer" title="compas_view2.views.View330.grabFramebuffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabFramebuffer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.grabGesture.html#compas_view2.views.View330.grabGesture" title="compas_view2.views.View330.grabGesture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabGesture</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.grabKeyboard.html#compas_view2.views.View330.grabKeyboard" title="compas_view2.views.View330.grabKeyboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabKeyboard</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.grabMouse.html#compas_view2.views.View330.grabMouse" title="compas_view2.views.View330.grabMouse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabMouse</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.grabShortcut.html#compas_view2.views.View330.grabShortcut" title="compas_view2.views.View330.grabShortcut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grabShortcut</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.graphicsEffect.html#compas_view2.views.View330.graphicsEffect" title="compas_view2.views.View330.graphicsEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graphicsEffect</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.graphicsProxyWidget.html#compas_view2.views.View330.graphicsProxyWidget" title="compas_view2.views.View330.graphicsProxyWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graphicsProxyWidget</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.hasFocus.html#compas_view2.views.View330.hasFocus" title="compas_view2.views.View330.hasFocus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasFocus</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.hasHeightForWidth.html#compas_view2.views.View330.hasHeightForWidth" title="compas_view2.views.View330.hasHeightForWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasHeightForWidth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.hasMouseTracking.html#compas_view2.views.View330.hasMouseTracking" title="compas_view2.views.View330.hasMouseTracking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasMouseTracking</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.hasTabletTracking.html#compas_view2.views.View330.hasTabletTracking" title="compas_view2.views.View330.hasTabletTracking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hasTabletTracking</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.height.html#compas_view2.views.View330.height" title="compas_view2.views.View330.height"><code class="xref py py-obj docutils literal notranslate"><span class="pre">height</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.heightForWidth.html#compas_view2.views.View330.heightForWidth" title="compas_view2.views.View330.heightForWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">heightForWidth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.heightMM.html#compas_view2.views.View330.heightMM" title="compas_view2.views.View330.heightMM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">heightMM</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.hide.html#compas_view2.views.View330.hide" title="compas_view2.views.View330.hide"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hide</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.hideEvent.html#compas_view2.views.View330.hideEvent" title="compas_view2.views.View330.hideEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hideEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.inherits.html#compas_view2.views.View330.inherits" title="compas_view2.views.View330.inherits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inherits</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.initPainter.html#compas_view2.views.View330.initPainter" title="compas_view2.views.View330.initPainter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initPainter</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.initializeGL.html#compas_view2.views.View330.initializeGL" title="compas_view2.views.View330.initializeGL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initializeGL</span></code></a></p></td>
-<td><p>Initialize the OpenGL canvas.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.inputMethodEvent.html#compas_view2.views.View330.inputMethodEvent" title="compas_view2.views.View330.inputMethodEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inputMethodEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.inputMethodHints.html#compas_view2.views.View330.inputMethodHints" title="compas_view2.views.View330.inputMethodHints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inputMethodHints</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.inputMethodQuery.html#compas_view2.views.View330.inputMethodQuery" title="compas_view2.views.View330.inputMethodQuery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inputMethodQuery</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.insertAction.html#compas_view2.views.View330.insertAction" title="compas_view2.views.View330.insertAction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">insertAction</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.insertActions.html#compas_view2.views.View330.insertActions" title="compas_view2.views.View330.insertActions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">insertActions</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.installEventFilter.html#compas_view2.views.View330.installEventFilter" title="compas_view2.views.View330.installEventFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">installEventFilter</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.internalWinId.html#compas_view2.views.View330.internalWinId" title="compas_view2.views.View330.internalWinId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">internalWinId</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isActiveWindow.html#compas_view2.views.View330.isActiveWindow" title="compas_view2.views.View330.isActiveWindow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isActiveWindow</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isAncestorOf.html#compas_view2.views.View330.isAncestorOf" title="compas_view2.views.View330.isAncestorOf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isAncestorOf</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isEnabled.html#compas_view2.views.View330.isEnabled" title="compas_view2.views.View330.isEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEnabled</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isEnabledTo.html#compas_view2.views.View330.isEnabledTo" title="compas_view2.views.View330.isEnabledTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEnabledTo</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isEnabledToTLW.html#compas_view2.views.View330.isEnabledToTLW" title="compas_view2.views.View330.isEnabledToTLW"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isEnabledToTLW</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isFullScreen.html#compas_view2.views.View330.isFullScreen" title="compas_view2.views.View330.isFullScreen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isFullScreen</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isHidden.html#compas_view2.views.View330.isHidden" title="compas_view2.views.View330.isHidden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isHidden</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isLeftToRight.html#compas_view2.views.View330.isLeftToRight" title="compas_view2.views.View330.isLeftToRight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isLeftToRight</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isMaximized.html#compas_view2.views.View330.isMaximized" title="compas_view2.views.View330.isMaximized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isMaximized</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isMinimized.html#compas_view2.views.View330.isMinimized" title="compas_view2.views.View330.isMinimized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isMinimized</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isModal.html#compas_view2.views.View330.isModal" title="compas_view2.views.View330.isModal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isModal</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isRightToLeft.html#compas_view2.views.View330.isRightToLeft" title="compas_view2.views.View330.isRightToLeft"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isRightToLeft</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isSignalConnected.html#compas_view2.views.View330.isSignalConnected" title="compas_view2.views.View330.isSignalConnected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isSignalConnected</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isTopLevel.html#compas_view2.views.View330.isTopLevel" title="compas_view2.views.View330.isTopLevel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isTopLevel</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isValid.html#compas_view2.views.View330.isValid" title="compas_view2.views.View330.isValid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isValid</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isVisible.html#compas_view2.views.View330.isVisible" title="compas_view2.views.View330.isVisible"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isVisible</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isVisibleTo.html#compas_view2.views.View330.isVisibleTo" title="compas_view2.views.View330.isVisibleTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isVisibleTo</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isWidgetType.html#compas_view2.views.View330.isWidgetType" title="compas_view2.views.View330.isWidgetType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isWidgetType</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isWindow.html#compas_view2.views.View330.isWindow" title="compas_view2.views.View330.isWindow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isWindow</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.isWindowModified.html#compas_view2.views.View330.isWindowModified" title="compas_view2.views.View330.isWindowModified"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isWindowModified</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.isWindowType.html#compas_view2.views.View330.isWindowType" title="compas_view2.views.View330.isWindowType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isWindowType</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.keyPressEvent.html#compas_view2.views.View330.keyPressEvent" title="compas_view2.views.View330.keyPressEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keyPressEvent</span></code></a></p></td>
-<td><p>Callback for the key press event.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.keyReleaseEvent.html#compas_view2.views.View330.keyReleaseEvent" title="compas_view2.views.View330.keyReleaseEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keyReleaseEvent</span></code></a></p></td>
-<td><p>Callback for the key release event.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.keyboardGrabber.html#compas_view2.views.View330.keyboardGrabber" title="compas_view2.views.View330.keyboardGrabber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keyboardGrabber</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.killTimer.html#compas_view2.views.View330.killTimer" title="compas_view2.views.View330.killTimer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">killTimer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.layout.html#compas_view2.views.View330.layout" title="compas_view2.views.View330.layout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layout</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.layoutDirection.html#compas_view2.views.View330.layoutDirection" title="compas_view2.views.View330.layoutDirection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layoutDirection</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.leaveEvent.html#compas_view2.views.View330.leaveEvent" title="compas_view2.views.View330.leaveEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">leaveEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.locale.html#compas_view2.views.View330.locale" title="compas_view2.views.View330.locale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">locale</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.logicalDpiX.html#compas_view2.views.View330.logicalDpiX" title="compas_view2.views.View330.logicalDpiX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logicalDpiX</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.logicalDpiY.html#compas_view2.views.View330.logicalDpiY" title="compas_view2.views.View330.logicalDpiY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logicalDpiY</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.lower.html#compas_view2.views.View330.lower" title="compas_view2.views.View330.lower"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lower</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.makeCurrent.html#compas_view2.views.View330.makeCurrent" title="compas_view2.views.View330.makeCurrent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">makeCurrent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.mapFrom.html#compas_view2.views.View330.mapFrom" title="compas_view2.views.View330.mapFrom"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapFrom</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.mapFromGlobal.html#compas_view2.views.View330.mapFromGlobal" title="compas_view2.views.View330.mapFromGlobal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapFromGlobal</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.mapFromParent.html#compas_view2.views.View330.mapFromParent" title="compas_view2.views.View330.mapFromParent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapFromParent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.mapTo.html#compas_view2.views.View330.mapTo" title="compas_view2.views.View330.mapTo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapTo</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.mapToGlobal.html#compas_view2.views.View330.mapToGlobal" title="compas_view2.views.View330.mapToGlobal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapToGlobal</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.mapToParent.html#compas_view2.views.View330.mapToParent" title="compas_view2.views.View330.mapToParent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mapToParent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.mask.html#compas_view2.views.View330.mask" title="compas_view2.views.View330.mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.maximumHeight.html#compas_view2.views.View330.maximumHeight" title="compas_view2.views.View330.maximumHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maximumHeight</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.maximumSize.html#compas_view2.views.View330.maximumSize" title="compas_view2.views.View330.maximumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maximumSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.maximumWidth.html#compas_view2.views.View330.maximumWidth" title="compas_view2.views.View330.maximumWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maximumWidth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.metaObject.html#compas_view2.views.View330.metaObject" title="compas_view2.views.View330.metaObject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">metaObject</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.metric.html#compas_view2.views.View330.metric" title="compas_view2.views.View330.metric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">metric</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.minimumHeight.html#compas_view2.views.View330.minimumHeight" title="compas_view2.views.View330.minimumHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimumHeight</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.minimumSize.html#compas_view2.views.View330.minimumSize" title="compas_view2.views.View330.minimumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimumSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.minimumSizeHint.html#compas_view2.views.View330.minimumSizeHint" title="compas_view2.views.View330.minimumSizeHint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimumSizeHint</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.minimumWidth.html#compas_view2.views.View330.minimumWidth" title="compas_view2.views.View330.minimumWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimumWidth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.mouseDoubleClickEvent.html#compas_view2.views.View330.mouseDoubleClickEvent" title="compas_view2.views.View330.mouseDoubleClickEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouseDoubleClickEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.mouseGrabber.html#compas_view2.views.View330.mouseGrabber" title="compas_view2.views.View330.mouseGrabber"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouseGrabber</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.mouseMoveEvent.html#compas_view2.views.View330.mouseMoveEvent" title="compas_view2.views.View330.mouseMoveEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouseMoveEvent</span></code></a></p></td>
-<td><p>Callback for the mouse move event.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.mousePressEvent.html#compas_view2.views.View330.mousePressEvent" title="compas_view2.views.View330.mousePressEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mousePressEvent</span></code></a></p></td>
-<td><p>Callback for the mouse press event.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.mouseReleaseEvent.html#compas_view2.views.View330.mouseReleaseEvent" title="compas_view2.views.View330.mouseReleaseEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mouseReleaseEvent</span></code></a></p></td>
-<td><p>Callback for the release press event.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.move.html#compas_view2.views.View330.move" title="compas_view2.views.View330.move"><code class="xref py py-obj docutils literal notranslate"><span class="pre">move</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.moveEvent.html#compas_view2.views.View330.moveEvent" title="compas_view2.views.View330.moveEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.moveToThread.html#compas_view2.views.View330.moveToThread" title="compas_view2.views.View330.moveToThread"><code class="xref py py-obj docutils literal notranslate"><span class="pre">moveToThread</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.nativeEvent.html#compas_view2.views.View330.nativeEvent" title="compas_view2.views.View330.nativeEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nativeEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.nativeParentWidget.html#compas_view2.views.View330.nativeParentWidget" title="compas_view2.views.View330.nativeParentWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nativeParentWidget</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.nextInFocusChain.html#compas_view2.views.View330.nextInFocusChain" title="compas_view2.views.View330.nextInFocusChain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nextInFocusChain</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.normalGeometry.html#compas_view2.views.View330.normalGeometry" title="compas_view2.views.View330.normalGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalGeometry</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.objectName.html#compas_view2.views.View330.objectName" title="compas_view2.views.View330.objectName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">objectName</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.overrideWindowFlags.html#compas_view2.views.View330.overrideWindowFlags" title="compas_view2.views.View330.overrideWindowFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overrideWindowFlags</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.overrideWindowState.html#compas_view2.views.View330.overrideWindowState" title="compas_view2.views.View330.overrideWindowState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overrideWindowState</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.paintEngine.html#compas_view2.views.View330.paintEngine" title="compas_view2.views.View330.paintEngine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paintEngine</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.paintEvent.html#compas_view2.views.View330.paintEvent" title="compas_view2.views.View330.paintEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paintEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.paintGL.html#compas_view2.views.View330.paintGL" title="compas_view2.views.View330.paintGL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paintGL</span></code></a></p></td>
-<td><p>Paint the OpenGL canvas.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.paint_instances.html#compas_view2.views.View330.paint_instances" title="compas_view2.views.View330.paint_instances"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paint_instances</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.paint_plane.html#compas_view2.views.View330.paint_plane" title="compas_view2.views.View330.paint_plane"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paint_plane</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.paintingActive.html#compas_view2.views.View330.paintingActive" title="compas_view2.views.View330.paintingActive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">paintingActive</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.palette.html#compas_view2.views.View330.palette" title="compas_view2.views.View330.palette"><code class="xref py py-obj docutils literal notranslate"><span class="pre">palette</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.parent.html#compas_view2.views.View330.parent" title="compas_view2.views.View330.parent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.parentWidget.html#compas_view2.views.View330.parentWidget" title="compas_view2.views.View330.parentWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parentWidget</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.physicalDpiX.html#compas_view2.views.View330.physicalDpiX" title="compas_view2.views.View330.physicalDpiX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">physicalDpiX</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.physicalDpiY.html#compas_view2.views.View330.physicalDpiY" title="compas_view2.views.View330.physicalDpiY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">physicalDpiY</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.pos.html#compas_view2.views.View330.pos" title="compas_view2.views.View330.pos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pos</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.previousInFocusChain.html#compas_view2.views.View330.previousInFocusChain" title="compas_view2.views.View330.previousInFocusChain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">previousInFocusChain</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.property.html#compas_view2.views.View330.property" title="compas_view2.views.View330.property"><code class="xref py py-obj docutils literal notranslate"><span class="pre">property</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.raise_.html#compas_view2.views.View330.raise_" title="compas_view2.views.View330.raise_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">raise_</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.receivers.html#compas_view2.views.View330.receivers" title="compas_view2.views.View330.receivers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">receivers</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.rect.html#compas_view2.views.View330.rect" title="compas_view2.views.View330.rect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rect</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.redirected.html#compas_view2.views.View330.redirected" title="compas_view2.views.View330.redirected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redirected</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.registerUserData.html#compas_view2.views.View330.registerUserData" title="compas_view2.views.View330.registerUserData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">registerUserData</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.releaseKeyboard.html#compas_view2.views.View330.releaseKeyboard" title="compas_view2.views.View330.releaseKeyboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">releaseKeyboard</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.releaseMouse.html#compas_view2.views.View330.releaseMouse" title="compas_view2.views.View330.releaseMouse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">releaseMouse</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.releaseShortcut.html#compas_view2.views.View330.releaseShortcut" title="compas_view2.views.View330.releaseShortcut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">releaseShortcut</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.removeAction.html#compas_view2.views.View330.removeAction" title="compas_view2.views.View330.removeAction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeAction</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.removeEventFilter.html#compas_view2.views.View330.removeEventFilter" title="compas_view2.views.View330.removeEventFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeEventFilter</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.render.html#compas_view2.views.View330.render" title="compas_view2.views.View330.render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.repaint.html#compas_view2.views.View330.repaint" title="compas_view2.views.View330.repaint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repaint</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.resizeEvent.html#compas_view2.views.View330.resizeEvent" title="compas_view2.views.View330.resizeEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resizeEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.resizeGL.html#compas_view2.views.View330.resizeGL" title="compas_view2.views.View330.resizeGL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resizeGL</span></code></a></p></td>
-<td><p>Resize the OpenGL canvas.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.restoreGeometry.html#compas_view2.views.View330.restoreGeometry" title="compas_view2.views.View330.restoreGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restoreGeometry</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.saveGeometry.html#compas_view2.views.View330.saveGeometry" title="compas_view2.views.View330.saveGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">saveGeometry</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.screen.html#compas_view2.views.View330.screen" title="compas_view2.views.View330.screen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">screen</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.scroll.html#compas_view2.views.View330.scroll" title="compas_view2.views.View330.scroll"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scroll</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.sender.html#compas_view2.views.View330.sender" title="compas_view2.views.View330.sender"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sender</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.senderSignalIndex.html#compas_view2.views.View330.senderSignalIndex" title="compas_view2.views.View330.senderSignalIndex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">senderSignalIndex</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setAcceptDrops.html#compas_view2.views.View330.setAcceptDrops" title="compas_view2.views.View330.setAcceptDrops"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAcceptDrops</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setAccessibleDescription.html#compas_view2.views.View330.setAccessibleDescription" title="compas_view2.views.View330.setAccessibleDescription"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAccessibleDescription</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setAccessibleName.html#compas_view2.views.View330.setAccessibleName" title="compas_view2.views.View330.setAccessibleName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAccessibleName</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setAttribute.html#compas_view2.views.View330.setAttribute" title="compas_view2.views.View330.setAttribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAttribute</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setAutoFillBackground.html#compas_view2.views.View330.setAutoFillBackground" title="compas_view2.views.View330.setAutoFillBackground"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setAutoFillBackground</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setBackgroundRole.html#compas_view2.views.View330.setBackgroundRole" title="compas_view2.views.View330.setBackgroundRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBackgroundRole</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setBaseSize.html#compas_view2.views.View330.setBaseSize" title="compas_view2.views.View330.setBaseSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setBaseSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setContentsMargins.html#compas_view2.views.View330.setContentsMargins" title="compas_view2.views.View330.setContentsMargins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setContentsMargins</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setContextMenuPolicy.html#compas_view2.views.View330.setContextMenuPolicy" title="compas_view2.views.View330.setContextMenuPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setContextMenuPolicy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setCursor.html#compas_view2.views.View330.setCursor" title="compas_view2.views.View330.setCursor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setCursor</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setDisabled.html#compas_view2.views.View330.setDisabled" title="compas_view2.views.View330.setDisabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setDisabled</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setEnabled.html#compas_view2.views.View330.setEnabled" title="compas_view2.views.View330.setEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEnabled</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setFixedHeight.html#compas_view2.views.View330.setFixedHeight" title="compas_view2.views.View330.setFixedHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFixedHeight</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setFixedSize.html#compas_view2.views.View330.setFixedSize" title="compas_view2.views.View330.setFixedSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFixedSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setFixedWidth.html#compas_view2.views.View330.setFixedWidth" title="compas_view2.views.View330.setFixedWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFixedWidth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setFocus.html#compas_view2.views.View330.setFocus" title="compas_view2.views.View330.setFocus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFocus</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setFocusPolicy.html#compas_view2.views.View330.setFocusPolicy" title="compas_view2.views.View330.setFocusPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFocusPolicy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setFocusProxy.html#compas_view2.views.View330.setFocusProxy" title="compas_view2.views.View330.setFocusProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFocusProxy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setFont.html#compas_view2.views.View330.setFont" title="compas_view2.views.View330.setFont"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFont</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setForegroundRole.html#compas_view2.views.View330.setForegroundRole" title="compas_view2.views.View330.setForegroundRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setForegroundRole</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setFormat.html#compas_view2.views.View330.setFormat" title="compas_view2.views.View330.setFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFormat</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setGeometry.html#compas_view2.views.View330.setGeometry" title="compas_view2.views.View330.setGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setGeometry</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setGraphicsEffect.html#compas_view2.views.View330.setGraphicsEffect" title="compas_view2.views.View330.setGraphicsEffect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setGraphicsEffect</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setHidden.html#compas_view2.views.View330.setHidden" title="compas_view2.views.View330.setHidden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setHidden</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setInputMethodHints.html#compas_view2.views.View330.setInputMethodHints" title="compas_view2.views.View330.setInputMethodHints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setInputMethodHints</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setLayout.html#compas_view2.views.View330.setLayout" title="compas_view2.views.View330.setLayout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLayout</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setLayoutDirection.html#compas_view2.views.View330.setLayoutDirection" title="compas_view2.views.View330.setLayoutDirection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLayoutDirection</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setLocale.html#compas_view2.views.View330.setLocale" title="compas_view2.views.View330.setLocale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLocale</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setMask.html#compas_view2.views.View330.setMask" title="compas_view2.views.View330.setMask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMask</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setMaximumHeight.html#compas_view2.views.View330.setMaximumHeight" title="compas_view2.views.View330.setMaximumHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaximumHeight</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setMaximumSize.html#compas_view2.views.View330.setMaximumSize" title="compas_view2.views.View330.setMaximumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaximumSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setMaximumWidth.html#compas_view2.views.View330.setMaximumWidth" title="compas_view2.views.View330.setMaximumWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMaximumWidth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setMinimumHeight.html#compas_view2.views.View330.setMinimumHeight" title="compas_view2.views.View330.setMinimumHeight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMinimumHeight</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setMinimumSize.html#compas_view2.views.View330.setMinimumSize" title="compas_view2.views.View330.setMinimumSize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMinimumSize</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setMinimumWidth.html#compas_view2.views.View330.setMinimumWidth" title="compas_view2.views.View330.setMinimumWidth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMinimumWidth</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setMouseTracking.html#compas_view2.views.View330.setMouseTracking" title="compas_view2.views.View330.setMouseTracking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setMouseTracking</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setObjectName.html#compas_view2.views.View330.setObjectName" title="compas_view2.views.View330.setObjectName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setObjectName</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setPalette.html#compas_view2.views.View330.setPalette" title="compas_view2.views.View330.setPalette"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setPalette</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setParent.html#compas_view2.views.View330.setParent" title="compas_view2.views.View330.setParent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setParent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setProperty.html#compas_view2.views.View330.setProperty" title="compas_view2.views.View330.setProperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setProperty</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setShortcutAutoRepeat.html#compas_view2.views.View330.setShortcutAutoRepeat" title="compas_view2.views.View330.setShortcutAutoRepeat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setShortcutAutoRepeat</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setShortcutEnabled.html#compas_view2.views.View330.setShortcutEnabled" title="compas_view2.views.View330.setShortcutEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setShortcutEnabled</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setSizeIncrement.html#compas_view2.views.View330.setSizeIncrement" title="compas_view2.views.View330.setSizeIncrement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSizeIncrement</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setSizePolicy.html#compas_view2.views.View330.setSizePolicy" title="compas_view2.views.View330.setSizePolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setSizePolicy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setStatusTip.html#compas_view2.views.View330.setStatusTip" title="compas_view2.views.View330.setStatusTip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStatusTip</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setStyle.html#compas_view2.views.View330.setStyle" title="compas_view2.views.View330.setStyle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStyle</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setStyleSheet.html#compas_view2.views.View330.setStyleSheet" title="compas_view2.views.View330.setStyleSheet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setStyleSheet</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setTabOrder.html#compas_view2.views.View330.setTabOrder" title="compas_view2.views.View330.setTabOrder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTabOrder</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setTabletTracking.html#compas_view2.views.View330.setTabletTracking" title="compas_view2.views.View330.setTabletTracking"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTabletTracking</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setTextureFormat.html#compas_view2.views.View330.setTextureFormat" title="compas_view2.views.View330.setTextureFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setTextureFormat</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setToolTip.html#compas_view2.views.View330.setToolTip" title="compas_view2.views.View330.setToolTip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setToolTip</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setToolTipDuration.html#compas_view2.views.View330.setToolTipDuration" title="compas_view2.views.View330.setToolTipDuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setToolTipDuration</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setUpdateBehavior.html#compas_view2.views.View330.setUpdateBehavior" title="compas_view2.views.View330.setUpdateBehavior"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setUpdateBehavior</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setUpdatesEnabled.html#compas_view2.views.View330.setUpdatesEnabled" title="compas_view2.views.View330.setUpdatesEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setUpdatesEnabled</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setVisible.html#compas_view2.views.View330.setVisible" title="compas_view2.views.View330.setVisible"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setVisible</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setWhatsThis.html#compas_view2.views.View330.setWhatsThis" title="compas_view2.views.View330.setWhatsThis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWhatsThis</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowFilePath.html#compas_view2.views.View330.setWindowFilePath" title="compas_view2.views.View330.setWindowFilePath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowFilePath</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowFlag.html#compas_view2.views.View330.setWindowFlag" title="compas_view2.views.View330.setWindowFlag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowFlag</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowFlags.html#compas_view2.views.View330.setWindowFlags" title="compas_view2.views.View330.setWindowFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowFlags</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowIcon.html#compas_view2.views.View330.setWindowIcon" title="compas_view2.views.View330.setWindowIcon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowIcon</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowIconText.html#compas_view2.views.View330.setWindowIconText" title="compas_view2.views.View330.setWindowIconText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowIconText</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowModality.html#compas_view2.views.View330.setWindowModality" title="compas_view2.views.View330.setWindowModality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowModality</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowModified.html#compas_view2.views.View330.setWindowModified" title="compas_view2.views.View330.setWindowModified"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowModified</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowOpacity.html#compas_view2.views.View330.setWindowOpacity" title="compas_view2.views.View330.setWindowOpacity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowOpacity</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowRole.html#compas_view2.views.View330.setWindowRole" title="compas_view2.views.View330.setWindowRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowRole</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowState.html#compas_view2.views.View330.setWindowState" title="compas_view2.views.View330.setWindowState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowState</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.setWindowTitle.html#compas_view2.views.View330.setWindowTitle" title="compas_view2.views.View330.setWindowTitle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setWindowTitle</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.sharedPainter.html#compas_view2.views.View330.sharedPainter" title="compas_view2.views.View330.sharedPainter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sharedPainter</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.show.html#compas_view2.views.View330.show" title="compas_view2.views.View330.show"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.showEvent.html#compas_view2.views.View330.showEvent" title="compas_view2.views.View330.showEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">showEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.showFullScreen.html#compas_view2.views.View330.showFullScreen" title="compas_view2.views.View330.showFullScreen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">showFullScreen</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.showMaximized.html#compas_view2.views.View330.showMaximized" title="compas_view2.views.View330.showMaximized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">showMaximized</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.showMinimized.html#compas_view2.views.View330.showMinimized" title="compas_view2.views.View330.showMinimized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">showMinimized</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.showNormal.html#compas_view2.views.View330.showNormal" title="compas_view2.views.View330.showNormal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">showNormal</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.signalsBlocked.html#compas_view2.views.View330.signalsBlocked" title="compas_view2.views.View330.signalsBlocked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">signalsBlocked</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.size.html#compas_view2.views.View330.size" title="compas_view2.views.View330.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.sizeHint.html#compas_view2.views.View330.sizeHint" title="compas_view2.views.View330.sizeHint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sizeHint</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.sizeIncrement.html#compas_view2.views.View330.sizeIncrement" title="compas_view2.views.View330.sizeIncrement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sizeIncrement</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.sizePolicy.html#compas_view2.views.View330.sizePolicy" title="compas_view2.views.View330.sizePolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sizePolicy</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.stackUnder.html#compas_view2.views.View330.stackUnder" title="compas_view2.views.View330.stackUnder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stackUnder</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.startTimer.html#compas_view2.views.View330.startTimer" title="compas_view2.views.View330.startTimer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">startTimer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.statusTip.html#compas_view2.views.View330.statusTip" title="compas_view2.views.View330.statusTip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statusTip</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.style.html#compas_view2.views.View330.style" title="compas_view2.views.View330.style"><code class="xref py py-obj docutils literal notranslate"><span class="pre">style</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.styleSheet.html#compas_view2.views.View330.styleSheet" title="compas_view2.views.View330.styleSheet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">styleSheet</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.tabletEvent.html#compas_view2.views.View330.tabletEvent" title="compas_view2.views.View330.tabletEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tabletEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.testAttribute.html#compas_view2.views.View330.testAttribute" title="compas_view2.views.View330.testAttribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">testAttribute</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.textureFormat.html#compas_view2.views.View330.textureFormat" title="compas_view2.views.View330.textureFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">textureFormat</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.thread.html#compas_view2.views.View330.thread" title="compas_view2.views.View330.thread"><code class="xref py py-obj docutils literal notranslate"><span class="pre">thread</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.timerEvent.html#compas_view2.views.View330.timerEvent" title="compas_view2.views.View330.timerEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">timerEvent</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.toolTip.html#compas_view2.views.View330.toolTip" title="compas_view2.views.View330.toolTip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toolTip</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.toolTipDuration.html#compas_view2.views.View330.toolTipDuration" title="compas_view2.views.View330.toolTipDuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toolTipDuration</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.topLevelWidget.html#compas_view2.views.View330.topLevelWidget" title="compas_view2.views.View330.topLevelWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topLevelWidget</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.tr.html#compas_view2.views.View330.tr" title="compas_view2.views.View330.tr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tr</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.underMouse.html#compas_view2.views.View330.underMouse" title="compas_view2.views.View330.underMouse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">underMouse</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.ungrabGesture.html#compas_view2.views.View330.ungrabGesture" title="compas_view2.views.View330.ungrabGesture"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ungrabGesture</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.unsetCursor.html#compas_view2.views.View330.unsetCursor" title="compas_view2.views.View330.unsetCursor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unsetCursor</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.unsetLayoutDirection.html#compas_view2.views.View330.unsetLayoutDirection" title="compas_view2.views.View330.unsetLayoutDirection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unsetLayoutDirection</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.unsetLocale.html#compas_view2.views.View330.unsetLocale" title="compas_view2.views.View330.unsetLocale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unsetLocale</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.update.html#compas_view2.views.View330.update" title="compas_view2.views.View330.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.updateBehavior.html#compas_view2.views.View330.updateBehavior" title="compas_view2.views.View330.updateBehavior"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateBehavior</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.updateGeometry.html#compas_view2.views.View330.updateGeometry" title="compas_view2.views.View330.updateGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateGeometry</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.updateMicroFocus.html#compas_view2.views.View330.updateMicroFocus" title="compas_view2.views.View330.updateMicroFocus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updateMicroFocus</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.updatesEnabled.html#compas_view2.views.View330.updatesEnabled" title="compas_view2.views.View330.updatesEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">updatesEnabled</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.visibleRegion.html#compas_view2.views.View330.visibleRegion" title="compas_view2.views.View330.visibleRegion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visibleRegion</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.whatsThis.html#compas_view2.views.View330.whatsThis" title="compas_view2.views.View330.whatsThis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">whatsThis</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.wheelEvent.html#compas_view2.views.View330.wheelEvent" title="compas_view2.views.View330.wheelEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wheelEvent</span></code></a></p></td>
-<td><p>Callback for the mouse wheel event.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.width.html#compas_view2.views.View330.width" title="compas_view2.views.View330.width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">width</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.widthMM.html#compas_view2.views.View330.widthMM" title="compas_view2.views.View330.widthMM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">widthMM</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.winId.html#compas_view2.views.View330.winId" title="compas_view2.views.View330.winId"><code class="xref py py-obj docutils literal notranslate"><span class="pre">winId</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.window.html#compas_view2.views.View330.window" title="compas_view2.views.View330.window"><code class="xref py py-obj docutils literal notranslate"><span class="pre">window</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.windowFilePath.html#compas_view2.views.View330.windowFilePath" title="compas_view2.views.View330.windowFilePath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowFilePath</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.windowFlags.html#compas_view2.views.View330.windowFlags" title="compas_view2.views.View330.windowFlags"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowFlags</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.windowHandle.html#compas_view2.views.View330.windowHandle" title="compas_view2.views.View330.windowHandle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowHandle</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.windowIcon.html#compas_view2.views.View330.windowIcon" title="compas_view2.views.View330.windowIcon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowIcon</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.windowIconText.html#compas_view2.views.View330.windowIconText" title="compas_view2.views.View330.windowIconText"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowIconText</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.windowModality.html#compas_view2.views.View330.windowModality" title="compas_view2.views.View330.windowModality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowModality</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.windowOpacity.html#compas_view2.views.View330.windowOpacity" title="compas_view2.views.View330.windowOpacity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowOpacity</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.windowRole.html#compas_view2.views.View330.windowRole" title="compas_view2.views.View330.windowRole"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowRole</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.windowState.html#compas_view2.views.View330.windowState" title="compas_view2.views.View330.windowState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowState</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.windowTitle.html#compas_view2.views.View330.windowTitle" title="compas_view2.views.View330.windowTitle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowTitle</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.windowType.html#compas_view2.views.View330.windowType" title="compas_view2.views.View330.windowType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">windowType</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_view2.views.View330.x.html#compas_view2.views.View330.x" title="compas_view2.views.View330.x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_view2.views.View330.y.html#compas_view2.views.View330.y" title="compas_view2.views.View330.y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">y</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </section>
 
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
         
       </main>
-      <!-- content -->
-      <!-- sidebar -->
-      <div class="col-12 col-md-3 compas-sidebar" role="navigation">
-        <form id="search" class="d-flex align-items-center compas-searchbox" action="../../search.html" method="get">
-          <input class="form-control" type="text" name="q" placeholder="Search docs" />
-          <input type="hidden" name="check_keywords" value="yes" />
-          <input type="hidden" name="area" value="default" />
-          <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#compas-navigation" aria-controls="compas-navigation" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </form>
-        
-        
-        <div id="compas-navigation" class="collapse compas-navigation">
-          <ul class="nav flex-column collapse show active">
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../index.html">Introduction</a></li>
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../tutorials.html">Tutorials</a><ul class="nav flex-column collapse">
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../tutorials/tutorial_basics.html">Tutorial Basics</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../tutorials/tutorial_configuration.html">Tutorial Configuration</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../tutorials/tutorial_software_concepts.html">Software Concepts</a></li>
-</ul>
-</li>
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/object.html">Object Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_arrows.html">Arrows</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_brep.html">Brep</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_collection.html">Collection</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_coplanaredges.html">Coplanar Edges</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_fonts.html">Fonts</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_frames.html">Frames</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_geometries.html">Geometries</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_lines.html">Lines</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_mesh_display.html">Mesh Display</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_nurbs.html">Nurbs</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_points.html">Points</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_polyline.html">Polyline</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_robot.html">Robot</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_robot_custom.html">Robot Custom</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_scripted.html">Scripted</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_texts.html">Texts</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/object/example_vector.html">Vector</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/color.html">Color Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/color/example_blending.html">Blending</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/color/example_colors.html">Colors</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/color/example_face_vertext_color.html">Face Vertex Color</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/control.html">Control Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_camera.html">Camera</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_camera_lookat.html">Camera LookAt</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_camera_scale.html">Camera Scale</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_custom_controller.html">Custom Controller</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/control/example_custom_keys.html">Custom Keys</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/ui.html">UI Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_customui.html">Make a Custom UI From a Script</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_image_display.html">Image Display</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_pair_object_form.html">UI SideDocks Custom</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_plot.html">Plot</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tabs_tree_form.html">Tabs Tree Form</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tree.html">Tree</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tree_editable.html">Tree Editable</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_tree_interactive.html">Tree Interactive</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_elements.html">UI Elements</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_elements2.html">UI Elements2</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_sidedocks.html">UI SideDocks</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/ui/example_ui_sidedocks_custom.html">UI SideDocks Custom</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic.html">Dynamic Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_background_compute.html">Background Compute</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_dynamic.html">Dynamic</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_dynamic_mesh.html">Dynamic Mesh</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_orbiting.html">Orbit Around an Object</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_record.html">Record</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/dynamic/example_transform.html">Transform</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/flow.html">Flow Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/flow/example_csg_flow.html">CSG Flow</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../../examples/flow/example_flow.html">Flow</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/other.html">Other Examples</a><ul class="simple">
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.app.html">compas_view2.app</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.app.App.html">App</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.app.Controller.html">Controller</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.forms.html">compas_view2.forms</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.Form.html">Form</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.PropertyForm.html">PropertyForm</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.forms.AddForm.html">AddForm</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.gl.html">compas_view2.gl</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.make_index_buffer.html">make_index_buffer</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.make_vertex_buffer.html">make_vertex_buffer</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.update_index_buffer.html">update_index_buffer</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.gl.update_vertex_buffer.html">update_vertex_buffer</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.objects.html">compas_view2.objects</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.Object.html">Object</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.BufferObject.html">BufferObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PointObject.html">PointObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.VectorObject.html">VectorObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PlaneObject.html">PlaneObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.FrameObject.html">FrameObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.LineObject.html">LineObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolylineObject.html">PolylineObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CircleObject.html">CircleObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.EllipseObject.html">EllipseObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolygonObject.html">PolygonObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NurbsSurfaceObject.html">NurbsSurfaceObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.BoxObject.html">BoxObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.SphereObject.html">SphereObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.TorusObject.html">TorusObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CylinderObject.html">CylinderObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ConeObject.html">ConeObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CapsuleObject.html">CapsuleObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PolyhedronObject.html">PolyhedronObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.PointcloudObject.html">PointcloudObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.NetworkObject.html">NetworkObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.MeshObject.html">MeshObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.CollectionObject.html">CollectionObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.ArrowObject.html">ArrowObject</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.objects.TextObject.html">TextObject</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.scene.html">compas_view2.scene</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.Camera.html">Camera</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.Mouse.html">Mouse</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.ortho.html">ortho</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.perspective.html">perspective</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.scene.lookat.html">lookat</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.shaders.html">compas_view2.shaders</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shaders.Shader.html">Shader</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.shapes.html">compas_view2.shapes</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shapes.Arrow.html">Arrow</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shapes.Text.html">Text</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.shapes.VectorGroup.html">VectorGroup</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../compas_view2.ui.html">compas_view2.ui</a><ul class="nav flex-column collapse">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Button.html">Button</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Checkbox.html">Checkbox</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Radio.html">Radio</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Slider.html">Slider</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.ui.Select.html">Select</a></li>
-</ul>
-</li>
-<li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_view2.views.html">compas_view2.views</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.views.View.html">View</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_view2.views.View120.html">View120</a></li>
-<li class="toctree-l3 nav-item active"><a class="nav-link active reference internal" href="#">View330</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../developer_guide.html">Developer Guide</a></li>
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
-</ul>
-
-        </div>
-        
-      </div>
-      <!-- sidebar -->
-      <!-- toc -->
-      <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
-        
-        <ul class="nav flex-column" id="compas-toc">
-<li class="nav-item"><a class="nav-link reference internal" href="#">View330</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#compas_view2.views.View330"><code class="docutils literal notranslate"><span class="pre">View330</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-      </div>
-      <!-- toc -->
     </div>
   </div>
-  <!-- main -->
-  <!-- footer -->
-  <footer class="compas-footer">
-    <nav class="nav p-2">
-      
-      <a href="compas_view2.views.View120.y.html" title="View120.y" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
-        <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
-        <div class="nav-title flex-grow-1 align-self-center">
-          <div class="nav-direction small font-weight-light">Previous</div>
-          View120.y
-        </div>
-      </a>
-      
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
       
-      <a href="compas_view2.views.View330.init.html" title="View330.init" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
-        <div class="nav-title footer-link flex-grow-1 align-self-center">
-          <div class="nav-direction small font-weight-light">Next</div>
-          View330.init
-        </div>
-        <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
-      </a>
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright COMPAS Association.
+      <br/>
+    
+  </p>
+</div>
       
-    </nav>
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
   </footer>
-  <!-- footer -->
-  <!-- below -->
-  <div class="below py-5" style="background-color: #222;">
-    <div class="container">
-      <div class="row flex-column">
-        <div class="col-12 col-md-6 mx-md-auto text-center">
-          <h4 class="pb-3 below-text">COMPAS</h4>
-          <p class="below-text">
-            A computational framework for collaboration and research
-            in Architecture, Engineering, Fabrication, and Construction.
-          </p>
-          <nav class="nav justify-content-center pb-3">
-            <a class="nav-link mx-2 px-0 below-link" href="http://github.com/compas-dev" target="_blank">
-              <span class="fab fa-github fa-1x"></span>
-            </a>
-            <a class="nav-link mx-2 px-0 below-link" href="http://forum.compas-framework.org" target="_blank">
-              <span class="fab fa-discourse fa-1x"></span>
-            </a>
-            <a class="nav-link mx-2 px-0 below-link" href="https://pypi.org/project/COMPAS/" target="_blank">
-              <span class="fab fa-python fa-1x"></span>
-            </a>
-          </nav>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col text-center">
-          <p class="p-0 m-0 below-text">Copyright &copy; 2017-2021 compas-dev</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- below -->
-  <!-- scripts -->
-  <script id="documentation_options" data-url_root="" src="../../_static/documentation_options.js"></script>
-
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-
-  <script src="../../_static/underscore.js"></script>
-  <script src="../../_static/doctools.js"></script>
-  <script src="../../_static/searchtools.js"></script>
-  <script src="../../_static/language_data.js"></script>
-
-  <script>
-    $(document).ready(function () {
-      $(".language-default code").addClass("python");
-      $(".language-python code").addClass("python");
-      $(".language-bash code").addClass("bash");
-      $(".language-cpp code").addClass("cpp");
-      $(".language-json code").addClass("json");
-      $(".language-none code").addClass("plaintext");
-
-      hljs.initHighlighting();
-      anchors.add();
-
-      new ClipboardJS(".btn.copy", {
-        target: function(trigger) {
-          return trigger.nextElementSibling;
-        }
-      });
-
-      $("#compas-navigation li.active > ul").each(function() {
-        var ul = $(this);
-        if (! ul.hasClass("show")) {
-          ul.addClass("show");
-        }
-      });
-
-      $("#compas-navigation li.toctree-l1").has("ul").each(function() {
-        var li = $(this);
-        li.addClass("has-children");
-        if (li.hasClass("active")) {
-          li.prepend('<span class="menu-toggle"><i class="fas fa-chevron-up"></i></span>');
-        }
-        else {
-          li.prepend('<span class="menu-toggle"><i class="fas fa-chevron-down"></i></span>');
-        }
-      });
-
-      $(".menu-toggle").click(function() {
-        var toggle = $(this);
-        toggle.siblings("ul").toggleClass("show");
-      });
-
-    });
-
-
-    var url = $("#doc_versions").data("url");
-    var docs_site = $("#doc_versions").data("docs");
-
-    if (url) {
-      $.get(url, res => {
-        var lines = res.match(/[^\r\n]+/g);
-        lines.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-        lines.reverse();
-        lines.forEach(version => {
-          $("#doc_version_list").append("<a class=\"dropdown-item\" href=\"" + docs_site + version + "\">" + version + "</a>");
-        });
-
-        var selected_version = $('.nav-versions .dropdown-item').filter(function (i, ver) {
-          return window.location.href.startsWith(ver.href);
-        });
-        selected_version.addClass('active');
-        $("#bd-versions").text(selected_version.text());
-
-      })
-    }
-  </script>
-  <!-- scripts -->
-  
-  
-</body>
-
+  </body>
 </html>
