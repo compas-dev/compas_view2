@@ -13,9 +13,18 @@
     },
     "view": {
         "show_grid": true,
-        "view_mode": "shaded",
+        "viewmode": "shaded",
+        "viewport": "perspective",
         "background_color": [1, 1, 1, 1],
-        "selection_color": [1.0, 1.0, 0.0]
+        "selection_color": [1.0, 1.0, 0.0],
+        "camera": {
+            "fov": 45,
+            "near": 0.1,
+            "far": 1000,
+            "position":[-1.5, -1.5, 1.5],
+            "target": [0, 0, 0],
+            "scale": 1
+        }
     },
     "statusbar": {
         "texts": "Ready",

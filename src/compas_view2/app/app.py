@@ -75,6 +75,8 @@ class App:
     viewmode : {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
         The display mode of the OpenGL view. It will override the value in the config file.
         In `ghosted` mode, all objects have a default opacity of 0.7.
+    viewport : {'front', 'right', 'top', 'perspective'}, optional
+        The viewport of the OpenGL view. It will override the value in the config file.
     show_grid : bool, optional
         Show the XY plane. It will override the value in the config file.
     config : dict | filepath, optional
@@ -135,6 +137,7 @@ class App:
         width: int = None,
         height: int = None,
         viewmode: Literal["wireframe", "shaded", "ghosted", "lighted"] = None,
+        viewport: Literal["front", "right", "top", "perspective"] = None,
         show_grid: bool = None,
         enable_sidebar=None,
         enable_sidedock1: bool = None,
@@ -177,6 +180,8 @@ class App:
 
         if viewmode is not None:
             config["view"]["viewmode"] = viewmode
+        if viewport is not None:
+            config["view"]["viewport"] = viewport
         if show_grid is not None:
             config["view"]["show_grid"] = show_grid
 

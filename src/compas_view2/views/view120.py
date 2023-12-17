@@ -1,18 +1,17 @@
+import os
+
+import numpy as np
 from OpenGL import GL
 
-# from PIL import Image
-
-import os
-import numpy as np
-
 from compas.geometry import transform_points_numpy
-
 from compas_view2.objects import BufferObject
 from compas_view2.objects import TextObject
 from compas_view2.objects import VectorObject
 from compas_view2.shaders import Shader
 
 from .view import View
+
+# from PIL import Image
 
 
 class View120(View):
@@ -120,7 +119,7 @@ class View120(View):
 
     def paint(self):
         viewworld = self.camera.viewworld()
-        if self.current != self.PERSPECTIVE:
+        if self.current != self.VIEWPORTS["perspective"]:
             self.update_projection()
 
         # Draw instance maps

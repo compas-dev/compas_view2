@@ -1,11 +1,11 @@
 import time
-from OpenGL import GL
 
+from OpenGL import GL
 from qtpy import QtCore
 from qtpy import QtWidgets
 
-from compas_view2.scene import Camera
 from compas_view2.objects import GridObject
+from compas_view2.scene import Camera
 
 
 class View(QtWidgets.QOpenGLWidget):
@@ -19,23 +19,20 @@ class View(QtWidgets.QOpenGLWidget):
         The view configuration.
     """
 
-    FRONT = 1
-    RIGHT = 2
-    TOP = 3
-    PERSPECTIVE = 4
+    VIEWPORTS = {"front": 1, "right": 2, "top": 3, "perspective": 4}
 
     def __init__(self, app, view_config):
         super().__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self._opacity = 1.0
-        self._current = View.PERSPECTIVE
+        self._current = self.VIEWPORTS[view_config["viewport"]]
         self.shader_model = None
         self.app = app
         self.color = view_config["background_color"]
-        self.mode = view_config["view_mode"]
+        self.mode = view_config["viewmode"]
         self.selection_color = view_config["selection_color"]
         self.show_grid = view_config["show_grid"]
-        self.camera = Camera(self)
+        self.camera = Camera(self, **view_config["camera"])
         self.grid = GridObject(1, 10, 10)
         self.objects = {}
         self.keys = {"shift": False, "control": False, "f": False}
