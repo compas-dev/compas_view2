@@ -7,7 +7,7 @@ Camera Config
     :nosignatures:
 
 Default Camera Config
-======================
+=======================================
 
 By default, the camera is configed 45 dregees perspective:
 
