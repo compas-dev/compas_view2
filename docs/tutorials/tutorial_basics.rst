@@ -189,7 +189,7 @@ use the "on" decorator (:meth:`compas_view2.app.App.on`) on a callback function.
 
 
 Zoom, Pan, Rotate, and Select
-=================
+===============================
 
 After launching the viewer, the view can be transformed by zooming, panning, and rotating. Object selection is also possible.
 
