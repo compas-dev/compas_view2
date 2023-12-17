@@ -124,7 +124,7 @@ class Controller:
 
         Returns
         -------
-        bool:
+        bool
             If the mouse key is happening.
 
 
@@ -167,7 +167,7 @@ class Controller:
 
         Returns
         -------
-        bool:
+        bool
             If the button is pressed.
         """
         supported_buttons = {
@@ -198,7 +198,7 @@ class Controller:
 
         Returns
         -------
-        bool:
+        bool
             If the key is pressed.
         """
 
@@ -225,7 +225,7 @@ class Controller:
 
         Returns
         -------
-        bool:
+        bool
             If all the keys are pressed.
         """
         for key in self.keys[action]:
@@ -248,7 +248,7 @@ class Controller:
 
         Returns
         -------
-        bool:
+        bool
             If all the keys are released.
         """
         for key in self.keys[action]:
