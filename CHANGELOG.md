@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Change the str options in `view_port` into all lower case.
 * Change naming `view_mode` to `viewport_mode`, `view_port` to `viewport`. 
+* Doc building using `sphinx_compas2_theme `.
+* Fix the documentation: title lines, comments.
 * Fix a bug when camera is looking straight up or down.
 
 ### Removed
