@@ -38,9 +38,6 @@ class Slider:
         The actual slider widget.
     value : float
         The current value of the slider.
-
-    Class Attributes
-    ----------------
     STYLE : str
         Stylesheet for the visual appearance of the groove and handle of the slider.
 

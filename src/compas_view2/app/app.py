@@ -64,37 +64,37 @@ class App:
     ----------
     title : str, optional
         The title of the viewer window.  It will override the value in the config file.
-    version: {'120', '330'}, optional
+    version : {'120', '330'}, optional
         The version of the GLSL used by the shaders. It will override the value in the config file.
         Default is ``'120'`` with a compatibility profile.
         The option ``'330'`` is not yet available.
-    width: int, optional
+    width : int, optional
         The width of the app window at startup. It will override the value in the config file.
-    height: int, optional
+    height : int, optional
         The height of the app window at startup. It will override the value in the config file.
-    viewmode: {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
+    viewmode : {'shaded', 'ghosted', 'wireframe', 'lighted'}, optional
         The display mode of the OpenGL view. It will override the value in the config file.
         In `ghosted` mode, all objects have a default opacity of 0.7.
-    show_grid: bool, optional
+    show_grid : bool, optional
         Show the XY plane. It will override the value in the config file.
-        config: dict | filepath, optional
+    config : dict | filepath, optional
         A configuration dict for the App, or a path to a JSON file containing such a dict.
         Default is None, in which case the default configuration (a `Rhino-like` preference) is used.
         More configuration options can be found in the `example-control` of the page.
-    controller_class: :class:`compas_view2.app.Controller`, optional
+    controller_class : :class:`compas_view2.app.Controller`, optional
         A custom controller corresponding to a custom config file.
         Default is None, in which case the default controller is used, matching the default config file.
 
     Attributes
     ----------
-    window: :class:`PySide2.QtWidgets.QMainWindow`
+    window : :class:`PySide2.QtWidgets.QMainWindow`
         The main window of the application.
         This window contains the view and any other UI components
         such as the menu, toolbar, statusbar, ...
-    view: :class:`compas_view2.View`
+    view : :class:`compas_view2.View`
         Instance of OpenGL view.
         This view is the central widget of the main window.
-    controller: :class:`compas_view2.app.Controller`
+    controller : :class:`compas_view2.app.Controller`
         The action controller of the app.
 
     Notes

@@ -126,15 +126,6 @@ class Object(ABC):
     otype : class
         The data class of the object.
 
-    Class Attributes
-    ----------------
-    default_color_points : :class:`compas.color.Color`
-        The default color of the points with value rgb(0.2, 0.2, 0.2).
-    default_color_lines : :class:`compas.color.Color`
-        The default color of the lines with value rgb(0.4, 0.4, 0.4).
-    default_color_faces : :class:`compas.color.Color`
-        The default color of the faces with value rgb(0.8, 0.8, 0.8).
-
     """
 
     default_color_points = Color(0.2, 0.2, 0.2)
