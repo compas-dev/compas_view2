@@ -79,7 +79,7 @@ class App:
         The viewport of the OpenGL view. It will override the value in the config file.
     show_grid : bool, optional
         Show the XY plane. It will override the value in the config file.
-        config: dict | filepath, optional
+    config : dict | filepath, optional
         A configuration dict for the App, or a path to a JSON file containing such a dict.
         Default is None, in which case the default configuration (a `Rhino-like` preference) is used.
         More configuration options can be found in the `example-control` of the page.
@@ -89,14 +89,14 @@ class App:
 
     Attributes
     ----------
-    window: :class:`PySide2.QtWidgets.QMainWindow`
+    window : :class:`PySide2.QtWidgets.QMainWindow`
         The main window of the application.
         This window contains the view and any other UI components
         such as the menu, toolbar, statusbar, ...
-    view: :class:`compas_view2.View`
+    view : :class:`compas_view2.View`
         Instance of OpenGL view.
         This view is the central widget of the main window.
-    controller: :class:`compas_view2.app.Controller`
+    controller : :class:`compas_view2.app.Controller`
         The action controller of the app.
 
     Notes

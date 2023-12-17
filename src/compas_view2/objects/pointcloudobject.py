@@ -26,7 +26,7 @@ class PointcloudObject(BufferObject):
         list of point colors
 
     Raises
-    -------
+    ------
     ValueError
         If number of colors does not equal to number of points.
 

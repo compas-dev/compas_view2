@@ -15,7 +15,7 @@ package = "compas_view2"
 
 master_doc = "index"
 source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
-templates_path = sphinx_compas2_theme.get_autosummary_templates_path()
+templates_path = sphinx_compas2_theme.get_autosummary_templates_path() + ["_templates"]
 exclude_patterns = sphinx_compas2_theme.default_exclude_patterns
 add_module_names = False
 language = "en"

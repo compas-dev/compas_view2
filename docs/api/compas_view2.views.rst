@@ -10,6 +10,7 @@ Classes
 .. autosummary::
     :toctree: generated/
     :nosignatures:
+    :template: class_noinheritance.rst
 
     View
     View120
