@@ -13,9 +13,9 @@ class View(QtWidgets.QOpenGLWidget):
 
     Parameters
     ----------
-    app: :class:`compas_view2.app.App`
+    app : :class:`compas_view2.app.App`
         The parent application of the view.
-    view_config: dict
+    view_config : dict
         The view configuration.
     """
 
