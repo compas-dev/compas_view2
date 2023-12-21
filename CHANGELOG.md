@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
+* Added `sphinx-qt-documentation` for doc build.
 
 ### Changed
 
@@ -19,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 
-* Added `viewport` and `camera` in the config
+* Added `viewport` and `camera` in the config.
 * Added the update method for the `textobject`.
 
 
