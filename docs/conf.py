@@ -80,7 +80,10 @@ plot_formats = ["png"]
 intersphinx_mapping = {
     "python": ("https://docs.python.org/", None),
     "compas": ("https://compas.dev/compas/latest/", None),
+    "PySide2": ("https://doc.qt.io/qtforpython-5/", None),
 }
+
+qt_documentation = "PySide2"
 
 # linkcode
 
