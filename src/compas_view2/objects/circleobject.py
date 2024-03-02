@@ -10,7 +10,7 @@ from .polylineobject import PolylineObject
 class CircleObject(PolylineObject):
     """Object for displaying COMPAS Circle geometry."""
 
-    def __init__(self, circle, u=16, **kwargs):
+    def __init__(self, circle, u=128, **kwargs):
         self.u = u
         self.calculate_circle_points(circle)
         super().__init__(circle, close=True, **kwargs)

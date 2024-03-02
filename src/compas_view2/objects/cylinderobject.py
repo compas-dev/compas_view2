@@ -9,7 +9,7 @@ from .meshobject import MeshObject
 class CylinderObject(MeshObject):
     """Object for displaying COMPAS cylinder geometry."""
 
-    def __init__(self, data, u=16, **kwargs):
+    def __init__(self, data, u=128, **kwargs):
         super().__init__(Mesh.from_shape(data, u=u), **kwargs)
         self.u = u
         self._data = data

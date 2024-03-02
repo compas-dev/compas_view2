@@ -7,7 +7,7 @@ from .meshobject import MeshObject
 class TorusObject(MeshObject):
     """Object for displaying COMPAS torus geometry."""
 
-    def __init__(self, data, u=16, v=16, **kwargs):
+    def __init__(self, data, u=128, v=128, **kwargs):
         super().__init__(Mesh.from_shape(data, u=u, v=v), **kwargs)
         self.u = u
         self.v = v

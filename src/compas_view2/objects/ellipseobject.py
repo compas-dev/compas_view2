@@ -8,7 +8,7 @@ from .polylineobject import PolylineObject
 class EllipseObject(PolylineObject):
     """Object for displaying COMPAS Ellipse geometry."""
 
-    def __init__(self, ellipse, u=16, **kwargs):
+    def __init__(self, ellipse, u=128, **kwargs):
         self.u = u
         self.calculate_ellipse_points(ellipse)
         super().__init__(ellipse, close=True, **kwargs)
