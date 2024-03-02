@@ -73,8 +73,8 @@ or by changing the corresponding attributes of the view object.
 ::
 
     >>> viewer.add(Sphere([0, 0, 0], 1.0),
-    ...     u=64,
-    ...     v=64,
+    ...     u=128,
+    ...     v=128,
     ...     show_points=True,
     ...     show_lines=True,
     ...     show_faces=True,
