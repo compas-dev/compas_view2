@@ -23,7 +23,8 @@ from qtpy.QtGui import QIcon
 
 from compas.data import Data
 from compas.colors import Color
-from compas.utilities import gif_from_images
+
+# from compas.utilities import gif_from_images
 
 from compas_view2.views import View120
 from compas_view2.views import View330
@@ -1184,18 +1185,21 @@ class App:
                     self.timer.stop()
                     if self.record:
                         self.record = False
-                        # self.recorded_frames[0].save(
-                        #     record_path, save_all=True, optimize=False,
-                        #     duration=playback_interval or interval,
-                        #     append_images=self.recorded_frames[1:],
-                        #     loop=100)
-                        files = [os.path.join(self.tempdir, f"{i}.png") for i in range(frames)]
-                        gif_from_images(
-                            files=files,
-                            gif_path=record_path,
-                            fps=record_fps,
-                            delete_files=True,
+                        self.recorded_frames[0].save(
+                            record_path,
+                            save_all=True,
+                            optimize=False,
+                            duration=playback_interval or interval,
+                            append_images=self.recorded_frames[1:],
+                            loop=100,
                         )
+                        # files = [os.path.join(self.tempdir, f"{i}.png") for i in range(frames)]
+                        # gif_from_images(
+                        #     files=files,
+                        #     gif_path=record_path,
+                        #     fps=record_fps,
+                        #     delete_files=True,
+                        # )
                         shutil.rmtree(self.tempdir)
                         print("Recorded to ", record_path)
 
