@@ -15,7 +15,7 @@ viewer.view.camera.rx = -60
 viewer.view.camera.rz = 0
 viewer.view.camera.distance = 5
 
-viewer.add(sphere, u=64, v=64, facecolor=Color.cyan(), linecolor=Color.blue())
+viewer.add(sphere, u=128, v=128, facecolor=Color.cyan(), linecolor=Color.blue())
 
 
 @viewer.on(interval=50, frames=180, record=True, record_path="docs/_images/example_orbiting.gif")
