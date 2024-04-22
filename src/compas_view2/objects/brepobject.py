@@ -1,5 +1,7 @@
-from compas.utilities import pairwise
+from compas.itertools import pairwise
 from compas.geometry import centroid_points
+from compas.tolerance import TOL
+
 from .bufferobject import BufferObject
 from compas_occ.brep import OCCBrep as Brep
 
@@ -17,7 +19,7 @@ class BrepObject(BufferObject):
 
     def __init__(self, brep: Brep, **kwargs):
         super().__init__(brep, **kwargs)
-        mesh, boundaries = brep.to_viewmesh(linear_deflection=0.001)
+        mesh, boundaries = brep.to_viewmesh(TOL.lineardeflection)
         self._mesh = mesh
         self._boundaries = boundaries
 
@@ -34,7 +36,7 @@ class BrepObject(BufferObject):
         return self._boundaries
 
     def update(self):
-        mesh, boundaries = self.brep.to_viewmesh(linear_deflection=0.001)
+        mesh, boundaries = self.brep.to_viewmesh(TOL.lineardeflection)
         self._mesh = mesh
         self._boundaries = boundaries
         super().update()
