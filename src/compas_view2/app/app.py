@@ -265,6 +265,8 @@ class App:
             "propertyform": None,
         }
 
+        self._controls = {}
+
         self.init(config)
         self.resize(self.width, self.height)
         if self.config["fullscreen"]:
