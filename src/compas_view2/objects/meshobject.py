@@ -1,4 +1,4 @@
-from compas.utilities import pairwise
+from compas.itertools import pairwise
 from compas.geometry import centroid_points
 from compas.geometry import is_coplanar
 from compas.colors import Color

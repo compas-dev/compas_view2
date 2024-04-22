@@ -1,5 +1,5 @@
 from compas.geometry import centroid_points
-from compas.utilities import pairwise
+from compas.itertools import pairwise
 from .polylineobject import PolylineObject
 
 

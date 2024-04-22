@@ -1,4 +1,4 @@
-from compas.utilities import pairwise
+from compas.itertools import pairwise
 from .bufferobject import BufferObject
 
 
