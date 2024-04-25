@@ -41,7 +41,7 @@ def make_vertex_buffer(data, dynamic=False):
 
     Examples
     --------
-    >>> from compas.utilities import flatten
+    >>> from compas.itertools import flatten
     >>> vertices = [[0, 0, 0], [1, 0, 0], [2, 0, 0], [3, 0, 0]]
     >>> buffer = make_vertex_buffer(list(flatten(vertices)))
 
@@ -74,7 +74,7 @@ def make_index_buffer(data, dynamic=False):
 
     Examples
     --------
-    >>> from compas.utilities import flatten
+    >>> from compas.itertools import flatten
     >>> edges = [(0, 1), (1, 2), (2, 3)]
     >>> buffer = make_index_buffer(list(flatten(edges)))
 

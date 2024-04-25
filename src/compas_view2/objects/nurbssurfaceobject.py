@@ -1,4 +1,4 @@
-from compas.utilities import flatten
+from compas.itertools import flatten
 from .bufferobject import BufferObject
 
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-from compas.utilities import flatten
+from compas.itertools import flatten
 from compas.geometry import transform_points_numpy
 
 from compas_view2.gl import make_index_buffer

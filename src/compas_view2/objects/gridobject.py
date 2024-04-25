@@ -1,4 +1,4 @@
-from compas.utilities import flatten
+from compas.itertools import flatten
 
 from compas_view2.gl import make_index_buffer
 from compas_view2.gl import make_vertex_buffer
