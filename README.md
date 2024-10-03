@@ -1,7 +1,7 @@
 # COMPAS Viewers 2
 
 > [!WARNING]
-> This package is deprecated because a new COMPAS2 viewer has been created and will be removed in the future.
+> This package is deprecated and will be removed in the future.
 > Please use [compas_viewer](https://github.com/compas-dev/compas_viewer) instead
 
 ![build](https://github.com/compas-dev/compas_view2/workflows/build/badge.svg)
